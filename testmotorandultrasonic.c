@@ -141,7 +141,7 @@ do {
 			get_tacho_state_flags( sn, &state );
 		} while ( state );
 		printf( "run to relative position...\n" );
-		set_tacho_speed_sp( med, max_speed / 2 );
+		set_tacho_speed_sp( med, max_speed);
 		set_tacho_ramp_up_sp( med, 0 );
 		set_tacho_ramp_down_sp( med, 0 );
 		set_tacho_position_sp( med, 5 );
