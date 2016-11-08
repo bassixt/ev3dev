@@ -20,7 +20,7 @@
 int main( void )
 {
         int i;
-        uint8_t sn;
+        uint8_t sn,dx;
         FLAGS_T state;
         uint8_t sn_touch;
         uint8_t sn_compass;
@@ -88,24 +88,24 @@ do {
                 printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
         }
 //Second motor
-if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &sn, 1 )) {
+if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &dx, 1 )) {
 
 
                 printf( "LEGO_EV3_L_MOTOR 2 is found, run for 5 sec...\n" );
-                get_tacho_max_speed( sn, &max_speed );
-                printf("value of buffer :%d\n", sn);
+                get_tacho_max_speed( dx, &max_speed );
+                printf("value of buffer :%d\n", dx);
                 printf("  max_speed = %d\n", max_speed );
-                set_tacho_stop_action_inx( sn, TACHO_COAST );
-                set_tacho_polarity( sn, "inversed" );
-                set_tacho_speed_sp( sn, max_speed * 2 / 3 );
-                set_tacho_time_sp( sn, 100 );
-                set_tacho_ramp_up_sp( sn, 2000 );
+                set_tacho_stop_action_inx( dx, TACHO_COAST );
+                set_tacho_polarity( dx, "inversed" );
+                set_tacho_speed_sp( dx, max_speed * 2 / 3 );
+                set_tacho_time_sp( dx, 100 );
+                set_tacho_ramp_up_sp( dx, 2000 );
               //  set_tacho_ramp_down_sp( sn, 2000 );
               //  set_tacho_command_inx( sn, TACHO_RUN_TIMED );
                 /* Wait tacho stop */
                 Sleep( 100 );
 do {
-                        get_tacho_state_flags( sn, &state );
+                        get_tacho_state_flags( dx, &state );
                 } while ( state );
                 //printf( "run to relative position...\n" );
                 //set_tacho_speed_sp( sn, max_speed / 2 );
@@ -161,16 +161,32 @@ do {
                         }
                         printf( "\r(%f) \n", value);
                                 if(value<2500 && value>=1500)
+                                        {
                                 set_tacho_speed_sp( sn, max_speed );
+                                set_tacho_speed_sp( dx, max_speed );
+                                                }
                                 if(value<1500 && value >=500)
+                                        {
                                 set_tacho_speed_sp( sn, max_speed * 2 / 3 );
+                                set_tacho_speed_sp( dx, max_speed * 2 / 3 );
+                                                }
                                 if(value<500 && value >=50)
+                                        {
                                 set_tacho_speed_sp( sn, max_speed * 1 / 3 );
+                                set_tacho_speed_sp( dx, max_speed * 1 / 3 );
+                                                       }
                                 if(value<50 && value >=40)
+                                        {
                                 set_tacho_speed_sp( sn, max_speed * 1 / 6 );
+                                set_tacho_speed_sp( dx, max_speed * 1 / 6 );
+                                         }
                                 if(value<40 && value >=30)
+                                         {       
                                 set_tacho_speed_sp( sn, max_speed * 0 );
+                                 set_tacho_speed_sp( dx, max_speed * 0 );
+                                                 }
                                 set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+                                       set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 
 
 
