@@ -22,7 +22,7 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 int main( void )
 {
         int i;
-        uint8_t sn,dx;
+        uint8_t sn,dx,med;
         FLAGS_T state;
         uint8_t sn_touch;
         uint8_t sn_compass;
@@ -122,7 +122,36 @@ do {
         } else {
                 printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
         }
-      
+//medium motor
+	if ( ev3_search_tacho( LEGO_EV3_M_MOTOR, &med, 2 )) {
+		int max_speed;
+
+		printf( "LEGO_EV3_M_MOTOR 1 is found, run for 5 sec...\n" );
+		get_tacho_max_speed( med, &max_speed );
+		printf("  max_speed = %d\n", max_speed );
+		set_tacho_stop_action_inx( med, TACHO_COAST );
+		set_tacho_speed_sp( med, max_speed * 2 / 3 );
+		set_tacho_time_sp( med, 5000 );
+		set_tacho_ramp_up_sp( med, 2000 );
+		set_tacho_ramp_down_sp( med, 2000 );
+		//set_tacho_command_inx( med, TACHO_RUN_TIMED );
+		/* Wait tacho stop */
+		//Sleep( 100 );
+		do {
+			get_tacho_state_flags( sn, &state );
+		} while ( state );
+		printf( "run to relative position...\n" );
+		set_tacho_speed_sp( med, max_speed / 16 );
+		set_tacho_ramp_up_sp( med, 0 );
+		set_tacho_ramp_down_sp( med, 0 );
+		set_tacho_position_sp( med, 1 );
+		for ( i = 0; i < 8; i++ ) {
+			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
+			Sleep( 500 );
+		}
+	} else {
+		printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
+	}
 
 //Run all sensors
         ev3_sensor_init();
