@@ -17,6 +17,8 @@
 
 //////////////////////////////////////////////////
 #endif
+const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
+#define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
 int main( void )
 {
         int i;
@@ -24,6 +26,7 @@ int main( void )
         FLAGS_T state;
         uint8_t sn_touch;
         uint8_t sn_compass;
+        uint8_t sn_color;
         uint8_t sn_sonar;
         uint8_t sn_mag;
         char s[ 256 ];
@@ -154,6 +157,14 @@ do {
                         printf( "\r(%f) \n", value);
                         fflush( stdout );
                 }
+                if ( ev3_search_sensor( LEGO_EV3_COLOR, &sn_color, 0 )) {
+			printf( "COLOR sensor is found, reading COLOR...\n" );
+			if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
+				val = 0;
+			}
+			printf( "\r(%s) \n", color[ val ]);
+			fflush( stdout );
+		}
                 if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
                         printf("SONAR found, reading sonar...\n");
                         if ( !get_sensor_value0(sn_sonar, &value )) {
