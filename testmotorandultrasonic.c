@@ -93,6 +93,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &sn, 1 )) {
 
                 printf( "LEGO_EV3_L_MOTOR 2 is found, run for 5 sec...\n" );
                 get_tacho_max_speed( sn, &max_speed );
+                printf("value of buffer :%d\n", sn);
                 printf("  max_speed = %d\n", max_speed );
                 set_tacho_stop_action_inx( sn, TACHO_COAST );
                 set_tacho_polarity( sn, "inversed" );
