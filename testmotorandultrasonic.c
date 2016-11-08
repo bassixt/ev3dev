@@ -181,17 +181,17 @@ do {
                                 set_tacho_speed_sp( sn, max_speed * 2 / 3 );
                                 set_tacho_speed_sp( dx, max_speed * 2 / 3 );
                                                 }
-                                if(value<500 && value >=50)
+                                if(value<500 && value >=150)
                                         {
                                 set_tacho_speed_sp( sn, max_speed * 1 / 3 );
                                 set_tacho_speed_sp( dx, max_speed * 1 / 3 );
                                                        }
-                                if(value<50 && value >=40)
+                                if(value<150 && value >=70)
                                         {
                                 set_tacho_speed_sp( sn, max_speed * 1 / 6 );
                                 set_tacho_speed_sp( dx, max_speed * 1 / 6 );
                                          }
-                                if(value<40 && value >=30)
+                                if(value<70 && value >=0)
                                          {       
                                 set_tacho_speed_sp( sn, max_speed * 0 );
                                  set_tacho_speed_sp( dx, max_speed * 0 );
