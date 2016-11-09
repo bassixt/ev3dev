@@ -236,6 +236,10 @@ do {
 			set_tacho_polarity( med, "normal" );
 			for ( i = 0; i < 4; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
+			if(i==2)
+			{_stop();
+			 _wait_stopped = 1;
+			}
 			Sleep( 200 );
 			}
 			set_tacho_polarity( med, "inversed" );
