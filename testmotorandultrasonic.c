@@ -153,7 +153,7 @@ do {
 	} else {
 		printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
 	} 
-	set_tacho_stop_action( med, TACHO_HOLD );
+	set_tacho_stop_action( med, "tacho_hold" );
 
 //Run all sensors
         ev3_sensor_init();
