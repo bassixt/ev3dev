@@ -148,7 +148,7 @@ do {
 		set_tacho_position_sp( med, 20 );
 		for ( i = 0; i < 3; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
-			Sleep( 1000 );
+			Sleep( 150 );
 		}
 	} else {
 		printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
