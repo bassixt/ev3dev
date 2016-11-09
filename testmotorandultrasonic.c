@@ -146,7 +146,7 @@ do {
 		set_tacho_ramp_up_sp( med, 0 );
 		set_tacho_ramp_down_sp( med, 0 );
 		set_tacho_position_sp( med, 20 );
-		for ( i = 0; i < 3; i++ ) {
+		for ( i = 0; i < 5; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 150 );
 		}
