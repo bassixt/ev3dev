@@ -130,7 +130,7 @@ do {
 		get_tacho_max_speed( med, &max_speed );
 		printf("  max_speed = %d\n", max_speed );
 		set_tacho_stop_action_inx( med, TACHO_COAST );
-		set_tacho_polarity( med, "inversed" );
+		set_tacho_polarity( med, "normal" );
 		set_tacho_speed_sp( med, max_speed);
 		set_tacho_time_sp( med, 6000 );
 		set_tacho_ramp_up_sp( med, 2000 );
@@ -146,9 +146,9 @@ do {
 		set_tacho_ramp_up_sp( med, 0 );
 		set_tacho_ramp_down_sp( med, 0 );
 		set_tacho_position_sp( med, 20 );
-		for ( i = 0; i < 4; i++ ) {
+		for ( i = 0; i < 7; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
-			Sleep( 150 );
+			Sleep( 200 );
 		}
 	} else {
 		printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
