@@ -227,8 +227,8 @@ do {
                                          }
                                 if(value<70 && value >=0)
                                          {   
-				set_tacho_stop_action_inx(sn,TACHO_HOLD);		 
-                              //  set_tacho_speed_sp( sn, max_speed * 0 );
+				//set_tacho_stop_action_inx(sn,TACHO_HOLD);		 
+                               set_tacho_speed_sp( sn, max_speed * 0 );
                                  set_tacho_speed_sp( dx, max_speed * 0 );
                                                  }
                                 set_tacho_command_inx( sn, TACHO_RUN_TIMED );
