@@ -153,9 +153,8 @@ do {
 	} else {
 		printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
 	} 
-	Sleep(500);
 	//set_tacho_polarity( med, "inversed" );
-	set_tacho_stop_action_inx(med,TACHO_HOLD);
+	//set_tacho_stop_action_inx(med,TACHO_HOLD);
 	//set_tacho_hold_pid_Kd 	(med,1000); 
 	//ev3_stop_command_motor(med,2);
 //Run all sensors
@@ -226,9 +225,8 @@ do {
                                 set_tacho_speed_sp( dx, max_speed * 1 / 6 );
                                          }
                                 if(value<70 && value >=0)
-                                         {   
-				//set_tacho_stop_action_inx(sn,TACHO_HOLD);		 
-                               set_tacho_speed_sp( sn, max_speed * 0 );
+                                         {   	 
+                                 set_tacho_speed_sp( sn, max_speed * 0 );
                                  set_tacho_speed_sp( dx, max_speed * 0 );
                                                  }
                                 set_tacho_command_inx( sn, TACHO_RUN_TIMED );
