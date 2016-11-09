@@ -130,6 +130,7 @@ do {
 		get_tacho_max_speed( med, &max_speed );
 		printf("  max_speed = %d\n", max_speed );
 		set_tacho_stop_action_inx( med, TACHO_COAST );
+		set_tacho_polarity( dx, "inversed" );
 		set_tacho_speed_sp( med, max_speed);
 		set_tacho_time_sp( med, 6000 );
 		set_tacho_ramp_up_sp( med, 2000 );
