@@ -153,6 +153,7 @@ do {
 	} else {
 		printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
 	} 
+	Sleep(500);
 	//set_tacho_polarity( med, "inversed" );
 	set_tacho_stop_action_inx(med,TACHO_HOLD);
 	//set_tacho_hold_pid_Kd 	(med,1000); 
