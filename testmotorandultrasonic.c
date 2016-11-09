@@ -123,10 +123,10 @@ do {
                 printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
         }
 //medium motor
-	if ( ev3_search_tacho( LEGO_EV3_M_MOTOR, &med, 2 )) {
+	if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &med, 2 )) {
 		int max_speed;
 
-		printf( "LEGO_EV3_M_MOTOR 1 is found, run for 5 sec...\n" );
+		printf( "LEGO_EV3_L_MOTOR 1 is found, run for 5 sec...\n" );
 		get_tacho_max_speed( med, &max_speed );
 		printf("  max_speed = %d\n", max_speed );
 		set_tacho_stop_action_inx( med, TACHO_COAST );
@@ -150,7 +150,7 @@ do {
 			Sleep( 500 );
 		}*/
 	} else {
-		printf( "LEGO_EV3_M_MOTOR 1 is NOT found\n" );
+		printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
 	}
 
 //Run all sensors
