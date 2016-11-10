@@ -242,7 +242,7 @@ do {
 
 			Sleep( 200 );
 			}
-			polmed=get_tacho_polarity_inx(med);
+			get_tacho_polarity(med,polmed,256);
 			printf("La polarità e':%s",polmed);
 			Sleep(3000);
 			set_tacho_polarity_inx (med,TACHO_INVERSED);
@@ -252,7 +252,7 @@ do {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
 			}
-			polmed=get_tacho_polarity_inx(med);
+			get_tacho_polarity(med,polmed,256);
 			printf("La polarità e':%s",polmed);
 			Sleep(3000);
 			
