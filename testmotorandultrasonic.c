@@ -30,7 +30,6 @@ int main( void )
         uint8_t sn_sonar;
         uint8_t sn_mag;
         char s[ 256 ];
-	char polmed[256];
         int val;
         int max_speed;
         float value;
@@ -234,13 +233,13 @@ do {
                                        set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 			
 			*/
-			set_tacho_position_sp( sn, 90 );
+			set_tacho_position_sp( med, 90 );
 			for ( i = 0; i < 2; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 
 			Sleep( 200 );
 			}
-			set_tacho_position_sp( sn, -90 );
+			set_tacho_position_sp( med, -90 );
 			for ( i = 0; i < 2; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
