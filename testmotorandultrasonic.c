@@ -232,7 +232,7 @@ do {
                                 set_tacho_command_inx( sn, TACHO_RUN_TIMED );
                                        set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 			
-			
+			/*
 			set_tacho_position_sp( med, 90 );
 			Sleep(200);
 			for ( i = 0; i < 7; i++ ) {
@@ -245,7 +245,7 @@ do {
 			for ( i = 0; i < 7; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
-			}
+			}	*/
 		
 
                         fflush( stdout );
