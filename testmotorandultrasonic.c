@@ -204,7 +204,7 @@ do {
                                 value = 0;
                         }
                         printf( "\r(%f) \n", value);
-                              /*  if(value<2500 && value>=1500)
+                               if(value<2500 && value>=1500)
                                         {
                                 set_tacho_speed_sp( sn, max_speed );
                                 set_tacho_speed_sp( dx, max_speed );
@@ -232,7 +232,7 @@ do {
                                 set_tacho_command_inx( sn, TACHO_RUN_TIMED );
                                        set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 			
-			*/
+			
 			set_tacho_position_sp( med, 90 );
 			Sleep(200);
 			for ( i = 0; i < 7; i++ ) {
