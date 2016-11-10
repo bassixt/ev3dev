@@ -21,6 +21,7 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 #define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
 
 void rotatedx(uint8_t sn,uint8_t dx,int max_speed){
+		int i;
 		set_tacho_speed_sp( sn, max_speed/12);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
@@ -39,7 +40,8 @@ void rotatedx(uint8_t sn,uint8_t dx,int max_speed){
 			}
 			
 }
-void rotatesx(uint8_t sn,uint8_t dx,int max_speed){		
+void rotatesx(uint8_t sn,uint8_t dx,int max_speed){
+		int i;
 		set_tacho_speed_sp( sn, max_speed/12);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
@@ -312,8 +314,8 @@ do {
 		
 			
 	
-	rotatedx();
-	rotatesx();
+	rotatedx(sn,dx,MAX_SPEED);
+	rotatesx(sn,dx,MAX_SPEED);
 	
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
