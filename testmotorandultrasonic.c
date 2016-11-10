@@ -146,10 +146,10 @@ do {
 		set_tacho_ramp_up_sp( med, 0 );
 		set_tacho_ramp_down_sp( med, 0 );
 		set_tacho_position_sp( med, 20 );
-		for ( i = 0; i < 7; i++ ) {
+		/*for ( i = 0; i < 7; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
-		}
+		}*/
 	} else {
 		printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
 	} 
@@ -228,6 +228,7 @@ do {
                                          {   	 
                                  set_tacho_speed_sp( sn, max_speed * 0 );
                                  set_tacho_speed_sp( dx, max_speed * 0 );
+				 break;
                                                  }
                                 set_tacho_command_inx( sn, TACHO_RUN_TIMED );
                                        set_tacho_command_inx( dx, TACHO_RUN_TIMED );
@@ -261,7 +262,34 @@ do {
 
 
         }
-
+		set_tacho_speed_sp( sn, max_speed/12);
+		set_tacho_ramp_up_sp( sn, 0 );
+		set_tacho_ramp_down_sp( sn, 0 );
+		set_tacho_position_sp( sn, 20 );
+		set_tacho_speed_sp( dx, max_speed/12);
+		set_tacho_ramp_up_sp( dx, 0 );
+		set_tacho_ramp_down_sp( dx, 0 );
+		set_tacho_position_sp( dx, 20 );
+		
+			set_tacho_position_sp( sn, 90 );
+			set_tacho_position_sp( dx, -90);
+			Sleep(200);
+			for ( i = 0; i < 7; i++ ) {
+			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+			Sleep( 200 );
+			}
+			set_tacho_position_sp( sn, -90);
+			set_tacho_position_sp( dx, 90 );
+			Sleep(200);
+			for ( i = 0; i < 7; i++ ) {
+			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+			Sleep( 200 );
+			}
+	
+	
+	
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
 
