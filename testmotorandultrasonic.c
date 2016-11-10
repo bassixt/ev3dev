@@ -244,6 +244,7 @@ do {
 				val = 0;
 			}
 			printf( "\r(%s) \n", color[ val ]);
+			printf( "valore del colore e': %d",val);
 			fflush( stdout );
 		}
                 if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
