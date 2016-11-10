@@ -24,7 +24,7 @@ void rotatedx(uint8_t sn,uint8_t dx,int max_speed){
 		int i;
 		set_tacho_speed_sp( sn, max_speed/12);
 		set_tacho_ramp_up_sp( sn, 0 );
-		set_tacho_ramp_down_sp( sn, 0 );
+		set_printtacho_ramp_down_sp( sn, 0 );
 		set_tacho_position_sp( sn, 20 );
 		set_tacho_speed_sp( dx, max_speed/12);
 		set_tacho_ramp_up_sp( dx, 0 );
@@ -253,7 +253,8 @@ do {
                         }
                         printf( "\r(%f) \n", value);
 			fflush( stdout );
-                               if(value<2500 && value>=1500)
+			
+                          /*     if(value<2500 && value>=1500)
                                         {
                                 set_tacho_speed_sp( sn, max_speed );
                                 set_tacho_speed_sp( dx, max_speed );
@@ -281,7 +282,7 @@ do {
                                                  }
                                 set_tacho_command_inx( sn, TACHO_RUN_TIMED );
                                        set_tacho_command_inx( dx, TACHO_RUN_TIMED );
-			
+			*/
 			/*
 			set_tacho_position_sp( med, 90 );
 			Sleep(200);
@@ -296,6 +297,7 @@ do {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
 			}	*/
+			
 		
 
                         fflush( stdout );
@@ -313,11 +315,11 @@ do {
         }
 		
 		
-			
+		/*	
 	
 	rotatedx(sn,dx,max_speed);
 	rotatesx(sn,dx,max_speed);
-	
+	*/
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
 
