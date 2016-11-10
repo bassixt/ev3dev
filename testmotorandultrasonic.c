@@ -20,7 +20,7 @@
 const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
 #define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
 
-rotatedx(){
+void rotatedx(uint8_t sn,uint8_t dx,int max_speed){
 		set_tacho_speed_sp( sn, max_speed/12);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
@@ -39,7 +39,7 @@ rotatedx(){
 			}
 			
 }
-rotatesx(){		
+void rotatesx(uint8_t sn,uint8_t dx,int max_speed){		
 		set_tacho_speed_sp( sn, max_speed/12);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
