@@ -252,6 +252,7 @@ do {
                                 value = 0;
                         }
                         printf( "\r(%f) \n", value);
+			fflush( stdout );
                                if(value<2500 && value>=1500)
                                         {
                                 set_tacho_speed_sp( sn, max_speed );
