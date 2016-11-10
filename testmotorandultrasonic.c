@@ -233,15 +233,16 @@ do {
                                        set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 			
 			*/
-			set_tacho_polarity( med, "normal" );
+			set_tacho_polarity_inx (med,TACHO_NORMAL);
+			//set_tacho_polarity( med, "normal" );
 			Sleep(1000);
 			for ( i = 0; i < 2; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 
 			Sleep( 200 );
 			}
-			
-			set_tacho_polarity( med, "inversed" );
+			set_tacho_polarity_inx (med,TACHO_INVERSED);
+			//set_tacho_polarity( med, "inversed" );
 			Sleep(1000);
 			for ( i = 0; i < 2; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
