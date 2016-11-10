@@ -234,29 +234,18 @@ do {
                                        set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 			
 			*/
-			set_tacho_polarity_inx (med,TACHO_NORMAL);
-			//set_tacho_polarity( med, "normal" );
-			Sleep(1000);
+			set_tacho_position_sp( sn, 90 );
 			for ( i = 0; i < 2; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 
 			Sleep( 200 );
 			}
-			get_tacho_polarity(med,polmed,256);
-			printf("La polarità e':%s",polmed);
-			Sleep(3000);
-			set_tacho_polarity_inx (med,TACHO_INVERSED);
-			//set_tacho_polarity( med, "inversed" );
-			Sleep(1000);
+			set_tacho_position_sp( sn, -90 );
 			for ( i = 0; i < 2; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
 			}
-			get_tacho_polarity(med,polmed,256);
-			printf("La polarità e':%s",polmed);
-			Sleep(3000);
-			
-			
+		
 
                         fflush( stdout );
                 }
