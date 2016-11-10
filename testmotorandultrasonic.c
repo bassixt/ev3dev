@@ -314,8 +314,8 @@ do {
 		
 			
 	
-	rotatedx(sn,dx,MAX_SPEED);
-	rotatesx(sn,dx,MAX_SPEED);
+	rotatedx(sn,dx,max_speed);
+	rotatesx(sn,dx,max_speed);
 	
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
