@@ -30,6 +30,7 @@ int main( void )
         uint8_t sn_sonar;
         uint8_t sn_mag;
         char s[ 256 ];
+	char polmed[256];
         int val;
         int max_speed;
         float value;
@@ -241,6 +242,9 @@ do {
 
 			Sleep( 200 );
 			}
+			polmed=get_tacho_polarity_inx(med);
+			printf("La polarità e':%s",polmed);
+			Sleep(3000);
 			set_tacho_polarity_inx (med,TACHO_INVERSED);
 			//set_tacho_polarity( med, "inversed" );
 			Sleep(1000);
@@ -248,6 +252,9 @@ do {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
 			}
+			polmed=get_tacho_polarity_inx(med);
+			printf("La polarità e':%s",polmed);
+			Sleep(3000);
 			
 			
 
