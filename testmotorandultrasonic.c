@@ -62,9 +62,97 @@ void rotatesx(uint8_t sn,uint8_t dx,int max_speed){
 
 
 }
-	   
-	   
 
+void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
+{			int act_pos,distance_el;
+			set_tacho_time_sp( sn, 100 );
+			set_tacho_ramp_up_sp( sn, 2000 );
+			set_tacho_ramp_down_sp( sn, 2000 );
+			set_tacho_time_sp( dx, 100 );
+			set_tacho_ramp_up_sp( dx, 2000 );
+			set_tacho_ramp_down_sp( dx, 2000 );
+ 			set_tacho_speed_sp( sn, max_speed * 1 / 6 );
+                        set_tacho_speed_sp( dx, max_speed * 1 / 6 );
+			//raise the grabber
+			set_tacho_position_sp( med, 90 );
+			Sleep(200);
+			for ( i = 0; i < 7; i++ ) {
+			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
+			Sleep( 200 );
+			}
+ 			get_tacho_position( dx, &act_pos);
+ 			distance_el=act_pos;
+ 			while((act_pos-(4*21)-distance_el)<=0)
+			{
+				set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+				set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+				get_tacho_position( dx, &act_pos);
+			}
+			//release the grabber
+			set_tacho_position_sp( med, -90 );
+			Sleep(200);
+			for ( i = 0; i < 7; i++ ) {
+			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
+			Sleep( 200 );
+			} 	
+}   
+
+float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar)
+{	//aggiungere funzione che controlla anche il motore 
+	//sinistro e vede se sono andati dritti tutti e due 
+	//altrimenti significa che hai girato e c'è un errore
+int beginning,finish;
+float value;
+
+set_tacho_time_sp( sn, 100 );
+set_tacho_ramp_up_sp( sn, 2000 );
+set_tacho_ramp_down_sp( sn, 2000 );
+set_tacho_time_sp( dx, 100 );
+set_tacho_ramp_up_sp( dx, 2000 );
+set_tacho_ramp_down_sp( dx, 2000 );
+get_tacho_position( dx, &beginning);
+while(1){			
+		
+	if ( !get_sensor_value0(sn_sonar, &value )) {
+                                value = 0;
+                        }
+                        printf( "\r(%f) \n", value);
+			fflush( stdout );
+	
+       if(value<2500 && value>=1500)
+		{
+	set_tacho_speed_sp( sn, max_speed );
+	set_tacho_speed_sp( dx, max_speed );
+			}
+	if(value<1500 && value >=500)
+		{
+	set_tacho_speed_sp( sn, max_speed * 2 / 3 );
+	set_tacho_speed_sp( dx, max_speed * 2 / 3 );
+			}
+	if(value<500 && value >=150)
+		{
+	set_tacho_speed_sp( sn, max_speed * 1 / 3 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 3 );
+			       }
+	if(value<150 && value >=70)
+		{
+	set_tacho_speed_sp( sn, max_speed * 1 / 6 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 6 );
+		 }
+	if(value<70 && value >=0)
+		 {   	 
+	 set_tacho_speed_sp( sn, max_speed * 0 );
+	 set_tacho_speed_sp( dx, max_speed * 0 );
+	break;
+		}
+	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+}
+	
+	get_tacho_position( dx, &finish);
+	
+ return (finish-beginning)/21; //return the distance in cm
+}
 
 
 int main( void )
@@ -82,6 +170,7 @@ int main( void )
         int max_speed;
 	int act_pos;
         float value;
+	float elapsed_distance;
         uint32_t n, ii;
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
@@ -120,7 +209,8 @@ int main( void )
                 set_tacho_speed_sp( sn, max_speed * 2 / 3 );
                 set_tacho_time_sp( sn, 100 );
                 set_tacho_ramp_up_sp( sn, 2000 );
-              //  set_tacho_ramp_down_sp( sn, 2000 );
+                set_tacho_ramp_down_sp( sn, 2000 );
+		set_tacho_position( sn,0);
               //  set_tacho_command_inx( sn, TACHO_RUN_TIMED );
                 /* Wait tacho stop */
                 Sleep( 100 );
@@ -152,8 +242,8 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &dx, 1 )) {
                 set_tacho_speed_sp( dx, max_speed * 2 / 3 );
                 set_tacho_time_sp( dx, 100 );
                 set_tacho_ramp_up_sp( dx, 2000 );
+	        set_tacho_ramp_down_sp( sn, 2000 );
 		set_tacho_position( dx,0);
-              //  set_tacho_ramp_down_sp( sn, 2000 );
               //  set_tacho_command_inx( sn, TACHO_RUN_TIMED );
                 /* Wait tacho stop */
                 Sleep( 100 );
@@ -257,57 +347,6 @@ do {
                         }
                         printf( "\r(%f) \n", value);
 			fflush( stdout );
-			
-		
-			
-                               if(value<2500 && value>=1500)
-                                        {
-                                set_tacho_speed_sp( sn, max_speed );
-                                set_tacho_speed_sp( dx, max_speed );
-                                                }
-                                if(value<1500 && value >=500)
-                                        {
-                                set_tacho_speed_sp( sn, max_speed * 2 / 3 );
-                                set_tacho_speed_sp( dx, max_speed * 2 / 3 );
-                                                }
-                                if(value<500 && value >=150)
-                                        {
-                                set_tacho_speed_sp( sn, max_speed * 1 / 3 );
-                                set_tacho_speed_sp( dx, max_speed * 1 / 3 );
-                                                       }
-                                if(value<150 && value >=70)
-                                        {
-                                set_tacho_speed_sp( sn, max_speed * 1 / 6 );
-                                set_tacho_speed_sp( dx, max_speed * 1 / 6 );
-                                         }
-                                if(value<70 && value >=0)
-                                         {   	 
-                                 set_tacho_speed_sp( sn, max_speed * 0 );
-                                 set_tacho_speed_sp( dx, max_speed * 0 );
-				 
-                                                 }
-                                set_tacho_command_inx( sn, TACHO_RUN_TIMED );
-                                       set_tacho_command_inx( dx, TACHO_RUN_TIMED );
-			        get_tacho_position( dx, &act_pos);
-				printf("Actual position is :%d\n",act_pos);
-			/*
-			set_tacho_position_sp( med, 90 );
-			Sleep(200);
-			for ( i = 0; i < 7; i++ ) {
-			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
-
-			Sleep( 200 );
-			}
-			set_tacho_position_sp( med, -90 );
-			Sleep(200);
-			for ( i = 0; i < 7; i++ ) {
-			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
-			Sleep( 200 );
-			}	
-			
-		
-				*/
-                        fflush( stdout );
                 }
                 if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_mag,0)){
                         printf("GYRO found, reading magnet...\n");
@@ -317,7 +356,10 @@ do {
                         printf( "\r(%f) \n", value);
                         fflush( stdout );
                 }
-
+	elapsed_distance=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar);
+	if( color[ val ]=="RED")
+	grab_ball(sn,dx,med,max_speed);
+	
 
         }
 		
