@@ -76,7 +76,7 @@ int main( void )
         uint8_t sn_compass;
         uint8_t sn_color;
         uint8_t sn_sonar;
-        //uint8_t sn_mag;
+        uint8_t sn_mag;
         char s[ 256 ];
         int val;
         int max_speed;
