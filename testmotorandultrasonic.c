@@ -33,11 +33,11 @@ void rotatedx(uint8_t sn,uint8_t dx,int max_speed){
 			set_tacho_position_sp( sn, 90 );
 			set_tacho_position_sp( dx, -90);
 			Sleep(200);
-			for ( i = 0; i < 10; i++ ) {
+			//for ( i = 0; i < 10; i++ ) {                     //modification in order to rotate using compass
 			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
-			}
+			//}
 			
 }
 void rotatesx(uint8_t sn,uint8_t dx,int max_speed){
@@ -201,7 +201,21 @@ while(1){
  return (finish-beginning)/21; //return the distance in cm
 }
 
-
+void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass)
+{	
+	float degree;
+	float initial;
+	get_sensor_value0(sn_compass, &degree);
+	initial=degree;
+	while((degree-initial-90)<=0)
+	{
+		rotatedx(sn,dx,max_speed);
+		get_sensor_value0(sn_compass, &degree);
+	}
+	return;
+}
+	
+	
 int main( void )
 {
         int i;
@@ -365,30 +379,30 @@ do {
                 }
 }
         if ( ev3_search_sensor( LEGO_EV3_TOUCH, &sn_touch, 0 )) {
-                printf( "TOUCH sensor is found, press BUTTON for EXIT...\n" );
+                //printf( "TOUCH sensor is found, press BUTTON for EXIT...\n" );
         }
         while(1){
 
                 if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
-                        printf("COMPASS found, reading compass...\n");
+                        //printf("COMPASS found, reading compass...\n");
                         if ( !get_sensor_value0(sn_compass, &value )) {
                         value = 0;
                         }
-                        printf( "\r(%f) \n", value);
+                        printf( "compass\r(%f) \n", value);
                         fflush( stdout );
                 }
                 if ( ev3_search_sensor( LEGO_EV3_COLOR, &sn_color, 0 )) {
-			printf( "COLOR sensor is found, reading COLOR...\n" );
+			//printf( "COLOR sensor is found, reading COLOR...\n" );
 			set_sensor_mode( sn_color, "COL-COLOR" );
 			if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
 			}
 			printf( "\r(%s) \n", color[ val ]);
-			printf( "valore del colore e': %d",val);
+			printf( "valore del colore e': %d\n",val);
 			fflush( stdout );
 		}
                 if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
-                        printf("SONAR found, reading sonar...\n");
+                        //printf("SONAR found, reading sonar...\n");
                         if ( !get_sensor_value0(sn_sonar, &value )) {
                                 value = 0;
                         }
@@ -396,18 +410,19 @@ do {
 			fflush( stdout );
                 }
                 if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_mag,0)){
-                        printf("GYRO found, reading magnet...\n");
+                        //printf("GYRO found, reading magnet...\n");
                         if ( !get_sensor_value0(sn_mag, &value )) {
                                 value = 0;
                         }
                         printf( "\r(%f) \n", value);
                         fflush( stdout );
                 }
-	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar);
-	if( strcmp(color[ val ],"RED")==0)
-	grab_ball(sn,dx,med,max_speed);
-	if( strcmp(color[ val ],"GREEN")==0)
-	leave_ball(sn,dx,med,max_speed);
+	research( sn, dx, max_speed, sn_compass);
+	//elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar);
+	//if( strcmp(color[ val ],"RED")==0)
+	//grab_ball(sn,dx,med,max_speed);
+	//if( strcmp(color[ val ],"GREEN")==0)
+	//leave_ball(sn,dx,med,max_speed);
 
         }
 		
