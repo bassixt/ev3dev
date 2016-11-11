@@ -306,7 +306,7 @@ do {
 			}	
 			
 		
-
+				*/
                         fflush( stdout );
                 }
                 if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_mag,0)){
@@ -327,7 +327,7 @@ do {
 	rotatedx(sn,dx,max_speed);
 	rotatesx(sn,dx,max_speed);
 	*/
-		}
+		
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
 
