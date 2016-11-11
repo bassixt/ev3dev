@@ -64,7 +64,8 @@ void rotatesx(uint8_t sn,uint8_t dx,int max_speed){
 }
 
 void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
-{			int act_pos,distance_el;
+{			int i;
+			int act_pos,distance_el;
 			set_tacho_time_sp( sn, 100 );
 			set_tacho_ramp_up_sp( sn, 2000 );
 			set_tacho_ramp_down_sp( sn, 2000 );
@@ -356,7 +357,7 @@ do {
                         printf( "\r(%f) \n", value);
                         fflush( stdout );
                 }
-	elapsed_distance=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar);
+	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar);
 	if( color[ val ]=="RED")
 	grab_ball(sn,dx,med,max_speed);
 	
