@@ -363,7 +363,7 @@ do {
                         fflush( stdout );
                 }
 	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar);
-	if( strcmp(color[ val ],"RED"))
+	if( strcmp(color[ val ],"RED")==0)
 	grab_ball(sn,dx,med,max_speed);
 	
 
