@@ -80,7 +80,7 @@ int main( void )
         char s[ 256 ];
         int val;
         int max_speed;
-	int act_pos;
+	int act_pos[ 256 ];
         float value;
         uint32_t n, ii;
 #ifndef __ARM_ARCH_4T__
@@ -257,7 +257,7 @@ do {
                         }
                         printf( "\r(%f) \n", value);
 			fflush( stdout );
-			
+		}	
 		Sleep(2000);
 			
                                if(value<2500 && value>=1500)
