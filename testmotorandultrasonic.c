@@ -30,8 +30,8 @@ void rotatedx(uint8_t sn,uint8_t dx,int max_speed){
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
 		set_tacho_position_sp( dx, 20 );
-			set_tacho_position_sp( sn, 90 );
-			set_tacho_position_sp( dx, -90);
+			set_tacho_position_sp( sn, -90 );
+			set_tacho_position_sp( dx, 90);
 			Sleep(200);
 			//for ( i = 0; i < 10; i++ ) {                     //modification in order to rotate using compass
 			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
@@ -50,13 +50,13 @@ void rotatesx(uint8_t sn,uint8_t dx,int max_speed){
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
 		set_tacho_position_sp( dx, 20 );
-			set_tacho_position_sp( sn, -90);
-			set_tacho_position_sp( dx, 90 );
+			set_tacho_position_sp( sn, 90);
+			set_tacho_position_sp( dx, -90 );
 			Sleep(200);
-			for ( i = 0; i < 20; i++ ) {
+			//for ( i = 0; i < 20; i++ ) {
 			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-			Sleep( 200 );
+			//Sleep( 200 );
 			}
 
 
