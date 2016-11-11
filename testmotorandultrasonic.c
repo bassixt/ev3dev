@@ -95,7 +95,8 @@ void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 			for ( i = 0; i < 5; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
-			} 	
+			} 
+ 			Sleep(500);
 }   
 
 float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar)
