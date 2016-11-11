@@ -130,15 +130,20 @@ while(1){
 	set_tacho_speed_sp( sn, max_speed * 2 / 3 );
 	set_tacho_speed_sp( dx, max_speed * 2 / 3 );
 			}
-	if(value<500 && value >=150)
+	if(value<500 && value >=350)
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 3 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 3 );
 			       }
-	if(value<150 && value >=70)
+	if(value<350 && value >=150)
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 12 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 12 );
+			       }
+	if(value<150 && value >=70)
+		{
+	set_tacho_speed_sp( sn, max_speed * 1 / 24 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 24 );
 		 }
 	if(value<70 && value >=0)
 		 {   	 
@@ -358,7 +363,7 @@ do {
                         fflush( stdout );
                 }
 	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar);
-	if( color[ val ]=="RED")
+	if( strcmp(color[ val ],"RED"))
 	grab_ball(sn,dx,med,max_speed);
 	
 
