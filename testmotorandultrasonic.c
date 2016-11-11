@@ -137,8 +137,8 @@ while(1){
 			       }
 	if(value<150 && value >=70)
 		{
-	set_tacho_speed_sp( sn, max_speed * 1 / 6 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 6 );
+	set_tacho_speed_sp( sn, max_speed * 1 / 12 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 12 );
 		 }
 	if(value<70 && value >=0)
 		 {   	 
