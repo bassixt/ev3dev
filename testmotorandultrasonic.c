@@ -257,7 +257,7 @@ do {
                         }
                         printf( "\r(%f) \n", value);
 			fflush( stdout );
-		}	
+			
 		Sleep(2000);
 			
                                if(value<2500 && value>=1500)
@@ -327,7 +327,7 @@ do {
 	rotatedx(sn,dx,max_speed);
 	rotatesx(sn,dx,max_speed);
 	*/
-	}
+		}
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
 
