@@ -25,11 +25,11 @@ void rotatedx(uint8_t sn,uint8_t dx,int max_speed){
 		set_tacho_speed_sp( sn, max_speed/12);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
-		set_tacho_position_sp( sn, 20 );
+		set_tacho_position_sp( sn, 5 );
 		set_tacho_speed_sp( dx, max_speed/12);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
-		set_tacho_position_sp( dx, 20 );
+		set_tacho_position_sp( dx, 5 );
 			set_tacho_position_sp( sn, -90 );
 			set_tacho_position_sp( dx, 90);
 			Sleep(200);
