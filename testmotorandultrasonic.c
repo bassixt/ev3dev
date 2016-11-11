@@ -56,8 +56,8 @@ void rotatesx(uint8_t sn,uint8_t dx,int max_speed){
 			//for ( i = 0; i < 20; i++ ) {
 			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-			//Sleep( 200 );
-			}
+			Sleep( 200 );
+			//}
 
 
 
