@@ -289,7 +289,7 @@ do {
                                 set_tacho_command_inx( sn, TACHO_RUN_TIMED );
                                        set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 			        get_tacho_position( dx, &act_pos);
-				printf("Actual position is :%d",act_pos);
+				printf("Actual position is :%d\n",act_pos);
 			/*
 			set_tacho_position_sp( med, 90 );
 			Sleep(200);
