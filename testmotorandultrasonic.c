@@ -284,7 +284,7 @@ do {
                                          {   	 
                                  set_tacho_speed_sp( sn, max_speed * 0 );
                                  set_tacho_speed_sp( dx, max_speed * 0 );
-				 break;
+				 
                                                  }
                                 set_tacho_command_inx( sn, TACHO_RUN_TIMED );
                                        set_tacho_command_inx( dx, TACHO_RUN_TIMED );
