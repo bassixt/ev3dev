@@ -80,6 +80,7 @@ int main( void )
         char s[ 256 ];
         int val;
         int max_speed;
+	int act_pos;
         float value;
         uint32_t n, ii;
 #ifndef __ARM_ARCH_4T__
@@ -151,6 +152,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &dx, 1 )) {
                 set_tacho_speed_sp( dx, max_speed * 2 / 3 );
                 set_tacho_time_sp( dx, 100 );
                 set_tacho_ramp_up_sp( dx, 2000 );
+		set_tacho_position( dx,0);
               //  set_tacho_ramp_down_sp( sn, 2000 );
               //  set_tacho_command_inx( sn, TACHO_RUN_TIMED );
                 /* Wait tacho stop */
@@ -258,7 +260,7 @@ do {
 			
 		Sleep(2000);
 			
-                          /*     if(value<2500 && value>=1500)
+                               if(value<2500 && value>=1500)
                                         {
                                 set_tacho_speed_sp( sn, max_speed );
                                 set_tacho_speed_sp( dx, max_speed );
@@ -286,7 +288,8 @@ do {
                                                  }
                                 set_tacho_command_inx( sn, TACHO_RUN_TIMED );
                                        set_tacho_command_inx( dx, TACHO_RUN_TIMED );
-			*/
+			        get_tacho_position( dx, act_pos);
+				printf("Actual position is :%d",act_pos);
 			/*
 			set_tacho_position_sp( med, 90 );
 			Sleep(200);
@@ -300,7 +303,7 @@ do {
 			for ( i = 0; i < 7; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
-			}	*/
+			}	
 			
 		
 
