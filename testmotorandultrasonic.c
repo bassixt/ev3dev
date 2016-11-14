@@ -19,7 +19,7 @@
 #endif
 const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
 #define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
-
+//function that allows to rotate on the right side
 void rotatedx(uint8_t sn,uint8_t dx,int max_speed){
 		int i;
 		set_tacho_speed_sp( sn, max_speed/12);
@@ -40,6 +40,7 @@ void rotatedx(uint8_t sn,uint8_t dx,int max_speed){
 			//}
 			
 }
+//function that allows to rotate on the left side
 void rotatesx(uint8_t sn,uint8_t dx,int max_speed){
 		int i;
 		set_tacho_speed_sp( sn, max_speed/12);
@@ -62,7 +63,8 @@ void rotatesx(uint8_t sn,uint8_t dx,int max_speed){
 
 
 }
-
+//function that allow to grab the ball. Raise the grabber, go ahead till 5*22 mm. and than release the grabber and wait 
+//few time till start moving
 void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			int i;
 			int act_pos,distance_el;
