@@ -201,6 +201,17 @@ while(1){
  return (finish-beginning)/21; //return the distance in cm
 }
 
+
+void movements(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass)
+{
+	/*	We decide a certain movements to do in order to go from the beginning to the destination and than
+		at certain point we scan for the ball.
+		Than after we found the ball we can go till the ball, than return back, and restart to follow fixed 
+		trajectory, without searching the ball.	
+	*/
+	return;
+}
+
 void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass)
 {	
 	float degree;
@@ -214,7 +225,8 @@ void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass)
 	}
 	return;
 }
-	
+
+
 	
 int main( void )
 {
@@ -417,14 +429,14 @@ do {
                         printf( "\r(%f) \n", value);
                         fflush( stdout );
                 }
-	//research( sn, dx, max_speed, sn_compass);
-	//break;
-	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar);
+	research( sn, dx, max_speed, sn_compass);
+	break;
+	/*elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar);
 	if( strcmp(color[ val ],"RED")==0)
 	grab_ball(sn,dx,med,max_speed);
 	if( strcmp(color[ val ],"GREEN")==0)
 	leave_ball(sn,dx,med,max_speed);
-
+	*/
         }
 		
 		
