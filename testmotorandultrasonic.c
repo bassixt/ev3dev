@@ -79,7 +79,7 @@ void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 				initial=359+initial;// If the number is negative trasnlate it in a positive one
 				while(degree<359)
 				{	
-					if(degree<=359&&degree>354)	
+					if(degree<=359&&degree>357)	
 						{break;}
 					else
 						{	
