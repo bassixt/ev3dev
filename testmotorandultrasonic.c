@@ -335,13 +335,8 @@ void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_t
 {	
 	float degree;
 	float initial;
-	get_sensor_value0(sn_compass, &degree);
-	initial=degree;
-	while((degree-initial-90)<=0)
-	{
-		rotatedx(sn,dx,max_speed);
-		get_sensor_value0(sn_compass, &degree);
-	}
+	rotatedx(sn,dx,,sn_compass,max_speed);
+	
 	return;
 }
 
