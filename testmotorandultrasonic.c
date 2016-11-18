@@ -552,6 +552,7 @@ do {
 	leave_ball(sn,dx,med,max_speed);
 	*/
         rotatesx(sn,dx,sn_compass,max_speed,90);
+	break;
         }
 		
 		
