@@ -26,7 +26,7 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 
 
 //function that allows to rotate on the right side
-void rotatedx(uint8_t sn,uint8_t dx,int max_speed, int rotation){
+void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
 		int i;
 		float degree;
 		float initial;
@@ -55,7 +55,7 @@ void rotatedx(uint8_t sn,uint8_t dx,int max_speed, int rotation){
 			
 }
 //function that allows to rotate on the left side
-void rotatesx(uint8_t sn,uint8_t dx,int max_speed int rotation){
+void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
 		int i;
 		float degree;
 		float initial;		
@@ -255,7 +255,7 @@ while((finish - beginning - distance)<=0){
 }
 
 
-void movements(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass)
+void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn_compass)
 {
 	/*	We decide a certain movements to do in order to go from the beginning to the destination and than
 		at certain point we scan for the ball.
@@ -556,7 +556,7 @@ do {
 	if( strcmp(color[ val ],"GREEN")==0)
 	leave_ball(sn,dx,med,max_speed);
 	*/
-        rotatesx(sn,dx,max_speed,90);
+        rotatesx(sn,dx,sn_compass,max_speed,90);
         }
 		
 		
