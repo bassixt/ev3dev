@@ -66,7 +66,7 @@ void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		set_tacho_speed_sp( dx, max_speed/12);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
-		set_tacho_position_sp( dx, 10 );
+		set_tacho_position_sp( dx, 5 );
 			set_tacho_position_sp( sn, 90);
 			set_tacho_position_sp( dx, -90 );
 			Sleep(200);
@@ -79,7 +79,7 @@ void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 				initial=359+initial;// If the number is negative trasnlate it in a positive one
 				while(degree<359)
 				{	
-					if(degree<=359&&degree>357)	
+					if(degree<=359&&degree>355)	
 						{break;}
 					else
 						{	
