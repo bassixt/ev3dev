@@ -20,7 +20,7 @@
 const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
 #define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
 
-#define int MIN_STEP_VER 20 //minimum step covered going ahead in cm
+#define MIN_STEP_VER 20 //minimum step covered going ahead in cm
 
 
 
