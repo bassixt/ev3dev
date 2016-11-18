@@ -19,9 +19,17 @@
 #endif
 const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
 #define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
+
+#define int MIN_STEP_VER 20 //minimum step covered going ahead in cm
+
+
+
+
 //function that allows to rotate on the right side
-void rotatedx(uint8_t sn,uint8_t dx,int max_speed){
+void rotatedx(uint8_t sn,uint8_t dx,int max_speed, int rotation){
 		int i;
+		float degree;
+		float initial;
 		set_tacho_speed_sp( sn, max_speed/12);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
@@ -33,16 +41,24 @@ void rotatedx(uint8_t sn,uint8_t dx,int max_speed){
 			set_tacho_position_sp( sn, -90 );
 			set_tacho_position_sp( dx, 90);
 			Sleep(200);
-			//for ( i = 0; i < 10; i++ ) {                     //modification in order to rotate using compass
-			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+			get_sensor_value0(sn_compass, &degree);
+			initial=degree;
+			while((degree-initial-rotation)<=0)
+			{
+				
+				set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+				set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+				get_sensor_value0(sn_compass, &degree);
+			}
 			Sleep( 200 );
-			//}
+		
 			
 }
 //function that allows to rotate on the left side
-void rotatesx(uint8_t sn,uint8_t dx,int max_speed){
+void rotatesx(uint8_t sn,uint8_t dx,int max_speed int rotation){
 		int i;
+		float degree;
+		float initial;		
 		set_tacho_speed_sp( sn, max_speed/12);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
@@ -54,11 +70,40 @@ void rotatesx(uint8_t sn,uint8_t dx,int max_speed){
 			set_tacho_position_sp( sn, 90);
 			set_tacho_position_sp( dx, -90 );
 			Sleep(200);
-			//for ( i = 0; i < 20; i++ ) {
-			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-			Sleep( 200 );
-			//}
+			get_sensor_value0(sn_compass, &degree);
+			//this function avoid the problem due to the initial position e.g. initial = 40
+			//expected rotation 90 degree final destination 310...
+			initial=degree-rotation;
+			if (initial<0)
+			{	
+				initial=359+initial;// If the number is negative trasnlate it in a positive one
+				while(degree<359)
+				{	
+					if(degree<=359&&degree>354)	
+						{break;}
+					else
+						{	
+						set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+						set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+						get_sensor_value0(sn_compass, &degree);
+						}Sleep( 200 );
+				}
+				while(degree>=initial)
+				{			
+				set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+				set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+				get_sensor_value0(sn_compass, &degree);
+				}Sleep( 200 );
+			}
+			else{
+			while((degree-initial)>=0)//it can rotate freely becouse the final pos is positive
+				{			
+				set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+				set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+				get_sensor_value0(sn_compass, &degree);
+				}
+			    Sleep( 200 );
+			}
 
 
 
@@ -141,10 +186,13 @@ void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
  			
 }   
 
-float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar)
+float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance)
 {	//aggiungere funzione che controlla anche il motore 
 	//sinistro e vede se sono andati dritti tutti e due 
 	//altrimenti significa che hai girato e c'è un errore
+	//can be used to take the ball once detected 
+	//we have to add the angle for the ball a routine to turn till this angle
+	//and than go and take te ball
 int beginning,finish;
 float value;
 
@@ -155,7 +203,8 @@ set_tacho_time_sp( dx, 100 );
 set_tacho_ramp_up_sp( dx, 2000 );
 set_tacho_ramp_down_sp( dx, 2000 );
 get_tacho_position( dx, &beginning);
-while(1){			
+finish = beginning;
+while((finish - beginning - distance)<=0){			
 		
 	if ( !get_sensor_value0(sn_sonar, &value )) {
                                 value = 0;
@@ -196,9 +245,11 @@ while(1){
 		}
 	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+	Sleep(100);
+	get_tacho_position( dx, &finish);
 }
 	
-	get_tacho_position( dx, &finish);
+	
 	
  return (finish-beginning)/21; //return the distance in cm
 }
@@ -210,11 +261,77 @@ void movements(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass)
 		at certain point we scan for the ball.
 		Than after we found the ball we can go till the ball, than return back, and restart to follow fixed 
 		trajectory, without searching the ball.	
+
+		THE TRAJECTORY CHOSEN IS GO 4 TIMES AHEAD FOR 20 CM 1 TIME AHEAD FOR 10 CM
+		THAN TURN LEFT +
 	*/
+	int i;
+	int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
+	Sleep(5000); //time elapsed to scan
+			/*
+	if(research(sn, dx, max_speed, sn_compass, 45)==1)
+		{	
+			found=1;
+				//funtion to take the ball and return back}
+		else
+			*/
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER);
+	for(i=0;i<3;i++)
+	{
+	/*if(found != 1)
+		if(research(sn, dx, max_speed, sn_compass, 90)==1)
+		{	
+			found=1;
+				//funtion to take the ball and return back}
+		else*/
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER);
+	}
+	if(found != 1)
+		/*
+		if(research(sn, dx, max_speed, sn_compass, 90)==1)
+		{	
+			found=1;
+				//funtion to take the ball and return back}
+		else*/
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-10); //here there is -10 becouse we did three step of 20cm	
+																			  //than we do another step of 10 cm than we turn left
+
+	//TURN LEFT
+	for(i=0;i<3;i++)
+	{
+	/*if(found != 1)
+		if(research(sn, dx, max_speed, sn_compass, 90)==1)
+		{	
+			found=1;
+				//funtion to take the ball and return back}
+		else*/
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER);
+	}
+
+	//TURN RIGHT
+	for(i=0;i<4;i++)
+	{
+	/*if(found != 1)
+		if(research(sn, dx, max_speed, sn_compass, 90)==1)
+		{	
+			found=1;
+				//funtion to take the ball and return back}
+		else*/
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER);
+	}
+	/*if(found != 1)
+		if(research(sn, dx, max_speed, sn_compass, 90)==1)
+		{	
+			found=1;
+				//funtion to take the ball and return back}
+		else*/
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-10);	
+	//WE HOPE ARRIVED HOME
+
 	return;
 }
 
-void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass)
+void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_turn_degree)
 {	
 	float degree;
 	float initial;
@@ -433,12 +550,13 @@ do {
                 }
 	//research( sn, dx, max_speed, sn_compass);
 	//break;
-	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar);
+	/*elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar);
 	if( strcmp(color[ val ],"RED")==0)
 	grab_ball(sn,dx,med,max_speed);
 	if( strcmp(color[ val ],"GREEN")==0)
 	leave_ball(sn,dx,med,max_speed);
-	
+	*/
+        rotatesx(sn,dx,max_speed,90);
         }
 		
 		
