@@ -335,7 +335,7 @@ void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_t
 {	
 	float degree;
 	float initial;
-	rotatedx(sn,dx,sn_compass,max_speed);
+	rotatedx(sn,dx,sn_compass,max_speed,90);
 	
 	return;
 }
