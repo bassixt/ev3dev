@@ -248,7 +248,7 @@ while((finish - beginning - distance)<=0){
 	Sleep(100);
 	get_tacho_position( dx, &finish);
 }
-	
+get_tacho_position( dx, &finish);	
 	
 	
  return (finish-beginning)/21; //return the distance in cm
