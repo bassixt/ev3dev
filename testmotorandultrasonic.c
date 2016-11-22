@@ -62,23 +62,7 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 				get_tacho_position(sn, &sinistro);
 				get_tacho_position(dx, &destro);
 				}
-				if((destro-ind)<275)
-				{	while((destro-ind)<=275)
-					{
-					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-					Sleep( 500 );
-					get_tacho_position(dx, &destro);
-					}
-				}
-				if((sinistro-ins)>-275)
-				{	while((sinistro-ins)>=-275)
-					{
-					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-					Sleep( 500 );
-					get_tacho_position(sn, &sinistro);
-					}
-				}
-					      
+									      
 			Sleep(500);
 			get_sensor_value0(sn_compass, &degree);
 			//printf("Final position %s\n", degree );
