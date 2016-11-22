@@ -30,6 +30,7 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		int i;
 		float degree;
 		float initial;
+		int destro, sinistro;
 		set_tacho_speed_sp( sn, max_speed/12);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
@@ -42,17 +43,29 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 			set_tacho_position_sp( dx, 90);
 			Sleep(200);
 			get_sensor_value0(sn_compass, &degree);
-			initial=degree;
-			while((degree-initial-rotation)<=0)
-			{
-				
+			printf("Initial position %s\n", degree );
+			//initial=degree;
+			//while((degree-initial-rotation)<=0)
+			//{
+			get_tacho_position(sn, &sinistro);
+			get_tacho_position(dx,&destro);
+			printf("sinistro %d\n",sinistro );
+			printf("destro %d\n",destro );
+			for(i=0;i<7;i++)
+			 	{	
 				set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 				set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-				get_sensor_value0(sn_compass, &degree);
-			}
+				
+				}
 			Sleep( 200 );
-		
-			
+			get_sensor_value0(sn_compass, &degree);
+			printf("Final position %s\n", degree );
+			get_tacho_position(sn, &sinistro);
+			get_tacho_position(dx,&destro);
+			printf("sinistro %d\n",sinistro );
+			printf("destro %d\n",destro );
+			fflush( stdout );
+	
 }
 //function that allows to rotate on the left side
 void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
@@ -545,16 +558,20 @@ do {
                 }
 	//research( sn, dx, max_speed, sn_compass);
 	//break;
+                /*
 	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,10);
 	if( strcmp(color[ val ],"RED")==0)
 	grab_ball(sn,dx,med,max_speed);
 	if( strcmp(color[ val ],"GREEN")==0)
 	leave_ball(sn,dx,med,max_speed);
+	*/
 	/*
         rotatesx(sn,dx,sn_compass,max_speed,90);
 	break;*/
+
+                rotatedx(sn,dx,sn_compass,max_speed,90);
         }
-		
+		Sleep(2000);
 		
 		/*	
 	
