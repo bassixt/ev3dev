@@ -54,7 +54,7 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 			printf("sinistro %d\n",sinistro);
 			printf("destro %d\n",destro);
 			//for(i=0;i<410;i++)
-			 	while((destro-ind)<=273||(sinistro-ins)>=-273)
+			 	while((destro-ind)<=270||(sinistro-ins)>=-270)
 				{	
 				set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 				set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
