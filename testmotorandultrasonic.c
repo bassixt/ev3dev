@@ -569,7 +569,8 @@ do {
 	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,10);
 	if( strcmp(color[ val ],"RED")==0)
 	grab_ball(sn,dx,med,max_speed);
-	if( strcmp(color[ val ],"GREEN")==0)
+	//if( strcmp(color[ val ],"RED")==0)
+	else
 	rotatedx(sn,dx,sn_compass,max_speed,90);
 	//leave_ball(sn,dx,med,max_speed);
 	
