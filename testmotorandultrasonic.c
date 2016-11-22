@@ -41,8 +41,8 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
 		set_tacho_position_sp( dx, 1 );
-			set_tacho_position_sp( sn, -90 );
-			set_tacho_position_sp( dx, 90);
+			set_tacho_position_sp( sn, -275 );
+			set_tacho_position_sp( dx, 275);
 			Sleep(200);
 			get_sensor_value0(sn_compass, &degree);
 			//printf("Initial position %s\n", degree );
