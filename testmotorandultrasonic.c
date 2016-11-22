@@ -72,7 +72,7 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 				{	while((sinistro-ins)>=-275)
 					{
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-					get_tacho_position(sn, &sinistro)
+					get_tacho_position(sn, &sinistro);
 					}
 				}
 					      
