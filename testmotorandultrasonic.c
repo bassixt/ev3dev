@@ -51,8 +51,8 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 			//initial=degree;
 			//while((degree-initial-rotation)<=0)
 			//{
-			get_tacho_position(sn, *ips);
-			get_tacho_position(dx,*ipd);
+			get_tacho_position(sn, &ips);
+			get_tacho_position(dx,&ipd);
 			printf("sinistro %d\n",sinistro );
 			printf("destro %d\n",destro );
 			for(i=0;i<900;i++)
@@ -65,8 +65,8 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 			get_sensor_value0(sn_compass, &degree);
 			//printf("Final position %s\n", degree );
 			
-			get_tacho_position(sn, *ips);
-			get_tacho_position(dx,*ipd);
+			get_tacho_position(sn, &ips);
+			get_tacho_position(dx,&ipd);
 			printf("sinistro %d\n",sinistro );
 			printf("destro %d\n",destro );
 			fflush( stdout );
