@@ -36,13 +36,11 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		set_tacho_speed_sp( sn, max_speed/6);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
-		set_tacho_position_sp( sn, 1 );
 		set_tacho_speed_sp( dx, max_speed/6);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
-		set_tacho_position_sp( dx, 1 );
-			set_tacho_position_sp( sn, -275 );
-			set_tacho_position_sp( dx, 275);
+			set_tacho_position_sp( sn, -1 );
+			set_tacho_position_sp( dx, 1);
 			Sleep(200);
 			get_sensor_value0(sn_compass, &degree);
 			//printf("Initial position %s\n", degree );
@@ -56,14 +54,14 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 			printf("sinistro %d\n",sinistro);
 			printf("destro %d\n",destro);
 			//for(i=0;i<410;i++)
-			 	//while((destro-ind)<=273||(sinistro-ins)>=-273)
-				//{	
+			 	while((destro-ind)<=273||(sinistro-ins)>=-273)
+				{	
 				set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 				set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-				Sleep( 1000 );
+				Sleep( 100 );
 				get_tacho_position(sn, &sinistro);
 				get_tacho_position(dx, &destro);
-				//}
+				}
 									      
 			Sleep(500);
 			get_sensor_value0(sn_compass, &degree);
