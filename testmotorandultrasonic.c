@@ -31,6 +31,10 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		float degree;
 		float initial;
 		int destro, sinistro;
+	/*	int *ipd;
+		int *ips;
+		ipd=&destro;
+		ips=&sinistro;*/
 		set_tacho_speed_sp( sn, max_speed/12);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
@@ -49,8 +53,8 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 			//{
 			get_tacho_position(sn, &sinistro);
 			get_tacho_position(dx,&destro);
-			//printf("sinistro %d\n",*sinistro );
-			//printf("destro %d\n",*destro );
+			printf("sinistro %d\n",*sinistro );
+			printf("destro %d\n",*destro );
 			for(i=0;i<900;i++)
 			 	{	
 				set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
@@ -63,8 +67,8 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 			
 			get_tacho_position(sn, &sinistro);
 			get_tacho_position(dx,&destro);
-			//printf("sinistro %d\n",*sinistro );
-			//printf("destro %d\n",*destro );
+			printf("sinistro %d\n",*sinistro );
+			printf("destro %d\n",*destro );
 			fflush( stdout );
 	
 }
