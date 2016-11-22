@@ -571,7 +571,7 @@ do {
 	break;*/
 
                 rotatedx(sn,dx,sn_compass,max_speed,90);
-		Sleep(2000);
+		Sleep(4000);
         }
 		
 		
