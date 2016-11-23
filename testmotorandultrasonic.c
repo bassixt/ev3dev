@@ -576,7 +576,7 @@ do {
 	grab_ball(sn,dx,med,max_speed);
 	//if( strcmp(color[ val ],"RED")==0)
 	else
-	rotatedx(sn,dx,sn_compass,max_speed,45);
+	rotatedx(sn,dx,sn_compass,max_speed,90);
 	//leave_ball(sn,dx,med,max_speed);
 	
 	/*
