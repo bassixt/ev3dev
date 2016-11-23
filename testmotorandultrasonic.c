@@ -288,12 +288,12 @@ while((finish - beginning - distance)<=0){
 	set_tacho_speed_sp( sn, max_speed * 1 / 12 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 12 );
 			       }
-	if(value<70 && value >=55)
+	if(value<70 && value >=45)
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 24 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 24 );
 		 }
-	if(value<55 && value >=0)
+	if(value<45 && value >=0)
 		 {   	 
 	 set_tacho_speed_sp( sn, max_speed * 0 );
 	 set_tacho_speed_sp( dx, max_speed * 0 );
