@@ -52,7 +52,7 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		get_tacho_position(dx, &destro);
 		ins=sinistro;
 		ind=destro;
-		actval=rotation*270/90;
+		actval=rotation*3;
 		printf("sinistro %d\n",sinistro);
 		printf("destro %d\n",destro);
 			//for(i=0;i<410;i++)
