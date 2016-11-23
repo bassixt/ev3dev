@@ -278,17 +278,22 @@ while((finish - beginning - distance)<=0){
 	set_tacho_speed_sp( sn, max_speed * 1 / 3 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 3 );
 			       }
-	if(value<350 && value >=150)
+	if(value<350 && value >=250)
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 6 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 6 );
 			       }
-	if(value<70 && value >=40)
+	if(value<250 && value >=150)
+		{
+	set_tacho_speed_sp( sn, max_speed * 1 / 12 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 12 );
+			       }
+	if(value<70 && value >=50)
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 24 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 24 );
 		 }
-	if(value<40 && value >=0)
+	if(value<50 && value >=0)
 		 {   	 
 	 set_tacho_speed_sp( sn, max_speed * 0 );
 	 set_tacho_speed_sp( dx, max_speed * 0 );
