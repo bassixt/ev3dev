@@ -288,15 +288,16 @@ while((finish - beginning - distance)<=0){
 	set_tacho_speed_sp( sn, max_speed * 1 / 12 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 12 );
 			       }
-	if(value<70 && value >=50)
+	if(value<70 && value >=55)
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 24 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 24 );
 		 }
-	if(value<50 && value >=0)
+	if(value<55 && value >=0)
 		 {   	 
 	 set_tacho_speed_sp( sn, max_speed * 0 );
 	 set_tacho_speed_sp( dx, max_speed * 0 );
+	Sleep(100);
 	break;
 		}
 	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
