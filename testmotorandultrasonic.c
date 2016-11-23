@@ -152,7 +152,7 @@ void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 			}
  			get_tacho_position( dx, &act_pos);
  			distance_el=act_pos;
- 			while((act_pos-(5*22)-distance_el)<=0)
+ 			while((act_pos-(5*24)-distance_el)<=0)
 			{
 				set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 				set_tacho_command_inx( dx, TACHO_RUN_TIMED );
