@@ -167,7 +167,36 @@ void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 			} 
  			Sleep(1000);
 }   
-
+int color_aq(uint8_t sn_color)
+{	
+	int i;
+	int val,max,maxval;
+	int mod[10];
+	int count[8]={0};
+	for(i=0;i<10;i++)
+	{
+	if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
+				val = 0;
+			}
+		mod[i]=val;
+	
+	}
+	for(i=0;i<10;i++)
+	{
+		count[mod[i]]++;
+	}
+	max=0;
+	maxval=0;
+	for(i=0;i<8;i++)
+	{
+		if(count[i] > max)
+		{
+			max=count[i];
+			maxval=i;
+		}
+	}
+	return maxval;
+}
 
 void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			int i;
@@ -579,7 +608,7 @@ do {
                
 	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,1500);
 	Sleep(500);
-	if( strcmp(color[ val ],"RED")==0)
+	if( strcmp(color[ color_aq(sn_color) ],"RED")==0)
 	grab_ball(sn,dx,med,max_speed);
 	//if( strcmp(color[ val ],"RED")==0)
 	else
