@@ -459,6 +459,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &dx, 1 )) {
               //  set_tacho_command_inx( sn, TACHO_RUN_TIMED );
                 /* Wait tacho stop */
                 Sleep( 100 );
+		fflush( stdout );
 do {
                         get_tacho_state_flags( dx, &state );
                 } while ( state );
@@ -473,6 +474,7 @@ do {
                 }*/
         } else {
                 printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
+		fflush( stdout );
         }
 //medium motor
 	if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &med, 2 )) {
@@ -502,8 +504,11 @@ do {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
 		}*/
+		Sleep( 200 );
+		fflush( stdout );
 	} else {
 		printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
+		fflush( stdout );
 	} 
 	//set_tacho_polarity( med, "inversed" );
 	//set_tacho_stop_action_inx(med,TACHO_HOLD);
@@ -517,6 +522,7 @@ do {
                 if ( ev3_sensor[ i ].type_inx != SENSOR_TYPE__NONE_ ) {
                         printf( "  type = %s\n", ev3_sensor_type( ev3_sensor[ i ].type_inx ));
                         printf( "  port = %s\n", ev3_sensor_port_name( i, s ));
+			fflush( stdout );
                         if ( get_sensor_mode( i, s, sizeof( s ))) {
                                 printf( "  mode = %s\n", s );
                         }
