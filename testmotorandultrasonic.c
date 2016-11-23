@@ -28,6 +28,7 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 //function that allows to rotate on the right side
 void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
 		int i;
+		float actval;
 		float degree;
 		float ins,ind;
 		int destro, sinistro;
@@ -39,22 +40,23 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		set_tacho_speed_sp( dx, max_speed/2);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
-			set_tacho_position_sp( sn, -5 );
-			set_tacho_position_sp( dx, 5);
-			Sleep(200);
-			get_sensor_value0(sn_compass, &degree);
-			//printf("Initial position %s\n", degree );
-			//initial=degree;
-			//while((degree-initial-rotation)<=0)
-			//{
-			get_tacho_position(sn, &sinistro);
-			get_tacho_position(dx, &destro);
-			ins=sinistro;
-			ind=destro;
-			printf("sinistro %d\n",sinistro);
-			printf("destro %d\n",destro);
+		set_tacho_position_sp( sn, -5 );
+		set_tacho_position_sp( dx, 5);
+		Sleep(100);
+		get_sensor_value0(sn_compass, &degree);
+		//printf("Initial position %s\n", degree );
+		//initial=degree;
+		//while((degree-initial-rotation)<=0)
+		//{
+		get_tacho_position(sn, &sinistro);
+		get_tacho_position(dx, &destro);
+		ins=sinistro;
+		ind=destro;
+		actval=(rotation*270/90);
+		printf("sinistro %d\n",sinistro);
+		printf("destro %d\n",destro);
 			//for(i=0;i<410;i++)
-			 	while((destro-ind)<=270||(sinistro-ins)>=-270)
+			 	while((destro-ind)<=actval||(sinistro-ins)>=-actval)
 				{	
 				set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 				set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
@@ -566,12 +568,12 @@ do {
 	//research( sn, dx, max_speed, sn_compass);
 	//break;
                
-	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,10);
+	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,500);
 	if( strcmp(color[ val ],"RED")==0)
 	grab_ball(sn,dx,med,max_speed);
 	//if( strcmp(color[ val ],"RED")==0)
 	else
-	rotatedx(sn,dx,sn_compass,max_speed,90);
+	rotatedx(sn,dx,sn_compass,max_speed,180);
 	//leave_ball(sn,dx,med,max_speed);
 	
 	/*
