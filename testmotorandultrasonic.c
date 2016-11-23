@@ -571,12 +571,12 @@ do {
 	//research( sn, dx, max_speed, sn_compass);
 	//break;
                
-	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,500);
+	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,1500);
 	if( strcmp(color[ val ],"RED")==0)
 	grab_ball(sn,dx,med,max_speed);
 	//if( strcmp(color[ val ],"RED")==0)
 	else
-	rotatedx(sn,dx,sn_compass,max_speed,180);
+	rotatedx(sn,dx,sn_compass,max_speed,45);
 	//leave_ball(sn,dx,med,max_speed);
 	
 	/*
