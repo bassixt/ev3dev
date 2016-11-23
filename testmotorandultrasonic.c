@@ -27,7 +27,7 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 
 //function that allows to rotate on the right side
 void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
-		int i;
+		//int i;
 		float actval;
 		float degree;
 		float ins,ind;
@@ -78,7 +78,7 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 }
 //function that allows to rotate on the left side
 void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
-		int i;
+		//int i;
 		float degree;
 		float initial;		
 		set_tacho_speed_sp( sn, max_speed/12);
@@ -288,6 +288,8 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 		THAN TURN LEFT +
 	*/
 	int i;
+	float degree;
+	
 	int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
 	Sleep(5000); //time elapsed to scan
 			/*
@@ -349,7 +351,8 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 		else*/
 			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-10);	
 	//WE HOPE ARRIVED HOME
-
+	get_sensor_value0(sn_compass, &degree);
+	
 	return;
 }
 
