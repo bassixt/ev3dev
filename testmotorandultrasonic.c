@@ -578,6 +578,7 @@ do {
 	//break;
                
 	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,1500);
+	Sleep(500);
 	if( strcmp(color[ val ],"RED")==0)
 	grab_ball(sn,dx,med,max_speed);
 	//if( strcmp(color[ val ],"RED")==0)
