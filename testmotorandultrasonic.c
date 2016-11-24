@@ -275,9 +275,9 @@ while((finish - beginning - distance)<=0){
                         fflush( stdout );
 	/*compensate the rotation*/
 	
-	if (value_compass > init_compass_value ) //rotate to left
+	if (value_compass > init_compass_value +1 ) //rotate to left
 	{
-	set_tacho_speed_sp( sn, max_speed * 1/24 );
+	set_tacho_speed_sp( sn, max_speed  );
 	set_tacho_speed_sp( dx, max_speed *  0);
 		while(value_compass!= init_compass_value )
 		{
@@ -287,10 +287,10 @@ while((finish - beginning - distance)<=0){
 			get_sensor_value0(sn_compass, &value_compass );
 		}
 	}
-	if (value_compass < init_compass_value ) //rotate to right
+	if (value_compass < init_compass_value -1 ) //rotate to right
 	{
 	set_tacho_speed_sp( sn, max_speed * 0);
-	set_tacho_speed_sp( dx, max_speed * 1/24 );
+	set_tacho_speed_sp( dx, max_speed );
 		while(value_compass!= init_compass_value )
 		{
 			set_tacho_command_inx( sn, TACHO_RUN_TIMED );
