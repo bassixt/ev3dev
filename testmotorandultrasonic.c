@@ -279,6 +279,7 @@ while((finish - beginning - distance)<=0){
 	{
 	set_tacho_speed_sp( sn, max_speed *1/12 );
 	set_tacho_speed_sp( dx, max_speed *  0);
+		Sleep(100);
 		while(value_compass > init_compass_value +1 )
 		{
 			set_tacho_command_inx( sn, TACHO_RUN_TIMED );
@@ -296,6 +297,7 @@ while((finish - beginning - distance)<=0){
 	{
 	set_tacho_speed_sp( sn, max_speed * 0);
 	set_tacho_speed_sp( dx, max_speed *1/12);
+		Sleep(100);
 		while(value_compass < init_compass_value -1)
 		{
 			set_tacho_command_inx( sn, TACHO_RUN_TIMED );
