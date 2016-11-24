@@ -583,6 +583,13 @@ do {
         if ( ev3_search_sensor( LEGO_EV3_TOUCH, &sn_touch, 0 )) {
                 //printf( "TOUCH sensor is found, press BUTTON for EXIT...\n" );
         }
+
+set_tacho_speed_pid_Kd(sn,10);
+set_tacho_speed_pid_Kd(dx,10);	
+set_tacho_speed_pid_Kp(sn,100);
+set_tacho_speed_pid_Kp(dx,100);
+set_tacho_speed_pid_Ki(sn,200);
+set_tacho_speed_pid_Ki(dx,200);
         while(1){
 
                 if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
