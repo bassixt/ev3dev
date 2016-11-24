@@ -283,6 +283,7 @@ set_tacho_time_sp( dx, 40 );
 		{
 			set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 			set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+			Sleep(100);
 			get_sensor_value0(sn_compass, &value_compass );
 			if(value_compass < init_compass_value)
 				{	
@@ -313,7 +314,6 @@ if((value_compass > (init_compass_value-2)) && (value_compass < (init_compass_va
 {
 set_tacho_time_sp( sn, 100 );
 set_tacho_time_sp( dx, 100 );
-Sleep(100);
        if(value<2500 && value>=1500)
 		{
 	set_tacho_speed_sp( sn, max_speed );
