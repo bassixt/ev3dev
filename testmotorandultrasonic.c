@@ -277,7 +277,7 @@ while((finish - beginning - distance)<=0){
 	set_tacho_time_sp( dx, 40 );	
 	if (value_compass > init_compass_value +2 ) //rotate to left
 	{
-	set_tacho_speed_sp( sn, max_speed *1/12 );
+	set_tacho_speed_sp( sn, max_speed *1/24 );
 	set_tacho_speed_sp( dx, max_speed *  0);
 		Sleep(100);
 		while(value_compass > init_compass_value +1 )
@@ -296,7 +296,7 @@ while((finish - beginning - distance)<=0){
 	if (value_compass < init_compass_value -2 ) //rotate to right
 	{
 	set_tacho_speed_sp( sn, max_speed * 0);
-	set_tacho_speed_sp( dx, max_speed *1/12);
+	set_tacho_speed_sp( dx, max_speed *1/24);
 		Sleep(100);
 		while(value_compass < init_compass_value -1)
 		{
@@ -313,9 +313,7 @@ while((finish - beginning - distance)<=0){
 	}
 	get_sensor_value0(sn_compass, &value_compass );
 	if((value_compass >= (init_compass_value-2)) && (value_compass <= (init_compass_value+2)))
-	{	set_tacho_time_sp( sn, 100 );
-		set_tacho_time_sp( dx, 100 );
-	       if(value<2500 && value>=1500)
+	{	if(value<2500 && value>=1500)
 			{
 		set_tacho_speed_sp( sn, max_speed );
 		set_tacho_speed_sp( dx, max_speed );
