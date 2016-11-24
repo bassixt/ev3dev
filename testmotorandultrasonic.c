@@ -257,7 +257,7 @@ finish = beginning;
 if ( !get_sensor_value0(sn_compass, &init_compass_value )) {
                         init_compass_value = 0;
                         }
-printf( "compass\r(%f) \n", value_compass);
+printf( "compass\r(%f) \n", init_compass_value);
 fflush( stdout );
 	
 while((finish - beginning - distance)<=0){			
@@ -303,7 +303,7 @@ set_tacho_time_sp( dx, 40 );
 				break;
 		}
 	}
-if(value_compass > init_compass_value-2 && value_compass < init_compass_value+2)
+if((value_compass > (init_compass_value-2)) && (value_compass < (init_compass_value+2)))
 {
 set_tacho_time_sp( sn, 100 );
 set_tacho_time_sp( dx, 100 );
