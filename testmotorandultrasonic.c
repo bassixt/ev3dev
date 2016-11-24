@@ -310,7 +310,7 @@ set_tacho_time_sp( dx, 40 );
 		}
 	}
 get_sensor_value0(sn_compass, &value_compass );
-if((value_compass > (init_compass_value-2)) && (value_compass < (init_compass_value+2)))
+if((value_compass >= (init_compass_value-2)) && (value_compass <= (init_compass_value+2)))
 {
 set_tacho_time_sp( sn, 100 );
 set_tacho_time_sp( dx, 100 );
