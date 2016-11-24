@@ -420,14 +420,6 @@ int main( void )
         float value;
 	float elapsed_distance;
         uint32_t n, ii;
-	/*only for test purpose*/
-	
-	int speed_kd_s,speed_kd_d;
-	int speed_kp_s,speed_kp_d;
-	int speed_ki_s,speed_ki_d;
-	
-	/*only for test purpose*/
-	
 	
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
@@ -584,12 +576,7 @@ do {
                 //printf( "TOUCH sensor is found, press BUTTON for EXIT...\n" );
         }
 
-set_tacho_speed_pid_Kd(sn,10);
-set_tacho_speed_pid_Kd(dx,10);	
-set_tacho_speed_pid_Kp(sn,100);
-set_tacho_speed_pid_Kp(dx,100);
-set_tacho_speed_pid_Ki(sn,200);
-set_tacho_speed_pid_Ki(dx,200);
+
         while(1){
 
                 if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
@@ -630,17 +617,7 @@ set_tacho_speed_pid_Ki(dx,200);
 	//break;
                
 	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,1500);
-	
-	get_tacho_speed_pid_Kd(sn,&speed_kd_s);
-	get_tacho_speed_pid_Kd(dx,&speed_kd_d);
-	
-	get_tacho_speed_pid_Kp(sn,&speed_kp_s);
-	get_tacho_speed_pid_Kp(dx,&speed_kp_d);
-	
-	get_tacho_speed_pid_Ki(sn,&speed_ki_s);
-	get_tacho_speed_pid_Ki(dx,&speed_ki_d);
-	printf("Right motor Kd:%d,Kp:%d,Ki:%d",speed_kd_d,speed_kp_d,speed_ki_d);
-	printf("Left  motor Kd:%d,Kp:%d,Ki:%d",speed_kd_s,speed_kp_s,speed_ki_s);
+
 	
 	Sleep(2000);
 	fflush( stdout );
