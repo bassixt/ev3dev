@@ -277,15 +277,15 @@ while((finish - beginning - distance)<=0){
 	set_tacho_time_sp( dx, 100 );	
 	if (value_compass > init_compass_value +2 ) //rotate to left
 	{
-	set_tacho_polarity( sn, "inversed" );
-	set_tacho_polarity( dx, "normal" );
+	set_tacho_position_sp( sn, 90);
+	set_tacho_position_sp( dx, -90 );
 	set_tacho_speed_sp( sn, max_speed *1/12 );
 	set_tacho_speed_sp( dx, max_speed *1/12);
 		Sleep(100);
 		while(value_compass > init_compass_value +1 )
-		{
-			set_tacho_command_inx( sn, TACHO_RUN_TIMED );
-			set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+			{
+			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 			Sleep(50);
 			get_sensor_value0(sn_compass, &value_compass );
 			if(value_compass < init_compass_value)
@@ -293,19 +293,19 @@ while((finish - beginning - distance)<=0){
 				get_sensor_value0(sn_compass, &value_compass );
 				break;
 				}
-		}
+			}	
 	}
 	if (value_compass < init_compass_value -2 ) //rotate to right
-	{
-	set_tacho_polarity( sn, "normal" );
-	set_tacho_polarity( dx, "inversed" );
-	set_tacho_speed_sp( sn, max_speed * 1/12);
-	set_tacho_speed_sp( dx, max_speed *1/12);
+		{
+		set_tacho_position_sp( sn, -90);
+		set_tacho_position_sp( dx,  90);
+		set_tacho_speed_sp( sn, max_speed * 1/12);
+		set_tacho_speed_sp( dx, max_speed *1/12);
 		Sleep(100);
 		while(value_compass < init_compass_value -1)
-		{
-			set_tacho_command_inx( sn, TACHO_RUN_TIMED );
-			set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+			{
+			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 			Sleep(100);
 			get_sensor_value0(sn_compass, &value_compass );
 			if(value_compass > init_compass_value )
@@ -313,8 +313,8 @@ while((finish - beginning - distance)<=0){
 				get_sensor_value0(sn_compass, &value_compass );
 				break;
 				}
+			}
 		}
-	}
 	get_sensor_value0(sn_compass, &value_compass );
 	if((value_compass >= (init_compass_value-2)) && (value_compass <= (init_compass_value+2)))
 	{	set_tacho_polarity( sn, "inversed" );
