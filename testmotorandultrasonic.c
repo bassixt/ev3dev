@@ -624,14 +624,14 @@ do {
                
 	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,1500);
 	
-	get_tacho_speed_pid_Kd(sn,speed_kd_s);
-	get_tacho_speed_pid_Kd(dx,speed_kd_d);
+	get_tacho_speed_pid_Kd(sn,&speed_kd_s);
+	get_tacho_speed_pid_Kd(dx,&speed_kd_d);
 	
-	get_tacho_speed_pid_Kp(sn,speed_kp_s);
-	get_tacho_speed_pid_Kp(dx,speed_kp_d);
+	get_tacho_speed_pid_Kp(sn,&speed_kp_s);
+	get_tacho_speed_pid_Kp(dx,&speed_kp_d);
 	
-	get_tacho_speed_pid_Ki(sn,speed_ki_s);
-	get_tacho_speed_pid_Ki(dx,speed_ki_d);
+	get_tacho_speed_pid_Ki(sn,&speed_ki_s);
+	get_tacho_speed_pid_Ki(dx,&speed_ki_d);
 	printf("Right motor Kd:%d,Kp:%d,Ki:%d",speed_kd_d,speed_kp_d,speed_ki_d);
 	printf("Left  motor Kd:%d,Kp:%d,Ki:%d",speed_kd_s,speed_kp_s,speed_ki_s);
 	
