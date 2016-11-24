@@ -257,7 +257,7 @@ finish = beginning;
 if ( !get_sensor_value0(sn_compass, &init_compass_value )) {
                         init_compass_value = 0;
                         }
-printf( "compass\r(%f) \n", init_compass_value);
+printf( "compass iniziale(%f) \n", init_compass_value);
 fflush( stdout );
 	
 while((finish - beginning - distance)<=0){			
@@ -273,8 +273,8 @@ while((finish - beginning - distance)<=0){
                         printf( "compass:(%f) \n", value_compass);
                         fflush( stdout );
 	/*compensate the rotation*/
-set_tacho_time_sp( sn, 40 );
-set_tacho_time_sp( dx, 40 );	
+	set_tacho_time_sp( sn, 40 );
+	set_tacho_time_sp( dx, 40 );	
 	if (value_compass > init_compass_value +2 ) //rotate to left
 	{
 	set_tacho_speed_sp( sn, max_speed *1/12 );
@@ -309,55 +309,56 @@ set_tacho_time_sp( dx, 40 );
 				}
 		}
 	}
-get_sensor_value0(sn_compass, &value_compass );
-if((value_compass >= (init_compass_value-2)) && (value_compass <= (init_compass_value+2)))
-{
-set_tacho_time_sp( sn, 100 );
-set_tacho_time_sp( dx, 100 );
-       if(value<2500 && value>=1500)
-		{
-	set_tacho_speed_sp( sn, max_speed );
-	set_tacho_speed_sp( dx, max_speed );
+	get_sensor_value0(sn_compass, &value_compass );
+	if((value_compass >= (init_compass_value-2)) && (value_compass <= (init_compass_value+2)))
+	{	printf( "sono passato da qui");
+	 	fflush( stdout );
+		set_tacho_time_sp( sn, 100 );
+		set_tacho_time_sp( dx, 100 );
+	       if(value<2500 && value>=1500)
+			{
+		set_tacho_speed_sp( sn, max_speed );
+		set_tacho_speed_sp( dx, max_speed );
+				}
+		if(value<1500 && value >=500)
+			{
+		set_tacho_speed_sp( sn, max_speed * 2 / 3 );
+		set_tacho_speed_sp( dx, max_speed * 2 / 3 );
+				}
+		if(value<500 && value >=350)
+			{
+		set_tacho_speed_sp( sn, max_speed * 1 / 3 );
+		set_tacho_speed_sp( dx, max_speed * 1 / 3 );
+				       }
+		if(value<350 && value >=250)
+			{
+		set_tacho_speed_sp( sn, max_speed * 1 / 6 );
+		set_tacho_speed_sp( dx, max_speed * 1 / 6 );
+				       }
+		if(value<250 && value >=70)
+			{
+		set_tacho_speed_sp( sn, max_speed * 1 / 12 );
+		set_tacho_speed_sp( dx, max_speed * 1 / 12 );
+				       }
+		if(value<70 && value >=40)
+			{
+		set_tacho_speed_sp( sn, max_speed * 1 / 24 );
+		set_tacho_speed_sp( dx, max_speed * 1 / 24 );
+			 }
+		if(value<40 && value >=0)
+			 {
+			printf("sono nello zero\n");
+			fflush( stdout );	
+		 set_tacho_speed_sp( sn, max_speed * 0 );
+		 set_tacho_speed_sp( dx, max_speed * 0 );
+		Sleep(100);
+		break;
 			}
-	if(value<1500 && value >=500)
-		{
-	set_tacho_speed_sp( sn, max_speed * 2 / 3 );
-	set_tacho_speed_sp( dx, max_speed * 2 / 3 );
-			}
-	if(value<500 && value >=350)
-		{
-	set_tacho_speed_sp( sn, max_speed * 1 / 3 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 3 );
-			       }
-	if(value<350 && value >=250)
-		{
-	set_tacho_speed_sp( sn, max_speed * 1 / 6 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 6 );
-			       }
-	if(value<250 && value >=70)
-		{
-	set_tacho_speed_sp( sn, max_speed * 1 / 12 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 12 );
-			       }
-	if(value<70 && value >=40)
-		{
-	set_tacho_speed_sp( sn, max_speed * 1 / 24 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 24 );
-		 }
-	if(value<40 && value >=0)
-		 {
-		printf("sono nello zero\n");
-		fflush( stdout );	
-	 set_tacho_speed_sp( sn, max_speed * 0 );
-	 set_tacho_speed_sp( dx, max_speed * 0 );
-	Sleep(100);
-	break;
-		}
-	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
-	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
-	Sleep(100);
-	get_tacho_position( dx, &finish);
-}
+		set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+		set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+		Sleep(100);
+		get_tacho_position( dx, &finish);
+	}
 }
 get_tacho_position( dx, &finish);	
 	
