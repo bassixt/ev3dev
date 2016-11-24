@@ -246,7 +246,7 @@ float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sona
 	//and than go and take te ball
 int beginning,finish;
 float value;
-float value_compass;
+float value_compass, init_compass_value;
 set_tacho_time_sp( sn, 100 );
 set_tacho_ramp_up_sp( sn, 2000 );
 set_tacho_ramp_down_sp( sn, 2000 );
@@ -255,8 +255,8 @@ set_tacho_ramp_up_sp( dx, 2000 );
 set_tacho_ramp_down_sp( dx, 2000 );
 get_tacho_position( dx, &beginning);
 finish = beginning;
-if ( !get_sensor_value0(sn_compass, &value_compass )) {
-                        value_compass = 0;
+if ( !get_sensor_value0(sn_compass, &init_compass_value )) {
+                        init_compass_value = 0;
                         }
 printf( "compass\r(%f) \n", value_compass);
 fflush( stdout );
@@ -273,7 +273,32 @@ while((finish - beginning - distance)<=0){
                         }
                         printf( "compass:(%f) \n", value_compass);
                         fflush( stdout );
+	/*compensate the rotation*/
 	
+	if (value_compass > init_compass_value ) //rotate to left
+	{
+	set_tacho_speed_sp( sn, max_speed * 0 );
+	set_tacho_speed_sp( dx, max_speed * 1/24 );
+		while(value_compass!= init_compass_value )
+		{
+			set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+			set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+			Sleep(100);
+			get_sensor_value0(sn_compass, &value_compass );
+		}
+	}
+	if (value_compass < init_compass_value ) //rotate to left
+	{
+	set_tacho_speed_sp( sn, max_speed * 1/24 );
+	set_tacho_speed_sp( dx, max_speed * 0);
+		while(value_compass!= init_compass_value )
+		{
+			set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+			set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+			Sleep(100);
+			get_sensor_value0(sn_compass, &value_compass );
+		}
+	}
        if(value<2500 && value>=1500)
 		{
 	set_tacho_speed_sp( sn, max_speed );
