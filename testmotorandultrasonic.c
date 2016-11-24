@@ -279,8 +279,8 @@ while((finish - beginning - distance)<=0){
 	{
 	set_tacho_polarity( sn, "inversed" );
 	set_tacho_polarity( dx, "normal" );
-	set_tacho_speed_sp( sn, max_speed *1/24 );
-	set_tacho_speed_sp( dx, max_speed *1/24);
+	set_tacho_speed_sp( sn, max_speed *1/12 );
+	set_tacho_speed_sp( dx, max_speed *1/12);
 		Sleep(100);
 		while(value_compass > init_compass_value +1 )
 		{
@@ -299,8 +299,8 @@ while((finish - beginning - distance)<=0){
 	{
 	set_tacho_polarity( sn, "normal" );
 	set_tacho_polarity( dx, "inversed" );
-	set_tacho_speed_sp( sn, max_speed * 1/24);
-	set_tacho_speed_sp( dx, max_speed *1/24);
+	set_tacho_speed_sp( sn, max_speed * 1/12);
+	set_tacho_speed_sp( dx, max_speed *1/12);
 		Sleep(100);
 		while(value_compass < init_compass_value -1)
 		{
