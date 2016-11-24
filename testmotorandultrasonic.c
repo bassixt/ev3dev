@@ -285,6 +285,8 @@ set_tacho_time_sp( dx, 40 );
 			set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 			Sleep(100);
 			get_sensor_value0(sn_compass, &value_compass );
+			if(value_compass < init_compass_value)
+				break;
 		}
 	}
 	if (value_compass < init_compass_value -2 ) //rotate to right
@@ -297,8 +299,12 @@ set_tacho_time_sp( dx, 40 );
 			set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 			Sleep(100);
 			get_sensor_value0(sn_compass, &value_compass );
+			if(value_compass > init_compass_value )
+				break;
 		}
 	}
+if(value_compass > init_compass_value-2 && value_compass < init_compass_value+2)
+{
 set_tacho_time_sp( sn, 100 );
 set_tacho_time_sp( dx, 100 );
        if(value<2500 && value>=1500)
@@ -344,6 +350,7 @@ set_tacho_time_sp( dx, 100 );
 	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 	Sleep(100);
 	get_tacho_position( dx, &finish);
+}
 }
 get_tacho_position( dx, &finish);	
 	
