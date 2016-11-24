@@ -246,7 +246,7 @@ float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sona
 	//and than go and take te ball
 int beginning,finish;
 float value;
-
+float value_compass;
 set_tacho_time_sp( sn, 100 );
 set_tacho_ramp_up_sp( sn, 2000 );
 set_tacho_ramp_down_sp( sn, 2000 );
@@ -255,10 +255,10 @@ set_tacho_ramp_up_sp( dx, 2000 );
 set_tacho_ramp_down_sp( dx, 2000 );
 get_tacho_position( dx, &beginning);
 finish = beginning;
-if ( !get_sensor_value0(sn_compass, &value )) {
-                        value = 0;
+if ( !get_sensor_value0(sn_compass, &value_compass )) {
+                        value_compass = 0;
                         }
-printf( "compass\r(%f) \n", value);
+printf( "compass\r(%f) \n", value_compass);
 fflush( stdout );
 	
 while((finish - beginning - distance)<=0){			
@@ -268,10 +268,10 @@ while((finish - beginning - distance)<=0){
                         }
                         printf( "\r(%f) \n", value);
 			fflush( stdout );
-	if ( !get_sensor_value0(sn_compass, &value )) {
-                        value = 0;
+	if ( !get_sensor_value0(sn_compass, &value_compass )) {
+                        value_compass = 0;
                         }
-                        printf( "compass\r(%f) \n", value);
+                        printf( "compass:(%f) \n", value_compass);
                         fflush( stdout );
 	
        if(value<2500 && value>=1500)
