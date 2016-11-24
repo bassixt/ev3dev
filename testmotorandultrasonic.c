@@ -313,9 +313,7 @@ while((finish - beginning - distance)<=0){
 	}
 	get_sensor_value0(sn_compass, &value_compass );
 	if((value_compass >= (init_compass_value-2)) && (value_compass <= (init_compass_value+2)))
-	{	printf( "sono passato da qui");
-	 	fflush( stdout );
-		set_tacho_time_sp( sn, 100 );
+	{	set_tacho_time_sp( sn, 100 );
 		set_tacho_time_sp( dx, 100 );
 	       if(value<2500 && value>=1500)
 			{
