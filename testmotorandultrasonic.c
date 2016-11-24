@@ -275,7 +275,6 @@ while((finish - beginning - distance)<=0){
 	/*compensate the rotation*/
 set_tacho_time_sp( sn, 40 );
 set_tacho_time_sp( dx, 40 );	
-Sleep(200);
 	if (value_compass > init_compass_value +2 ) //rotate to left
 	{
 	set_tacho_speed_sp( sn, max_speed *1/12 );
@@ -284,7 +283,6 @@ Sleep(200);
 		{
 			set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 			set_tacho_command_inx( dx, TACHO_RUN_TIMED );
-			Sleep(100);
 			get_sensor_value0(sn_compass, &value_compass );
 			if(value_compass < init_compass_value)
 				{	
