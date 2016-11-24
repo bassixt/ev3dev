@@ -237,7 +237,7 @@ void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
  			
 }   
 
-float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance)
+float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance,uint8_t sn_compass)
 {	//aggiungere funzione che controlla anche il motore 
 	//sinistro e vede se sono andati dritti tutti e due 
 	//altrimenti significa che hai girato e c'è un errore
@@ -255,6 +255,12 @@ set_tacho_ramp_up_sp( dx, 2000 );
 set_tacho_ramp_down_sp( dx, 2000 );
 get_tacho_position( dx, &beginning);
 finish = beginning;
+if ( !get_sensor_value0(sn_compass, &value )) {
+                        value = 0;
+                        }
+printf( "compass\r(%f) \n", value);
+fflush( stdout );
+	
 while((finish - beginning - distance)<=0){			
 		
 	if ( !get_sensor_value0(sn_sonar, &value )) {
@@ -262,6 +268,11 @@ while((finish - beginning - distance)<=0){
                         }
                         printf( "\r(%f) \n", value);
 			fflush( stdout );
+	if ( !get_sensor_value0(sn_compass, &value )) {
+                        value = 0;
+                        }
+                        printf( "compass\r(%f) \n", value);
+                        fflush( stdout );
 	
        if(value<2500 && value>=1500)
 		{
@@ -335,7 +346,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 				//funtion to take the ball and return back}
 		else
 			*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER);
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass);
 	for(i=0;i<3;i++)
 	{
 	/*if(found != 1)
@@ -344,7 +355,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER);
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass);
 	}
 	if(found != 1)
 		/*
@@ -353,7 +364,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-10); //here there is -10 becouse we did three step of 20cm	
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-10,sn_compass); //here there is -10 becouse we did three step of 20cm	
 																			  //than we do another step of 10 cm than we turn left
 
 	//TURN LEFT
@@ -365,7 +376,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER);
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass);
 	}
 
 	//TURN RIGHT
@@ -377,7 +388,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER);
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass);
 	}
 	/*if(found != 1)
 		if(research(sn, dx, max_speed, sn_compass, 90)==1)
@@ -385,7 +396,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-10);	
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-10,sn_compass);	
 	//WE HOPE ARRIVED HOME
 	get_sensor_value0(sn_compass, &degree);
 	
@@ -616,7 +627,7 @@ do {
 	//research( sn, dx, max_speed, sn_compass);
 	//break;
                
-	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,1500);
+	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,1500,sn_compass);
 
 	
 	Sleep(2000);
