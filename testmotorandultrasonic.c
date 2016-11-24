@@ -273,11 +273,11 @@ while((finish - beginning - distance)<=0){
                         printf( "compass:(%f) \n", value_compass);
                         fflush( stdout );
 	/*compensate the rotation*/
-set_tacho_time_sp( sn, 10 );
-set_tacho_time_sp( dx, 10 );	
+set_tacho_time_sp( sn, 40 );
+set_tacho_time_sp( dx, 40 );	
 	if (value_compass > init_compass_value +1 ) //rotate to left
 	{
-	set_tacho_speed_sp( sn, max_speed *1/12 );
+	set_tacho_speed_sp( sn, max_speed *1/8 );
 	set_tacho_speed_sp( dx, max_speed *  0);
 		while(value_compass!= init_compass_value )
 		{
@@ -290,7 +290,7 @@ set_tacho_time_sp( dx, 10 );
 	if (value_compass < init_compass_value -1 ) //rotate to right
 	{
 	set_tacho_speed_sp( sn, max_speed * 0);
-	set_tacho_speed_sp( dx, max_speed *1/12);
+	set_tacho_speed_sp( dx, max_speed *1/8);
 		while(value_compass!= init_compass_value )
 		{
 			set_tacho_command_inx( sn, TACHO_RUN_TIMED );
