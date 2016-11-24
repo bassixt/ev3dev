@@ -420,6 +420,15 @@ int main( void )
         float value;
 	float elapsed_distance;
         uint32_t n, ii;
+	/*only for test purpose*/
+	
+	int speed_kd_s,speed_kd_d;
+	int speed_kp_s,speed_kp_d;
+	int speed_ki_s,speed_ki_d;
+	
+	/*only for test purpose*/
+	
+	
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
         ev3_brick_addr = "192.168.0.204";
@@ -614,8 +623,21 @@ do {
 	//break;
                
 	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,1500);
-	Sleep(500);
-	/*
+	
+	get_tacho_speed_pid_Kd(sn,speed_kd_s);
+	get_tacho_speed_pid_Kd(dx,speed_kd_d);
+	
+	get_tacho_speed_pid_Kp(sn,speed_kp_s);
+	get_tacho_speed_pid_Kp(dx,speed_kp_d);
+	
+	get_tacho_speed_pid_Ki(sn,speed_ki_s);
+	get_tacho_speed_pid_Ki(dx,speed_ki_d);
+	printf("Right motor Kd:%d,Kp:%d,Ki:%d",speed_kd_d,speed_kp_d,speed_ki_d);
+	printf("Left  motor Kd:%d,Kp:%d,Ki:%d",speed_kd_s,speed_kp_s,speed_ki_s);
+	
+	Sleep(2000);
+	fflush( stdout );
+		/*
 	if( strcmp(color[ color_aq(sn_color) ],"RED")==0)
 	grab_ball(sn,dx,med,max_speed);
 	//if( strcmp(color[ val ],"RED")==0)
