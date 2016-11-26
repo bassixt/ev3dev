@@ -266,12 +266,12 @@ while((finish - beginning - distance)<=0){
                                 value = 0;
                         }
                         //printf( "\r(%f) \n", value);
-			fflush( stdout );
+
 	if ( !get_sensor_value0(sn_compass, &value_compass )) {
                         value_compass = 0;
                         }
                         //printf( "compass:(%f) \n", value_compass);
-                        fflush( stdout );
+                       
 	/*compensate the rotation*/
 	set_tacho_time_sp( sn, 100 );
 	set_tacho_time_sp( dx, 100 );	
