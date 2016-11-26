@@ -247,19 +247,27 @@ float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sona
 int beginning,finish;
 float value;
 float value_compass, init_compass_value;
+set_tacho_stop_action_inx( med, TACHO_COAST );
 set_tacho_ramp_up_sp( sn, 2000 );
 set_tacho_ramp_down_sp( sn, 2000 );
 set_tacho_ramp_up_sp( dx, 2000 );
 set_tacho_ramp_down_sp( dx, 2000 );
 get_tacho_position( dx, &beginning);
 finish = beginning;
-/*
+	
+	
+	
+		
+		
+		
+
+
 if ( !get_sensor_value0(sn_compass, &init_compass_value )) {
                         init_compass_value = 0;
                         }
 printf( "compass iniziale\r(%f) \n", init_compass_value);
 fflush( stdout );
-*/	
+	
 while((finish - beginning - distance)<=0){			
 		
 	if ( !get_sensor_value0(sn_sonar, &value )) {
@@ -267,13 +275,13 @@ while((finish - beginning - distance)<=0){
                         }
                         //printf( "\r(%f) \n", value);
 
-	/*if ( !get_sensor_value0(sn_compass, &value_compass )) {
+	if ( !get_sensor_value0(sn_compass, &value_compass )) {
                         value_compass = 0;
-                        }*/
+                        }
                         //printf( "compass:(%f) \n", value_compass);
                        
 	/*compensate the rotation*/
-	/*
+	
 	set_tacho_time_sp( sn, 100 );
 	set_tacho_time_sp( dx, 100 );	
 	if (value_compass > init_compass_value +2 ) //rotate to left
@@ -282,6 +290,10 @@ while((finish - beginning - distance)<=0){
 	set_tacho_position_sp( dx, -2 );
 	set_tacho_speed_sp( sn, max_speed  );
 	set_tacho_speed_sp( dx, max_speed );
+	set_tacho_ramp_up_sp( sx, 0 );
+	set_tacho_ramp_down_sp( sx, 0);
+	set_tacho_ramp_up_sp( dx, 0 );
+	set_tacho_ramp_down_sp( dx, 0);		
 		Sleep(100);
 		while(value_compass > init_compass_value  )
 			{
@@ -298,10 +310,15 @@ while((finish - beginning - distance)<=0){
 	}
 	if (value_compass < init_compass_value -2 ) //rotate to right
 		{
+		
 		set_tacho_position_sp( sn, -2);
 		set_tacho_position_sp( dx,  2);
 		set_tacho_speed_sp( sn, max_speed );
 		set_tacho_speed_sp( dx, max_speed );
+		set_tacho_ramp_up_sp( sx, 0 );
+		set_tacho_ramp_down_sp( sx, 0);
+		set_tacho_ramp_up_sp( dx, 0 );
+		set_tacho_ramp_down_sp( dx, 0);
 		Sleep(100);
 		while(value_compass < init_compass_value )
 			{
@@ -320,7 +337,7 @@ while((finish - beginning - distance)<=0){
 	
 	if((value_compass >= (init_compass_value-2)) && (value_compass <= (init_compass_value+2)))
 	{
-	*/
+	
 		if(value<2500 && value>=1500)
 			{
 		set_tacho_speed_sp( sn, max_speed );
@@ -357,14 +374,18 @@ while((finish - beginning - distance)<=0){
 			fflush( stdout );	
 		 set_tacho_speed_sp( sn, max_speed * 0 );
 		 set_tacho_speed_sp( dx, max_speed * 0 );
-		Sleep(100);
+		Sleep(200);
 		break;
 			}
+		set_tacho_ramp_up_sp( sx, 2000 );
+		set_tacho_ramp_down_sp( sx, 2000);
+		set_tacho_ramp_up_sp( dx, 2000 );
+		set_tacho_ramp_down_sp( dx, 2000);
 		set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 		set_tacho_command_inx( dx, TACHO_RUN_TIMED );
-		Sleep(100);
+		Sleep(200);
 		get_tacho_position( dx, &finish);
-	//}
+	}
 }
 get_tacho_position( dx, &finish);	
 	
