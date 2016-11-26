@@ -279,8 +279,8 @@ while((finish - beginning - distance)<=0){
 	{
 	set_tacho_position_sp( sn,  1);
 	set_tacho_position_sp( dx, -1 );
-	set_tacho_speed_sp( sn, max_speed *1/6 );
-	set_tacho_speed_sp( dx, max_speed *1/6);
+	set_tacho_speed_sp( sn, max_speed  );
+	set_tacho_speed_sp( dx, max_speed );
 		Sleep(100);
 		while(value_compass > init_compass_value +1 )
 			{
@@ -288,7 +288,7 @@ while((finish - beginning - distance)<=0){
 			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 			Sleep(50);
 			get_sensor_value0(sn_compass, &value_compass );
-			if(value_compass < init_compass_value)
+			if(value_compass <= init_compass_value)
 				{	
 				get_sensor_value0(sn_compass, &value_compass );
 				break;
@@ -299,8 +299,8 @@ while((finish - beginning - distance)<=0){
 		{
 		set_tacho_position_sp( sn, -1);
 		set_tacho_position_sp( dx,  1);
-		set_tacho_speed_sp( sn, max_speed * 1/6);
-		set_tacho_speed_sp( dx, max_speed *1/6);
+		set_tacho_speed_sp( sn, max_speed );
+		set_tacho_speed_sp( dx, max_speed );
 		Sleep(100);
 		while(value_compass < init_compass_value -1)
 			{
@@ -308,7 +308,7 @@ while((finish - beginning - distance)<=0){
 			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 			Sleep(100);
 			get_sensor_value0(sn_compass, &value_compass );
-			if(value_compass > init_compass_value )
+			if(value_compass >= init_compass_value )
 				{	
 				get_sensor_value0(sn_compass, &value_compass );
 				break;
