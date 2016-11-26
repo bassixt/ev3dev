@@ -265,12 +265,12 @@ while((finish - beginning - distance)<=0){
 	if ( !get_sensor_value0(sn_sonar, &value )) {
                                 value = 0;
                         }
-                        printf( "\r(%f) \n", value);
+                        //printf( "\r(%f) \n", value);
 			fflush( stdout );
 	if ( !get_sensor_value0(sn_compass, &value_compass )) {
                         value_compass = 0;
                         }
-                        printf( "compass:(%f) \n", value_compass);
+                        //printf( "compass:(%f) \n", value_compass);
                         fflush( stdout );
 	/*compensate the rotation*/
 	set_tacho_time_sp( sn, 100 );
@@ -282,7 +282,7 @@ while((finish - beginning - distance)<=0){
 	set_tacho_speed_sp( sn, max_speed  );
 	set_tacho_speed_sp( dx, max_speed );
 		Sleep(100);
-		while(value_compass > init_compass_value +1 )
+		while(value_compass > init_compass_value  )
 			{
 			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
@@ -302,7 +302,7 @@ while((finish - beginning - distance)<=0){
 		set_tacho_speed_sp( sn, max_speed );
 		set_tacho_speed_sp( dx, max_speed );
 		Sleep(100);
-		while(value_compass < init_compass_value -1)
+		while(value_compass < init_compass_value )
 			{
 			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
