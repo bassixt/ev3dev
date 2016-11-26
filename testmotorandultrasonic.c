@@ -492,14 +492,14 @@ int main( void )
 #endif
         while ( ev3_tacho_init() < 1 ) Sleep( 1000 );
 
-        printf( "*** ( EV3 ) Hello! ***\n" );
+        //printf( "*** ( EV3 ) Hello! ***\n" );
 
-        printf( "Found tacho motors:\n" );
+        //printf( "Found tacho motors:\n" );
 	fflush( stdout );
         for ( i = 0; i < DESC_LIMIT; i++ ) {
                 if ( ev3_tacho[ i ].type_inx != TACHO_TYPE__NONE_ ) {
-                        printf( "  type = %s\n", ev3_tacho_type( ev3_tacho[ i ].type_inx ));
-                        printf( "  port = %s\n", ev3_tacho_port_name( i, s ));
+                        //printf( "  type = %s\n", ev3_tacho_type( ev3_tacho[ i ].type_inx ));
+                        //printf( "  port = %s\n", ev3_tacho_port_name( i, s ));
 			fflush( stdout );
                 }
         }
@@ -507,10 +507,10 @@ int main( void )
         if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &sn, 0 )) {
 
 
-                printf( "LEGO_EV3_L_MOTOR 1 is found, run for 5 sec...\n" );
+                //printf( "LEGO_EV3_L_MOTOR 1 is found, run for 5 sec...\n" );
                 get_tacho_max_speed( sn, &max_speed );
-                printf("value of buffer :%d\n", sn);
-                printf("  max_speed = %d\n", max_speed );
+                //printf("value of buffer :%d\n", sn);
+                //printf("  max_speed = %d\n", max_speed );
                 set_tacho_stop_action_inx( sn, TACHO_COAST );
                 set_tacho_polarity( sn, "inversed" );
                 set_tacho_speed_sp( sn, max_speed * 2 / 3 );
@@ -536,17 +536,17 @@ do {
                         Sleep( 500 );
                 }*/
         } else {
-                printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
+                //printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
 		fflush( stdout );
         }
 //Second motor
 if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &dx, 1 )) {
 
 
-                printf( "LEGO_EV3_L_MOTOR 2 is found, run for 5 sec...\n" );
+                //printf( "LEGO_EV3_L_MOTOR 2 is found, run for 5 sec...\n" );
                 get_tacho_max_speed( dx, &max_speed );
-                printf("value of buffer :%d\n", dx);
-                printf("  max_speed = %d\n", max_speed );
+                //printf("value of buffer :%d\n", dx);
+                //printf("  max_speed = %d\n", max_speed );
                 set_tacho_stop_action_inx( dx, TACHO_COAST );
                 set_tacho_polarity( dx, "inversed" );
                 set_tacho_speed_sp( dx, max_speed * 2 / 3 );
@@ -571,16 +571,16 @@ do {
                         Sleep( 500 );
                 }*/
         } else {
-                printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
+                //printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
 		fflush( stdout );
         }
 //medium motor
 	if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &med, 2 )) {
 		int max_speed;
 
-		printf( "LEGO_EV3_L_MOTOR 1 is found, run for 5 sec...\n" );
+		//printf( "LEGO_EV3_L_MOTOR 1 is found, run for 5 sec...\n" );
 		get_tacho_max_speed( med, &max_speed );
-		printf("  max_speed = %d\n", max_speed );
+		//printf("  max_speed = %d\n", max_speed );
 		fflush( stdout );
 		set_tacho_stop_action_inx( med, TACHO_COAST );
 		set_tacho_polarity( med, "normal" );
@@ -594,7 +594,7 @@ do {
 		do {
 			get_tacho_state_flags( sn, &state );
 		} while ( state );
-		printf( "run to relative position...\n" );
+		//printf( "run to relative position...\n" );
 		fflush( stdout );
 		set_tacho_speed_sp( med, max_speed/12);
 		set_tacho_ramp_up_sp( med, 0 );
@@ -607,7 +607,7 @@ do {
 		Sleep( 200 );
 		fflush( stdout );
 	} else {
-		printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
+		//printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
 		fflush( stdout );
 	} 
 	//set_tacho_polarity( med, "inversed" );
@@ -620,17 +620,17 @@ do {
         printf( "Found sensors:\n" );
         for ( i = 0; i < DESC_LIMIT; i++ ) {
                 if ( ev3_sensor[ i ].type_inx != SENSOR_TYPE__NONE_ ) {
-                        printf( "  type = %s\n", ev3_sensor_type( ev3_sensor[ i ].type_inx ));
-                        printf( "  port = %s\n", ev3_sensor_port_name( i, s ));
+                        //printf( "  type = %s\n", ev3_sensor_type( ev3_sensor[ i ].type_inx ));
+                        //printf( "  port = %s\n", ev3_sensor_port_name( i, s ));
 			fflush( stdout );
                         if ( get_sensor_mode( i, s, sizeof( s ))) {
-                                printf( "  mode = %s\n", s );
+                                //printf( "  mode = %s\n", s );
 				fflush( stdout );
                         }
                         if ( get_sensor_num_values( i, &n )) {
                                 for ( ii = 0; ii < n; ii++ ) {
                                         if ( get_sensor_value( ii, i, &val )) {
-                                                printf( "  value%d = %d\n", ii, val );
+                                                //printf( "  value%d = %d\n", ii, val );
 						fflush( stdout );
                                         }
                                 }
@@ -649,7 +649,7 @@ do {
                         if ( !get_sensor_value0(sn_compass, &value )) {
                         value = 0;
                         }
-                        printf( "compass\r(%f) \n", value);
+                        //printf( "compass\r(%f) \n", value);
                         fflush( stdout );
                 }
                 if ( ev3_search_sensor( LEGO_EV3_COLOR, &sn_color, 0 )) {
@@ -659,7 +659,7 @@ do {
 				val = 0;
 			}
 			printf( "\r(%s) \n", color[ val ]);
-			printf( "valore del colore e': %d\n",val);
+			//printf( "valore del colore e': %d\n",val);
 			fflush( stdout );
 		}
                 if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
@@ -667,7 +667,7 @@ do {
                         if ( !get_sensor_value0(sn_sonar, &value )) {
                                 value = 0;
                         }
-                        printf( "\r(%f) \n", value);
+                        //printf( "\r(%f) \n", value);
 			fflush( stdout );
                 }
                 if (ev3_search_sensor(LEGO_EV3_GYRO, &sn_mag,0)){
@@ -675,7 +675,7 @@ do {
                         if ( !get_sensor_value0(sn_mag, &value )) {
                                 value = 0;
                         }
-                        printf( "\r(%f) \n", value);
+                        //printf( "\r(%f) \n", value);
                         fflush( stdout );
                 }
 	//research( sn, dx, max_speed, sn_compass);
