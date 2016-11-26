@@ -257,7 +257,7 @@ finish = beginning;
 if ( !get_sensor_value0(sn_compass, &init_compass_value )) {
                         init_compass_value = 0;
                         }
-printf( "compass iniziale(%f) \n", init_compass_value);
+printf( "compass iniziale\r(%f) \n", init_compass_value);
 fflush( stdout );
 	
 while((finish - beginning - distance)<=0){			
@@ -350,7 +350,7 @@ while((finish - beginning - distance)<=0){
 			 }
 		if(value<40 && value >=0)
 			 {
-			printf("sono nello zero\n");
+			printf("sono nello zero\r\n");
 			fflush( stdout );	
 		 set_tacho_speed_sp( sn, max_speed * 0 );
 		 set_tacho_speed_sp( dx, max_speed * 0 );
