@@ -253,13 +253,13 @@ set_tacho_ramp_up_sp( dx, 2000 );
 set_tacho_ramp_down_sp( dx, 2000 );
 get_tacho_position( dx, &beginning);
 finish = beginning;
-
+/*
 if ( !get_sensor_value0(sn_compass, &init_compass_value )) {
                         init_compass_value = 0;
                         }
 printf( "compass iniziale\r(%f) \n", init_compass_value);
 fflush( stdout );
-	
+*/	
 while((finish - beginning - distance)<=0){			
 		
 	if ( !get_sensor_value0(sn_sonar, &value )) {
@@ -267,18 +267,19 @@ while((finish - beginning - distance)<=0){
                         }
                         //printf( "\r(%f) \n", value);
 
-	if ( !get_sensor_value0(sn_compass, &value_compass )) {
+	/*if ( !get_sensor_value0(sn_compass, &value_compass )) {
                         value_compass = 0;
-                        }
+                        }*/
                         //printf( "compass:(%f) \n", value_compass);
                        
 	/*compensate the rotation*/
+	/*
 	set_tacho_time_sp( sn, 100 );
 	set_tacho_time_sp( dx, 100 );	
 	if (value_compass > init_compass_value +2 ) //rotate to left
 	{
-	set_tacho_position_sp( sn,  1);
-	set_tacho_position_sp( dx, -1 );
+	set_tacho_position_sp( sn,  2);
+	set_tacho_position_sp( dx, -2 );
 	set_tacho_speed_sp( sn, max_speed  );
 	set_tacho_speed_sp( dx, max_speed );
 		Sleep(100);
@@ -297,8 +298,8 @@ while((finish - beginning - distance)<=0){
 	}
 	if (value_compass < init_compass_value -2 ) //rotate to right
 		{
-		set_tacho_position_sp( sn, -1);
-		set_tacho_position_sp( dx,  1);
+		set_tacho_position_sp( sn, -2);
+		set_tacho_position_sp( dx,  2);
 		set_tacho_speed_sp( sn, max_speed );
 		set_tacho_speed_sp( dx, max_speed );
 		Sleep(100);
@@ -316,8 +317,10 @@ while((finish - beginning - distance)<=0){
 			}
 		}
 	get_sensor_value0(sn_compass, &value_compass );
+	
 	if((value_compass >= (init_compass_value-2)) && (value_compass <= (init_compass_value+2)))
 	{
+	*/
 		if(value<2500 && value>=1500)
 			{
 		set_tacho_speed_sp( sn, max_speed );
@@ -361,7 +364,7 @@ while((finish - beginning - distance)<=0){
 		set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 		Sleep(100);
 		get_tacho_position( dx, &finish);
-	}
+	//}
 }
 get_tacho_position( dx, &finish);	
 	
