@@ -290,8 +290,8 @@ while((finish - beginning - distance)<=0){
 	set_tacho_position_sp( dx, -2 );
 	set_tacho_speed_sp( sn, max_speed  );
 	set_tacho_speed_sp( dx, max_speed );
-	set_tacho_ramp_up_sp( sx, 0 );
-	set_tacho_ramp_down_sp( sx, 0);
+	set_tacho_ramp_up_sp( sn, 0 );
+	set_tacho_ramp_down_sp( sn, 0);
 	set_tacho_ramp_up_sp( dx, 0 );
 	set_tacho_ramp_down_sp( dx, 0);		
 		Sleep(100);
@@ -315,8 +315,8 @@ while((finish - beginning - distance)<=0){
 		set_tacho_position_sp( dx,  2);
 		set_tacho_speed_sp( sn, max_speed );
 		set_tacho_speed_sp( dx, max_speed );
-		set_tacho_ramp_up_sp( sx, 0 );
-		set_tacho_ramp_down_sp( sx, 0);
+		set_tacho_ramp_up_sp( sn, 0 );
+		set_tacho_ramp_down_sp( sn, 0);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0);
 		Sleep(100);
@@ -377,8 +377,8 @@ while((finish - beginning - distance)<=0){
 		Sleep(200);
 		break;
 			}
-		set_tacho_ramp_up_sp( sx, 2000 );
-		set_tacho_ramp_down_sp( sx, 2000);
+		set_tacho_ramp_up_sp( sn, 2000 );
+		set_tacho_ramp_down_sp( sn, 2000);
 		set_tacho_ramp_up_sp( dx, 2000 );
 		set_tacho_ramp_down_sp( dx, 2000);
 		set_tacho_command_inx( sn, TACHO_RUN_TIMED );
