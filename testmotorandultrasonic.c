@@ -247,7 +247,8 @@ float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sona
 int beginning,finish;
 float value;
 float value_compass, init_compass_value;
-set_tacho_stop_action_inx( med, TACHO_COAST );
+set_tacho_stop_action_inx( sn, TACHO_COAST );
+set_tacho_stop_action_inx( dx, TACHO_COAST );
 set_tacho_ramp_up_sp( sn, 2000 );
 set_tacho_ramp_down_sp( sn, 2000 );
 set_tacho_ramp_up_sp( dx, 2000 );
