@@ -483,7 +483,7 @@ struct motandsens inizialization (struct motandsens donald)
 {
   int i;
   
-        FLAGS_T state
+        FLAGS_T state;
         char s[ 256 ];
         int val;
         float value;
@@ -492,7 +492,7 @@ struct motandsens inizialization (struct motandsens donald)
 
 
       if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.sn, 0 )){
-                get_tacho_max_speed( sn, &donald.max_speed );
+                get_tacho_max_speed( donald.sn, &donald.max_speed );
                 printf("value of buffer :%d\n", donald.sn);
                 printf("  max_speed = %d\n", donald.max_speed );
                 set_tacho_stop_action_inx( donald.sn, TACHO_COAST );
@@ -533,7 +533,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
 		fflush( stdout );
         }
 //medium motor
-	if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald,med, 2 )) {
+	if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.med, 2 )) {
 		int max_speed;
 
 		printf( "LEGO_EV3_L_MOTOR 3 is found, \n" );
@@ -596,9 +596,9 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
 			printf( "valore del colore e': %d\n",val);
 			fflush( stdout );
 		}
-                if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
+                if (ev3_search_sensor(LEGO_EV3_US, &donald.sn_sonar,0)){
                         //printf("SONAR found, reading sonar...\n");
-                        if ( !get_sensor_value0(sn_sonar, &value )) {
+                        if ( !get_sensor_value0(donald.sn_sonar, &value )) {
                                 value = 0;
                         }
                         printf( "\r(%f) \n", value);
@@ -606,7 +606,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
                 }
                 if (ev3_search_sensor(LEGO_EV3_GYRO, &donald.sn_mag,0)){
                         //printf("GYRO found, reading magnet...\n");
-                        if ( !get_sensor_value0(sn_mag, &value )) {
+                        if ( !get_sensor_value0(donald.sn_mag, &value )) {
                                 value = 0;
                         }
                         printf( "\r(%f) \n", value);
