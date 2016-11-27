@@ -274,8 +274,8 @@ void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 			set_tacho_time_sp( dx, 100 );
 			set_tacho_ramp_up_sp( dx, 2000 );
 			set_tacho_ramp_down_sp( dx, 2000 );
- 			set_tacho_speed_sp( sn, max_speed * 1 / 12 );
-                        set_tacho_speed_sp( dx, max_speed * 1 / 12 );
+ 			set_tacho_speed_sp( sn, max_speed * 1 / 6 );
+                        set_tacho_speed_sp( dx, max_speed * 1 / 6 );
 			//raise the grabber
 			set_tacho_position_sp( med, 90 );
 			Sleep(200);
@@ -740,7 +740,12 @@ int main( void )
 				val = 0;
 			}
 			if( strcmp(color[ color_aq(donald.sn_color) ],"RED")==0)
+			{
 				grab_ball(donald.sn,donald.dx,donald.med,donald.max_speed);
+				Seep(200);
+				put_integer_in_mq (turnqueue, 1);
+			}
+				
 		}
 		}
 		
@@ -760,6 +765,12 @@ int main( void )
              
 		elapsed_distance = go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,2000,donald.sn_compass);
 		put_integer_in_mq (posqueue, 1); //1 means I'm arrived to the ball control if it is red
+		n = get_integer_from_mq (turnqueue);
+		while(n!=1)
+		{
+			Sleep(500);
+			n = get_integer_from_mq (turnqueue);
+		}
 		fflush( stdout );
 	}
 		/*
