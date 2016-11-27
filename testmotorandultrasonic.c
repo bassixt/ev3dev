@@ -2,6 +2,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <signal.h>
+#include <mqueue.h>
+#include <pthread.h>
+#include <sys/types.h>
 #include "ev3.h"
 #include "ev3_port.h"
 #include "ev3_tacho.h"
@@ -35,6 +38,63 @@ struct motandsens {
     int max_speed;
 
 };
+//message queue
+#define MAX_MSG 15
+#define OVER 37
+#define MQ_NAME "/mquni" /* Message queue name: To be modified. The name */
+#define MQ_FORW "/mqforw"                          /* must start with a "/" */
+#define MQ_SIZE 10
+#define PMODE 0666
+/* to open the message queue */
+void init_queue (mqd_t *mq_desc, int open_flags, int s) {
+  struct mq_attr attr;
+  
+  // fill attributes of the mq
+  attr.mq_maxmsg = MQ_SIZE;
+  attr.mq_msgsize = sizeof (int);
+  attr.mq_flags = 0;
+	if(s==1){  
+	*mq_desc = mq_open (MQ_NAME, open_flags, PMODE, &attr);
+	}else{
+	*mq_desc = mq_open (MQ_FORW, open_flags, PMODE, &attr);
+	}
+  if (*mq_desc == (mqd_t)-1) {
+    perror("Mq opening failed");
+    exit(-1);
+  }
+}
+
+
+/* to add an integer to the message queue */
+void put_integer_in_mq (mqd_t mq_desc, int data) {
+  int status;
+  
+  //sends message
+  status = mq_send (mq_desc, (char *) &data, sizeof (int), 1);
+  if (status == -1)
+    perror ("mq_send failure");
+}
+
+
+/* to get an integer from message queue */
+int get_integer_from_mq (mqd_t mq_desc) {
+  ssize_t num_bytes_received = 0;
+  int data=0;
+
+  //receive an int from mq
+  num_bytes_received = mq_receive (mq_desc, (char *) &data, sizeof (int), NULL);
+  if (num_bytes_received == -1)
+    perror ("mq_receive failure");
+  return (data);
+}
+
+
+
+
+
+
+
+
 
 struct pos {
 	float x,y
@@ -630,7 +690,7 @@ return donald;
 int main( void )
 {	pid_t ret;
  	char *name;
-        int i;
+        int i,d,n;
 	struct motandsens donald;
         FLAGS_T state;
         int val;
@@ -638,7 +698,11 @@ int main( void )
         float value;
 	float elapsed_distance;
         //uint32_t n, ii;
-	
+//stuff for queue	
+ 	 mqd_t posqueue;
+         mqd_f turnqueue;
+ 
+ 
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
         ev3_brick_addr = "192.168.0.204";
@@ -663,10 +727,28 @@ int main( void )
 		printf( "there is a problem with fork()\n");
  	else if ( ret==0 ) //child
 	{
+		init_queue (&posqueue, O_CREAT | O_RDONLY,1);
+		init_queue (&turnqueue,O_CREAT | O_WRONLY,2);
+		//put_integer_in_mq (turnqueue, 0);
 		name = "child\n";
+		while(1){
+		d = get_integer_from_mq (posqueue);
+		if(d==1)
+		{
+			if ( !get_sensor_value( 0, donald.sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
+				val = 0;
+			}
+			if( strcmp(color[ color_aq(donald.sn_color) ],"RED")==0)
+				grab_ball(donald.sn,donald.dx,donald.med,donald.max_speed);
+		}
+		
 	}
  	else		  //parent
-	{	
+	{
+		init_queue (&posqueue, O_CREAT | O_WRONLY,1);
+		init_queue (&turnqueue,O_CREAT | O_RDONLY,2);
+		//put_integer_in_mq (posqueue, 0);
+		//n = get_integer_from_mq (turnqueue);
 		name = "parent\n";
 
         while(1){
@@ -675,9 +757,7 @@ int main( void )
 	//break;
              
 		elapsed_distance = go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,2000,donald.sn_compass);
-
-	
-		Sleep(2000);
+		put_integer_in_mq (posqueue, 1); //1 means I'm arrived to the ball control if it is red
 		fflush( stdout );
 	}
 		/*
