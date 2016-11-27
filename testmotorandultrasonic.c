@@ -41,7 +41,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				set_tacho_ramp_down_sp( sn, 0 );
 				set_tacho_ramp_up_sp( dx,   0 );
 				set_tacho_ramp_down_sp( dx, 0 );
-				Sleep(50);
+				Sleep(100);
 				while(actual_angle<initial_angle)
 				{
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
@@ -64,7 +64,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				set_tacho_ramp_down_sp( sn, 0 );
 				set_tacho_ramp_up_sp( dx,   0 );
 				set_tacho_ramp_down_sp( dx, 0 );
-				Sleep(50);
+				Sleep(100);
 				while(actual_angle>initial_angle)
 				{
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
