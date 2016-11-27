@@ -21,7 +21,22 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 #define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
 
 #define MIN_STEP_VER 20 //minimum step covered going ahead in cm
+struct motandsens {
+	uint8_t sn;
+	uint8_t dx;
+	uint8_t med;
+	uint8_t sn_touch;
+	uint8_t sn_sonar;
+	uint8_t sn_color;
+	uint8_t sn_compass;
+	uint8_t mag;
+    int max_speed;
 
+};
+
+struct pos {
+	float x,y
+	};
 //function that hold the direction
 void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle){
 		float actual_angle;
@@ -463,6 +478,141 @@ void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_t
 	rotatedx(sn,dx,sn_compass,max_speed,90);
 	
 	return;
+}
+struct motandsens inizialization (struct motandsens donald)
+{
+  int i;
+  
+        FLAGS_T state
+        char s[ 256 ];
+        int val;
+        float value;
+        uint32_t n, ii;
+
+
+
+      if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.sn, 0 )){
+                get_tacho_max_speed( sn, &donald.max_speed );
+                printf("value of buffer :%d\n", donald.sn);
+                printf("  max_speed = %d\n", donald.max_speed );
+                set_tacho_stop_action_inx( donald.sn, TACHO_COAST );
+                set_tacho_polarity( donald.sn, "inversed" );
+                set_tacho_speed_sp( donald.sn, donald.max_speed * 2 / 3 );
+                set_tacho_time_sp( donald.sn, 100 );
+                set_tacho_ramp_up_sp( donald.sn, 2000 );
+                set_tacho_ramp_down_sp( donald.sn, 2000 );
+		        set_tacho_position( donald.sn,0);
+               set_tacho_command_inx( donald.sn, TACHO_RUN_TIMED );
+                /* Wait tacho stop */
+                Sleep( 100 );
+
+        } else {
+                printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
+                fflush( stdout );
+        }
+//Second motor
+if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
+
+
+                printf( "LEGO_EV3_L_MOTOR 2 is found, run for 5 sec...\n" );
+               
+                set_tacho_stop_action_inx( donald.dx, TACHO_COAST );
+                set_tacho_polarity( donald.dx, "inversed" );
+                set_tacho_speed_sp( donald.dx, donald.max_speed * 2 / 3 );
+                set_tacho_time_sp( donald.dx, 100 );
+                set_tacho_ramp_up_sp( donald.dx, 2000 );
+	        set_tacho_ramp_down_sp( donald.dx, 2000 );
+		set_tacho_position( donald.dx,0);
+               set_tacho_command_inx( donal.dx, TACHO_RUN_TIMED );
+                /* Wait tacho stop */
+                Sleep( 100 );
+		fflush( stdout );
+
+        } else {
+                printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
+		fflush( stdout );
+        }
+//medium motor
+	if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald,med, 2 )) {
+		int max_speed;
+
+		printf( "LEGO_EV3_L_MOTOR 3 is found, \n" );
+		
+		set_tacho_stop_action_inx( donald.med, TACHO_COAST );
+		set_tacho_polarity( donald.med, "normal" );
+		set_tacho_speed_sp( donald.med, donald.max_speed/12);
+		set_tacho_time_sp( donald.med, 6000 );
+		set_tacho_ramp_up_sp( donald.med, 2000 );
+		set_tacho_ramp_down_sp( donald.med, 2000 );
+		set_tacho_command_inx( donald.med, TACHO_RUN_TIMED );
+		/* Wait tacho stop */
+		Sleep( 100 );
+	
+	} else {
+		printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
+		fflush( stdout );
+	} 
+	
+//Run all sensors
+        ev3_sensor_init();
+
+        printf( "Found sensors:\n" );
+        for ( i = 0; i < DESC_LIMIT; i++ ) {
+                if ( ev3_sensor[ i ].type_inx != SENSOR_TYPE__NONE_ ) {
+                        printf( "  type = %s\n", ev3_sensor_type( ev3_sensor[ i ].type_inx ));
+                        printf( "  port = %s\n", ev3_sensor_port_name( i, s ));
+			fflush( stdout );
+                        if ( get_sensor_mode( i, s, sizeof( s ))) {
+                                printf( "  mode = %s\n", s );
+                        }
+                        if ( get_sensor_num_values( i, &n )) {
+                                for ( ii = 0; ii < n; ii++ ) {
+                                        if ( get_sensor_value( ii, i, &val )) {
+                                                printf( "  value%d = %d\n", ii, val );
+                                        }
+                                }
+                        }
+                }
+}
+        if ( ev3_search_sensor( LEGO_EV3_TOUCH, &donald.sn_touch, 0 )) {
+                //printf( "TOUCH sensor is found, press BUTTON for EXIT...\n" );
+        }
+
+                if (ev3_search_sensor(HT_NXT_COMPASS, &donald.sn_compass,0)){
+                        //printf("COMPASS found, reading compass...\n");
+                        if ( !get_sensor_value0(donald.sn_compass, &value )) {
+                        value = 0;
+                        }
+                        printf( "compass\r(%f) \n", value);
+                        fflush( stdout );
+                }
+                if ( ev3_search_sensor( LEGO_EV3_COLOR, &donald.sn_color, 0 )) {
+			printf( "COLOR sensor is found, setting...\n" );
+			set_sensor_mode( donald.sn_color, "COL-COLOR" );
+			if ( !get_sensor_value( 0, donald.sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
+				val = 0;
+			}
+			printf( "\r(%s) \n", color[ val ]);
+			printf( "valore del colore e': %d\n",val);
+			fflush( stdout );
+		}
+                if (ev3_search_sensor(LEGO_EV3_US, &sn_sonar,0)){
+                        //printf("SONAR found, reading sonar...\n");
+                        if ( !get_sensor_value0(sn_sonar, &value )) {
+                                value = 0;
+                        }
+                        printf( "\r(%f) \n", value);
+			fflush( stdout );
+                }
+                if (ev3_search_sensor(LEGO_EV3_GYRO, &donald.sn_mag,0)){
+                        //printf("GYRO found, reading magnet...\n");
+                        if ( !get_sensor_value0(sn_mag, &value )) {
+                                value = 0;
+                        }
+                        printf( "\r(%f) \n", value);
+                        fflush( stdout );
+               
+return donald;
 }
 
 
