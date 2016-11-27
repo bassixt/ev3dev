@@ -742,7 +742,7 @@ int main( void )
 			if( strcmp(color[ color_aq(donald.sn_color) ],"RED")==0)
 			{
 				grab_ball(donald.sn,donald.dx,donald.med,donald.max_speed);
-				Seep(200);
+				Sleep(200);
 				put_integer_in_mq (turnqueue, 1);
 			}
 				
