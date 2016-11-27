@@ -673,7 +673,7 @@ int main( void )
 		
 	//research( sn, dx, max_speed, sn_compass);
 	//break;
-         */    
+             
 	elapsed_distance = go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,2000,donald.sn_compass);
 
 	
@@ -692,7 +692,7 @@ int main( void )
 	break;
              	
         }	
-		/*	
+			
 	
 	rotatedx(sn,dx,max_speed);
 	rotatesx(sn,dx,max_speed);
