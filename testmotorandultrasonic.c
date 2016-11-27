@@ -23,8 +23,8 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 #define MIN_STEP_VER 20 //minimum step covered going ahead in cm
 
 //function that hold the direction
-void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int initial_angle){
-		int actual_angle;
+void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle){
+		float actual_angle;
 		get_sensor_value0(sn_compass, &actual_angle);
 		if(actual_angle!=init_angle)
 		{	
@@ -287,7 +287,7 @@ float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sona
 	//and than go and take te ball
 int beginning,finish;
 float value;
-int initial_angle;
+float initial_angle;
 set_tacho_time_sp( sn, 100 );
 set_tacho_ramp_up_sp( sn, 2000 );
 set_tacho_ramp_down_sp( sn, 2000 );
