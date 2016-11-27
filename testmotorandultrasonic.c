@@ -26,7 +26,7 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle){
 		float actual_angle;
 		if ( !get_sensor_value0(sn_compass, &actual_angle )) {
-                        value = 0;
+                        actual_angle = 0;
 		}
 		if(actual_angle!=initial_angle)
 		{	
@@ -47,7 +47,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 					Sleep(100);
 					if ( !get_sensor_value0(sn_compass, &actual_angle )) {
-					value = 0;
+					actual_angle = 0;
 					}
 				}
 			
@@ -64,7 +64,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 					Sleep(100);
 					if ( !get_sensor_value0(sn_compass, &actual_angle )) {
-					value = 0;
+					actual_angle = 0;
 					}
 				}
 			
