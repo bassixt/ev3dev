@@ -674,11 +674,12 @@ int main( void )
 	//research( sn, dx, max_speed, sn_compass);
 	//break;
              
-	elapsed_distance = go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,2000,donald.sn_compass);
+		elapsed_distance = go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,2000,donald.sn_compass);
 
 	
-	Sleep(2000);
-	fflush( stdout );
+		Sleep(2000);
+		fflush( stdout );
+	}
 		/*
 	if( strcmp(color[ color_aq(sn_color) ],"RED")==0)
 	grab_ball(sn,dx,med,max_speed);
