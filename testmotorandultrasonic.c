@@ -22,8 +22,49 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 
 #define MIN_STEP_VER 20 //minimum step covered going ahead in cm
 
-
-
+//function that hold the direction
+void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int initial_angle){
+		int actual_angle;
+		get_sensor_value0(sn_compass, &actual_angle);
+		if(actual_angle!=init_angle)
+		{	
+			if(actual_angle<init_angle)	//too to the left turn right!!!
+			{
+				set_tacho_position_sp( sn,  2 );
+				set_tacho_position_sp( dx, -2 );
+				set_tacho_speed_sp( sn, max_speed );
+				set_tacho_speed_sp( dx, max_speed );
+				set_tacho_time_sp( sn, 100 );
+				set_tacho_ramp_up_sp( sn,   0 );
+				set_tacho_ramp_down_sp( sn, 0 );
+				set_tacho_ramp_up_sp( dx,   0 );
+				set_tacho_ramp_down_sp( dx, 0 );
+				while(actual_angle<init_angle)
+				{
+					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+					Sleep(100);
+					get_sensor_value0(sn_compass, &actual_angle);
+				}
+			
+			}
+			if(actual_angle>init_angle)	//too to the right turn left!!!
+			{
+				set_tacho_position_sp( sn, -2 );
+				set_tacho_position_sp( dx,  2 );
+				set_tacho_speed_sp( sn, max_speed );
+				set_tacho_speed_sp( dx, max_speed );
+				while(actual_angle>init_angle)
+				{
+					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+					Sleep(100);
+					get_sensor_value0(sn_compass, &actual_angle);
+				}
+			
+			}
+			
+		}
 
 //function that allows to rotate on the right side
 void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
@@ -246,7 +287,7 @@ float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sona
 	//and than go and take te ball
 int beginning,finish;
 float value;
-float value_compass, init_compass_value;
+int initial_angle;
 set_tacho_time_sp( sn, 100 );
 set_tacho_ramp_up_sp( sn, 2000 );
 set_tacho_ramp_down_sp( sn, 2000 );
@@ -255,13 +296,17 @@ set_tacho_ramp_up_sp( dx, 2000 );
 set_tacho_ramp_down_sp( dx, 2000 );
 get_tacho_position( dx, &beginning);
 finish = beginning;
-if ( !get_sensor_value0(sn_compass, &init_compass_value )) {
-                        init_compass_value = 0;
+if ( !get_sensor_value0(sn_compass, &initial_angle )) {
+                        initial_angle = 0;
                         }
-printf( "compass\r(%f) \n", value_compass);
-fflush( stdout );
 	
-while((finish - beginning - distance)<=0){			
+while((finish - beginning - distance)<=0){
+	control_direction(sn,dx,sn_compass,max_speed,initial_angle);
+	set_tacho_time_sp( sn, 100 );
+	set_tacho_ramp_up_sp( sn, 2000 );
+	set_tacho_ramp_down_sp( sn, 2000 );
+	set_tacho_ramp_up_sp( dx, 2000 );
+	set_tacho_ramp_down_sp( dx, 2000 );
 		
 	if ( !get_sensor_value0(sn_sonar, &value )) {
                                 value = 0;
