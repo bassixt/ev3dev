@@ -29,7 +29,7 @@ struct motandsens {
 	uint8_t sn_sonar;
 	uint8_t sn_color;
 	uint8_t sn_compass;
-	uint8_t mag;
+	uint8_t sn_mag;
     int max_speed;
 
 };
@@ -523,7 +523,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
                 set_tacho_ramp_up_sp( donald.dx, 2000 );
 	        set_tacho_ramp_down_sp( donald.dx, 2000 );
 		set_tacho_position( donald.dx,0);
-               set_tacho_command_inx( donal.dx, TACHO_RUN_TIMED );
+               set_tacho_command_inx( donald.dx, TACHO_RUN_TIMED );
                 /* Wait tacho stop */
                 Sleep( 100 );
 		fflush( stdout );
