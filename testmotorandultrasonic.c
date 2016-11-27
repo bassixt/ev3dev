@@ -573,7 +573,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
                                 }
                         }
                 }
-
+	}
         if ( ev3_search_sensor( LEGO_EV3_TOUCH, &donald.sn_touch, 0 )) {
                 //printf( "TOUCH sensor is found, press BUTTON for EXIT...\n" );
         }
@@ -611,7 +611,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
                         }
                         printf( "\r(%f) \n", value);
                         fflush( stdout );
-               
+		}
 return donald;
 }
 
