@@ -26,7 +26,7 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle){
 		float actual_angle;
 		get_sensor_value0(sn_compass, &actual_angle);
-		if(actual_angle!=init_angle)
+		if(actual_angle!=initial_angle)
 		{	
 			if(actual_angle<initial_angle)	//too to the left turn right!!!
 			{
