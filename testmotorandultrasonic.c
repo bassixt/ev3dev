@@ -488,9 +488,17 @@ struct motandsens inizialization (struct motandsens donald)
         int val;
         float value;
         uint32_t n, ii;
-
-
-
+	/*
+ 	printf( "Found tacho motors:\n" );
+        for ( i = 0; i < DESC_LIMIT; i++ ) {
+                if ( ev3_tacho[ i ].type_inx != TACHO_TYPE__NONE_ ) {
+                        printf( "  type = %s\n", ev3_tacho_type( ev3_tacho[ i ].type_inx ));
+                        printf( "  port = %s\n", ev3_tacho_port_name( i, s ));
+                }
+        }*/
+	ev3_search_tacho_plugged_in(65,0, &donald.dx, 0 );
+	ev3_search_tacho_plugged_in(66,0, &donald.sn, 0 );
+	ev3_search_tacho_plugged_in(67,0, &donald.med, 0 );
       if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.sn, 0 )){
                 get_tacho_max_speed( donald.sn, &donald.max_speed );
                 printf("value of buffer :%d\n", donald.sn);
@@ -501,8 +509,8 @@ struct motandsens inizialization (struct motandsens donald)
                 set_tacho_time_sp( donald.sn, 100 );
                 set_tacho_ramp_up_sp( donald.sn, 2000 );
                 set_tacho_ramp_down_sp( donald.sn, 2000 );
-		        set_tacho_position( donald.sn,0);
-               set_tacho_command_inx( donald.sn, TACHO_RUN_TIMED );
+		set_tacho_position( donald.sn,0);
+               // set_tacho_command_inx( donald.sn, TACHO_RUN_TIMED );
                 /* Wait tacho stop */
                 Sleep( 100 );
 
@@ -511,7 +519,7 @@ struct motandsens inizialization (struct motandsens donald)
                 fflush( stdout );
         }
 //Second motor
-if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
+if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 0 )) {
 
 
                 printf( "LEGO_EV3_L_MOTOR 2 is found, run for 5 sec...\n" );
@@ -523,7 +531,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
                 set_tacho_ramp_up_sp( donald.dx, 2000 );
 	        set_tacho_ramp_down_sp( donald.dx, 2000 );
 		set_tacho_position( donald.dx,0);
-               set_tacho_command_inx( donald.dx, TACHO_RUN_TIMED );
+                //set_tacho_command_inx( donald.dx, TACHO_RUN_TIMED );
                 /* Wait tacho stop */
                 Sleep( 100 );
 		fflush( stdout );
@@ -533,7 +541,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
 		fflush( stdout );
         }
 //medium motor
-	if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.med, 2 )) {
+	if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.med, 0 )) {
 		int max_speed;
 
 		printf( "LEGO_EV3_L_MOTOR 3 is found, \n" );
@@ -544,7 +552,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
 		set_tacho_time_sp( donald.med, 6000 );
 		set_tacho_ramp_up_sp( donald.med, 2000 );
 		set_tacho_ramp_down_sp( donald.med, 2000 );
-		set_tacho_command_inx( donald.med, TACHO_RUN_TIMED );
+		//set_tacho_command_inx( donald.med, TACHO_RUN_TIMED );
 		/* Wait tacho stop */
 		Sleep( 100 );
 	
