@@ -519,7 +519,7 @@ struct motandsens inizialization (struct motandsens donald)
                 fflush( stdout );
         }
 //Second motor
-if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 0 )) {
+if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
 
 
                 printf( "LEGO_EV3_L_MOTOR 2 is found, run for 5 sec...\n" );
@@ -541,7 +541,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 0 )) {
 		fflush( stdout );
         }
 //medium motor
-	if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.med, 0 )) {
+	if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.med, 2 )) {
 		int max_speed;
 
 		printf( "LEGO_EV3_L_MOTOR 3 is found, \n" );
