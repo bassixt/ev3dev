@@ -65,6 +65,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 			}
 			
 		}
+}
 
 //function that allows to rotate on the right side
 void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
