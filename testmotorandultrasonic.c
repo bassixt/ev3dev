@@ -700,7 +700,7 @@ int main( void )
         //uint32_t n, ii;
 //stuff for queue	
  	 mqd_t posqueue;
-         mqd_f turnqueue;
+         mqd_t turnqueue;
  
  
 #ifndef __ARM_ARCH_4T__
@@ -740,6 +740,7 @@ int main( void )
 			}
 			if( strcmp(color[ color_aq(donald.sn_color) ],"RED")==0)
 				grab_ball(donald.sn,donald.dx,donald.med,donald.max_speed);
+		}
 		}
 		
 	}
