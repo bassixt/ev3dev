@@ -25,10 +25,12 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 //function that hold the direction
 void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle){
 		float actual_angle;
-		get_sensor_value0(sn_compass, &actual_angle);
+		if ( !get_sensor_value0(sn_compass, &actual_angle )) {
+                        value = 0;
+		}
 		if(actual_angle!=initial_angle)
 		{	
-			if(actual_angle<initial_angle)	//too to the left turn right!!!
+			if(actual_angle<initial_angle - 2)	//too to the left turn right!!!
 			{
 				set_tacho_position_sp( sn,  2 );
 				set_tacho_position_sp( dx, -2 );
@@ -44,11 +46,13 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 					Sleep(100);
-					get_sensor_value0(sn_compass, &actual_angle);
+					if ( !get_sensor_value0(sn_compass, &actual_angle )) {
+					value = 0;
+					}
 				}
 			
 			}
-			if(actual_angle>initial_angle)	//too to the right turn left!!!
+			if(actual_angle>initial_angle + 2)	//too to the right turn left!!!
 			{
 				set_tacho_position_sp( sn, -2 );
 				set_tacho_position_sp( dx,  2 );
@@ -59,7 +63,9 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 					Sleep(100);
-					get_sensor_value0(sn_compass, &actual_angle);
+					if ( !get_sensor_value0(sn_compass, &actual_angle )) {
+					value = 0;
+					}
 				}
 			
 			}
