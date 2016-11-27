@@ -680,7 +680,7 @@ do {
 	//research( sn, dx, max_speed, sn_compass);
 	//break;
                
-	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,1500,sn_compass);
+	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,2000,sn_compass);
 
 	
 	Sleep(2000);
