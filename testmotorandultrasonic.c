@@ -2,6 +2,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <signal.h>
+#include <stdlib.h>
 #include <mqueue.h>
 #include <pthread.h>
 #include <sys/types.h>
