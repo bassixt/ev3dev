@@ -620,20 +620,21 @@ return donald;
 int main( void )
 {
         int i;
-        uint8_t sn,dx,med;
+	struct motandsens donald;
+        //uint8_t sn,dx,med;
         FLAGS_T state;
-        uint8_t sn_touch;
-        uint8_t sn_compass;
-        uint8_t sn_color;
-        uint8_t sn_sonar;
-        uint8_t sn_mag;
-        char s[ 256 ];
+        //uint8_t sn_touch;
+        //uint8_t sn_compass;
+        //uint8_t sn_color;
+        //uint8_t sn_sonar;
+        //uint8_t sn_mag;
+        //char s[ 256 ];
         int val;
-        int max_speed;
+        //int max_speed;
 	int act_pos;
         float value;
 	float elapsed_distance;
-        uint32_t n, ii;
+        //uint32_t n, ii;
 	
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
@@ -651,7 +652,10 @@ int main( void )
         while ( ev3_tacho_init() < 1 ) Sleep( 1000 );
 
         printf( "*** ( EV3 ) Hello! ***\n" );
-
+	
+	donald = inizialization(donald);
+	
+	/*
         printf( "Found tacho motors:\n" );
         for ( i = 0; i < DESC_LIMIT; i++ ) {
                 if ( ev3_tacho[ i ].type_inx != TACHO_TYPE__NONE_ ) {
@@ -675,7 +679,7 @@ int main( void )
                 set_tacho_ramp_down_sp( sn, 2000 );
 		set_tacho_position( sn,0);
               //  set_tacho_command_inx( sn, TACHO_RUN_TIMED );
-                /* Wait tacho stop */
+                // Wait tacho stop 
                 Sleep( 100 );
 do {
                         get_tacho_state_flags( sn, &state );
@@ -688,7 +692,7 @@ do {
                 /*for ( i = 0; i < 8; i++ ) {
                         set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
                         Sleep( 500 );
-                }*/
+                }
         } else {
                 printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
         }
@@ -708,7 +712,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &dx, 1 )) {
 	        set_tacho_ramp_down_sp( sn, 2000 );
 		set_tacho_position( dx,0);
               //  set_tacho_command_inx( sn, TACHO_RUN_TIMED );
-                /* Wait tacho stop */
+                // Wait tacho stop 
                 Sleep( 100 );
 		fflush( stdout );
 do {
@@ -722,7 +726,7 @@ do {
                 /*for ( i = 0; i < 8; i++ ) {
                         set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
                         Sleep( 500 );
-                }*/
+                }
         } else {
                 printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
 		fflush( stdout );
@@ -741,7 +745,7 @@ do {
 		set_tacho_ramp_up_sp( med, 2000 );
 		set_tacho_ramp_down_sp( med, 2000 );
 		//set_tacho_command_inx( med, TACHO_RUN_TIMED );
-		/* Wait tacho stop */
+		// Wait tacho stop 
 		Sleep( 100 );
 		do {
 			get_tacho_state_flags( sn, &state );
@@ -751,10 +755,10 @@ do {
 		set_tacho_ramp_up_sp( med, 0 );
 		set_tacho_ramp_down_sp( med, 0 );
 		set_tacho_position_sp( med, 20 );
-		/*for ( i = 0; i < 7; i++ ) {
+		for ( i = 0; i < 7; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
-		}*/
+		}
 		Sleep( 200 );
 		fflush( stdout );
 	} else {
@@ -789,10 +793,10 @@ do {
         if ( ev3_search_sensor( LEGO_EV3_TOUCH, &sn_touch, 0 )) {
                 //printf( "TOUCH sensor is found, press BUTTON for EXIT...\n" );
         }
-
-
+*/
+   
         while(1){
-
+		/*
                 if (ev3_search_sensor(HT_NXT_COMPASS, &sn_compass,0)){
                         //printf("COMPASS found, reading compass...\n");
                         if ( !get_sensor_value0(sn_compass, &value )) {
@@ -829,8 +833,8 @@ do {
                 }
 	//research( sn, dx, max_speed, sn_compass);
 	//break;
-               
-	elapsed_distance = go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,2000,sn_compass);
+         */    
+	elapsed_distance = go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,2000,donald.sn_compass);
 
 	
 	Sleep(2000);
