@@ -28,7 +28,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 		get_sensor_value0(sn_compass, &actual_angle);
 		if(actual_angle!=init_angle)
 		{	
-			if(actual_angle<init_angle)	//too to the left turn right!!!
+			if(actual_angle<initial_angle)	//too to the left turn right!!!
 			{
 				set_tacho_position_sp( sn,  2 );
 				set_tacho_position_sp( dx, -2 );
@@ -39,7 +39,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				set_tacho_ramp_down_sp( sn, 0 );
 				set_tacho_ramp_up_sp( dx,   0 );
 				set_tacho_ramp_down_sp( dx, 0 );
-				while(actual_angle<init_angle)
+				while(actual_angle<initial_angle)
 				{
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
@@ -48,13 +48,13 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				}
 			
 			}
-			if(actual_angle>init_angle)	//too to the right turn left!!!
+			if(actual_angle>initial_angle)	//too to the right turn left!!!
 			{
 				set_tacho_position_sp( sn, -2 );
 				set_tacho_position_sp( dx,  2 );
 				set_tacho_speed_sp( sn, max_speed );
 				set_tacho_speed_sp( dx, max_speed );
-				while(actual_angle>init_angle)
+				while(actual_angle>initial_angle)
 				{
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
