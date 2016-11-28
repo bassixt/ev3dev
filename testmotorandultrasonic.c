@@ -167,10 +167,10 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		int destro, sinistro;
 		set_tacho_position( sn,0);
 		set_tacho_position( dx,0);
-		set_tacho_speed_sp( sn, max_speed/2);
+		set_tacho_speed_sp( sn, max_speed/6);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
-		set_tacho_speed_sp( dx, max_speed/2);
+		set_tacho_speed_sp( dx, max_speed/6);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
 		set_tacho_position_sp( sn, -5 );
@@ -211,10 +211,10 @@ void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		int destro, sinistro;
 		set_tacho_position( sn,0);
 		set_tacho_position( dx,0);
-		set_tacho_speed_sp( sn, max_speed/2);
+		set_tacho_speed_sp( sn, max_speed/6);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
-		set_tacho_speed_sp( dx, max_speed/2);
+		set_tacho_speed_sp( dx, max_speed/6);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
 		set_tacho_position_sp( sn, 5 );
