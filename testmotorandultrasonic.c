@@ -229,7 +229,7 @@ void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		printf("sinistro %d\n",sinistro);
 		printf("destro %d\n",destro);
 		
-		while((destro-ind)<=actval||(sinistro-ins)>=-actval)
+		while((destro-ind)>=-actval||(sinistro-ins)<=actval)
 		{	
 			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
