@@ -225,7 +225,7 @@ void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		get_tacho_position(dx, &destro);
 		ins=sinistro;
 		ind=destro;
-		actval=rotation*4;
+		actval=rotation*3;  // It's a fixed value to have the right rotation
 		printf("sinistro %d\n",sinistro);
 		printf("destro %d\n",destro);
 		
