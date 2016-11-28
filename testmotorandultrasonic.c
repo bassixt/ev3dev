@@ -781,7 +781,7 @@ int main( void )
 				grab_ball(donald.sn,donald.dx,donald.med,donald.max_speed);
 				Sleep(200);
 				put_integer_in_mq (turnqueue, 1);
-			}
+			}	put_integer_in_mq (turnqueue, 1);
 				
 		}
 		}
