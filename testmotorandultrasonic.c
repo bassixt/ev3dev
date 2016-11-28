@@ -26,7 +26,7 @@
 const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
 #define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
 
-#define MIN_STEP_VER 20 //minimum step covered going ahead in cm
+#define MIN_STEP_VER 420 //minimum step covered going ahead in cm
 struct motandsens {
 	uint8_t sn;
 	uint8_t dx;
