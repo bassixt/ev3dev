@@ -489,6 +489,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 		else*/
 			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass);
 			printf("I'am in movements' for1\n");
+			Sleep(1000);
 	}
 	if(found != 1)
 		/*
@@ -496,10 +497,10 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 		{	
 			found=1;
 				//funtion to take the ball and return back}
-		else*/
+		else*/	
 			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-10,sn_compass); //here there is -10 becouse we did three step of 20cm	
-			printf("I'am in movements after for\n");																  //than we do another step of 10 cm than we turn left
-
+			printf("I'am in movements after for\n");	//than we do another step of 10 cm than we turn left
+			Sleep(1000);
 	//TURN LEFT
 	rotatedx(sn,dx,sn_compass,max_speed,90);
 	for(i=0;i<3;i++)
@@ -512,6 +513,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 		else*/
 			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass);
 			printf("I'am in movements turn left\n");
+			Sleep(1000);
 	}
 
 	//TURN RIGHT
@@ -525,6 +527,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 		else*/
 			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass);
 			printf("I'am in movements turn right\n");
+			Sleep(1000);
 	}
 	/*if(found != 1)
 		if(research(sn, dx, max_speed, sn_compass, 90)==1)
@@ -534,6 +537,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 		else*/
 			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-10,sn_compass);
 			printf("I'am in movements finish\n");
+			Sleep(1000);
 	//WE HOPE ARRIVED HOME
 	get_sensor_value0(sn_compass, &degree);
 	
