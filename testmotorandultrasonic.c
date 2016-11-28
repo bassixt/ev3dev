@@ -225,7 +225,7 @@ void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		get_tacho_position(dx, &destro);
 		ins=sinistro;
 		ind=destro;
-		actval=rotation*3;
+		actval=rotation*4;
 		printf("sinistro %d\n",sinistro);
 		printf("destro %d\n",destro);
 		
@@ -410,8 +410,8 @@ while((finish - beginning - distance)<=0){
 			       }         		*/
 	if(value<2500 && value >=70)
 		{
-	set_tacho_speed_sp( sn, max_speed * 1 / 12 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 12 );
+	set_tacho_speed_sp( sn, max_speed * 1 / 6 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 6 );
 			       }
 	if(value<70 && value >=40)
 		{
