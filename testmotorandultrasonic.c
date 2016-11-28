@@ -762,7 +762,7 @@ int main( void )
 		
 	//research( sn, dx, max_speed, sn_compass);
 	//break;
-            	movements(donald.sn,donald.dx,donald.sn_sonar,donald.max_speed, donald.sn_compass) 
+            	movements(donald.sn,donald.dx,donald.sn_sonar,donald.max_speed, donald.sn_compass); 
 		//elapsed_distance = go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,2000,donald.sn_compass);
 		put_integer_in_mq (posqueue, 1); //1 means I'm arrived to the ball control if it is red
 		n = get_integer_from_mq (turnqueue);
