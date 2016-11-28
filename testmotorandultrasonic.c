@@ -425,6 +425,7 @@ while((finish - beginning - distance)<=0){
 	 set_tacho_speed_sp( sn, max_speed * 0 );
 	 set_tacho_speed_sp( dx, max_speed * 0 );
 	Sleep(100);
+	put_integer_in_mq (posqueue, 1); //trial to take the ball if detected;
 	break;
 		}
 	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
