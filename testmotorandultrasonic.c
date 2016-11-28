@@ -460,7 +460,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 				//funtion to take the ball and return back}
 		else
 			*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-10,sn_compass);
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-210,sn_compass);
 			printf("I'am in movements\n");
 	for(i=0;i<2;i++)
 	{
@@ -484,7 +484,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 			found=1;
 				//funtion to take the ball and return back}
 		else*/	
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-15,sn_compass); 	
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-315,sn_compass); 	
 			printf("I'am in movements after turn\n");	
 			Sleep(1000);
 
@@ -522,7 +522,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-15,sn_compass);
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-315,sn_compass);
 			printf("I'am in movements finish\n");
 			Sleep(1000);
 	//WE HOPE ARRIVED HOME
