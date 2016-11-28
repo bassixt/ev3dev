@@ -447,7 +447,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 		trajectory, without searching the ball.	
 		THE TRAJECTORY CHOSEN IS GO 1 TIME AHEAD FOR 10 CM + 2 TIMES AHEAD FOR 25 CM +
 		TURN LEFT + 1 TIME AHEAD FOR 10 CM + 2 TIMES AHEAD FOR 25 CM + TURN RIGHT + 
-		2 TIMES AHEAD FOR 25 C
+		2 TIMES AHEAD FOR 25 C */
 	int i;
 	float degree;
 	
