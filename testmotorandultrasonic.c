@@ -26,7 +26,7 @@
 const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "WHITE", "BROWN" };
 #define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
 
-#define MIN_STEP_VER 420 //minimum step covered going ahead in cm
+#define MIN_STEP_VER 525 //minimum step covered going ahead in cm (25cm)
 struct motandsens {
 	uint8_t sn;
 	uint8_t dx;
@@ -445,9 +445,9 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 		at certain point we scan for the ball.
 		Than after we found the ball we can go till the ball, than return back, and restart to follow fixed 
 		trajectory, without searching the ball.	
-		THE TRAJECTORY CHOSEN IS GO 4 TIMES AHEAD FOR 20 CM 1 TIME AHEAD FOR 10 CM
-		THAN TURN LEFT +
-	*/
+		THE TRAJECTORY CHOSEN IS GO 1 TIME AHEAD FOR 10 CM + 2 TIMES AHEAD FOR 25 CM +
+		TURN LEFT + 1 TIME AHEAD FOR 10 CM + 2 TIMES AHEAD FOR 25 CM + TURN RIGHT + 
+		2 TIMES AHEAD FOR 25 C
 	int i;
 	float degree;
 	
@@ -460,9 +460,9 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 				//funtion to take the ball and return back}
 		else
 			*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass);
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-10,sn_compass);
 			printf("I'am in movements\n");
-	for(i=0;i<3;i++)
+	for(i=0;i<2;i++)
 	{
 	/*if(found != 1)
 		if(research(sn, dx, max_speed, sn_compass, 90)==1)
@@ -474,20 +474,21 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 			printf("I'am in movements' for1\n");
 			Sleep(1000);
 	}
-	if(found != 1)
+	//TURN LEFT
+	rotatesx(sn,dx,sn_compass,max_speed,90);
+	Sleep(1000);
+		if(found != 1)
 		/*
 		if(research(sn, dx, max_speed, sn_compass, 90)==1)
 		{	
 			found=1;
 				//funtion to take the ball and return back}
 		else*/	
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-10,sn_compass); //here there is -10 becouse we did three step of 20cm	
-			printf("I'am in movements after for\n");	//than we do another step of 10 cm than we turn left
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-15,sn_compass); 	
+			printf("I'am in movements after turn\n");	
 			Sleep(1000);
-	//TURN LEFT
-	rotatesx(sn,dx,sn_compass,max_speed,90);
-	Sleep(1000);
-	for(i=0;i<3;i++)
+
+	for(i=0;i<2;i++)
 	{
 	/*if(found != 1)
 		if(research(sn, dx, max_speed, sn_compass, 90)==1)
@@ -503,7 +504,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 	//TURN RIGHT
 	rotatedx(sn,dx,sn_compass,max_speed,90);
 	Sleep(1000);
-	for(i=0;i<4;i++)
+	for(i=0;i<2;i++)
 	{
 	/*if(found != 1)
 		if(research(sn, dx, max_speed, sn_compass, 90)==1)
@@ -521,7 +522,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-10,sn_compass);
+			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-15,sn_compass);
 			printf("I'am in movements finish\n");
 			Sleep(1000);
 	//WE HOPE ARRIVED HOME
