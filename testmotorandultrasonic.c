@@ -388,7 +388,7 @@ while((finish - beginning - distance)<=0){
                         }
                         printf( "\r(%f) \n", value);
 			fflush( stdout );
-       if(value<2500 && value>=1500)
+     /*  if(value<2500 && value>=1500)
 		{
 	set_tacho_speed_sp( sn, max_speed );
 	set_tacho_speed_sp( dx, max_speed );
@@ -407,8 +407,8 @@ while((finish - beginning - distance)<=0){
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 6 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 6 );
-			       }
-	if(value<250 && value >=70)
+			       }         		*/
+	if(value<2500 && value >=70)
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 12 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 12 );
