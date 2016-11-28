@@ -177,10 +177,6 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		set_tacho_position_sp( dx, 5);
 		Sleep(100);
 		get_sensor_value0(sn_compass, &degree);
-		//printf("Initial position %s\n", degree );
-		//initial=degree;
-		//while((degree-initial-rotation)<=0)
-		//{
 		get_tacho_position(sn, &sinistro);
 		get_tacho_position(dx, &destro);
 		ins=sinistro;
@@ -188,80 +184,67 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		actval=rotation*3;
 		printf("sinistro %d\n",sinistro);
 		printf("destro %d\n",destro);
-			//for(i=0;i<410;i++)
-			 	while((destro-ind)<=actval||(sinistro-ins)>=-actval)
-				{	
-				set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-				set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-				Sleep( 50 );
-				get_tacho_position(sn, &sinistro);
-				get_tacho_position(dx, &destro);
-				}
-									      
-			Sleep(500);
-			get_sensor_value0(sn_compass, &degree);
-			//printf("Final position %s\n", degree );
-			
+		
+		while((destro-ind)<=actval||(sinistro-ins)>=-actval)
+		{	
+			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+			Sleep( 50 );
 			get_tacho_position(sn, &sinistro);
 			get_tacho_position(dx, &destro);
-			printf("sinistro %d\n",sinistro);
-			printf("destro %d\n",destro);
-			fflush( stdout );
+		}									      
+		Sleep(500); 
+	
+		get_sensor_value0(sn_compass, &degree);
+		get_tacho_position(sn, &sinistro);
+		get_tacho_position(dx, &destro);
+		printf("sinistro %d\n",sinistro);
+		printf("destro %d\n",destro);
+		fflush( stdout );
 	
 }
 //function that allows to rotate on the left side
 void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
-		//int i;
+		float actval;
 		float degree;
-		float initial;		
-		set_tacho_speed_sp( sn, max_speed/12);
+		float ins,ind;
+		int destro, sinistro;
+		set_tacho_position( sn,0);
+		set_tacho_position( dx,0);
+		set_tacho_speed_sp( sn, max_speed/2);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
-		set_tacho_position_sp( sn, 1);
-		set_tacho_speed_sp( dx, max_speed/12);
+		set_tacho_speed_sp( dx, max_speed/2);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
-		set_tacho_position_sp( dx, 5 );
-			set_tacho_position_sp( sn, 90);
-			set_tacho_position_sp( dx, -90 );
-			Sleep(200);
-			get_sensor_value0(sn_compass, &degree);
-			//this function avoid the problem due to the initial position e.g. initial = 40
-			//expected rotation 90 degree final destination 310...
-			initial=degree-rotation;
-			if (initial<0)
-			{	
-				initial=359+initial;// If the number is negative trasnlate it in a positive one
-				while(degree<359)
-				{	
-					if(degree<=359&&degree>355)	
-						{break;}
-					else
-						{	
-						set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-						set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-						get_sensor_value0(sn_compass, &degree);
-						}Sleep( 200 );
-				}
-				while(degree>=initial)
-				{			
-				set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-				set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-				get_sensor_value0(sn_compass, &degree);
-				}Sleep( 200 );
-			}
-			else{
-			while((degree-initial)>=0)//it can rotate freely becouse the final pos is positive
-				{			
-				set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-				set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-				get_sensor_value0(sn_compass, &degree);
-				}
-			    Sleep( 200 );
-			}
-
-
-
+		set_tacho_position_sp( sn, 5 );
+		set_tacho_position_sp( dx,-5);
+		Sleep(100);
+		get_sensor_value0(sn_compass, &degree);
+		get_tacho_position(sn, &sinistro);
+		get_tacho_position(dx, &destro);
+		ins=sinistro;
+		ind=destro;
+		actval=rotation*3;
+		printf("sinistro %d\n",sinistro);
+		printf("destro %d\n",destro);
+		
+		while((destro-ind)<=actval||(sinistro-ins)>=-actval)
+		{	
+			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+			Sleep( 50 );
+			get_tacho_position(sn, &sinistro);
+			get_tacho_position(dx, &destro);
+		}									      
+		Sleep(500); 
+	
+		get_sensor_value0(sn_compass, &degree);
+		get_tacho_position(sn, &sinistro);
+		get_tacho_position(dx, &destro);
+		printf("sinistro %d\n",sinistro);
+		printf("destro %d\n",destro);
+		fflush( stdout );
 }
 //function that allow to grab the ball. Raise the grabber, go ahead till 5*22 mm. and than release the grabber and wait 
 //few time till start moving
