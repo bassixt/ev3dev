@@ -434,7 +434,7 @@ while((finish - beginning - distance)<=0){
 	get_tacho_position( dx, &finish);
 }
 get_tacho_position( dx, &finish);	
-	
+put_integer_in_mq (posqueue, 1); //trial to take the ball if detected;	
 	
  return (finish-beginning)/21; //return the distance in cm
 }
@@ -782,7 +782,8 @@ int main( void )
 				grab_ball(donald.sn,donald.dx,donald.med,donald.max_speed);
 				Sleep(200);
 				put_integer_in_mq (turnqueue, 1);
-			}	put_integer_in_mq (turnqueue, 1);
+			}	
+			else put_integer_in_mq (turnqueue, 1);
 				
 		}
 		}
@@ -802,13 +803,13 @@ int main( void )
 	//break;
             	movements(donald.sn,donald.dx,donald.sn_sonar,donald.max_speed, donald.sn_compass, posqueue,turnqueue); 
 		//elapsed_distance = go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,2000,donald.sn_compass);
-		put_integer_in_mq (posqueue, 1); //1 means I'm arrived to the ball control if it is red
-		n = get_integer_from_mq (turnqueue);
+		//put_integer_in_mq (posqueue, 1); //1 means I'm arrived to the ball control if it is red
+		/*n = get_integer_from_mq (turnqueue);
 		while(n!=1)
 		{
 			Sleep(500);
 			n = get_integer_from_mq (turnqueue);
-		}
+		}*/
 		fflush( stdout );
 	}
 		/*
