@@ -485,7 +485,8 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 			printf("I'am in movements after for\n");	//than we do another step of 10 cm than we turn left
 			Sleep(1000);
 	//TURN LEFT
-	rotatedx(sn,dx,sn_compass,max_speed,90);
+	rotatesx(sn,dx,sn_compass,max_speed,90);
+	Sleep(1000);
 	for(i=0;i<3;i++)
 	{
 	/*if(found != 1)
@@ -500,6 +501,8 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 	}
 
 	//TURN RIGHT
+	rotatedx(sn,dx,sn_compass,max_speed,90);
+	Sleep(1000);
 	for(i=0;i<4;i++)
 	{
 	/*if(found != 1)
