@@ -467,6 +467,7 @@ void movements(uint8_t sn,uint8_t dx,uint8_t sn_sonar, int max_speed, uint8_t sn
 			{
 				Sleep(500);
 				n = get_integer_from_mq (turnqueue);
+				printf("I'm waiting here for exiting and n:%d\n",n);
 			}
 			printf("I'am in movements\n");
 	for(i=0;i<2;i++)
