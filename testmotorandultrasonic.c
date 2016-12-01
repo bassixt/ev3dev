@@ -440,13 +440,14 @@ get_tacho_position( dx, &finish);
 }
 
 void* colorsense(void * args)
-{ int val;
-	if ( !get_sensor_value( 0, args->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
+{ 	int val;
+ 	struct motandsens *donald = (struct motandsens *) args;
+	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
 			}
-			if( strcmp(color[ color_aq(args->sn_color) ],"RED")==0)
+			if( strcmp(color[ color_aq(donald->sn_color) ],"RED")==0)
 			{
-				grab_ball(args->sn,args->dx,args->med,args->max_speed);
+				grab_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 				Sleep(200);
 				
 			}	
