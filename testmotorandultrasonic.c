@@ -461,7 +461,7 @@ void* movements(void * donald)
 				//funtion to take the ball and return back}
 		else
 			*/
-			go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,MIN_STEP_VER,donald.sn_compass,posqueue);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,posqueue);
 			n = get_integer_from_mq (turnqueue);
 			while(n!=1)
 			{
@@ -478,7 +478,7 @@ void* movements(void * donald)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,MIN_STEP_VER,donald.sn_compass,posqueue);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,posqueue);
 			n = get_integer_from_mq (turnqueue);
 			while(n!=1)
 			{
@@ -489,7 +489,7 @@ void* movements(void * donald)
 			Sleep(1000);
 	}
 	//TURN LEFT
-	rotatesx(donald.sn,donald.dx,donald.sn_compass,donald.max_speed,90);
+	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90);
 	Sleep(1000);
 		if(found != 1)
 		/*
@@ -498,7 +498,7 @@ void* movements(void * donald)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/	
-			go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,MIN_STEP_VER-315,donald.sn_compass,posqueue); 	
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,posqueue); 	
 			n = get_integer_from_mq (turnqueue);
 			while(n!=1)
 			{
@@ -522,16 +522,16 @@ void* movements(void * donald)
 //	}
 
 	//TURN RIGHT
-	rotatedx(donald.sn,donald.dx,donald.sn_compass,donald.max_speed,180);
+	rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180);
 	Sleep(1000);
-	go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,MIN_STEP_VER-315,donald.sn_compass,posqueue);
+	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,posqueue);
 	n = get_integer_from_mq (turnqueue);
 	while(n!=1)
 	{
 		Sleep(500);
 		n = get_integer_from_mq (turnqueue);
 	}
-	rotatesx(donald.sn,donald.dx,donald.sn_compass,donald.max_speed,90);
+	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90);
 	Sleep(1000);
 	for(i=0;i<2;i++)
 	{
@@ -541,7 +541,7 @@ void* movements(void * donald)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,MIN_STEP_VER,donald.sn_compass,posqueue);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,posqueue);
 			n = get_integer_from_mq (turnqueue);
 			while(n!=1)
 			{
@@ -557,7 +557,7 @@ void* movements(void * donald)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,MIN_STEP_VER-315,donald.sn_compass,,posqueue);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,posqueue);
 			n = get_integer_from_mq (turnqueue);
 			while(n!=1)
 			{
@@ -567,7 +567,7 @@ void* movements(void * donald)
 			printf("I'am in movements finish\n");
 			Sleep(1000);
 	//WE HOPE ARRIVED HOME
-	get_sensor_value0(donald.sn_compass, &degree);
+	get_sensor_value0(donald->sn_compass, &degree);
 	
 	return;
 }
