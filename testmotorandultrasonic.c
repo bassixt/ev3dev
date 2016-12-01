@@ -778,9 +778,13 @@ int main( void )
      				  exit(EXIT_FAILURE);
     					 }	
  		if (pthread_join(thread_colorsense, NULL)) {
-	perror("pthread_join colorsens");
-	return EXIT_FAILURE;
-    }
+			perror("pthread_join colorsens");
+			return EXIT_FAILURE;
+   					 		}
+		if (pthread_join(thread_movement, NULL)) {
+			perror("pthread_join colorsens");
+			return EXIT_FAILURE;
+   					 		} 
        
  	/*ret= fork();
  	if (ret<0)
