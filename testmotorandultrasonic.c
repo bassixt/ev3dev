@@ -15,6 +15,8 @@
 
 #include <windows.h>
 
+pthread_mutex_t mutex;
+
 // UNIX //////////////////////////////////////////
 #else
 
@@ -250,6 +252,7 @@ void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 //few time till start moving
 void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			int i;
+ 			int retour;
 			int act_pos,distance_el;
 			set_tacho_time_sp( sn, 100 );
 			set_tacho_ramp_up_sp( sn, 2000 );
@@ -260,6 +263,12 @@ void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
  			set_tacho_speed_sp( sn, max_speed * 1 / 6 );
                         set_tacho_speed_sp( dx, max_speed * 1 / 6 );
 			//raise the grabber
+ 			 retour = pthread_mutex_lock(&mutex);
+    			if (retour != 0)
+    			 {
+    			   perror("erreur mutex lock");
+     			  exit(EXIT_FAILURE);
+    			 }
 			set_tacho_position_sp( med, 90 );
 			Sleep(200);
 			for ( i = 0; i < 7; i++ ) {
@@ -282,6 +291,12 @@ void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 			Sleep( 200 );
 			} 
  			Sleep(1000);
+ 			 retour = pthread_mutex_unlock(&mutex);
+    			if (retour != 0)
+    			 {
+    			   perror("erreur mutex unlock");
+     			  exit(EXIT_FAILURE);
+    			 }
 }   
 int color_aq(uint8_t sn_color)
 {	
@@ -725,6 +740,7 @@ int main( void )
          mqd_t turnqueue;
  pthread_t thread_movement, thread_colorsense;
  
+  pthread_mutex_init(&mutex, NULL);
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
         ev3_brick_addr = "192.168.0.204";
