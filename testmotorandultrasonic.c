@@ -376,6 +376,7 @@ float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sona
 	//we have to add the angle for the ball a routine to turn till this angle
 	//and than go and take te ball
 int beginning,finish;
+int retour;
 float value;
 float initial_angle;
 set_tacho_time_sp( sn, 100 );
