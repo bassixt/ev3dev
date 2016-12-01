@@ -813,7 +813,7 @@ int main( void )
 		
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
-	}
-	printf("process %s ret = %d\n", name, ret);
+	
+	//printf("process %s ret = %d\n", name, ret);
         return ( 0 );
 }
