@@ -580,7 +580,7 @@ void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_t
 	
 	return;
 }
-struct motandsens inizialization (struct motandsens donald)
+struct motandsens inizialization (struct* motandsens donald)
 {
   int i;
   
