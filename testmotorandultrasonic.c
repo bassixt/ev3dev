@@ -15,8 +15,6 @@
 
 #include <windows.h>
 
-pthread_mutex_t mutex;
-
 // UNIX //////////////////////////////////////////
 #else
 
@@ -29,6 +27,8 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 #define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
 
 #define MIN_STEP_VER 525 //minimum step covered going ahead in cm (25cm)
+pthread_mutex_t mutex;
+
 struct motandsens {
 	uint8_t sn;
 	uint8_t dx;
