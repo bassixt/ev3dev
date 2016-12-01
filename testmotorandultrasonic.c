@@ -723,7 +723,7 @@ int main( void )
 //stuff for queue	
  	 mqd_t posqueue;
          mqd_t turnqueue;
- pthread_t thread_movement;
+ pthread_t thread_movement, thread_colorsensor;
  
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
@@ -744,7 +744,7 @@ int main( void )
 	
 	donald = inizialization(donald);
 	int retour;		
-		pthread_create(&thread_movement, NULL, movements, donald);
+	pthread_create(&thread_movement, NULL, movements, donald);
 				  if (retour != 0)
    					  {
      				  perror("erreur thread movement");
@@ -752,6 +752,17 @@ int main( void )
     					 }	
  		if (pthread_join(thread_movement, NULL)) {
 	perror("pthread_join");
+	return EXIT_FAILURE;
+    }
+ 
+ pthread_create(&thread_colorsense, NULL, colorsense, donald);
+				  if (retour != 0)
+   					  {
+     				  perror("erreur thread sensor");
+     				  exit(EXIT_FAILURE);
+    					 }	
+ 		if (pthread_join(thread_colorsense, NULL)) {
+	perror("pthread_join colorsens");
 	return EXIT_FAILURE;
     }
        
