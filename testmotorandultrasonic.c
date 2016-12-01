@@ -803,7 +803,7 @@ int main( void )
 	//break;
 	
 		int retour;		
-		pthread_create(&thread_movement, NULL, movements, &donald);
+		pthread_create(&thread_movement, NULL, movements, donald);
 				  if (retour != 0)
    					  {
      				  perror("erreur thread movement");
