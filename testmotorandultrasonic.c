@@ -27,7 +27,7 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 #define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
 
 #define MIN_STEP_VER 525 //minimum step covered going ahead in cm (25cm)
-struct *motandsens {
+typedef struct {
 	uint8_t sn;
 	uint8_t dx;
 	uint8_t med;
@@ -38,7 +38,15 @@ struct *motandsens {
 	uint8_t sn_mag;
     int max_speed;
 
-};
+}motandsens ;
+
+void *motandsensparam (void *args) {
+	motandsens *actual_args = args;
+	
+	free(actual_args);
+	return 0;
+}
+
 //message queue
 #define MAX_MSG 15
 #define OVER 37
@@ -758,8 +766,9 @@ int main( void )
         while ( ev3_tacho_init() < 1 ) Sleep( 1000 );
 
         printf( "*** ( EV3 ) Hello! ***\n" );
-	
-	donald = inizialization(donald);
+	motandsens *args = malloc(sizeof *args);
+ 	
+	args = inizialization(args);
 	
         ret= fork();
  	if (ret<0)
@@ -803,7 +812,7 @@ int main( void )
 	//break;
 	
 		int retour;		
-		pthread_create(&thread_movement, NULL, movements, donald);
+		pthread_create(&thread_movement, NULL, movements, args);
 				  if (retour != 0)
    					  {
      				  perror("erreur thread movement");
