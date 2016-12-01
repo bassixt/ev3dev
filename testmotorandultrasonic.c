@@ -723,7 +723,7 @@ int main( void )
 //stuff for queue	
  	 mqd_t posqueue;
          mqd_t turnqueue;
- pthread_t thread_movement, thread_colorsensor;
+ pthread_t thread_movement, thread_colorsense;
  
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
