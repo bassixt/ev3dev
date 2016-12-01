@@ -353,7 +353,7 @@ void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
  			
 }   
 
-float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance,uint8_t sn_compass,mqd_t posqueue)
+float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance,uint8_t sn_compass)
 {	//aggiungere funzione che controlla anche il motore 
 	//sinistro e vede se sono andati dritti tutti e due 
 	//altrimenti significa che hai girato e c'è un errore
@@ -462,7 +462,7 @@ void* movements(void * args)
 				//funtion to take the ball and return back}
 		else
 			*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,posqueue);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass);
 			
 			printf("I'am in movements\n");
 	for(i=0;i<2;i++)
@@ -473,7 +473,7 @@ void* movements(void * args)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,posqueue);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass);
 			
 			printf("I'am in movements' for1\n");
 			Sleep(1000);
@@ -488,7 +488,7 @@ void* movements(void * args)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/	
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,posqueue); 	
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass); 	
 		
 			printf("I'am in movements after turn\n");	
 			Sleep(1000);
@@ -509,7 +509,7 @@ void* movements(void * args)
 	//TURN RIGHT
 	rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180);
 	Sleep(1000);
-	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,posqueue);
+	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass);
 	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90);
 	Sleep(1000);
 	for(i=0;i<2;i++)
@@ -520,7 +520,7 @@ void* movements(void * args)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,posqueue);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass);
 			
 			printf("I'am in movements turn right\n");
 			Sleep(1000);
@@ -531,7 +531,7 @@ void* movements(void * args)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,posqueue);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass);
 			
 			
 			printf("I'am in movements finish\n");
