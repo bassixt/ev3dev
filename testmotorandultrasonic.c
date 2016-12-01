@@ -737,6 +737,10 @@ int main( void )
      				  perror("erreur thread movement");
      				  exit(EXIT_FAILURE);
     					 }	
+ 		if (pthread_join(thread_movement, NULL)) {
+	perror("pthread_join");
+	return EXIT_FAILURE;
+    }
        
  	/*ret= fork();
  	if (ret<0)
