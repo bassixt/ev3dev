@@ -700,7 +700,7 @@ int main( void )
 {	pid_t ret;
  	char *name;
         int i,d,n;
-	struct motandsens *donald=malloc(sizeof(motandsens));
+	struct motandsens *donald=malloc(sizeof(struct motandsens));
         FLAGS_T state;
         int val;
 	int act_pos;
