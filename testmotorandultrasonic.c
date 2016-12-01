@@ -397,7 +397,18 @@ while((finish - beginning - distance)<=0){
 	set_tacho_ramp_down_sp( sn, 2000 );
 	set_tacho_ramp_up_sp( dx, 2000 );
 	set_tacho_ramp_down_sp( dx, 2000 );
-		
+	retour = pthread_mutex_lock(&mutex);
+    			if (retour != 0)
+    			 {
+    			   perror("erreur mutex lock");
+     			  exit(EXIT_FAILURE);
+    			 }
+	retour = pthread_mutex_unlock(&mutex);
+    			if (retour != 0)
+    			 {
+    			   perror("erreur mutex unlock");
+     			  exit(EXIT_FAILURE);
+    			 }
 	if ( !get_sensor_value0(sn_sonar, &value )) {
                                 value = 0;
                         }
