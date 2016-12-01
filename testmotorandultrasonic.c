@@ -457,6 +457,8 @@ get_tacho_position( dx, &finish);
 void* colorsense(void * args)
 { 	int val;
  	struct motandsens *donald = (struct motandsens *) args;
+ 	while(1)
+	{
 	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
 			}
@@ -465,7 +467,8 @@ void* colorsense(void * args)
 				grab_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 				Sleep(200);
 				
-			}	
+			}
+	}
 	return;
 }
 void* movements(void * args)
