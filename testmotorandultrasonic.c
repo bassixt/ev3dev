@@ -440,7 +440,7 @@ put_integer_in_mq (posqueue, 1); //trial to take the ball if detected;
 }
 
 
-void* movements(void * donald)
+void* movements(void * args)
 {
 	/*	We decide a certain movements to do in order to go from the beginning to the destination and than
 		at certain point we scan for the ball.
@@ -450,6 +450,7 @@ void* movements(void * donald)
 		TURN LEFT + 1 TIME AHEAD FOR 10 CM + 2 TIMES AHEAD FOR 25 CM + TURN RIGHT + 
 		2 TIMES AHEAD FOR 25 C */
 	int i,n;
+	struct motandsens *donald = (struct motandsens *) args;
 	float degree;
 	
 	int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
@@ -580,7 +581,7 @@ void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_t
 	
 	return;
 }
-struct motandsens inizialization (struct motandsens donald)
+struct motandsens* inizialization (struct motandsens *donald)
 {
   int i;
   
@@ -597,21 +598,21 @@ struct motandsens inizialization (struct motandsens donald)
                         printf( "  port = %s\n", ev3_tacho_port_name( i, s ));
                 }
         }*/
-	ev3_search_tacho_plugged_in(65,0, &donald.dx, 0 );
-	ev3_search_tacho_plugged_in(66,0, &donald.sn, 0 );
-	ev3_search_tacho_plugged_in(67,0, &donald.med, 0 );
-      if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.sn, 0 )){
-                get_tacho_max_speed( donald.sn, &donald.max_speed );
-                printf("value of buffer :%d\n", donald.sn);
-                printf("  max_speed = %d\n", donald.max_speed );
-                set_tacho_stop_action_inx( donald.sn, TACHO_COAST );
-                set_tacho_polarity( donald.sn, "inversed" );
-                set_tacho_speed_sp( donald.sn, donald.max_speed * 2 / 3 );
-                set_tacho_time_sp( donald.sn, 100 );
-                set_tacho_ramp_up_sp( donald.sn, 2000 );
-                set_tacho_ramp_down_sp( donald.sn, 2000 );
-		set_tacho_position( donald.sn,0);
-               // set_tacho_command_inx( donald.sn, TACHO_RUN_TIMED );
+	ev3_search_tacho_plugged_in(65,0, &donald->dx, 0 );
+	ev3_search_tacho_plugged_in(66,0, &donald->sn, 0 );
+	ev3_search_tacho_plugged_in(67,0, &donald->med, 0 );
+      if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->sn, 0 )){
+                get_tacho_max_speed( donald->sn, &donald->max_speed );
+                printf("value of buffer :%d\n", donald->sn);
+                printf("  max_speed = %d\n", donald->max_speed );
+                set_tacho_stop_action_inx( donald->sn, TACHO_COAST );
+                set_tacho_polarity( donald->sn, "inversed" );
+                set_tacho_speed_sp( donald->sn, donald->max_speed * 2 / 3 );
+                set_tacho_time_sp( donald->sn, 100 );
+                set_tacho_ramp_up_sp( donald->sn, 2000 );
+                set_tacho_ramp_down_sp( donald->sn, 2000 );
+		set_tacho_position( donald->sn,0);
+               // set_tacho_command_inx( donald->sn, TACHO_RUN_TIMED );
                 /* Wait tacho stop */
                 Sleep( 100 );
 
@@ -620,19 +621,19 @@ struct motandsens inizialization (struct motandsens donald)
                 fflush( stdout );
         }
 //Second motor
-if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
+if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->dx, 1 )) {
 
 
                 printf( "LEGO_EV3_L_MOTOR 2 is found, run for 5 sec...\n" );
                
-                set_tacho_stop_action_inx( donald.dx, TACHO_COAST );
-                set_tacho_polarity( donald.dx, "inversed" );
-                set_tacho_speed_sp( donald.dx, donald.max_speed * 2 / 3 );
-                set_tacho_time_sp( donald.dx, 100 );
-                set_tacho_ramp_up_sp( donald.dx, 2000 );
-	        set_tacho_ramp_down_sp( donald.dx, 2000 );
-		set_tacho_position( donald.dx,0);
-                //set_tacho_command_inx( donald.dx, TACHO_RUN_TIMED );
+                set_tacho_stop_action_inx( donald->dx, TACHO_COAST );
+                set_tacho_polarity( donald->dx, "inversed" );
+                set_tacho_speed_sp( donald->dx, donald->max_speed * 2 / 3 );
+                set_tacho_time_sp( donald->dx, 100 );
+                set_tacho_ramp_up_sp( donald->dx, 2000 );
+	        set_tacho_ramp_down_sp( donald->dx, 2000 );
+		set_tacho_position( donald->dx,0);
+                //set_tacho_command_inx( donald->dx, TACHO_RUN_TIMED );
                 /* Wait tacho stop */
                 Sleep( 100 );
 		fflush( stdout );
@@ -642,18 +643,18 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
 		fflush( stdout );
         }
 //medium motor
-	if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.med, 2 )) {
+	if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->med, 2 )) {
 		int max_speed;
 
 		printf( "LEGO_EV3_L_MOTOR 3 is found, \n" );
 		
-		set_tacho_stop_action_inx( donald.med, TACHO_COAST );
-		set_tacho_polarity( donald.med, "normal" );
-		set_tacho_speed_sp( donald.med, donald.max_speed/12);
-		set_tacho_time_sp( donald.med, 6000 );
-		set_tacho_ramp_up_sp( donald.med, 2000 );
-		set_tacho_ramp_down_sp( donald.med, 2000 );
-		//set_tacho_command_inx( donald.med, TACHO_RUN_TIMED );
+		set_tacho_stop_action_inx( donald->med, TACHO_COAST );
+		set_tacho_polarity( donald->med, "normal" );
+		set_tacho_speed_sp( donald->med, donald->max_speed/12);
+		set_tacho_time_sp( donald->med, 6000 );
+		set_tacho_ramp_up_sp( donald->med, 2000 );
+		set_tacho_ramp_down_sp( donald->med, 2000 );
+		//set_tacho_command_inx( donald->med, TACHO_RUN_TIMED );
 		/* Wait tacho stop */
 		Sleep( 100 );
 	
@@ -683,39 +684,39 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald.dx, 1 )) {
                         }
                 }
 	}
-        if ( ev3_search_sensor( LEGO_EV3_TOUCH, &donald.sn_touch, 0 )) {
+        if ( ev3_search_sensor( LEGO_EV3_TOUCH, &donald->sn_touch, 0 )) {
                 //printf( "TOUCH sensor is found, press BUTTON for EXIT...\n" );
         }
 
-                if (ev3_search_sensor(HT_NXT_COMPASS, &donald.sn_compass,0)){
+                if (ev3_search_sensor(HT_NXT_COMPASS, &donald->sn_compass,0)){
                         //printf("COMPASS found, reading compass...\n");
-                        if ( !get_sensor_value0(donald.sn_compass, &value )) {
+                        if ( !get_sensor_value0(donald->sn_compass, &value )) {
                         value = 0;
                         }
                         printf( "compass\r(%f) \n", value);
                         fflush( stdout );
                 }
-                if ( ev3_search_sensor( LEGO_EV3_COLOR, &donald.sn_color, 0 )) {
+                if ( ev3_search_sensor( LEGO_EV3_COLOR, &donald->sn_color, 0 )) {
 			printf( "COLOR sensor is found, setting...\n" );
-			set_sensor_mode( donald.sn_color, "COL-COLOR" );
-			if ( !get_sensor_value( 0, donald.sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
+			set_sensor_mode( donald->sn_color, "COL-COLOR" );
+			if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
 			}
 			printf( "\r(%s) \n", color[ val ]);
 			printf( "valore del colore e': %d\n",val);
 			fflush( stdout );
 		}
-                if (ev3_search_sensor(LEGO_EV3_US, &donald.sn_sonar,0)){
+                if (ev3_search_sensor(LEGO_EV3_US, &donald->sn_sonar,0)){
                         //printf("SONAR found, reading sonar...\n");
-                        if ( !get_sensor_value0(donald.sn_sonar, &value )) {
+                        if ( !get_sensor_value0(donald->sn_sonar, &value )) {
                                 value = 0;
                         }
                         printf( "\r(%f) \n", value);
 			fflush( stdout );
                 }
-                if (ev3_search_sensor(LEGO_EV3_GYRO, &donald.sn_mag,0)){
+                if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
                         //printf("GYRO found, reading magnet...\n");
-                        if ( !get_sensor_value0(donald.sn_mag, &value )) {
+                        if ( !get_sensor_value0(donald->sn_mag, &value )) {
                                 value = 0;
                         }
                         printf( "\r(%f) \n", value);
@@ -766,6 +767,7 @@ int main( void )
 		printf( "there is a problem with fork()\n");
  	else if ( ret==0 ) //child
 	{
+/*
 		init_queue (&posqueue, O_CREAT | O_RDONLY,1);
 		init_queue (&turnqueue,O_CREAT | O_WRONLY,2);
 		//put_integer_in_mq (turnqueue, 0);
@@ -779,7 +781,7 @@ int main( void )
 			}
 			if( strcmp(color[ color_aq(donald.sn_color) ],"RED")==0)
 			{
-				grab_ball(donald.sn,donald.dx,donald.med,donald.max_speed);
+				grab_ball(donald->sn,donald.dx,donald.med,donald.max_speed);
 				Sleep(200);
 				put_integer_in_mq (turnqueue, 1);
 			}	
@@ -788,7 +790,7 @@ int main( void )
 		}
 		}
 		
-	}
+	*/}
  	else		  //parent
 	{
 		init_queue (&posqueue, O_CREAT | O_WRONLY,1);
@@ -832,7 +834,7 @@ int main( void )
         rotatesx(sn,dx,sn_compass,max_speed,90);
 	break;
              	
-        }	
+        }
 			
 	
 	rotatedx(sn,dx,max_speed);
