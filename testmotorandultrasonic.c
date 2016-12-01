@@ -463,13 +463,7 @@ void* movements(void * args)
 		else
 			*/
 			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,posqueue);
-			n = get_integer_from_mq (turnqueue);
-			while(n!=1)
-			{
-				Sleep(500);
-				n = get_integer_from_mq (turnqueue);
-				printf("I'm waiting here for exiting and n:%d\n",n);
-			}
+			
 			printf("I'am in movements\n");
 	for(i=0;i<2;i++)
 	{
@@ -480,12 +474,7 @@ void* movements(void * args)
 				//funtion to take the ball and return back}
 		else*/
 			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,posqueue);
-			n = get_integer_from_mq (turnqueue);
-			while(n!=1)
-			{
-				Sleep(500);
-				n = get_integer_from_mq (turnqueue);
-			}
+			
 			printf("I'am in movements' for1\n");
 			Sleep(1000);
 	}
@@ -500,12 +489,7 @@ void* movements(void * args)
 				//funtion to take the ball and return back}
 		else*/	
 			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,posqueue); 	
-			n = get_integer_from_mq (turnqueue);
-			while(n!=1)
-			{
-				Sleep(500);
-				n = get_integer_from_mq (turnqueue);
-			}
+		
 			printf("I'am in movements after turn\n");	
 			Sleep(1000);
 
@@ -526,12 +510,6 @@ void* movements(void * args)
 	rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180);
 	Sleep(1000);
 	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,posqueue);
-	n = get_integer_from_mq (turnqueue);
-	while(n!=1)
-	{
-		Sleep(500);
-		n = get_integer_from_mq (turnqueue);
-	}
 	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90);
 	Sleep(1000);
 	for(i=0;i<2;i++)
@@ -543,12 +521,7 @@ void* movements(void * args)
 				//funtion to take the ball and return back}
 		else*/
 			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,posqueue);
-			n = get_integer_from_mq (turnqueue);
-			while(n!=1)
-			{
-				Sleep(500);
-				n = get_integer_from_mq (turnqueue);
-			}
+			
 			printf("I'am in movements turn right\n");
 			Sleep(1000);
 	}
@@ -559,12 +532,8 @@ void* movements(void * args)
 				//funtion to take the ball and return back}
 		else*/
 			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,posqueue);
-			n = get_integer_from_mq (turnqueue);
-			while(n!=1)
-			{
-				Sleep(500);
-				n = get_integer_from_mq (turnqueue);
-			}
+			
+			
 			printf("I'am in movements finish\n");
 			Sleep(1000);
 	//WE HOPE ARRIVED HOME
