@@ -27,7 +27,7 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 #define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
 
 #define MIN_STEP_VER 525 //minimum step covered going ahead in cm (25cm)
-struct *motandsens {
+struct motandsens {
 	uint8_t sn;
 	uint8_t dx;
 	uint8_t med;
@@ -580,7 +580,7 @@ void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_t
 	
 	return;
 }
-struct* motandsens inizialization (struct* motandsens donald)
+struct motandsens inizialization (struct motandsens donald)
 {
   int i;
   
@@ -730,7 +730,7 @@ int main( void )
 {	pid_t ret;
  	char *name;
         int i,d,n;
-	struct *motandsens donald;
+	struct motandsens *donald;
         FLAGS_T state;
         int val;
 	int act_pos;
