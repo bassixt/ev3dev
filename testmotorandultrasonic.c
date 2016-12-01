@@ -730,13 +730,20 @@ int main( void )
         printf( "*** ( EV3 ) Hello! ***\n" );
 	
 	donald = inizialization(donald);
-	
-        ret= fork();
+	int retour;		
+		pthread_create(&thread_movement, NULL, movements, donald);
+				  if (retour != 0)
+   					  {
+     				  perror("erreur thread movement");
+     				  exit(EXIT_FAILURE);
+    					 }	
+       
+ 	/*ret= fork();
  	if (ret<0)
 		printf( "there is a problem with fork()\n");
  	else if ( ret==0 ) //child
 	{
-/*
+
 		init_queue (&posqueue, O_CREAT | O_RDONLY,1);
 		init_queue (&turnqueue,O_CREAT | O_WRONLY,2);
 		//put_integer_in_mq (turnqueue, 0);
@@ -759,7 +766,7 @@ int main( void )
 		}
 		}
 		
-	*/}
+	}
  	else		  //parent
 	{
 		init_queue (&posqueue, O_CREAT | O_WRONLY,1);
@@ -772,14 +779,8 @@ int main( void )
 		
 	//research( sn, dx, max_speed, sn_compass);
 	//break;
-	
-		int retour;		
-		pthread_create(&thread_movement, NULL, movements, donald);
-				  if (retour != 0)
-   					  {
-     				  perror("erreur thread movement");
-     				  exit(EXIT_FAILURE);
-    					 }	
+	*/
+		
             	//movements(donald.sn,donald.dx,donald.sn_sonar,donald.max_speed, donald.sn_compass, posqueue,turnqueue); 
 		//elapsed_distance = go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,2000,donald.sn_compass);
 		//put_integer_in_mq (posqueue, 1); //1 means I'm arrived to the ball control if it is red
