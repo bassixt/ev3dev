@@ -439,7 +439,18 @@ get_tacho_position( dx, &finish);
  return (finish-beginning)/21; //return the distance in cm
 }
 
-
+void* colorsense(void * args)
+{
+	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
+				val = 0;
+			}
+			if( strcmp(color[ color_aq(donald->sn_color) ],"RED")==0)
+			{
+				grab_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
+				Sleep(200);
+				
+			}		
+}
 void* movements(void * args)
 {
 	/*	We decide a certain movements to do in order to go from the beginning to the destination and than
