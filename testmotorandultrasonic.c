@@ -768,7 +768,7 @@ int main( void )
 		//n = get_integer_from_mq (turnqueue);
 		name = "parent\n";
 
-        while(1){
+        
 		
 	//research( sn, dx, max_speed, sn_compass);
 	//break;
@@ -789,8 +789,8 @@ int main( void )
 			Sleep(500);
 			n = get_integer_from_mq (turnqueue);
 		}*/
-		fflush( stdout );
-	}
+		//fflush( stdout );
+	
 		/*
 	if( strcmp(color[ color_aq(sn_color) ],"RED")==0)
 	grab_ball(sn,dx,med,max_speed);
