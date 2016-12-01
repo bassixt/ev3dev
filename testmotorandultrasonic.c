@@ -461,7 +461,7 @@ void* movements(void * donald)
 				//funtion to take the ball and return back}
 		else
 			*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass,posqueue);
+			go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,MIN_STEP_VER,donald.sn_compass,posqueue);
 			n = get_integer_from_mq (turnqueue);
 			while(n!=1)
 			{
@@ -478,7 +478,7 @@ void* movements(void * donald)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass,posqueue);
+			go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,MIN_STEP_VER,donald.sn_compass,posqueue);
 			n = get_integer_from_mq (turnqueue);
 			while(n!=1)
 			{
@@ -489,7 +489,7 @@ void* movements(void * donald)
 			Sleep(1000);
 	}
 	//TURN LEFT
-	rotatesx(sn,dx,sn_compass,max_speed,90);
+	rotatesx(donald.sn,donald.dx,donald.sn_compass,donald.max_speed,90);
 	Sleep(1000);
 		if(found != 1)
 		/*
@@ -498,7 +498,7 @@ void* movements(void * donald)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/	
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-315,sn_compass,posqueue); 	
+			go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,MIN_STEP_VER-315,donald.sn_compass,posqueue); 	
 			n = get_integer_from_mq (turnqueue);
 			while(n!=1)
 			{
@@ -522,16 +522,16 @@ void* movements(void * donald)
 //	}
 
 	//TURN RIGHT
-	rotatedx(sn,dx,sn_compass,max_speed,180);
+	rotatedx(donald.sn,donald.dx,donald.sn_compass,donald.max_speed,180);
 	Sleep(1000);
-	go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-315,sn_compass,posqueue);
+	go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,MIN_STEP_VER-315,donald.sn_compass,posqueue);
 	n = get_integer_from_mq (turnqueue);
 	while(n!=1)
 	{
 		Sleep(500);
 		n = get_integer_from_mq (turnqueue);
 	}
-	rotatesx(sn,dx,sn_compass,max_speed,90);
+	rotatesx(donald.sn,donald.dx,donald.sn_compass,donald.max_speed,90);
 	Sleep(1000);
 	for(i=0;i<2;i++)
 	{
@@ -541,7 +541,7 @@ void* movements(void * donald)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass,posqueue);
+			go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,MIN_STEP_VER,donald.sn_compass,posqueue);
 			n = get_integer_from_mq (turnqueue);
 			while(n!=1)
 			{
@@ -557,7 +557,7 @@ void* movements(void * donald)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER-315,sn_compass,posqueue);
+			go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,MIN_STEP_VER-315,donald.sn_compass,,posqueue);
 			n = get_integer_from_mq (turnqueue);
 			while(n!=1)
 			{
@@ -567,7 +567,7 @@ void* movements(void * donald)
 			printf("I'am in movements finish\n");
 			Sleep(1000);
 	//WE HOPE ARRIVED HOME
-	get_sensor_value0(sn_compass, &degree);
+	get_sensor_value0(donald.sn_compass, &degree);
 	
 	return;
 }
@@ -580,7 +580,7 @@ void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_t
 	
 	return;
 }
-struct motandsens inizialization (struct* motandsens donald)
+struct* motandsens inizialization (struct* motandsens donald)
 {
   int i;
   
@@ -730,7 +730,7 @@ int main( void )
 {	pid_t ret;
  	char *name;
         int i,d,n;
-	struct motandsens donald;
+	struct *motandsens donald;
         FLAGS_T state;
         int val;
 	int act_pos;
@@ -802,8 +802,13 @@ int main( void )
 	//research( sn, dx, max_speed, sn_compass);
 	//break;
 	
-				pthread_create(&thread_movement, NULL, movements, &donald);
-				thread_movement();
+		int retour;		
+		pthread_create(&thread_movement, NULL, movements, &donald);
+				  if (retour != 0)
+   					  {
+     				  perror("erreur thread movement");
+     				  exit(EXIT_FAILURE);
+    					 }	
             	//movements(donald.sn,donald.dx,donald.sn_sonar,donald.max_speed, donald.sn_compass, posqueue,turnqueue); 
 		//elapsed_distance = go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,2000,donald.sn_compass);
 		//put_integer_in_mq (posqueue, 1); //1 means I'm arrived to the ball control if it is red
