@@ -528,7 +528,7 @@ void* movements(void * args)
 	return;
 }
 
-void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_turn_degree, uint8_t med)
+void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_sonar, uint8_t sn_compass, int max_turn_degree, uint8_t med)
 {	
 	int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
 	int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
