@@ -41,63 +41,6 @@ struct motandsens {
     int max_speed;
 
 };
-//message queue
-#define MAX_MSG 15
-#define OVER 37
-#define MQ_NAME "/mquni" /* Message queue name: To be modified. The name */
-#define MQ_FORW "/mqforw"                          /* must start with a "/" */
-#define MQ_SIZE 10
-#define PMODE 0666
-/* to open the message queue */
-void init_queue (mqd_t *mq_desc, int open_flags, int s) {
-  struct mq_attr attr;
-  
-  // fill attributes of the mq
-  attr.mq_maxmsg = MQ_SIZE;
-  attr.mq_msgsize = sizeof (int);
-  attr.mq_flags = 0;
-	if(s==1){  
-	*mq_desc = mq_open (MQ_NAME, open_flags, PMODE, &attr);
-	}else{
-	*mq_desc = mq_open (MQ_FORW, open_flags, PMODE, &attr);
-	}
-  if (*mq_desc == (mqd_t)-1) {
-    perror("Mq opening failed");
-    exit(-1);
-  }
-}
-
-
-/* to add an integer to the message queue */
-void put_integer_in_mq (mqd_t mq_desc, int data) {
-  int status;
-  
-  //sends message
-  status = mq_send (mq_desc, (char *) &data, sizeof (int), 1);
-  if (status == -1)
-    perror ("mq_send failure");
-}
-
-
-/* to get an integer from message queue */
-int get_integer_from_mq (mqd_t mq_desc) {
-  ssize_t num_bytes_received = 0;
-  int data=0;
-
-  //receive an int from mq
-  num_bytes_received = mq_receive (mq_desc, (char *) &data, sizeof (int), NULL);
-  if (num_bytes_received == -1)
-    perror ("mq_receive failure");
-  return (data);
-}
-
-
-
-
-
-
-
-
 
 struct pos {
 	float x,y
@@ -585,10 +528,42 @@ void* movements(void * args)
 	return;
 }
 
-void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_turn_degree)
+void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_turn_degree, uint8_t med)
 {	
-	float degree;
-	float initial;
+	int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
+	int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found dx;
+	int i, k, flag_1;
+	int points[1000]={0};
+	get_tacho_position(sn, &pos_in_sn);
+	get_tacho_position(dx, &pos_in_dx);
+	flag_1=0;
+	for(i=0;i<1000;i++)
+		{
+			get_sensor_value0(sn_sonar, &points[i]);
+			if(i!=0 && ((points[i-1]-points[i])>=30) && flag_1==0)
+			{
+			 //this is the first balls' extremity 
+				get_tacho_position(sn,&pos_in_ball_sn);
+				get_tacho_position(dx,&pos_in_ball_dx);
+				flag_1=1;
+			}
+			if(i!=0 && ((points[i]-points[i-1])>=30) && flag_1==1)
+			{
+			  //this is the last point of the ball detected
+			  get_tacho_position(sn,&pos_in_ball_sn);
+			  get_tacho_position(dx,&pos_in_ball_dx);
+			  flag_1=2;
+			  break;
+			}
+			if(flag_1==2)
+			{
+				found_sn=(pos_fin_ball_sn - pos_in_ball_sn) / 2;
+				found_dx=(pos_fin_ball_dx - pos_in_ball_dx) / 2;
+			}
+
+
+		}
+
 	rotatedx(sn,dx,sn_compass,max_speed,90);
 	
 	return;
