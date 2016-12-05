@@ -56,14 +56,16 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 		if ( !get_sensor_value0(sn_compass, &actual_angle_compass )) {
                         actual_angle = 0;
 		}
+		printf("initial  %f\n",initial_angle);
+		printf("final %f\n", actual_angle);
 		if(actual_angle!=initial_angle)
 		{	
 			if(actual_angle<(initial_angle - 2))	//too to the left turn right!!!
 			{
-				set_tacho_position_sp( sn, -2 );
-				set_tacho_position_sp( dx,  2 );
-				set_tacho_speed_sp( sn, max_speed/6 );
-				set_tacho_speed_sp( dx, max_speed/6 );
+				set_tacho_position_sp( sn, -1 );
+				set_tacho_position_sp( dx,  1 );
+				set_tacho_speed_sp( sn, max_speed/2 );
+				set_tacho_speed_sp( dx, max_speed/2 );
 				set_tacho_time_sp( sn, 100 );
 				set_tacho_ramp_up_sp( sn,   0 );
 				set_tacho_ramp_down_sp( sn, 0 );
@@ -86,10 +88,10 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 			}
 			if(actual_angle> (initial_angle + 2))	//too to the right turn left!!!
 			{
-				set_tacho_position_sp( sn,  2 );
-				set_tacho_position_sp( dx, -2 );
-				set_tacho_speed_sp( sn, max_speed/6 );
-				set_tacho_speed_sp( dx, max_speed/6 );
+				set_tacho_position_sp( sn,  1 );
+				set_tacho_position_sp( dx, -1 );
+				set_tacho_speed_sp( sn, max_speed/2 );
+				set_tacho_speed_sp( dx, max_speed/2 );
 				set_tacho_time_sp( sn, 100 );
 				set_tacho_ramp_up_sp( sn,   0 );
 				set_tacho_ramp_down_sp( sn, 0 );
@@ -130,15 +132,15 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		set_tacho_speed_sp( dx, max_speed/2);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
-		set_tacho_position_sp( sn, -5 );
-		set_tacho_position_sp( dx, 5);
+		set_tacho_position_sp( sn, -2 );
+		set_tacho_position_sp( dx, 2);
 		Sleep(100);
 		get_sensor_value0(sn_compass, &degree);
 		get_tacho_position(sn, &sinistro);
 		get_tacho_position(dx, &destro);
 		ins=sinistro;
 		ind=destro;
-		actval=rotation*2.8;
+		actval=(float)rotation*2.8;
 		printf("sinistro %d\n",sinistro);
 		printf("destro %d\n",destro);
 		
@@ -174,8 +176,8 @@ void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		set_tacho_speed_sp( dx, max_speed/2);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
-		set_tacho_position_sp( sn, 5 );
-		set_tacho_position_sp( dx,-5);
+		set_tacho_position_sp( sn, 2 );
+		set_tacho_position_sp( dx,-2);
 		Sleep(100);
 		get_sensor_value0(sn_compass, &degree);
 		get_tacho_position(sn, &sinistro);
@@ -411,7 +413,6 @@ while((finish - beginning - distance)<=0){
 	 set_tacho_speed_sp( sn, max_speed * 0 );
 	 set_tacho_speed_sp( dx, max_speed * 0 );
 	Sleep(100);
-	//put_integer_in_mq (posqueue, 1); //trial to take the ball if detected;
 	break;
 		}
 	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
@@ -419,10 +420,9 @@ while((finish - beginning - distance)<=0){
 	Sleep(100);
 	get_tacho_position( dx, &finish);
 }
-get_tacho_position( dx, &finish);	
-//put_integer_in_mq (posqueue, 1); //trial to take the ball if detected;	
-	
- return (finish-beginning)/21; //return the distance in cm
+get_tacho_position( dx, &finish);		
+control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);	
+return (finish-beginning)/21; //return the distance in cm
 }
 
 void* colorsense(void * args)
@@ -719,6 +719,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->dx, 1 )) {
                 }
                 if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
                         //printf("GYRO found, reading magnet...\n");
+			set_sensor_mode( donald->sn_mag, "GYRO-ANG" );
                         if ( !get_sensor_value0(donald->sn_mag, &value )) {
                                 value = 0;
                         }
