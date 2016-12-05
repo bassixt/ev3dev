@@ -53,10 +53,10 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 		}
 		if(actual_angle!=initial_angle)
 		{	
-			if(actual_angle<(initial_angle - 2))	//too to the left turn right!!!
+			if(actual_angle<(initial_angle - 4))	//too to the left turn right!!!
 			{
-				set_tacho_position_sp( sn, -2 );
-				set_tacho_position_sp( dx,  2 );
+				set_tacho_position_sp( sn, -1 );
+				set_tacho_position_sp( dx,  1 );
 				set_tacho_speed_sp( sn, max_speed/6 );
 				set_tacho_speed_sp( dx, max_speed/6 );
 				set_tacho_time_sp( sn, 100 );
@@ -76,10 +76,10 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				}
 			
 			}
-			if(actual_angle> (initial_angle + 2))	//too to the right turn left!!!
+			if(actual_angle> (initial_angle + 4))	//too to the right turn left!!!
 			{
-				set_tacho_position_sp( sn,  2 );
-				set_tacho_position_sp( dx, -2 );
+				set_tacho_position_sp( sn,  1 );
+				set_tacho_position_sp( dx, -1 );
 				set_tacho_speed_sp( sn, max_speed/6 );
 				set_tacho_speed_sp( dx, max_speed/6 );
 				set_tacho_time_sp( sn, 100 );
@@ -112,10 +112,10 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		int destro, sinistro;
 		set_tacho_position( sn,0);
 		set_tacho_position( dx,0);
-		set_tacho_speed_sp( sn, max_speed/8);
+		set_tacho_speed_sp( sn, max_speed/2);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
-		set_tacho_speed_sp( dx, max_speed/8);
+		set_tacho_speed_sp( dx, max_speed/2);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
 		set_tacho_position_sp( sn, -5 );
@@ -156,10 +156,10 @@ void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		int destro, sinistro;
 		set_tacho_position( sn,0);
 		set_tacho_position( dx,0);
-		set_tacho_speed_sp( sn, max_speed/8);
+		set_tacho_speed_sp( sn, max_speed/2);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
-		set_tacho_speed_sp( dx, max_speed/8);
+		set_tacho_speed_sp( dx, max_speed/2);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
 		set_tacho_position_sp( sn, 5 );
@@ -214,7 +214,7 @@ void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
     			 }
 			set_tacho_position_sp( med, 90 );
 			Sleep(200);
-			for ( i = 0; i < 7; i++ ) {
+			for ( i = 0; i < 5; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
 			}
@@ -229,7 +229,7 @@ void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 			//release the grabber
 			set_tacho_position_sp( med, -90 );
 			Sleep(200);
-			for ( i = 0; i < 5; i++ ) {
+			for ( i = 0; i < 1; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
 			} 
@@ -593,7 +593,7 @@ struct motandsens* inizialization (struct motandsens *donald)
                 printf("value of buffer :%d\n", donald->sn);
                 printf("  max_speed = %d\n", donald->max_speed );
                 set_tacho_stop_action_inx( donald->sn, TACHO_COAST );
-                set_tacho_polarity( donald->sn, "inversed" );
+                set_tacho_polarity( donald->sn, "normal" );
                 set_tacho_speed_sp( donald->sn, donald->max_speed * 2 / 3 );
                 set_tacho_time_sp( donald->sn, 100 );
                 set_tacho_ramp_up_sp( donald->sn, 2000 );
@@ -614,7 +614,7 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->dx, 1 )) {
                 printf( "LEGO_EV3_L_MOTOR 2 is found, run for 5 sec...\n" );
                
                 set_tacho_stop_action_inx( donald->dx, TACHO_COAST );
-                set_tacho_polarity( donald->dx, "inversed" );
+                set_tacho_polarity( donald->dx, "normal" );
                 set_tacho_speed_sp( donald->dx, donald->max_speed * 2 / 3 );
                 set_tacho_time_sp( donald->dx, 100 );
                 set_tacho_ramp_up_sp( donald->dx, 2000 );
