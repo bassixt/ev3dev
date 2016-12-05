@@ -112,10 +112,10 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		int destro, sinistro;
 		set_tacho_position( sn,0);
 		set_tacho_position( dx,0);
-		set_tacho_speed_sp( sn, max_speed/2);
+		set_tacho_speed_sp( sn, max_speed/8);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
-		set_tacho_speed_sp( dx, max_speed/2);
+		set_tacho_speed_sp( dx, max_speed/8);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
 		set_tacho_position_sp( sn, -5 );
@@ -156,10 +156,10 @@ void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 		int destro, sinistro;
 		set_tacho_position( sn,0);
 		set_tacho_position( dx,0);
-		set_tacho_speed_sp( sn, max_speed/2);
+		set_tacho_speed_sp( sn, max_speed/8);
 		set_tacho_ramp_up_sp( sn, 0 );
 		set_tacho_ramp_down_sp( sn, 0 );
-		set_tacho_speed_sp( dx, max_speed/2);
+		set_tacho_speed_sp( dx, max_speed/8);
 		set_tacho_ramp_up_sp( dx, 0 );
 		set_tacho_ramp_down_sp( dx, 0 );
 		set_tacho_position_sp( sn, 5 );
@@ -440,7 +440,7 @@ void* movements(void * args)
 	float degree;
 	
 	int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
-	Sleep(5000); //time elapsed to scan
+	Sleep(500); //time elapsed to scan
 			/*
 	if(research(sn, dx, max_speed, sn_compass, 45)==1)
 		{	
