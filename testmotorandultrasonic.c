@@ -879,7 +879,6 @@ int main( void )
 	
 	//printf("process %s ret = %d\n", name, ret);
         return ( 0 );
-        sto provando ad aggiungere qualcosa;
-	ancora prova
+        
 
 }
