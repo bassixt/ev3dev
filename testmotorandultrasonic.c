@@ -46,17 +46,22 @@ struct pos {
 	float x,y
 	};
 //function that hold the direction
-void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle){
+void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle,uint8_t sn_mag){
+		
 		float actual_angle;
-		if ( !get_sensor_value0(sn_compass, &actual_angle )) {
+		float actual_angle_compass;
+		if ( !get_sensor_value0(sn_mag, &actual_angle)) {
+			actual_angle = 0;
+		}
+		if ( !get_sensor_value0(sn_compass, &actual_angle_compass )) {
                         actual_angle = 0;
 		}
 		if(actual_angle!=initial_angle)
 		{	
-			if(actual_angle<(initial_angle - 4))	//too to the left turn right!!!
+			if(actual_angle<(initial_angle - 2))	//too to the left turn right!!!
 			{
-				set_tacho_position_sp( sn, -1 );
-				set_tacho_position_sp( dx,  1 );
+				set_tacho_position_sp( sn, -2 );
+				set_tacho_position_sp( dx,  2 );
 				set_tacho_speed_sp( sn, max_speed/6 );
 				set_tacho_speed_sp( dx, max_speed/6 );
 				set_tacho_time_sp( sn, 100 );
@@ -70,16 +75,19 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 					Sleep(100);
-					if ( !get_sensor_value0(sn_compass, &actual_angle )) {
-					actual_angle = 0;
+					if ( !get_sensor_value0(sn_mag, &actual_angle)){
+					actual_angle=0;
+					}
+					if ( !get_sensor_value0(sn_compass, &actual_angle_compass )) {
+					actual_angle_compass = 0;
 					}
 				}
 			
 			}
-			if(actual_angle> (initial_angle + 4))	//too to the right turn left!!!
+			if(actual_angle> (initial_angle + 2))	//too to the right turn left!!!
 			{
-				set_tacho_position_sp( sn,  1 );
-				set_tacho_position_sp( dx, -1 );
+				set_tacho_position_sp( sn,  2 );
+				set_tacho_position_sp( dx, -2 );
 				set_tacho_speed_sp( sn, max_speed/6 );
 				set_tacho_speed_sp( dx, max_speed/6 );
 				set_tacho_time_sp( sn, 100 );
@@ -93,8 +101,12 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 					Sleep(100);
-					if ( !get_sensor_value0(sn_compass, &actual_angle )) {
-					actual_angle = 0;
+					 if ( !get_sensor_value0(sn_mag, &actual_angle)){
+                                        actual_angle=0;
+                                        }
+
+					if ( !get_sensor_value0(sn_compass, &actual_angle_compass )) {
+					actual_angle_compass = 0;
 					}
 				}
 			
@@ -311,7 +323,7 @@ void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
  			
 }   
 
-float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance,uint8_t sn_compass)
+float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance,uint8_t sn_compass, uint8_t sn_mag)
 {	//aggiungere funzione che controlla anche il motore 
 	//sinistro e vede se sono andati dritti tutti e due 
 	//altrimenti significa che hai girato e c'è un errore
@@ -322,6 +334,7 @@ int beginning,finish;
 int retour;
 float value;
 float initial_angle;
+float initial_angle_compass;
 set_tacho_time_sp( sn, 100 );
 set_tacho_ramp_up_sp( sn, 2000 );
 set_tacho_ramp_down_sp( sn, 2000 );
@@ -330,12 +343,15 @@ set_tacho_ramp_up_sp( dx, 2000 );
 set_tacho_ramp_down_sp( dx, 2000 );
 get_tacho_position( dx, &beginning);
 finish = beginning;
-if ( !get_sensor_value0(sn_compass, &initial_angle )) {
-                        initial_angle = 0;
+if ( !get_sensor_value0(sn_compass, &initial_angle_compass )) {
+                        initial_angle_compass = 0;
+                        }
+if ( !get_sensor_value0(sn_mag, &initial_angle)){
+                        initial_angle=0;
                         }
 	
 while((finish - beginning - distance)<=0){
-	control_direction(sn,dx,sn_compass,max_speed,initial_angle);
+	control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
 	set_tacho_time_sp( sn, 100 );
 	set_tacho_ramp_up_sp( sn, 2000 );
 	set_tacho_ramp_down_sp( sn, 2000 );
@@ -448,7 +464,7 @@ void* movements(void * args)
 				//funtion to take the ball and return back}
 		else
 			*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass, donald->sn_mag);
 			
 			printf("I'am in movements\n");
 	for(i=0;i<2;i++)
@@ -459,7 +475,7 @@ void* movements(void * args)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,donald->sn_mag);
 			
 			printf("I'am in movements' for1\n");
 			Sleep(1000);
@@ -474,7 +490,7 @@ void* movements(void * args)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/	
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass); 	
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag); 	
 		
 			printf("I'am in movements after turn\n");	
 			Sleep(1000);
@@ -495,7 +511,7 @@ void* movements(void * args)
 	//TURN RIGHT
 	rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180);
 	Sleep(1000);
-	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass);
+	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag);
 	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90);
 	Sleep(1000);
 	for(i=0;i<2;i++)
@@ -506,7 +522,7 @@ void* movements(void * args)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,donald->sn_mag);
 			
 			printf("I'am in movements turn right\n");
 			Sleep(1000);
@@ -517,7 +533,7 @@ void* movements(void * args)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag);
 			
 			
 			printf("I'am in movements finish\n");
