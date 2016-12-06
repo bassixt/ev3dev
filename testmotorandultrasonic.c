@@ -540,7 +540,7 @@ flag_1=0;
 
 //turn right 45 ° and start moving 2° each step
 rotatedx(sn,dx,sn_compass,max_speed,45,sn_mag);	
-for(i=0;i<1000;i++)
+for(i=0;i<45;i++)
 {
 get_sensor_value0(sn_sonar, &points[i]);
 if(i!=0 && ((points[i-1]-points[i])>=30) && flag_1==0)
@@ -573,6 +573,7 @@ if(flag_1==2)
 	found_dx=(pos_fin_ball_dx - pos_in_ball_dx) / 2;
 }
 rotatesx(sn,dx,sn_compass,max_speed,2,sn_mag);
+Sleep(100);
 }
 //it has finished the search
 //restart from centre and go to the desired angle
