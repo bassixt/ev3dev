@@ -401,7 +401,6 @@ int retour;
 float value;
 float initial_angle;
 float initial_angle_compass;
-FLAGS_T flagstat;
 //uint8_t both[2];
 //both[0]=sn;
 //both[1]=dx;
@@ -502,11 +501,6 @@ while((finish - beginning - distance)<=0){
 	//multi_set_tacho_command_inx(both , TACHO_RUN_TIMED );
 	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
-	get_tacho_state_flags(sn, flagstat);
-	while(flagstat==TACHO_RUNNING)
-	{
-	get_tacho_state_flags(sn, flagstat);
-	}
 	Sleep(100);
 	control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
 	get_tacho_position( dx, &finish);
@@ -889,7 +883,6 @@ int main( void )
 		printf( "there is a problem with fork()\n");
  	else if ( ret==0 ) //child
 	{
-
 		init_queue (&posqueue, O_CREAT | O_RDONLY,1);
 		init_queue (&turnqueue,O_CREAT | O_WRONLY,2);
 		//put_integer_in_mq (turnqueue, 0);
@@ -920,7 +913,6 @@ int main( void )
 		//put_integer_in_mq (posqueue, 0);
 		//n = get_integer_from_mq (turnqueue);
 		name = "parent\n";
-
         
 		
 	//research( sn, dx, max_speed, sn_compass);
