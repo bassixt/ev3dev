@@ -677,9 +677,9 @@ int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
 int i, k, flag_1;
 int points[1000]={0};
 if ( !get_sensor_value0(sn_mag, &initial_angle )) 
-			{
-	initial_angle = 0;
-			}
+   {
+   initial_angle = 0;
+   }
 get_tacho_position(sn, &pos_in_sn);
 get_tacho_position(dx, &pos_in_dx);
 flag_1=0;
@@ -690,6 +690,7 @@ for(i=0;i<45;i++)
 {
 printf("I'M here");
 get_sensor_value0(sn_sonar, &points[i]);
+printf("Il valore è %d:",points[i]);
 if(i!=0 && ((points[i-1]-points[i])>=30) && flag_1==0)
 {
  //this is the first balls' extremity 
