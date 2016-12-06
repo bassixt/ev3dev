@@ -433,7 +433,7 @@ void* movements(void * args)
 	int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
 	Sleep(500); //time elapsed to scan
 			
-        research(sn, dx,max_speed, sn_compass,max_turn_degree, med, sn_mag, sn_sonar);
+        research(donald->sn, donald->dx,donald->max_speed, donald->sn_compass,max_turn_degree, donald->med, donald->sn_mag, donald->sn_sonar);
 	/*if(research(sn, dx, max_speed, sn_compass, 45)==1)
 		{	
 			found=1;
