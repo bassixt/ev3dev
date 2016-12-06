@@ -767,7 +767,7 @@ pthread_create(&thread_colorsense, NULL, colorsense, donald);
 			return EXIT_FAILURE;
    					 		} 
 
-        }
+        
 			
 	
 
