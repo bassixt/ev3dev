@@ -519,45 +519,73 @@ void* movements(void * args)
 	return;
 }
 
-void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_sonar, uint8_t sn_compass, int max_turn_degree, uint8_t med, uint8_t sn_mag)
+void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_turn_degree, uint8_t med, uint8_t sn_mag)
+{	//Take the initial position than move to 
+float initial_angle;
+float actual_angle;
+float elapsed_dis;
+float start_angle, finish_angle, middle_angle;
+int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
+int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found dx;
+int i, k, flag_1;
+int points[1000]={0};
+if ( !get_sensor_value0(sn_mag, &initial_angle )) 
+			{
+	initial_angle = 0;
+			}
+get_tacho_position(sn, &pos_in_sn);
+get_tacho_position(dx, &pos_in_dx);
+flag_1=0;
+
+//turn right 45 ° and start moving 2° each step
+for(i=0;i<1000;i++)
+{
+get_sensor_value0(sn_sonar, &points[i]);
+if(i!=0 && ((points[i-1]-points[i])>=30) && flag_1==0)
+{
+ //this is the first balls' extremity 
+	if ( !get_sensor_value0(sn_mag, &start_angle )) 
+	{
+	start_angle = 0;
+	}
+	get_tacho_position(sn,&pos_in_ball_sn);
+	get_tacho_position(dx,&pos_in_ball_dx);
+	flag_1=1;
+}
+if(i!=0 && ((points[i]-points[i-1])>=30) && flag_1==1)
+{
+  //this is the last point of the ball detected
+	if ( !get_sensor_value0(sn_mag, &start_angle )) 
+	{
+	final_angle = 0;
+	}
+	get_tacho_position(sn,&pos_in_ball_sn);
+	get_tacho_position(dx,&pos_in_ball_dx);
+	flag_1=2;
+	break;
+}
+if(flag_1==2)
 {	
-	int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
-	int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
-	int i, k, flag_1;
-	int points[1000]={0};
-	get_tacho_position(sn, &pos_in_sn);
-	get_tacho_position(dx, &pos_in_dx);
-	flag_1=0;
-	for(i=0;i<1000;i++)
-		{
-			get_sensor_value0(sn_sonar, &points[i]);
-			if(i!=0 && ((points[i-1]-points[i])>=30) && flag_1==0)
-			{
-			 //this is the first balls' extremity 
-				get_tacho_position(sn,&pos_in_ball_sn);
-				get_tacho_position(dx,&pos_in_ball_dx);
-				flag_1=1;
-			}
-			if(i!=0 && ((points[i]-points[i-1])>=30) && flag_1==1)
-			{
-			  //this is the last point of the ball detected
-			  get_tacho_position(sn,&pos_in_ball_sn);
-			  get_tacho_position(dx,&pos_in_ball_dx);
-			  flag_1=2;
-			  break;
-			}
-			if(flag_1==2)
-			{
-				found_sn=(float)(pos_fin_ball_sn - pos_in_ball_sn) / 2;
-				found_dx=(float)(pos_fin_ball_dx - pos_in_ball_dx) / 2;
-			}
+	middle_angle = (final_angle - start_angle) / 2;
+	found_sn=(pos_fin_ball_sn - pos_in_ball_sn) / 2;
+	found_dx=(pos_fin_ball_dx - pos_in_ball_dx) / 2;
+}
+rotatesx(sn,dx,sn_compass,max_speed,2,sn_mag);
+}
+//it has finished the search
+//restart from centre and go to the desired angle
+rotatedx(sn,dx,sn_compass,max_speed,90,sn_mag); 
+rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
+elapsed_dis=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,4000,sn_compass);
+rotatedx(sn,dx,sn_compass,max_speed,180,sn_mag);
+go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,elapsed_dis,sn_compass);
+rotatesx(sn,dx,sn_compass,max_speed,180,sn_mag);
+rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
+//hope it will work=)
 
 
-		}
 
-	rotatedx(sn,dx,sn_compass,max_speed,90,sn_mag);
-	
-	return;
+return;
 }
 struct motandsens* inizialization (struct motandsens *donald)
 {
