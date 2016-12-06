@@ -71,12 +71,12 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				set_tacho_ramp_down_sp( sn, 0 );
 				set_tacho_ramp_up_sp( dx,   0 );
 				set_tacho_ramp_down_sp( dx, 0 );
-				Sleep(100);
+				//Sleep(100);
 				while(actual_angle<initial_angle)
 				{
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-					Sleep(100);
+					//Sleep(100);
 					if ( !get_sensor_value0(sn_mag, &actual_angle)){
 					actual_angle=0;
 					}
@@ -97,12 +97,12 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				set_tacho_ramp_down_sp( sn, 0 );
 				set_tacho_ramp_up_sp( dx,   0 );
 				set_tacho_ramp_down_sp( dx, 0 );
-				Sleep(100);
+				//Sleep(100);
 				while(actual_angle>initial_angle)
 				{
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-					Sleep(100);
+					//Sleep(100);
 					 if ( !get_sensor_value0(sn_mag, &actual_angle)){
                                         actual_angle=0;
                                         }
@@ -494,13 +494,13 @@ while((finish - beginning - distance)<=0){
 	 //multi_set_tacho_speed_sp(both, max_speed * 0);	
 	 set_tacho_speed_sp( sn, max_speed * 0 );
 	 set_tacho_speed_sp( dx, max_speed * 0 );
-	Sleep(100);
+	//Sleep(100);
 	break;
 		}
 	//multi_set_tacho_command_inx(both , TACHO_RUN_TIMED );
 	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
-	Sleep(100);
+	//Sleep(100);
 	get_tacho_position( dx, &finish);
 }
 get_tacho_position( dx, &finish);		
