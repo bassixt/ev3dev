@@ -770,8 +770,7 @@ pthread_create(&thread_colorsense, NULL, colorsense, donald);
         }
 			
 	
-	rotatedx(sn,dx,max_speed);
-	rotatesx(sn,dx,max_speed);
+
 	
 		
         ev3_uninit();
