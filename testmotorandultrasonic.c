@@ -644,7 +644,7 @@ void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_sonar, uint8_t sn_
 
 		}
 
-	rotatedx(sn,dx,sn_compass,max_speed,90);
+	rotatedx(sn,dx,sn_compass,max_speed,90,sn_mag);
 	
 	return;
 }
