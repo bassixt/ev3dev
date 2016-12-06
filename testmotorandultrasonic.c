@@ -714,14 +714,9 @@ int main( void )
         int val;
 	int act_pos;
         float value;
-	float elapsed_distance;
-        //uint32_t n, ii;
-//stuff for queue	
- 	 mqd_t posqueue;
-         mqd_t turnqueue;
- pthread_t thread_movement, thread_colorsense;
- 
-  pthread_mutex_init(&mutex, NULL);
+	float elapsed_distance;        
+	pthread_t thread_movement, thread_colorsense; 
+        pthread_mutex_init(&mutex, NULL);
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
         ev3_brick_addr = "192.168.0.204";
@@ -742,42 +737,35 @@ int main( void )
 	donald = inizialization(donald);
 	int retour;		
 	pthread_create(&thread_movement, NULL, movements, donald);
-				  if (retour != 0)
-   					  {
-     				  perror("erreur thread movement");
-     				  exit(EXIT_FAILURE);
-    					 }	
- 		if (pthread_join(thread_movement, NULL)) {
-	perror("pthread_join");
-	return EXIT_FAILURE;
-    }
- 
-pthread_create(&thread_colorsense, NULL, colorsense, donald);
-				  if (retour != 0)
-   					  {
-     				  perror("erreur thread sensor");
-     				  exit(EXIT_FAILURE);
-    					 }	
- 		if (pthread_join(thread_colorsense, NULL)) {
-			perror("pthread_join colorsens");
-			return EXIT_FAILURE;
-   					 		}
-		if (pthread_join(thread_movement, NULL)) {
-			perror("pthread_join colorsens");
-			return EXIT_FAILURE;
-   					 		} 
-
-        
-			
-	
-
-	
-		
+	if (retour != 0)
+	{
+	  perror("erreur thread movement");
+	  exit(EXIT_FAILURE);
+	}	
+ 	if (pthread_join(thread_movement, NULL)) 
+	{
+	  perror("pthread_join");
+	  return EXIT_FAILURE;
+        } 
+        pthread_create(&thread_colorsense, NULL, colorsense, donald);
+	if (retour != 0)
+	{
+	  perror("erreur thread sensor");
+	  exit(EXIT_FAILURE);
+	}	
+	if (pthread_join(thread_colorsense, NULL)) 
+	{
+	  perror("pthread_join colorsens");
+	  return EXIT_FAILURE;
+	}
+	if (pthread_join(thread_movement, NULL)) 
+	{
+	  perror("pthread_join colorsens");
+	  return EXIT_FAILURE;
+	} 
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
-	
-	//printf("process %s ret = %d\n", name, ret);
-        return ( 0 );
-        
+
+        return ( 0 );       
 
 }
