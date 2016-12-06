@@ -116,7 +116,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 			
 		}
 }
-void rotatedx_modi(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
+void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
 	float wanted_c;
 	set_tacho_position( sn,0);
@@ -148,8 +148,41 @@ void rotatedx_modi(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, in
 	
 
 }
+
+void rotatesx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
+{	float actual_angle;
+	float wanted_c;
+	set_tacho_position( sn,0);
+	set_tacho_position( dx,0);
+	set_tacho_speed_sp( sn, max_speed/2);
+	set_tacho_ramp_up_sp( sn, 0 );
+	set_tacho_ramp_down_sp( sn, 0 );
+	set_tacho_speed_sp( dx, max_speed/2);
+	set_tacho_ramp_up_sp( dx, 0 );
+	set_tacho_ramp_down_sp( dx, 0 );
+	set_tacho_position_sp( sn, -5 );
+	set_tacho_position_sp( dx, 5);
+	if ( !get_sensor_value0(sn_mag, &actual_angle )) {
+                        actual_angle = 0;
+		}
+	wanted_c= actual_angle - rotation;
+
+	while((actual_angle-wanted_c)>0)
+			{
+			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+			Sleep(50);
+			if ( !get_sensor_value0(sn_mag, &actual_angle )) 
+				{
+                actual_angle = 0;
+				}
+
+			}
+	
+
+}
 //function that allows to rotate on the right side
-void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
+void rotatedx_old(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
 		//int i;
 		float actval;
 		float degree;
@@ -194,7 +227,7 @@ void rotatedx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotati
 	
 }
 //function that allows to rotate on the left side
-void rotatesx(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
+void rotatesx_old(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
 		float actval;
 		float degree;
 		float ins,ind;
@@ -512,7 +545,7 @@ void* movements(void * args)
 			Sleep(1000);
 	}
 	//TURN LEFT
-	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90);
+	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 	Sleep(1000);
 		if(found != 1)
 		/*
@@ -540,10 +573,10 @@ void* movements(void * args)
 //	}
 
 	//TURN RIGHT
-	rotatedx_modi(donald->sn,donald->dx,donald->sn_compass,donald->max_speed, 180, donald->sn_mag);
+	rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed, 180, donald->sn_mag);
 	Sleep(1000);
 	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag);
-	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90);
+	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,,donald->sn_mag);
 	Sleep(1000);
 	for(i=0;i<2;i++)
 	{
