@@ -60,7 +60,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 		printf("final %f\n", actual_angle);
 		if(actual_angle!=initial_angle)
 		{	
-			if(actual_angle<(initial_angle - 2))	//too to the left turn right!!!
+			if(actual_angle<(initial_angle - 3))	//too to the left turn right!!!
 			{
 				set_tacho_position_sp( sn, -1 );
 				set_tacho_position_sp( dx,  1 );
@@ -86,7 +86,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				}
 			
 			}
-			if(actual_angle> (initial_angle + 2))	//too to the right turn left!!!
+			if(actual_angle> (initial_angle + 3))	//too to the right turn left!!!
 			{
 				set_tacho_position_sp( sn,  1 );
 				set_tacho_position_sp( dx, -1 );
