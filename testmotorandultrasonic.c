@@ -121,14 +121,14 @@ void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rot
 	float wanted_c;
 	set_tacho_position( sn,0);
 	set_tacho_position( dx,0);
-	set_tacho_speed_sp( sn, max_speed/2);
+	set_tacho_speed_sp( sn, max_speed/4);
 	set_tacho_ramp_up_sp( sn, 0 );
 	set_tacho_ramp_down_sp( sn, 0 );
-	set_tacho_speed_sp( dx, max_speed/2);
+	set_tacho_speed_sp( dx, max_speed/4);
 	set_tacho_ramp_up_sp( dx, 0 );
 	set_tacho_ramp_down_sp( dx, 0 );
-	set_tacho_position_sp( sn, -5 );
-	set_tacho_position_sp( dx, 5);
+	set_tacho_position_sp( sn, -2 );
+	set_tacho_position_sp( dx, 2);
 	if ( !get_sensor_value0(sn_mag, &actual_angle )) {
                         actual_angle = 0;
 		}
@@ -154,14 +154,14 @@ void rotatesx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rot
 	float wanted_c;
 	set_tacho_position( sn,0);
 	set_tacho_position( dx,0);
-	set_tacho_speed_sp( sn, max_speed/2);
+	set_tacho_speed_sp( sn, max_speed/4);
 	set_tacho_ramp_up_sp( sn, 0 );
 	set_tacho_ramp_down_sp( sn, 0 );
-	set_tacho_speed_sp( dx, max_speed/2);
+	set_tacho_speed_sp( dx, max_speed/4);
 	set_tacho_ramp_up_sp( dx, 0 );
 	set_tacho_ramp_down_sp( dx, 0 );
-	set_tacho_position_sp( sn,  5);
-	set_tacho_position_sp( dx, -5);
+	set_tacho_position_sp( sn,  2);
+	set_tacho_position_sp( dx, -2);
 	if ( !get_sensor_value0(sn_mag, &actual_angle )) {
                         actual_angle = 0;
 		}
