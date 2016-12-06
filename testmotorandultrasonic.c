@@ -484,8 +484,8 @@ while((finish - beginning - distance)<=0){
 	if(value<70 && value >=40)
 		{
 	//multi_set_tacho_speed_sp(both, max_speed * 1 / 24);	
-	set_tacho_speed_sp( sn, max_speed * 1 / 24 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 24 );
+	set_tacho_speed_sp( sn, max_speed * 1 / 18 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 18 );
 		 }
 	if(value<40 && value >=0)
 		 {
@@ -494,8 +494,8 @@ while((finish - beginning - distance)<=0){
 	 //multi_set_tacho_speed_sp(both, max_speed * 0);	
 	 set_tacho_speed_sp( sn, max_speed * 0 );
 	 set_tacho_speed_sp( dx, max_speed * 0 );
-	Sleep(100);
-	break;
+	 Sleep(100);
+	 break;
 		}
 	//multi_set_tacho_command_inx(both , TACHO_RUN_TIMED );
 	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
