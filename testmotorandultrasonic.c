@@ -862,7 +862,7 @@ int main( void )
 	return EXIT_FAILURE;
     }*/
  
- pthread_create(&thread_colorsense, NULL, colorsense, donald);
+/* pthread_create(&thread_colorsense, NULL, colorsense, donald);
 				  if (retour != 0)
    					  {
      				  perror("erreur thread sensor");
@@ -871,7 +871,7 @@ int main( void )
  		if (pthread_join(thread_colorsense, NULL)) {
 			perror("pthread_join colorsens");
 			return EXIT_FAILURE;
-   					 		}
+   					 		}*/
 		if (pthread_join(thread_movement, NULL)) {
 			perror("pthread_join colorsens");
 			return EXIT_FAILURE;
