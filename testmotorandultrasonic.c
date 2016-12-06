@@ -406,11 +406,11 @@ both[0]=sn;
 both[1]=dx;
 
 set_tacho_time_sp( sn, 100 );
-set_tacho_ramp_up_sp( sn, 2000 );
-set_tacho_ramp_down_sp( sn, 2000 );
+set_tacho_ramp_up_sp( sn, 900 );
+set_tacho_ramp_down_sp( sn, 900 );
 set_tacho_time_sp( dx, 100 );
-set_tacho_ramp_up_sp( dx, 2000 );
-set_tacho_ramp_down_sp( dx, 2000 );
+set_tacho_ramp_up_sp( dx, 900 );
+set_tacho_ramp_down_sp( dx, 900 );
 /*
 multi_set_tacho_time_sp( both, 100);
 multi_set_tacho_ramp_up_sp( both, 2000 );
@@ -434,10 +434,10 @@ while((finish - beginning - distance)<=0){
 	multi_set_tacho_ramp_down_sp( both, 2000 );
 	*/
 	set_tacho_time_sp( sn, 100 );
-	set_tacho_ramp_up_sp( sn, 2000 );
-	set_tacho_ramp_down_sp( sn, 2000 );
-	set_tacho_ramp_up_sp( dx, 2000 );
-	set_tacho_ramp_down_sp( dx, 2000 );
+	set_tacho_ramp_up_sp( sn, 900 );
+	set_tacho_ramp_down_sp( sn, 900 );
+	set_tacho_ramp_up_sp( dx, 900 );
+	set_tacho_ramp_down_sp( dx, 900 );
 	retour = pthread_mutex_lock(&mutex);
     			if (retour != 0)
     			 {
