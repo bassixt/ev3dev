@@ -576,7 +576,7 @@ void* movements(void * args)
 	rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed, 180, donald->sn_mag);
 	Sleep(1000);
 	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag);
-	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,,donald->sn_mag);
+	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 	Sleep(1000);
 	for(i=0;i<2;i++)
 	{
