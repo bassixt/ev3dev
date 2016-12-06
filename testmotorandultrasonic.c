@@ -76,9 +76,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 					if ( !get_sensor_value0(sn_mag, &actual_angle)){
 					actual_angle=0;
 					}
-					if ( !get_sensor_value0(sn_compass, &actual_angle_compass )) {
-					actual_angle_compass = 0;
-					}
+				
 				}
 			
 			}
@@ -313,9 +311,6 @@ set_tacho_ramp_up_sp( dx, 2000 );
 set_tacho_ramp_down_sp( dx, 2000 );
 get_tacho_position( dx, &beginning);
 finish = beginning;
-if ( !get_sensor_value0(sn_compass, &initial_angle_compass )) {
-                        initial_angle_compass = 0;
-                        }
 if ( !get_sensor_value0(sn_mag, &initial_angle)){
                         initial_angle=0;
                         }
@@ -552,8 +547,8 @@ void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_sonar, uint8_t sn_
 			}
 			if(flag_1==2)
 			{
-				found_sn=(pos_fin_ball_sn - pos_in_ball_sn) / 2;
-				found_dx=(pos_fin_ball_dx - pos_in_ball_dx) / 2;
+				found_sn=(float)(pos_fin_ball_sn - pos_in_ball_sn) / 2;
+				found_dx=(float)(pos_fin_ball_dx - pos_in_ball_dx) / 2;
 			}
 
 
@@ -777,7 +772,7 @@ pthread_create(&thread_colorsense, NULL, colorsense, donald);
 	
 	rotatedx(sn,dx,max_speed);
 	rotatesx(sn,dx,max_speed);
-	*/
+	
 		
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
