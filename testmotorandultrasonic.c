@@ -401,6 +401,7 @@ int retour;
 float value;
 float initial_angle;
 float initial_angle_compass;
+FLAGS_T flagstat;
 //uint8_t both[2];
 //both[0]=sn;
 //both[1]=dx;
@@ -501,6 +502,11 @@ while((finish - beginning - distance)<=0){
 	//multi_set_tacho_command_inx(both , TACHO_RUN_TIMED );
 	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+	get_tacho_state_flags(sn, flagstat);
+	while(flagstat==TACHO_RUNNING)
+	{
+	get_tacho_state_flags(sn, flagstat);
+	}
 	Sleep(100);
 	control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
 	get_tacho_position( dx, &finish);
