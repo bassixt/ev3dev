@@ -433,7 +433,7 @@ void* movements(void * args)
 	int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
 	Sleep(500); //time elapsed to scan
 			
-        research(donald->sn, donald->dx,donald->max_speed, donald->sn_compass,max_turn_degree, donald->med, donald->sn_mag, donald->sn_sonar);
+        research(donald->sn, donald->dx,donald->max_speed, donald->sn_compass,0, donald->med, donald->sn_mag, donald->sn_sonar);
 	/*if(research(sn, dx, max_speed, sn_compass, 45)==1)
 		{	
 			found=1;
@@ -539,6 +539,7 @@ get_tacho_position(dx, &pos_in_dx);
 flag_1=0;
 
 //turn right 45 ° and start moving 2° each step
+rotatedx(sn,dx,sn_compass,max_speed,45,sn_mag);	
 for(i=0;i<1000;i++)
 {
 get_sensor_value0(sn_sonar, &points[i]);
