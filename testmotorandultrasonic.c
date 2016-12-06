@@ -540,7 +540,7 @@ void* movements(void * args)
 //	}
 
 	//TURN RIGHT
-	rotatedx_modi(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,donald->sn_mag, 180);
+	rotatedx_modi(donald->sn,donald->dx,donald->sn_compass,donald->max_speed, 180, donald->sn_mag);
 	Sleep(1000);
 	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag);
 	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90);
