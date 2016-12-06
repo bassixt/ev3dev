@@ -406,11 +406,11 @@ both[0]=sn;
 both[1]=dx;
 
 set_tacho_time_sp( sn, 100 );
-set_tacho_ramp_up_sp( sn, 900 );
-set_tacho_ramp_down_sp( sn, 900 );
+set_tacho_ramp_up_sp( sn, 1200 );
+set_tacho_ramp_down_sp( sn, 1200);
 set_tacho_time_sp( dx, 100 );
-set_tacho_ramp_up_sp( dx, 900 );
-set_tacho_ramp_down_sp( dx, 900 );
+set_tacho_ramp_up_sp( dx, 1200 );
+set_tacho_ramp_down_sp( dx, 1200 );
 /*
 multi_set_tacho_time_sp( both, 100);
 multi_set_tacho_ramp_up_sp( both, 2000 );
@@ -434,10 +434,10 @@ while((finish - beginning - distance)<=0){
 	multi_set_tacho_ramp_down_sp( both, 2000 );
 	*/
 	set_tacho_time_sp( sn, 100 );
-	set_tacho_ramp_up_sp( sn, 900 );
-	set_tacho_ramp_down_sp( sn, 900 );
-	set_tacho_ramp_up_sp( dx, 900 );
-	set_tacho_ramp_down_sp( dx, 900 );
+	set_tacho_ramp_up_sp( sn, 1200 );
+	set_tacho_ramp_down_sp( sn, 1200 );
+	set_tacho_ramp_up_sp( dx, 1200 );
+	set_tacho_ramp_down_sp( dx, 1200 );
 	retour = pthread_mutex_lock(&mutex);
     			if (retour != 0)
     			 {
@@ -478,14 +478,14 @@ while((finish - beginning - distance)<=0){
 	if(value<1000 && value >=70)
 		{
 	//multi_set_tacho_speed_sp(both, max_speed * 1 / 6);	
-	set_tacho_speed_sp( sn, max_speed * 1 / 6 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 6 );
+	set_tacho_speed_sp( sn, max_speed * 1 / 8 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 8 );
 			       }
 	if(value<70 && value >=40)
 		{
 	//multi_set_tacho_speed_sp(both, max_speed * 1 / 24);	
-	set_tacho_speed_sp( sn, max_speed * 1 / 18 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 18 );
+	set_tacho_speed_sp( sn, max_speed * 1 / 20 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 20);
 		 }
 	if(value<40 && value >=0)
 		 {
