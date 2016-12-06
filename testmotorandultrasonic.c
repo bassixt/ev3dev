@@ -304,11 +304,11 @@ int retour;
 float value;
 float initial_angle;
 set_tacho_time_sp( sn, 100 );
-set_tacho_ramp_up_sp( sn, 2000 );
-set_tacho_ramp_down_sp( sn, 2000);
+set_tacho_ramp_up_sp( sn, 1000 );
+set_tacho_ramp_down_sp( sn, 1000);
 set_tacho_time_sp( dx, 100 );
-set_tacho_ramp_up_sp( dx, 2000 );
-set_tacho_ramp_down_sp( dx, 2000 );
+set_tacho_ramp_up_sp( dx, 1000 );
+set_tacho_ramp_down_sp( dx, 1000 );
 get_tacho_position( dx, &beginning);
 finish = beginning;
 if ( !get_sensor_value0(sn_mag, &initial_angle)){
@@ -323,11 +323,11 @@ while((finish - beginning - distance)<=0){
 	multi_set_tacho_ramp_down_sp( both, 2000 );
 	*/
 	set_tacho_time_sp( sn, 100 );
-	set_tacho_ramp_up_sp( sn, 1200 );
-	set_tacho_ramp_down_sp( sn, 1200 );
+	set_tacho_ramp_up_sp( sn, 1000 );
+	set_tacho_ramp_down_sp( sn, 1000 );
 	set_tacho_time_sp( dx, 100);
-	set_tacho_ramp_up_sp( dx, 1200 );
-	set_tacho_ramp_down_sp( dx, 1200 );
+	set_tacho_ramp_up_sp( dx, 1000 );
+	set_tacho_ramp_down_sp( dx, 1000 );
 	retour = pthread_mutex_lock(&mutex);
     			if (retour != 0)
     			 {
