@@ -117,7 +117,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 		}
 }
 void rotatedx_modi(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
-{	float actual_ancle;
+{	float actual_angle;
 	float wanted_c;
 	set_tacho_position( sn,0);
 	set_tacho_position( dx,0);
