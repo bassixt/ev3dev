@@ -436,6 +436,7 @@ while((finish - beginning - distance)<=0){
 	set_tacho_time_sp( sn, 100 );
 	set_tacho_ramp_up_sp( sn, 1000 );
 	set_tacho_ramp_down_sp( sn, 1000 );
+	set_tacho_time_sp( dx, 100);
 	set_tacho_ramp_up_sp( dx, 1000 );
 	set_tacho_ramp_down_sp( dx, 1000 );
 	retour = pthread_mutex_lock(&mutex);
