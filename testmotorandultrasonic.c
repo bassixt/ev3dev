@@ -427,7 +427,7 @@ if ( !get_sensor_value0(sn_mag, &initial_angle)){
                         }
 	
 while((finish - beginning - distance)<=0){
-	//control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
+	
 	/*
 	multi_set_tacho_time_sp( both, 100);
 	multi_set_tacho_ramp_up_sp( both, 2000 );
@@ -502,10 +502,11 @@ while((finish - beginning - distance)<=0){
 	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 	Sleep(100);
+	control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
 	get_tacho_position( dx, &finish);
 }
 get_tacho_position( dx, &finish);		
-//control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);	
+control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);	
 return (finish-beginning)/21; //return the distance in cm
 }
 
