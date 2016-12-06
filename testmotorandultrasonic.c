@@ -64,8 +64,8 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 			{
 				set_tacho_position_sp( sn, -1 );
 				set_tacho_position_sp( dx,  1 );
-				set_tacho_speed_sp( sn, max_speed/2 );
-				set_tacho_speed_sp( dx, max_speed/2 );
+				set_tacho_speed_sp( sn, max_speed/6 );
+				set_tacho_speed_sp( dx, max_speed/6 );
 				set_tacho_time_sp( sn, 100 );
 				set_tacho_ramp_up_sp( sn,   0 );
 				set_tacho_ramp_down_sp( sn, 0 );
@@ -90,8 +90,8 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 			{
 				set_tacho_position_sp( sn,  1 );
 				set_tacho_position_sp( dx, -1 );
-				set_tacho_speed_sp( sn, max_speed/2 );
-				set_tacho_speed_sp( dx, max_speed/2 );
+				set_tacho_speed_sp( sn, max_speed/6 );
+				set_tacho_speed_sp( dx, max_speed/6 );
 				set_tacho_time_sp( sn, 100 );
 				set_tacho_ramp_up_sp( sn,   0 );
 				set_tacho_ramp_down_sp( sn, 0 );
@@ -469,13 +469,13 @@ while((finish - beginning - distance)<=0){
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 3 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 3 );
-			       }   
-	if(value<2500 && value >=100)
+			       } */   
+	if(value<2500 && value >=1000)
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 2 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 2 );
-			       }    */      		
-	if(value<2500 && value >=70)
+			       }         		
+	if(value<1000 && value >=70)
 		{
 	//multi_set_tacho_speed_sp(both, max_speed * 1 / 6);	
 	set_tacho_speed_sp( sn, max_speed * 1 / 6 );
