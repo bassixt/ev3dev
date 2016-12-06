@@ -49,21 +49,17 @@ struct pos {
 void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle,uint8_t sn_mag){
 		
 		float actual_angle;
-		float actual_angle_compass;
 		if ( !get_sensor_value0(sn_mag, &actual_angle)) {
 			actual_angle = 0;
-		}
-		if ( !get_sensor_value0(sn_compass, &actual_angle_compass )) {
-                        actual_angle = 0;
 		}
 		printf("initial  %f\n",initial_angle);
 		printf("final %f\n", actual_angle);
 		if(actual_angle!=initial_angle)
 		{	
-			if(actual_angle<(initial_angle - 3))	//too to the left turn right!!!
+			if(actual_angle<(initial_angle - 4))	//too to the left turn right!!!
 			{
-				set_tacho_position_sp( sn, -1 );
-				set_tacho_position_sp( dx,  1 );
+				set_tacho_position_sp( sn, -2 );
+				set_tacho_position_sp( dx,  2 );
 				set_tacho_speed_sp( sn, max_speed/6 );
 				set_tacho_speed_sp( dx, max_speed/6 );
 				set_tacho_time_sp( sn, 100 );
@@ -86,10 +82,10 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				}
 			
 			}
-			if(actual_angle> (initial_angle + 3))	//too to the right turn left!!!
+			if(actual_angle> (initial_angle + 4))	//too to the right turn left!!!
 			{
-				set_tacho_position_sp( sn,  1 );
-				set_tacho_position_sp( dx, -1 );
+				set_tacho_position_sp( sn,  2 );
+				set_tacho_position_sp( dx, -2 );
 				set_tacho_speed_sp( sn, max_speed/6 );
 				set_tacho_speed_sp( dx, max_speed/6 );
 				set_tacho_time_sp( sn, 100 );
@@ -106,10 +102,6 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 					 if ( !get_sensor_value0(sn_mag, &actual_angle)){
                                         actual_angle=0;
                                         }
-
-					if ( !get_sensor_value0(sn_compass, &actual_angle_compass )) {
-					actual_angle_compass = 0;
-					}
 				}
 			
 			}
@@ -181,94 +173,7 @@ void rotatesx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rot
 	
 
 }
-//function that allows to rotate on the right side
-void rotatedx_old(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
-		//int i;
-		float actval;
-		float degree;
-		float ins,ind;
-		int destro, sinistro;
-		set_tacho_position( sn,0);
-		set_tacho_position( dx,0);
-		set_tacho_speed_sp( sn, max_speed/2);
-		set_tacho_ramp_up_sp( sn, 0 );
-		set_tacho_ramp_down_sp( sn, 0 );
-		set_tacho_speed_sp( dx, max_speed/2);
-		set_tacho_ramp_up_sp( dx, 0 );
-		set_tacho_ramp_down_sp( dx, 0 );
-		set_tacho_position_sp( sn, -2 );
-		set_tacho_position_sp( dx, 2);
-		Sleep(100);
-		get_sensor_value0(sn_compass, &degree);
-		get_tacho_position(sn, &sinistro);
-		get_tacho_position(dx, &destro);
-		ins=sinistro;
-		ind=destro;
-		actval=(float)rotation*2.8;
-		printf("sinistro %d\n",sinistro);
-		printf("destro %d\n",destro);
-		
-		while((destro-ind)<=actval||(sinistro-ins)>=-actval)
-		{	
-			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-			Sleep( 50 );
-			get_tacho_position(sn, &sinistro);
-			get_tacho_position(dx, &destro);
-		}									      
-		Sleep(500); 
-	
-		get_sensor_value0(sn_compass, &degree);
-		get_tacho_position(sn, &sinistro);
-		get_tacho_position(dx, &destro);
-		printf("sinistro %d\n",sinistro);
-		printf("destro %d\n",destro);
-		fflush( stdout );
-	
-}
-//function that allows to rotate on the left side
-void rotatesx_old(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, int rotation){
-		float actval;
-		float degree;
-		float ins,ind;
-		int destro, sinistro;
-		set_tacho_position( sn,0);
-		set_tacho_position( dx,0);
-		set_tacho_speed_sp( sn, max_speed/2);
-		set_tacho_ramp_up_sp( sn, 0 );
-		set_tacho_ramp_down_sp( sn, 0 );
-		set_tacho_speed_sp( dx, max_speed/2);
-		set_tacho_ramp_up_sp( dx, 0 );
-		set_tacho_ramp_down_sp( dx, 0 );
-		set_tacho_position_sp( sn, 2 );
-		set_tacho_position_sp( dx,-2);
-		Sleep(100);
-		get_sensor_value0(sn_compass, &degree);
-		get_tacho_position(sn, &sinistro);
-		get_tacho_position(dx, &destro);
-		ins=sinistro;
-		ind=destro;
-		actval=rotation*2.8;  // It's a fixed value to have the right rotation
-		printf("sinistro %d\n",sinistro);
-		printf("destro %d\n",destro);
-		
-		while((destro-ind)>=-actval||(sinistro-ins)<=actval)
-		{	
-			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-			Sleep( 50 );
-			get_tacho_position(sn, &sinistro);
-			get_tacho_position(dx, &destro);
-		}									      
-		Sleep(500); 
-	
-		get_sensor_value0(sn_compass, &degree);
-		get_tacho_position(sn, &sinistro);
-		get_tacho_position(dx, &destro);
-		printf("sinistro %d\n",sinistro);
-		printf("destro %d\n",destro);
-		fflush( stdout );
-}
+
 //function that allow to grab the ball. Raise the grabber, go ahead till 5*22 mm. and than release the grabber and wait 
 //few time till start moving
 void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
@@ -400,23 +305,12 @@ int beginning,finish;
 int retour;
 float value;
 float initial_angle;
-float initial_angle_compass;
-//uint8_t both[2];
-//both[0]=sn;
-//both[1]=dx;
-
 set_tacho_time_sp( sn, 100 );
-set_tacho_ramp_up_sp( sn, 1200 );
-set_tacho_ramp_down_sp( sn, 1200);
+set_tacho_ramp_up_sp( sn, 2000 );
+set_tacho_ramp_down_sp( sn, 2000);
 set_tacho_time_sp( dx, 100 );
-set_tacho_ramp_up_sp( dx, 1200 );
-set_tacho_ramp_down_sp( dx, 1200 );
-/*
-multi_set_tacho_time_sp( both, 100);
-multi_set_tacho_ramp_up_sp( both, 2000 );
-multi_set_tacho_ramp_down_sp( both, 2000 );
-multi_set_tacho_hold_pid_Kd( both, 	
-*/
+set_tacho_ramp_up_sp( dx, 2000 );
+set_tacho_ramp_down_sp( dx, 2000 );
 get_tacho_position( dx, &beginning);
 finish = beginning;
 if ( !get_sensor_value0(sn_compass, &initial_angle_compass )) {
@@ -439,7 +333,7 @@ while((finish - beginning - distance)<=0){
 	set_tacho_time_sp( dx, 100);
 	set_tacho_ramp_up_sp( dx, 1200 );
 	set_tacho_ramp_down_sp( dx, 1200 );
-	/*retour = pthread_mutex_lock(&mutex);
+	retour = pthread_mutex_lock(&mutex);
     			if (retour != 0)
     			 {
     			   perror("erreur mutex lock");
@@ -450,7 +344,7 @@ while((finish - beginning - distance)<=0){
     			 {
     			   perror("erreur mutex unlock");
      			  exit(EXIT_FAILURE);
-    			 }*/
+    			 }
 	if ( !get_sensor_value0(sn_sonar, &value )) {
                                 value = 0;
                         }
@@ -479,14 +373,14 @@ while((finish - beginning - distance)<=0){
 	if(value<1000 && value >=70)
 		{
 	//multi_set_tacho_speed_sp(both, max_speed * 1 / 6);	
-	set_tacho_speed_sp( sn, max_speed * 1 / 8 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 8 );
+	set_tacho_speed_sp( sn, max_speed * 1 / 6 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 6 );
 			       }
 	if(value<70 && value >=40)
 		{
 	//multi_set_tacho_speed_sp(both, max_speed * 1 / 24);	
-	set_tacho_speed_sp( sn, max_speed * 1 / 20 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 20);
+	set_tacho_speed_sp( sn, max_speed * 1 / 24 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 24);
 		 }
 	if(value<40 && value >=0)
 		 {
@@ -858,12 +752,12 @@ int main( void )
      				  perror("erreur thread movement");
      				  exit(EXIT_FAILURE);
     					 }	
- 		/*if (pthread_join(thread_movement, NULL)) {
+ 		if (pthread_join(thread_movement, NULL)) {
 	perror("pthread_join");
 	return EXIT_FAILURE;
-    }*/
+    }
  
-/* pthread_create(&thread_colorsense, NULL, colorsense, donald);
+pthread_create(&thread_colorsense, NULL, colorsense, donald);
 				  if (retour != 0)
    					  {
      				  perror("erreur thread sensor");
@@ -872,76 +766,12 @@ int main( void )
  		if (pthread_join(thread_colorsense, NULL)) {
 			perror("pthread_join colorsens");
 			return EXIT_FAILURE;
-   					 		}*/
+   					 		}
 		if (pthread_join(thread_movement, NULL)) {
 			perror("pthread_join colorsens");
 			return EXIT_FAILURE;
    					 		} 
-       
- 	/*ret= fork();
- 	if (ret<0)
-		printf( "there is a problem with fork()\n");
- 	else if ( ret==0 ) //child
-	{
-		init_queue (&posqueue, O_CREAT | O_RDONLY,1);
-		init_queue (&turnqueue,O_CREAT | O_WRONLY,2);
-		//put_integer_in_mq (turnqueue, 0);
-		name = "child\n";
-		while(1){
-		d = get_integer_from_mq (posqueue);
-		if(d==1)
-		{
-			if ( !get_sensor_value( 0, donald.sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
-				val = 0;
-			}
-			if( strcmp(color[ color_aq(donald.sn_color) ],"RED")==0)
-			{
-				grab_ball(donald->sn,donald.dx,donald.med,donald.max_speed);
-				Sleep(200);
-				put_integer_in_mq (turnqueue, 1);
-			}	
-			else put_integer_in_mq (turnqueue, 1);
-				
-		}
-		}
-		
-	}
- 	else		  //parent
-	{
-		init_queue (&posqueue, O_CREAT | O_WRONLY,1);
-		init_queue (&turnqueue,O_CREAT | O_RDONLY,2);
-		//put_integer_in_mq (posqueue, 0);
-		//n = get_integer_from_mq (turnqueue);
-		name = "parent\n";
-        
-		
-	//research( sn, dx, max_speed, sn_compass);
-	//break;
-	*/
-		
-            	//movements(donald.sn,donald.dx,donald.sn_sonar,donald.max_speed, donald.sn_compass, posqueue,turnqueue); 
-		//elapsed_distance = go_ahead_till_obstacle(donald.sn,donald.dx,donald.max_speed,donald.sn_sonar,2000,donald.sn_compass);
-		//put_integer_in_mq (posqueue, 1); //1 means I'm arrived to the ball control if it is red
-		/*n = get_integer_from_mq (turnqueue);
-		while(n!=1)
-		{
-			Sleep(500);
-			n = get_integer_from_mq (turnqueue);
-		}*/
-		//fflush( stdout );
-	
-		/*
-	if( strcmp(color[ color_aq(sn_color) ],"RED")==0)
-	grab_ball(sn,dx,med,max_speed);
-	//if( strcmp(color[ val ],"RED")==0)
-	else
-	rotatedx(sn,dx,sn_compass,max_speed,45);
-	//leave_ball(sn,dx,med,max_speed);
-	*/
-	/*
-        rotatesx(sn,dx,sn_compass,max_speed,90);
-	break;
-             	
+
         }
 			
 	
