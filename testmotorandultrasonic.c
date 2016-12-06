@@ -56,7 +56,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 		printf("final %f\n", actual_angle);
 		if(actual_angle!=initial_angle)
 		{	
-			if(actual_angle<(initial_angle - 4))	//too to the left turn right!!!
+			if(actual_angle<(initial_angle - 2))	//too to the left turn right!!!
 			{
 				set_tacho_position_sp( sn, -2 );
 				set_tacho_position_sp( dx,  2 );
@@ -80,7 +80,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				}
 			
 			}
-			if(actual_angle> (initial_angle + 4))	//too to the right turn left!!!
+			if(actual_angle> (initial_angle + 2))	//too to the right turn left!!!
 			{
 				set_tacho_position_sp( sn,  2 );
 				set_tacho_position_sp( dx, -2 );
@@ -201,14 +201,14 @@ void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 			}
  			get_tacho_position( dx, &act_pos);
  			distance_el=act_pos;
- 			while((act_pos-(5*26)-distance_el)<=0)
+ 			while((act_pos-(7*26)-distance_el)<=0)
 			{
 				set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 				set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 				get_tacho_position( dx, &act_pos);
 			}
 			//release the grabber
-			set_tacho_position_sp( med, -90 );
+			set_tacho_position_sp( med, -80 );
 			Sleep(200);
 			for ( i = 0; i < 1; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
@@ -404,6 +404,7 @@ void* colorsense(void * args)
  	struct motandsens *donald = (struct motandsens *) args;
  	while(1)
 	{
+ 
 	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
 			}
@@ -742,12 +743,7 @@ int main( void )
 	  perror("erreur thread movement");
 	  exit(EXIT_FAILURE);
 	}	
- 	if (pthread_join(thread_movement, NULL)) 
-	{
-	  perror("pthread_join");
-	  return EXIT_FAILURE;
-        } 
-        pthread_create(&thread_colorsense, NULL, colorsense, donald);
+ 	pthread_create(&thread_colorsense, NULL, colorsense, donald);
 	if (retour != 0)
 	{
 	  perror("erreur thread sensor");
