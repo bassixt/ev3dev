@@ -401,12 +401,21 @@ int retour;
 float value;
 float initial_angle;
 float initial_angle_compass;
+uint8_t both[2];
+both[0]=sn;
+both[1]=dx;
+/*
 set_tacho_time_sp( sn, 100 );
 set_tacho_ramp_up_sp( sn, 2000 );
 set_tacho_ramp_down_sp( sn, 2000 );
 set_tacho_time_sp( dx, 100 );
 set_tacho_ramp_up_sp( dx, 2000 );
 set_tacho_ramp_down_sp( dx, 2000 );
+*/
+multi_set_tacho_time_sp( both, 100);
+multi_set_tacho_ramp_up_sp( both, 2000 );
+multi_set_tacho_ramp_down_sp( both, 2000 );
+	
 get_tacho_position( dx, &beginning);
 finish = beginning;
 if ( !get_sensor_value0(sn_compass, &initial_angle_compass )) {
@@ -418,11 +427,15 @@ if ( !get_sensor_value0(sn_mag, &initial_angle)){
 	
 while((finish - beginning - distance)<=0){
 	control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
+	multi_set_tacho_time_sp( both, 100);
+	multi_set_tacho_ramp_up_sp( both, 2000 );
+	multi_set_tacho_ramp_down_sp( both, 2000 );
+	/*
 	set_tacho_time_sp( sn, 100 );
 	set_tacho_ramp_up_sp( sn, 2000 );
 	set_tacho_ramp_down_sp( sn, 2000 );
 	set_tacho_ramp_up_sp( dx, 2000 );
-	set_tacho_ramp_down_sp( dx, 2000 );
+	set_tacho_ramp_down_sp( dx, 2000 );*/
 	retour = pthread_mutex_lock(&mutex);
     			if (retour != 0)
     			 {
@@ -462,25 +475,29 @@ while((finish - beginning - distance)<=0){
 			       }    */      		
 	if(value<2500 && value >=70)
 		{
-	set_tacho_speed_sp( sn, max_speed * 1 / 6 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 6 );
+	multi_set_tacho_speed_sp(both, max_speed * 1 / 6);	
+	//set_tacho_speed_sp( sn, max_speed * 1 / 6 );
+	//set_tacho_speed_sp( dx, max_speed * 1 / 6 );
 			       }
 	if(value<70 && value >=40)
 		{
-	set_tacho_speed_sp( sn, max_speed * 1 / 24 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 24 );
+	multi_set_tacho_speed_sp(both, max_speed * 1 / 24);	
+	//set_tacho_speed_sp( sn, max_speed * 1 / 24 );
+	//set_tacho_speed_sp( dx, max_speed * 1 / 24 );
 		 }
 	if(value<40 && value >=0)
 		 {
 		printf("sono nello zero\n");
-		fflush( stdout );	
-	 set_tacho_speed_sp( sn, max_speed * 0 );
-	 set_tacho_speed_sp( dx, max_speed * 0 );
+		fflush( stdout );
+	multi_set_tacho_speed_sp(both, max_speed * 0);	
+	 //set_tacho_speed_sp( sn, max_speed * 0 );
+	 //set_tacho_speed_sp( dx, max_speed * 0 );
 	Sleep(100);
 	break;
 		}
-	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
-	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+	multi_set_tacho_command_inx(both , TACHO_RUN_TIMED );
+	//set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+	//set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 	Sleep(100);
 	get_tacho_position( dx, &finish);
 }
