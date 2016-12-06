@@ -406,11 +406,11 @@ float initial_angle_compass;
 //both[1]=dx;
 
 set_tacho_time_sp( sn, 100 );
-set_tacho_ramp_up_sp( sn, 1000 );
-set_tacho_ramp_down_sp( sn, 1000);
+set_tacho_ramp_up_sp( sn, 1200 );
+set_tacho_ramp_down_sp( sn, 1200);
 set_tacho_time_sp( dx, 100 );
-set_tacho_ramp_up_sp( dx, 1000 );
-set_tacho_ramp_down_sp( dx, 1000 );
+set_tacho_ramp_up_sp( dx, 1200 );
+set_tacho_ramp_down_sp( dx, 1200 );
 /*
 multi_set_tacho_time_sp( both, 100);
 multi_set_tacho_ramp_up_sp( both, 2000 );
@@ -434,12 +434,12 @@ while((finish - beginning - distance)<=0){
 	multi_set_tacho_ramp_down_sp( both, 2000 );
 	*/
 	set_tacho_time_sp( sn, 100 );
-	set_tacho_ramp_up_sp( sn, 1000 );
-	set_tacho_ramp_down_sp( sn, 1000 );
+	set_tacho_ramp_up_sp( sn, 1200 );
+	set_tacho_ramp_down_sp( sn, 1200 );
 	set_tacho_time_sp( dx, 100);
-	set_tacho_ramp_up_sp( dx, 1000 );
-	set_tacho_ramp_down_sp( dx, 1000 );
-	retour = pthread_mutex_lock(&mutex);
+	set_tacho_ramp_up_sp( dx, 1200 );
+	set_tacho_ramp_down_sp( dx, 1200 );
+	/*retour = pthread_mutex_lock(&mutex);
     			if (retour != 0)
     			 {
     			   perror("erreur mutex lock");
@@ -450,7 +450,7 @@ while((finish - beginning - distance)<=0){
     			 {
     			   perror("erreur mutex unlock");
      			  exit(EXIT_FAILURE);
-    			 }
+    			 }*/
 	if ( !get_sensor_value0(sn_sonar, &value )) {
                                 value = 0;
                         }
