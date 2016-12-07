@@ -690,7 +690,7 @@ switch(arena)
 		printf("I'am in movements after turn\n");	
 		Sleep(1000);
 		break;
-	case 3:
+	case 2:
 
 		Sleep(500); //time elapsed to scan
 
