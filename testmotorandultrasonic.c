@@ -122,8 +122,8 @@ float get_compass_values(uint8_t sn_compass)
 	for(i=0;i<10;i++)
 	{
 		
-		get_sensor_value0(donald->sn_compass, &degree);
-		if ( !get_sensor_value0(donald->sn_compass, &degree )) 
+		get_sensor_value0(sn_compass, &degree);
+		if ( !get_sensor_value0(sn_compass, &degree )) 
 			{
 			   degree = 0;
 			} 
