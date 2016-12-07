@@ -202,8 +202,8 @@ void* position(void *args) //or we can pass all the struct
         {   
             first_comp=degree;
 		
-  			x_new=x_start+motor_value/21*sin(PI/180*(degree-first_comp+iniz_comp));
-  			y_new=y_start+motor_value/21*cos(PI/180*(degree-first_comp+iniz_comp));
+  			x_new=x_start+motor_value/21*sin(M_PI/180*(degree-first_comp+iniz_comp));
+  			y_new=y_start+motor_value/21*cos(M_PI/180*(degree-first_comp+iniz_comp));
   			i=1;
   			donald->x=x_new;
   			donald->y=y_new;
@@ -217,8 +217,8 @@ void* position(void *args) //or we can pass all the struct
    			y_old=y_new;
    			if(flag_rot==0)   /*go haed*/
    			{       printf("sono nell'if cond, degree:%f , firstcomp:%f, diff:%d ", degree,first_comp,degree-first_comp);
-   				x_new=x_old+(motor_value/21-x_old)*sin(PI/180*(degree-first_comp+iniz_comp));
-   				y_new=y_old+(motor_value/21-y_old)*cos(PI/180*(degree-first_comp+iniz_comp));
+   				x_new=x_old+(motor_value/21-x_old)*sin(M_PI/180*(degree-first_comp+iniz_comp));
+   				y_new=y_old+(motor_value/21-y_old)*cos(M_PI/180*(degree-first_comp+iniz_comp));
    				donald->x=x_new;
   			        donald->y=y_new;
 				//send realpos.x and .y/
@@ -229,8 +229,8 @@ void* position(void *args) //or we can pass all the struct
 			{
  				//x_old=x_new;
    				//y_old=y_new;
-   				x_new=motor_value/21*sin(PI/180*(degree-first_comp+iniz_comp));
-   				y_new=motor_value/21*cos(PI/180*(degree-first_comp+iniz_comp));
+   				x_new=motor_value/21*sin(M_PI/180*(degree-first_comp+iniz_comp));
+   				y_new=motor_value/21*cos(M_PI/180*(degree-first_comp+iniz_comp));
    				donald->x=x_old;
   				donald->y=y_old;
   				//send realpos.x and .y/    /setta flag sulla fifo s per dire che il robot può girare/
