@@ -204,7 +204,7 @@ void* position(void *args) //or we can pass all the struct
   			donald->y=y_new;
   			//send realpos.x and .y/
   			printf( "x=%f  y=%f \n" ,donald->x, donald->y);
-  			sleep(2000);
+  			
         }
         else
         {    
@@ -218,7 +218,7 @@ void* position(void *args) //or we can pass all the struct
   			        donald->y=y_new;
 				//send realpos.x and .y/
 				printf( "x=%f  y=%f \n" , donald->x, donald->y);
-  				sleep(2000);
+  				
 			}
 			else   /*turning*/
 			{
@@ -230,10 +230,11 @@ void* position(void *args) //or we can pass all the struct
   				donald->y=y_old;
   				//send realpos.x and .y/    /setta flag sulla fifo s per dire che il robot può girare/
   				printf( "x=%f  y=%f \n" , donald->x, donald->y);
-  				sleep(2000);
+  				
 	               	}
 	
         }
+	     Sleep(2000);
     	res_cond=getcondition(0,0,0,donald->x,donald->y);
   printf(" res_cond=%d\n" , res_cond); 
         //gira se sei arrivato ai limiti dell'arena/
