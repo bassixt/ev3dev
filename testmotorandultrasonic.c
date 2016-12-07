@@ -39,13 +39,213 @@ struct motandsens {
 	uint8_t sn_compass;
 	uint8_t sn_mag;
     int max_speed;
+	float x,y;
+        int role;/*0 beg 1 fin*/
+        int arena;/*0 small1 big*/
+        int side_of_arena;/*0 right 1 left*/
+    int max_speed;
+
 
 };
 
 struct pos {
 	float x,y
 	};
+//calculate the the condition for the loop in the next function
+int getcondition(int role, int arena, int side_of_arena,float real_posx, float real_posy)
+{
+	int res_cond;
+        res_cond=0;
+	switch (arena)
+	{
+       case 0 :
+         switch (role)
+         {
+       		case 0 :
+       		  if(real_posx>=80 && real_posy>=165)
+       		   {res_cond=1;}
+       		  break;
+    		case 1:
+    		   if(real_posx<=40 && real_posy<=35)
+       		   {res_cond=1;}
+       		  break;
 
+         }
+         break;
+       case 1:
+         switch (side)
+         {
+ 			case 0:
+ 			   switch (role)
+               {
+       		      case 0:
+       		          if(real_posx>=40 && real_posy>=365)
+       		           {res_cond=1;}
+       		          break;
+    		      case 1:
+    		        if(real_posx>=80 && real_posy<=35)
+       		           {res_cond=1;}
+       		         break;
+               }
+                break;
+            case 1 :
+ 			   switch (role)
+               {
+       		      case 0 :
+       		         if(real_posx<=-40 && real_posy>=365)
+       		           {res_cond=1;}
+       		          break;
+    		      case 1 :
+    		         if(real_posx<=-80 && real_posy<=35)
+       		           {res_cond=1;}
+       		          break;
+               }
+                break;
+
+         }
+         break;
+    } 
+
+
+return res_cond;
+
+}
+
+//position
+
+void* position(void *args) //or we can pass all the struct
+{
+   int flag_rot=0; 
+    struct motandsens *donald = (struct motandsens *) args;
+    int retour;
+    int motor_value,degree,iniz_comp,first_comp,res_cond;
+    float x_new,y_nex,x_old,y_old,x_start,y_start,x_lim,y_lim;
+/////////////////////////do a switch case of if based on where you are ( small or big arena, side) and rol\\\\\
+//////thread
+//	retour = pthread_mutex_lock(&mutex);
+//	 retour = pthread_mutex_lock(&mutex);
+  //  			if (retour != 0)
+    //			 {
+    //			   perror("erreur mutex lock");
+     //			  exit(EXIT_FAILURE);
+    	//		 }
+/////////	
+	switch (donald->arena)
+	{
+       case 0 :
+         switch (donald->role)
+         {
+       		case 0 :
+       		  x_start=90;
+        	  y_start=25;
+        	  iniz_comp=0;
+              break;
+    		case 1 :
+    		  x_start=30;
+        	  y_start=175;
+        	  iniz_comp=180;
+     		  break;
+
+         }
+         break;
+       case 1 :
+         switch (donald->side)
+         {
+ 			case 0 :
+ 			   switch (donald->role)
+               {
+       		      case 0 :
+       		         x_start=30;
+        	         y_start=25;
+        	         iniz_comp=0;
+     		         break;
+    		      case 1 :
+    		         x_start=90;
+        	         y_start=375;
+        	         iniz_comp=180;
+        	         break;
+               }
+                break;
+            case 1:
+ 			   switch (donald->role)
+               {
+       		      case 0 :
+       		         x_start=-30;
+        	         y_start=25;
+        	         iniz_comp=0;
+                     break;
+    		      case 1 :
+    		         x_start=-90;
+        	         y_start=375;
+        	         iniz_comp=180;
+       		         break;
+               }
+                break;
+
+         }
+         break;
+    } 
+ //////////////////////////////////////////
+     i=0;
+     res_cond=getcondition(0,0,0,donald->x,donald->y);
+     while ( res_cond==0 || i==0)
+     {
+        get_tacho_position(donald->sn,&motor_value);
+        get_sensor_value0(donald->sn_compass, &degree);
+        if(i==0)
+        {   
+            first_comp=degree;
+  			x_new=x_start+motor_value/21*sin(degree-first_comp+iniz_comp);
+  			y_new=y_start+motor_value/21*cos(degree-first_comp+iniz_comp);
+  			i=1;
+  			donald->x=x_new;
+  			donald->y=y_new;
+  			//send realpos.x and .y/
+  			printf( "x=%f  y=%f \n" ,donald->x, donald->y);
+  			sleep(2000);
+        }
+        else
+        {    
+   			x_old=x_new;
+   			y_old=y_new;
+   			if(leggo flag_rot==0)   /*go haed*/
+   			{   
+   				x_new=x_old+(motor_value/21-x_old)*sin(degree-first_comp+iniz_comp);
+   				y_new=y_old+(motor_value/21-y_old)*cos(degree-first_comp+iniz_comp);
+   				donald->x=x_new;
+  			        donald->y=y_new;
+				//send realpos.x and .y/
+				printf( "x=%f  y=%f \n" , donald->x, donald->y);
+  				sleep(2000);
+			}
+			else   /*turning*/
+			{
+ 				//x_old=x_new;
+   				//y_old=y_new;
+   				x_new=motor_value/21*sin(degree-first_comp+iniz_comp);
+   				y_new=motor_value/21*cos(degree-first_comp+iniz_comp);
+   				donald->x=x_old;
+  				donald->y=y_old;
+  				//send realpos.x and .y/    /setta flag sulla fifo s per dire che il robot può girare/
+  				printf( "x=%f  y=%f \n" , donald->x, donald->y);
+  				sleep(2000);
+	               	}
+        }
+
+
+        //gira se sei arrivato ai limiti dell'arena/
+        //void dont_pass_arena_limits (realpox.x,realpos.y, sn, dx, sn_compass, max_speed,role,side,arena,first_comp,degree)
+     }
+   //send start to the finisher or stop if you are the finisher/
+	//trhead
+		
+ 			 retour = pthread_mutex_unlock(&mutex);
+    			if (retour != 0)
+    			 {
+    			   perror("erreur mutex unlock");
+     			  exit(EXIT_FAILURE);
+    			 }
+}
 
 //function that hold the direction
 void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle,uint8_t sn_mag){
@@ -775,13 +975,13 @@ int main( void )
 	  perror("erreur thread movement");
 	  exit(EXIT_FAILURE);
 	}	
- 	pthread_create(&thread_colorsense, NULL, colorsense, donald);
+ 	pthread_create(&thread_position, NULL, position, donald);
 	if (retour != 0)
 	{
 	  perror("erreur thread sensor");
 	  exit(EXIT_FAILURE);
 	}	
-	if (pthread_join(thread_colorsense, NULL)) 
+	if (pthread_join(thread_position, NULL)) 
 	{
 	  perror("pthread_join colorsens");
 	  return EXIT_FAILURE;
