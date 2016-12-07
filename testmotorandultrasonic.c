@@ -263,8 +263,8 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 		if ( !get_sensor_value0(sn_mag, &actual_angle)) {
 			actual_angle = 0;
 		}
-		printf("initial  %f\n",initial_angle);
-		printf("final %f\n", actual_angle);
+		//printf("initial  %f\n",initial_angle);
+		//printf("final %f\n", actual_angle);
 		if(actual_angle!=initial_angle)
 		{	
 			if(actual_angle<(initial_angle - 4))	//too to the left turn right!!!
@@ -554,7 +554,7 @@ while((finish - beginning - distance)<=0){
 	if ( !get_sensor_value0(sn_sonar, &value )) {
                                 value = 0;
                         }
-                        printf( "\r(%f) \n", value);
+                        //printf( "\r(%f) \n", value);
 			fflush( stdout );
      /*  if(value<2500 && value>=1500)
 		{
