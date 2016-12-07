@@ -233,7 +233,7 @@ void* position(void *args) //or we can pass all the struct
 	               	}
         }
  res_cond=getcondition(0,0,0,donald->x,donald->y);
-
+  printf(" res_cond=%d\n" , res_cond);    
         //gira se sei arrivato ai limiti dell'arena/
         //void dont_pass_arena_limits (realpox.x,realpos.y, sn, dx, sn_compass, max_speed,role,side,arena,first_comp,degree)
      }
