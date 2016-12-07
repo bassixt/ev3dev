@@ -668,11 +668,11 @@ int arena;
 int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
 //arena  case 0 TEST #1 go straight ahead
 //arena  case 1 TEST #2 leave the ball at the center
-arena = 2;
+arena = 0;
 switch(arena)
 {
 	case 0 :
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1450,donald->sn_compass, donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3000,donald->sn_compass, donald->sn_mag);
 		break;
 	case 1 :
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass, donald->sn_mag);
