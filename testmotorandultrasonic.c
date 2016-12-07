@@ -43,7 +43,7 @@ struct motandsens {
 	float x,y;
         int role;/*0 beg 1 fin*/
         int arena;/*0 small1 big*/
-        int side_of_arena;/*0 right 1 left*/
+        int side;/*0 right 1 left*/
     int max_speed;
 
 
@@ -53,7 +53,7 @@ struct pos {
 	float x,y
 	};
 //calculate the the condition for the loop in the next function
-int getcondition(int role, int arena, int side_of_arena,float real_posx, float real_posy)
+int getcondition(int role, int arena, int side,float real_posx, float real_posy)
 {
 	int res_cond;
         res_cond=0;
