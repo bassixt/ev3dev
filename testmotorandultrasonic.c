@@ -202,8 +202,8 @@ void* position(void *args) //or we can pass all the struct
         {   
             first_comp=degree;
 		
-  			x_new=x_start+motor_value/21*sin(degree-first_comp+iniz_comp);
-  			y_new=y_start+motor_value/21*cos(degree-first_comp+iniz_comp);
+  			x_new=x_start+motor_value/21*sin(PI/180*(degree-first_comp+iniz_comp));
+  			y_new=y_start+motor_value/21*cos(PI/180*(degree-first_comp+iniz_comp));
   			i=1;
   			donald->x=x_new;
   			donald->y=y_new;
@@ -217,8 +217,8 @@ void* position(void *args) //or we can pass all the struct
    			y_old=y_new;
    			if(flag_rot==0)   /*go haed*/
    			{       printf("sono nell'if cond, degree:%f , firstcomp:%f, diff:%d ", degree,first_comp,degree-first_comp);
-   				x_new=x_old+(motor_value/21-x_old)*sin(degree-first_comp+iniz_comp);
-   				y_new=y_old+(motor_value/21-y_old)*cos(degree-first_comp+iniz_comp);
+   				x_new=x_old+(motor_value/21-x_old)*sin(PI/180*(degree-first_comp+iniz_comp));
+   				y_new=y_old+(motor_value/21-y_old)*cos(PI/180(degree-first_comp+iniz_comp));
    				donald->x=x_new;
   			        donald->y=y_new;
 				//send realpos.x and .y/
@@ -229,8 +229,8 @@ void* position(void *args) //or we can pass all the struct
 			{
  				//x_old=x_new;
    				//y_old=y_new;
-   				x_new=motor_value/21*sin(degree-first_comp+iniz_comp);
-   				y_new=motor_value/21*cos(degree-first_comp+iniz_comp);
+   				x_new=motor_value/21*sin(PI/180*(degree-first_comp+iniz_comp));
+   				y_new=motor_value/21*cos(PI/180*(degree-first_comp+iniz_comp));
    				donald->x=x_old;
   				donald->y=y_old;
   				//send realpos.x and .y/    /setta flag sulla fifo s per dire che il robot può girare/
@@ -900,10 +900,11 @@ flag_1=0;
 rotatedx(sn,dx,sn_compass,max_speed,45,sn_mag);	
 for(i=0;i<45;i++)
 {
-printf("I'M here");
+printf("I'M here\n");
+Sleep(500);
 get_sensor_value0(sn_sonar, &points[i]);
-printf("Il valore è %d:",points[i]);
-if(i!=0 && ((points[i-1]-points[i])>=30) && flag_1==0)
+printf("Il valore è %d:\n",points[i]);
+if(i!=0 && ((points[i-1]-points[i])>=350) && flag_1==0)
 {
  //this is the first balls' extremity 
 	if ( !get_sensor_value0(sn_mag, &start_angle )) 
@@ -914,7 +915,7 @@ if(i!=0 && ((points[i-1]-points[i])>=30) && flag_1==0)
 	get_tacho_position(dx,&pos_in_ball_dx);
 	flag_1=1;
 }
-if(i!=0 && ((points[i]-points[i-1])>=30) && flag_1==1)
+if(i!=0 && ((points[i]-points[i-1])>=350) && flag_1==1)
 {
   //this is the last point of the ball detected
 	if ( !get_sensor_value0(sn_mag, &final_angle )) 
@@ -924,13 +925,14 @@ if(i!=0 && ((points[i]-points[i-1])>=30) && flag_1==1)
 	get_tacho_position(sn,&pos_in_ball_sn);
 	get_tacho_position(dx,&pos_in_ball_dx);
 	flag_1=2;
-	break;
+
 }
 if(flag_1==2)
 {	
 	middle_angle = (final_angle - start_angle) / 2;
 	found_sn=(pos_fin_ball_sn - pos_in_ball_sn) / 2;
 	found_dx=(pos_fin_ball_dx - pos_in_ball_dx) / 2;
+	break;
 }
 rotatesx(sn,dx,sn_compass,max_speed,2,sn_mag);
 Sleep(100);
