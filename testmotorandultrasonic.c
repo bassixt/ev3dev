@@ -715,7 +715,7 @@ void* movements(void * args)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-310,donald->sn_compass,donald->sn_mag);
 			
 			
 			printf("I'am in movements finish\n");
