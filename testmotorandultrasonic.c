@@ -187,7 +187,7 @@ void* position(void *args) //or we can pass all the struct
          break;
     } 
  //////////////////////////////////////////
-     i=0;
+   int  i=0;
      res_cond=getcondition(0,0,0,donald->x,donald->y);
      while ( res_cond==0 || i==0)
      {
