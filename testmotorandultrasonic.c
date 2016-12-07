@@ -9,6 +9,7 @@
 #include "ev3.h"
 #include "ev3_port.h"
 #include "ev3_tacho.h"
+#include <math.h>
 #include "ev3_sensor.h"
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
@@ -208,7 +209,7 @@ void* position(void *args) //or we can pass all the struct
         {    
    			x_old=x_new;
    			y_old=y_new;
-   			if(leggo flag_rot==0)   /*go haed*/
+   			if(flag_rot==0)   /*go haed*/
    			{   
    				x_new=x_old+(motor_value/21-x_old)*sin(degree-first_comp+iniz_comp);
    				y_new=y_old+(motor_value/21-y_old)*cos(degree-first_comp+iniz_comp);
