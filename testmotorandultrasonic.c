@@ -566,12 +566,12 @@ while((finish - beginning - distance)<=0){
 	set_tacho_speed_sp( sn, max_speed * 1 / 3 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 3 );
 			       } */   
-	if(value<2500 && value >=1000)
+	if(value<2500 && value >=1500)
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 4 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 4 );
 			       }         		
-	if(value<1000 && value >=70)
+	if(value<1500 && value >=70)
 		{
 	//multi_set_tacho_speed_sp(both, max_speed * 1 / 6);	
 	set_tacho_speed_sp( sn, max_speed * 1 / 8 );
@@ -715,7 +715,7 @@ void* movements(void * args)
 			found=1;
 				//funtion to take the ball and return back}
 		else*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-305,donald->sn_compass,donald->sn_mag);
+			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-295,donald->sn_compass,donald->sn_mag);
 			
 			
 			printf("I'am in movements finish\n");
