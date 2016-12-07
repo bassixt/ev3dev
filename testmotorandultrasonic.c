@@ -258,7 +258,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 		printf("final %f\n", actual_angle);
 		if(actual_angle!=initial_angle)
 		{	
-			if(actual_angle<(initial_angle - 2))	//too to the left turn right!!!
+			if(actual_angle<(initial_angle - 4))	//too to the left turn right!!!
 			{
 				set_tacho_position_sp( sn, -2 );
 				set_tacho_position_sp( dx,  2 );
@@ -282,7 +282,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				}
 			
 			}
-			if(actual_angle> (initial_angle + 2))	//too to the right turn left!!!
+			if(actual_angle> (initial_angle + 4))	//too to the right turn left!!!
 			{
 				set_tacho_position_sp( sn,  2 );
 				set_tacho_position_sp( dx, -2 );
@@ -635,7 +635,7 @@ void* movements(void * args)
 	int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
 	Sleep(500); //time elapsed to scan
 			
-        research(donald->sn, donald->dx,donald->max_speed, donald->sn_compass,0, donald->med, donald->sn_mag, donald->sn_sonar);
+       // research(donald->sn, donald->dx,donald->max_speed, donald->sn_compass,0, donald->med, donald->sn_mag, donald->sn_sonar);
 	/*if(research(sn, dx, max_speed, sn_compass, 45)==1)
 		{	
 			found=1;
@@ -739,8 +739,11 @@ struct motandsens* inizialization (struct motandsens *donald)
                 }
         }*/
 	ev3_search_tacho_plugged_in(65,0, &donald->dx, 0 );
+	Sleep(100);
 	ev3_search_tacho_plugged_in(66,0, &donald->sn, 0 );
+	Sleep(100);
 	ev3_search_tacho_plugged_in(67,0, &donald->med, 0 );
+	Sleep(100);
       if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->sn, 0 )){
                 get_tacho_max_speed( donald->sn, &donald->max_speed );
                 printf("value of buffer :%d\n", donald->sn);
