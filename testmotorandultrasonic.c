@@ -210,7 +210,7 @@ void* position(void *args) //or we can pass all the struct
    			x_old=x_new;
    			y_old=y_new;
    			if(flag_rot==0)   /*go haed*/
-   			{   
+   			{       printf("sono nell'if conde");
    				x_new=x_old+(motor_value/21-x_old)*sin(degree-first_comp+iniz_comp);
    				y_new=y_old+(motor_value/21-y_old)*cos(degree-first_comp+iniz_comp);
    				donald->x=x_new;
