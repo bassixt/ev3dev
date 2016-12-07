@@ -113,6 +113,29 @@ return res_cond;
 }
 
 //position
+float get_compass_values(uint8_t sn_compass)
+{
+	int i;
+	float sum;
+	float degree;
+	sum=0;
+	for(i=0;i<10;i++)
+	{
+		
+		get_sensor_value0(donald->sn_compass, &degree);
+		if ( !get_sensor_value0(donald->sn_compass, &degree )) 
+			{
+			   degree = 0;
+			} 
+		Sleep(100);
+		sum+=degree;
+	}
+	return sum/10;
+		
+		
+	
+	
+}
 
 void* position(void *args) //or we can pass all the struct
 {
@@ -194,10 +217,11 @@ void* position(void *args) //or we can pass all the struct
      while ( res_cond==0 )
      {
         get_tacho_position(donald->sn,&motor_value);
-        get_sensor_value0(donald->sn_compass, &degree);
+        /*
 	if ( !get_sensor_value0(donald->sn_compass, &degree )) {
                         degree = 0;
-                        }     
+                        }   */
+	degree = get_compass_values(donald->sn_compass);
         if(i==0)
         {   
             first_comp=degree;
