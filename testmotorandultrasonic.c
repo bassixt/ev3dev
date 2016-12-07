@@ -197,6 +197,7 @@ void* position(void *args) //or we can pass all the struct
         if(i==0)
         {   
             first_comp=degree;
+		
   			x_new=x_start+motor_value/21*sin(degree-first_comp+iniz_comp);
   			y_new=y_start+motor_value/21*cos(degree-first_comp+iniz_comp);
   			i=1;
@@ -211,7 +212,7 @@ void* position(void *args) //or we can pass all the struct
    			x_old=x_new;
    			y_old=y_new;
    			if(flag_rot==0)   /*go haed*/
-   			{       printf("sono nell'if conde");
+   			{       printf("sono nell'if cond, degree:%d , firstcomp:%d, diff:%d ", degree,first_comp,degree-first_comp);
    				x_new=x_old+(motor_value/21-x_old)*sin(degree-first_comp+iniz_comp);
    				y_new=y_old+(motor_value/21-y_old)*cos(degree-first_comp+iniz_comp);
    				donald->x=x_new;
@@ -566,12 +567,12 @@ while((finish - beginning - distance)<=0){
 	set_tacho_speed_sp( sn, max_speed * 1 / 3 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 3 );
 			       } */   
-	if(value<2500 && value >=1500)
+	if(value<2500 && value >=500)
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 4 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 4 );
 			       }         		
-	if(value<1500 && value >=70)
+	if(value<500 && value >=70)
 		{
 	//multi_set_tacho_speed_sp(both, max_speed * 1 / 6);	
 	set_tacho_speed_sp( sn, max_speed * 1 / 8 );
