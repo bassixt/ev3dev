@@ -952,7 +952,7 @@ int main( void )
 	int act_pos;
         float value;
 	float elapsed_distance;        
-	pthread_t thread_movement, thread_colorsense; 
+	pthread_t thread_movement, thread_position; 
         pthread_mutex_init(&mutex, NULL);
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
