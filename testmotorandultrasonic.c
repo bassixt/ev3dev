@@ -661,98 +661,124 @@ void* movements(void * args)
 		THE TRAJECTORY CHOSEN IS GO 1 TIME AHEAD FOR 10 CM + 2 TIMES AHEAD FOR 25 CM +
 		TURN LEFT + 1 TIME AHEAD FOR 10 CM + 2 TIMES AHEAD FOR 25 CM + TURN RIGHT + 
 		2 TIMES AHEAD FOR 25 C */
-	int i,n;
-	struct motandsens *donald = (struct motandsens *) args;
-	float degree;
-	
-	int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
-	Sleep(500); //time elapsed to scan
-			
-       // research(donald->sn, donald->dx,donald->max_speed, donald->sn_compass,0, donald->med, donald->sn_mag, donald->sn_sonar);
-	/*if(research(sn, dx, max_speed, sn_compass, 45)==1)
-		{	
-			found=1;
-				//funtion to take the ball and return back}
-		else
-			*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass, donald->sn_mag);
-			
-			printf("I'am in movements\n");
-	for(i=0;i<2;i++)
-	{
-	/*if(found != 1)
-		if(research(sn, dx, max_speed, sn_compass, 90)==1)
-		{	
-			found=1;
-				//funtion to take the ball and return back}
-		else*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,donald->sn_mag);
-			
-			printf("I'am in movements' for1\n");
-			Sleep(1000);
-	}
-	//TURN LEFT
-	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
-	Sleep(1000);
-		if(found != 1)
-		/*
-		if(research(sn, dx, max_speed, sn_compass, 90)==1)
-		{	
-			found=1;
-				//funtion to take the ball and return back}
-		else*/	
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag); 	
-		
-			printf("I'am in movements after turn\n");	
-			Sleep(1000);
+int i,n;
+struct motandsens *donald = (struct motandsens *) args;
+float degree;
 
-//	for(i=0;i<2;i++)
-//	{
-	/*if(found != 1)
-		if(research(sn, dx, max_speed, sn_compass, 90)==1)
-		{	
-			found=1;
-				//funtion to take the ball and return back}
-		else*/
-//			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass);
-//			printf("I'am in movements turn left\n");
-//			Sleep(1000);
-//	}
+int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
+//arena  case 0 TEST #1 go straight ahead
+//arena  case 1 TEST #2 leave the ball at the center
+arena = 0;
+switch(arena)
+{
+	case 0 :
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1450,donald->sn_compass, donald->sn_mag);
+		break;
+	case 1 :
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass, donald->sn_mag);
+		printf("I'am in movements\n");
+		for(i=0;i<2;i++)
+		{
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,donald->sn_mag);
+		printf("I'am in movements' for1\n");
+		Sleep(1000);
+		}
+		//TURN LEFT
+		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		Sleep(1000);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag); 	
+		printf("I'am in movements after turn\n");	
+		Sleep(1000);
+		break;
+	case 3:
 
-	//TURN RIGHT
-	rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed, 180, donald->sn_mag);
-	Sleep(1000);
-	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag);
-	rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
-	Sleep(1000);
-	for(i=0;i<2;i++)
-	{
-	/*if(found != 1)
-		if(research(sn, dx, max_speed, sn_compass, 90)==1)
-		{	
-			found=1;
-				//funtion to take the ball and return back}
-		else*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,donald->sn_mag);
-			
-			printf("I'am in movements turn right\n");
-			Sleep(1000);
-	}
-	/*if(found != 1)
-		if(research(sn, dx, max_speed, sn_compass, 90)==1)
-		{	
-			found=1;
-				//funtion to take the ball and return back}
-		else*/
-			go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-295,donald->sn_compass,donald->sn_mag);
-			
-			
-			printf("I'am in movements finish\n");
-			Sleep(1000);
-	//WE HOPE ARRIVED HOME
-	get_sensor_value0(donald->sn_compass, &degree);
-	
-	return;
+		Sleep(500); //time elapsed to scan
+
+		// research(donald->sn, donald->dx,donald->max_speed, donald->sn_compass,0, donald->med, donald->sn_mag, donald->sn_sonar);
+		/*if(research(sn, dx, max_speed, sn_compass, 45)==1)
+			{	
+				found=1;
+					//funtion to take the ball and return back}
+			else
+				*/
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass, donald->sn_mag);
+
+		printf("I'am in movements\n");
+		for(i=0;i<2;i++)
+		{
+		/*if(found != 1)
+			if(research(sn, dx, max_speed, sn_compass, 90)==1)
+			{	
+				found=1;
+					//funtion to take the ball and return back}
+			else*/
+				go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,donald->sn_mag);
+
+				printf("I'am in movements' for1\n");
+				Sleep(1000);
+		}
+		//TURN LEFT
+		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		Sleep(1000);
+			if(found != 1)
+			/*
+			if(research(sn, dx, max_speed, sn_compass, 90)==1)
+			{	
+				found=1;
+					//funtion to take the ball and return back}
+			else*/	
+				go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag); 	
+
+				printf("I'am in movements after turn\n");	
+				Sleep(1000);
+
+		//	for(i=0;i<2;i++)
+		//	{
+		/*if(found != 1)
+			if(research(sn, dx, max_speed, sn_compass, 90)==1)
+			{	
+				found=1;
+					//funtion to take the ball and return back}
+			else*/
+		//			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass);
+		//			printf("I'am in movements turn left\n");
+		//			Sleep(1000);
+		//	}
+
+		//TURN RIGHT
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed, 180, donald->sn_mag);
+		Sleep(1000);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		Sleep(1000);
+		for(i=0;i<2;i++)
+		{
+		/*if(found != 1)
+			if(research(sn, dx, max_speed, sn_compass, 90)==1)
+			{	
+				found=1;
+					//funtion to take the ball and return back}
+			else*/
+				go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,donald->sn_mag);
+
+				printf("I'am in movements turn right\n");
+				Sleep(1000);
+		}
+		/*if(found != 1)
+			if(research(sn, dx, max_speed, sn_compass, 90)==1)
+			{	
+				found=1;
+					//funtion to take the ball and return back}
+			else*/
+				go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-295,donald->sn_compass,donald->sn_mag);
+
+
+				printf("I'am in movements finish\n");
+				Sleep(1000);
+		//WE HOPE ARRIVED HOME
+		get_sensor_value0(donald->sn_compass, &degree);
+		break;
+return;
 }
 struct motandsens* inizialization (struct motandsens *donald)
 {
