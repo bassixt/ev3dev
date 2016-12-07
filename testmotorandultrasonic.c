@@ -778,6 +778,7 @@ switch(arena)
 		//WE HOPE ARRIVED HOME
 		get_sensor_value0(donald->sn_compass, &degree);
 		break;
+}
 return;
 }
 struct motandsens* inizialization (struct motandsens *donald)
