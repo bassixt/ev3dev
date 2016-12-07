@@ -119,7 +119,8 @@ void* position(void *args) //or we can pass all the struct
    int flag_rot; 
     struct motandsens *donald = (struct motandsens *) args;
     int retour;
-    int motor_value,degree,iniz_comp,first_comp,res_cond;
+    float degree, first_comp;
+    int motor_value,iniz_comp,res_cond;
     float x_new,y_new,x_old,y_old,x_start,y_start,x_lim,y_lim;
 /////////////////////////do a switch case of if based on where you are ( small or big arena, side) and rol\\\\\
 //////thread
@@ -194,6 +195,9 @@ void* position(void *args) //or we can pass all the struct
      {
         get_tacho_position(donald->sn,&motor_value);
         get_sensor_value0(donald->sn_compass, &degree);
+	if ( !get_sensor_value0(donald->sn_compass, &degree )) {
+                        degree = 0;
+                        }     
         if(i==0)
         {   
             first_comp=degree;
@@ -212,7 +216,7 @@ void* position(void *args) //or we can pass all the struct
    			x_old=x_new;
    			y_old=y_new;
    			if(flag_rot==0)   /*go haed*/
-   			{       printf("sono nell'if cond, degree:%d , firstcomp:%d, diff:%d ", degree,first_comp,degree-first_comp);
+   			{       printf("sono nell'if cond, degree:%f , firstcomp:%f, diff:%d ", degree,first_comp,degree-first_comp);
    				x_new=x_old+(motor_value/21-x_old)*sin(degree-first_comp+iniz_comp);
    				y_new=y_old+(motor_value/21-y_old)*cos(degree-first_comp+iniz_comp);
    				donald->x=x_new;
