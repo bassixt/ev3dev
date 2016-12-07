@@ -218,7 +218,7 @@ void* position(void *args) //or we can pass all the struct
    			if(flag_rot==0)   /*go haed*/
    			{       printf("sono nell'if cond, degree:%f , firstcomp:%f, diff:%d ", degree,first_comp,degree-first_comp);
    				x_new=x_old+(motor_value/21-x_old)*sin(PI/180*(degree-first_comp+iniz_comp));
-   				y_new=y_old+(motor_value/21-y_old)*cos(PI/180(degree-first_comp+iniz_comp));
+   				y_new=y_old+(motor_value/21-y_old)*cos(PI/180*(degree-first_comp+iniz_comp));
    				donald->x=x_new;
   			        donald->y=y_new;
 				//send realpos.x and .y/
