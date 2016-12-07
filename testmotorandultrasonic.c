@@ -188,7 +188,7 @@ void* position(void *args) //or we can pass all the struct
     } 
  //////////////////////////////////////////
    int  i=0;
-     res_cond=getcondition(0,0,0,donald->x,donald->y);
+    res_cond=0;
      while ( res_cond==0 || i==0)
      {
         get_tacho_position(donald->sn,&motor_value);
@@ -232,7 +232,7 @@ void* position(void *args) //or we can pass all the struct
   				sleep(2000);
 	               	}
         }
-
+ res_cond=getcondition(0,0,0,donald->x,donald->y);
 
         //gira se sei arrivato ai limiti dell'arena/
         //void dont_pass_arena_limits (realpox.x,realpos.y, sn, dx, sn_compass, max_speed,role,side,arena,first_comp,degree)
