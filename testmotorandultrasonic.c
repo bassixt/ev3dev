@@ -231,21 +231,22 @@ void* position(void *args) //or we can pass all the struct
   				printf( "x=%f  y=%f \n" , donald->x, donald->y);
   				sleep(2000);
 	               	}
+	
         }
- res_cond=getcondition(0,0,0,donald->x,donald->y);
-  printf(" res_cond=%d\n" , res_cond);    
+    	res_cond=getcondition(0,0,0,donald->x,donald->y);
+  printf(" res_cond=%d\n" , res_cond); 
         //gira se sei arrivato ai limiti dell'arena/
         //void dont_pass_arena_limits (realpox.x,realpos.y, sn, dx, sn_compass, max_speed,role,side,arena,first_comp,degree)
      }
    //send start to the finisher or stop if you are the finisher/
 	//trhead
 		
- 			 retour = pthread_mutex_unlock(&mutex);
-    			if (retour != 0)
-    			 {
-    			   perror("erreur mutex unlock");
-     			  exit(EXIT_FAILURE);
-    			 }
+ 		//	 retour = pthread_mutex_unlock(&mutex);
+    		//	if (retour != 0)
+    		//	 {
+    		//	   perror("erreur mutex unlock");
+     		//	  exit(EXIT_FAILURE);
+    		//	 }
 }
 
 //function that hold the direction
