@@ -116,7 +116,7 @@ return res_cond;
 
 void* position(void *args) //or we can pass all the struct
 {
-   int flag_rot=0; 
+   int flag_rot; 
     struct motandsens *donald = (struct motandsens *) args;
     int retour;
     int motor_value,degree,iniz_comp,first_comp,res_cond;
@@ -131,6 +131,7 @@ void* position(void *args) //or we can pass all the struct
      //			  exit(EXIT_FAILURE);
     	//		 }
 /////////	
+	flag_rot=0;
 	switch (donald->arena)
 	{
        case 0 :
