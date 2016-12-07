@@ -44,7 +44,7 @@ struct motandsens {
         int role;/*0 beg 1 fin*/
         int arena;/*0 small1 big*/
         int side;/*0 right 1 left*/
-    int max_speed;
+    
 
 
 };
@@ -120,7 +120,7 @@ void* position(void *args) //or we can pass all the struct
     struct motandsens *donald = (struct motandsens *) args;
     int retour;
     int motor_value,degree,iniz_comp,first_comp,res_cond;
-    float x_new,y_nex,x_old,y_old,x_start,y_start,x_lim,y_lim;
+    float x_new,y_new,x_old,y_old,x_start,y_start,x_lim,y_lim;
 /////////////////////////do a switch case of if based on where you are ( small or big arena, side) and rol\\\\\
 //////thread
 //	retour = pthread_mutex_lock(&mutex);
