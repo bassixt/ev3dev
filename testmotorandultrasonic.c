@@ -749,7 +749,7 @@ switch(arena)
 		printf("I'am in movements after turn\n");	
 		Sleep(1500);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed)
+		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		//put_down(donald->sn,donald->dx,donald->med,donald->max_speed);
 		Sleep(1000);
 		break;
