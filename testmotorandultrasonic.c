@@ -533,15 +533,7 @@ void put_down(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			int i;
 			int act_pos,distance_el;
 			//stabilize the ball
- 			Sleep(2000);
-			//raise the grabber
-			set_tacho_position_sp( med, 90 );
-			Sleep(200);
-			for ( i = 0; i < 7; i++ ) {
-			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
-			Sleep( 200 );
-			}
-			set_tacho_position_sp( med, -90 );
+ 			set_tacho_position_sp( med, -90 );
 			Sleep(200);
 			for ( i = 0; i < 4; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
@@ -727,16 +719,19 @@ switch(arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,2860,donald->sn_compass, donald->sn_mag);
 		break;
 	case 1 :
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1450,donald->sn_compass, donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1412,donald->sn_compass, donald->sn_mag);
 		//TURN LEFT
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		Sleep(1000);
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,600,donald->sn_compass,donald->sn_mag); 	
 		printf("I'am in movements after turn\n");	
-		Sleep(1500);
+		Sleep(500);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-		Sleep(2000);
+		Sleep(1000);
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);		
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1412,donald->sn_compass, donald->sn_mag);
 		//put_down(donald->sn,donald->dx,donald->med,donald->max_speed);
 		Sleep(1000);
 		break;
