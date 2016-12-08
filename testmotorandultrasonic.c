@@ -864,7 +864,7 @@ uint32_t n, ii;
         }*/
 	ev3_search_tacho_plugged_in(65,0, &donald->dx, 0 );
 	Sleep(100);
-	ev3_search_tacho_plugged_in(66,0, &donald->sn, 0 );
+	ev3_search_tacho_plugged_in(68,0, &donald->sn, 0 );
 	Sleep(100);
 	ev3_search_tacho_plugged_in(67,0, &donald->med, 0 );
 	Sleep(100);
