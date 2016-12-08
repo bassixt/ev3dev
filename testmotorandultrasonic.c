@@ -687,8 +687,10 @@ switch(arena)
 		//TURN LEFT
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		Sleep(1000);
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag); 	
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,donald->sn_mag); 	
 		printf("I'am in movements after turn\n");	
+		Sleep(1500);
+		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 		Sleep(1000);
 		break;
 	case 2:
