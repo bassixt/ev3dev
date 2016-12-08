@@ -854,6 +854,7 @@ int val;
 int max_speed;
 float value;
 uint32_t n, ii;
+	int prova1, prova2, prova3;
 	/*
  	printf( "Found tacho motors:\n" );
         for ( i = 0; i < DESC_LIMIT; i++ ) {
@@ -862,12 +863,19 @@ uint32_t n, ii;
                         printf( "  port = %s\n", ev3_tacho_port_name( i, s ));
                 }
         }*/
-	ev3_search_tacho_plugged_in(65,0, &donald->dx, 0 );
+	prova1=ev3_search_tacho_plugged_in(65,0, &donald->dx, 0 );
 	Sleep(100);
-	ev3_search_tacho_plugged_in(68,0, &donald->sn, 0 );
+	prova2=ev3_search_tacho_plugged_in(68,0, &donald->sn, 0 );
 	Sleep(100);
-	ev3_search_tacho_plugged_in(67,0, &donald->med, 0 );
+	prova3=ev3_search_tacho_plugged_in(67,0, &donald->med, 0 );
 	Sleep(100);
+	printf("prova 1 = %d ", prova1);
+	Sleep(500);
+	printf("prova 2 = %d ", prova2);
+	Sleep(500);
+
+	printf("prova 3 = %d ", prova3);
+	Sleep(500);
       //if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->sn, 0 )){
                 get_tacho_max_speed( donald->sn, &donald->max_speed );
                 printf("value of buffer :%d\n", donald->sn);
