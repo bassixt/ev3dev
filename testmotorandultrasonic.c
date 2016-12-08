@@ -282,8 +282,9 @@ void* position(void *args) //or we can pass all the struct
 
 //function that hold the direction
 void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle,uint8_t sn_mag){
-		
+		int minsize;
 		float actual_angle;
+		minsize=2;
 		if ( !get_sensor_value0(sn_mag, &actual_angle)) {
 			actual_angle = 0;
 		}
@@ -308,7 +309,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 					/*set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 					Sleep(100);*/
-					void rotatedx(sn,dx,sn_compass,max_speed,2,sn_mag);
+					void rotatedx(sn,dx,sn_compass,max_speed,minsize,sn_mag);
 					if ( !get_sensor_value0(sn_mag, &actual_angle)){
 					actual_angle=0;
 					}
@@ -333,7 +334,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 					Sleep(100);*/
-					void rotatesx(sn,dx,sn_compass,max_speed,2,sn_mag);
+					void rotatesx(sn,dx,sn_compass,max_speed,minsize,sn_mag);
 					 if ( !get_sensor_value0(sn_mag, &actual_angle)){
                                         actual_angle=0;
                                         }
