@@ -376,7 +376,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 					/*set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 					Sleep(100);*/
-					void rotatedx(sn,dx,sn_compass,max_speed,minsize,sn_mag);
+					rotatedx(sn,dx,sn_compass,max_speed,minsize,sn_mag);
 					if ( !get_sensor_value0(sn_mag, &actual_angle)){
 					actual_angle=0;
 					}
@@ -401,7 +401,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 					Sleep(100);*/
-					void rotatesx(sn,dx,sn_compass,max_speed,minsize,sn_mag);
+					rotatesx(sn,dx,sn_compass,max_speed,minsize,sn_mag);
 					 if ( !get_sensor_value0(sn_mag, &actual_angle)){
                                         actual_angle=0;
                                         }
