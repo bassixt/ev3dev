@@ -554,14 +554,14 @@ void put_down(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			int i;
 			int act_pos,distance_el;
-			set_tacho_time_sp( sn, -200 );
+			set_tacho_time_sp( sn, 800 );
 			set_tacho_ramp_up_sp( sn, 2000 );
 			set_tacho_ramp_down_sp( sn, 2000 );
-			set_tacho_time_sp( dx, -200);
+			set_tacho_time_sp( dx, 800);
 			set_tacho_ramp_up_sp( dx, 2000 );
 			set_tacho_ramp_down_sp( dx, 2000 );
- 			set_tacho_speed_sp( sn, max_speed * 1 / 6 );
-                        set_tacho_speed_sp( dx, max_speed * 1 / 6 );
+ 			set_tacho_speed_sp( sn, -max_speed * 1 / 6 );
+                        set_tacho_speed_sp( dx, -max_speed * 1 / 6 );
  			//stabilize the ball
  			Sleep(2000);
 			get_tacho_position( dx, &act_pos);
