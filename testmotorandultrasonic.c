@@ -560,8 +560,8 @@ void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 			set_tacho_ramp_down_sp( dx, 2000 );
  			set_tacho_speed_sp( sn, max_speed * 1 / 6 );
                         set_tacho_speed_sp( dx, max_speed * 1 / 6 );
- 			set_tacho_polarity( donald->dx, "inversed" );
- 			set_tacho_polarity( donald->sn, "inversed" );
+ 			set_tacho_polarity( dx, "inversed" );
+ 			set_tacho_polarity( sn, "inversed" );
  			//stabilize the ball
  			Sleep(2000);
 			get_tacho_position( dx, &act_pos);
@@ -580,8 +580,8 @@ void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
 			} 
- 			set_tacho_polarity( donald->dx, "normal" );
- 			set_tacho_polarity( donald->sn, "normal" );
+ 			set_tacho_polarity( dx, "normal" );
+ 			set_tacho_polarity( sn, "normal" );
  			Sleep(500);
  			
 }  
