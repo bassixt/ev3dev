@@ -526,7 +526,65 @@ void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 			} */
  			Sleep(500);
  			
-}   
+}  
+void put_down(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
+{			int i;
+			int act_pos,distance_el;
+			//stabilize the ball
+ 			Sleep(2000);
+			//raise the grabber
+			set_tacho_position_sp( med, 90 );
+			Sleep(200);
+			for ( i = 0; i < 7; i++ ) {
+			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
+			Sleep( 200 );
+			}
+			set_tacho_position_sp( med, -90 );
+			Sleep(200);
+			for ( i = 0; i < 4; i++ ) {
+			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
+			Sleep( 200 );
+			} 
+ 			Sleep(500);
+ 			
+} 
+
+void go_backward(uint8_t sn,uint8_t dx,int max_speed)
+{			int i;
+			int act_pos,distance_el;
+			set_tacho_time_sp( sn, 100 );
+			set_tacho_ramp_up_sp( sn, 2000 );
+			set_tacho_ramp_down_sp( sn, 2000 );
+			set_tacho_time_sp( dx, 100 );
+			set_tacho_ramp_up_sp( dx, 2000 );
+			set_tacho_ramp_down_sp( dx, 2000 );
+ 			set_tacho_speed_sp( sn, max_speed * 1 / 6 );
+                        set_tacho_speed_sp( dx, max_speed * 1 / 6 );
+ 			set_tacho_polarity( donald->dx, "inversed" );
+ 			set_tacho_polarity( donald->sn, "inversed" );
+ 			//stabilize the ball
+ 			Sleep(2000);
+			get_tacho_position( dx, &act_pos);
+ 			distance_el=act_pos;
+ 			
+ 			while((act_pos-(24*21)-distance_el)<=0)
+			{
+				set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+				set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+				get_tacho_position( dx, &act_pos);
+			}
+			//release the grabber
+			set_tacho_position_sp( med, -90 );
+			Sleep(200);
+			for ( i = 0; i < 4; i++ ) {
+			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
+			Sleep( 200 );
+			} 
+ 			set_tacho_polarity( donald->dx, "normal" );
+ 			set_tacho_polarity( donald->sn, "normal" );
+ 			Sleep(500);
+ 			
+}  
 
 float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance,uint8_t sn_compass, uint8_t sn_mag)
 {	//aggiungere funzione che controlla anche il motore 
@@ -691,6 +749,7 @@ switch(arena)
 		printf("I'am in movements after turn\n");	
 		Sleep(1500);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
+		//put_down(donald->sn,donald->dx,donald->med,donald->max_speed);
 		Sleep(1000);
 		break;
 	case 2:
