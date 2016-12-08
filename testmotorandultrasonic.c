@@ -656,12 +656,12 @@ while((finish - beginning - distance)<=0){
 	set_tacho_speed_sp( sn, max_speed * 1 / 3 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 3 );
 			       } */   
-	if(value<2500 && value >=500)
+	if(value<2500 && value >=90)
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 4 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 4 );
 			       }         		
-	if(value<500 && value >=70)
+	if(value<90 && value >=70)
 		{
 	//multi_set_tacho_speed_sp(both, max_speed * 1 / 6);	
 	set_tacho_speed_sp( sn, max_speed * 1 / 8 );
@@ -735,7 +735,7 @@ arena = 0;
 switch(arena)
 {
 	case 0 :
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,2900,donald->sn_compass, donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,2860,donald->sn_compass, donald->sn_mag);
 		break;
 	case 1 :
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass, donald->sn_mag);
