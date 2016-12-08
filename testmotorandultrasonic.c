@@ -293,7 +293,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 		{	
 			if(actual_angle<(initial_angle - 4))	//too to the left turn right!!!
 			{
-				set_tacho_position_sp( sn, -2 );
+				/*set_tacho_position_sp( sn, -2 );
 				set_tacho_position_sp( dx,  2 );
 				set_tacho_speed_sp( sn, max_speed/6 );
 				set_tacho_speed_sp( dx, max_speed/6 );
@@ -302,12 +302,13 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				set_tacho_ramp_down_sp( sn, 0 );
 				set_tacho_ramp_up_sp( dx,   0 );
 				set_tacho_ramp_down_sp( dx, 0 );
-				Sleep(100);
+				Sleep(100);*/
 				while(actual_angle<initial_angle)
 				{
-					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+					/*set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-					Sleep(100);
+					Sleep(100);*/
+					void rotatedx(sn,dx,sn_compass,max_speed,2,sn_mag);
 					if ( !get_sensor_value0(sn_mag, &actual_angle)){
 					actual_angle=0;
 					}
@@ -317,7 +318,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 			}
 			if(actual_angle> (initial_angle + 4))	//too to the right turn left!!!
 			{
-				set_tacho_position_sp( sn,  2 );
+				/*set_tacho_position_sp( sn,  2 );
 				set_tacho_position_sp( dx, -2 );
 				set_tacho_speed_sp( sn, max_speed/6 );
 				set_tacho_speed_sp( dx, max_speed/6 );
@@ -326,12 +327,13 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				set_tacho_ramp_down_sp( sn, 0 );
 				set_tacho_ramp_up_sp( dx,   0 );
 				set_tacho_ramp_down_sp( dx, 0 );
-				Sleep(100);
+				Sleep(100);*/
 				while(actual_angle>initial_angle)
-				{
+				{	/*
 					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-					Sleep(100);
+					Sleep(100);*/
+					void rotatesx(sn,dx,sn_compass,max_speed,2,sn_mag);
 					 if ( !get_sensor_value0(sn_mag, &actual_angle)){
                                         actual_angle=0;
                                         }
