@@ -847,13 +847,13 @@ return;
 }
 struct motandsens* inizialization (struct motandsens *donald)
 {
-  int i;
-  
-        FLAGS_T state;
-        char s[ 256 ];
-        int val;
-        float value;
-        uint32_t n, ii;
+int i;
+FLAGS_T state;
+char s[ 256 ];
+int val;
+int max_speed;
+float value;
+uint32_t n, ii;
 	/*
  	printf( "Found tacho motors:\n" );
         for ( i = 0; i < DESC_LIMIT; i++ ) {
@@ -868,7 +868,7 @@ struct motandsens* inizialization (struct motandsens *donald)
 	Sleep(100);
 	ev3_search_tacho_plugged_in(67,0, &donald->med, 0 );
 	Sleep(100);
-      if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->sn, 0 )){
+      //if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->sn, 0 )){
                 get_tacho_max_speed( donald->sn, &donald->max_speed );
                 printf("value of buffer :%d\n", donald->sn);
                 printf("  max_speed = %d\n", donald->max_speed );
@@ -883,16 +883,16 @@ struct motandsens* inizialization (struct motandsens *donald)
                 /* Wait tacho stop */
                 Sleep( 100 );
 
-        } else {
+    /*    } else {
                 printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
                 fflush( stdout );
-        }
+        }*/
 //Second motor
-if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->dx, 1 )) {
+/*if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->dx, 1 )) {
 
 
                 printf( "LEGO_EV3_L_MOTOR 2 is found, run for 5 sec...\n" );
-               
+  */             
                 set_tacho_stop_action_inx( donald->dx, TACHO_COAST );
                 set_tacho_polarity( donald->dx, "normal" );
                 set_tacho_speed_sp( donald->dx, donald->max_speed * 2 / 3 );
@@ -905,15 +905,15 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->dx, 1 )) {
                 Sleep( 100 );
 		fflush( stdout );
 
-        } else {
+      /*  } else {
                 printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
 		fflush( stdout );
-        }
+        }*/
 //medium motor
-	if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->med, 2 )) {
-		int max_speed;
+	//if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->med, 2 )) {
+		
 
-		printf( "LEGO_EV3_L_MOTOR 3 is found, \n" );
+	//	printf( "LEGO_EV3_L_MOTOR 3 is found, \n" );
 		
 		set_tacho_stop_action_inx( donald->med, TACHO_COAST );
 		set_tacho_polarity( donald->med, "normal" );
@@ -925,10 +925,10 @@ if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->dx, 1 )) {
 		/* Wait tacho stop */
 		Sleep( 100 );
 	
-	} else {
+	/*} else {
 		printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
 		fflush( stdout );
-	} 
+	} */
 	
 //Run all sensors
         ev3_sensor_init();
