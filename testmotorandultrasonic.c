@@ -688,12 +688,12 @@ while((finish - beginning - distance)<=0){
 	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 	Sleep(100);
 	get_tacho_position( dx, &partial);
-	//control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
+	control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
 	get_tacho_position( dx, &finish);
 	beginning+=(finish-partial);
 }
 get_tacho_position( dx, &finish);		
-//control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);	
+control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);	
 return (finish-beginning)/21; //return the distance in cm
 }
 
@@ -731,29 +731,22 @@ int arena;
 int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
 //arena  case 0 TEST #1 go straight ahead
 //arena  case 1 TEST #2 leave the ball at the center
-arena = 0;
+arena = 1;
 switch(arena)
 {
 	case 0 :
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,2860,donald->sn_compass, donald->sn_mag);
 		break;
 	case 1 :
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass, donald->sn_mag);
-		printf("I'am in movements\n");
-		for(i=0;i<2;i++)
-		{
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,donald->sn_mag);
-		printf("I'am in movements' for1\n");
-		Sleep(1000);
-		}
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1450,donald->sn_compass, donald->sn_mag);
 		//TURN LEFT
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		Sleep(1000);
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,donald->sn_mag); 	
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,600,donald->sn_compass,donald->sn_mag); 	
 		printf("I'am in movements after turn\n");	
 		Sleep(1500);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-		Sleep(200);
+		Sleep(2000);
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		//put_down(donald->sn,donald->dx,donald->med,donald->max_speed);
 		Sleep(1000);
