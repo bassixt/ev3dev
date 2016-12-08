@@ -510,6 +510,7 @@ void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 			}
  			get_tacho_position( dx, &act_pos);
  			distance_el=act_pos;
+ 			/*
  			while((act_pos-(24*21)-distance_el)<=0)
 			{
 				set_tacho_command_inx( sn, TACHO_RUN_TIMED );
@@ -522,7 +523,7 @@ void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 			for ( i = 0; i < 4; i++ ) {
 			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 			Sleep( 200 );
-			} 
+			} */
  			Sleep(500);
  			
 }   
@@ -668,7 +669,7 @@ int arena;
 int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
 //arena  case 0 TEST #1 go straight ahead
 //arena  case 1 TEST #2 leave the ball at the center
-arena = 0;
+arena = 1;
 switch(arena)
 {
 	case 0 :
@@ -1039,25 +1040,26 @@ int main( void )
 	{
 	  perror("erreur thread movement");
 	  exit(EXIT_FAILURE);
-	}	
+	}
+ /*
  	pthread_create(&thread_position, NULL, position, donald);
 	if (retour != 0)
 	{
 	  perror("erreur thread sensor");
 	  exit(EXIT_FAILURE);
-	}
+	}*/
  	pthread_create(&thread_colorsense, NULL, colorsense, donald);
 	if (retour != 0)
 	{
 	  perror("erreur thread sensor");
 	  exit(EXIT_FAILURE);
 	}
- 	
+ 	/*
 	if (pthread_join(thread_position, NULL)) 
 	{
 	  perror("pthread_join position");
 	  return EXIT_FAILURE;
-	}
+	}*/
 	if (pthread_join(thread_movement, NULL)) 
 	{
 	  perror("pthread_join movement");
