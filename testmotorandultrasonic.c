@@ -280,70 +280,7 @@ void* position(void *args) //or we can pass all the struct
     		//	 }
 }
 
-//function that hold the direction
-void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle,uint8_t sn_mag){
-		int minsize;
-		float actual_angle;
-		minsize=2;
-		if ( !get_sensor_value0(sn_mag, &actual_angle)) {
-			actual_angle = 0;
-		}
-		//printf("initial  %f\n",initial_angle);
-		//printf("final %f\n", actual_angle);
-		if(actual_angle!=initial_angle)
-		{	
-			if(actual_angle<(initial_angle - 4))	//too to the left turn right!!!
-			{
-				/*set_tacho_position_sp( sn, -2 );
-				set_tacho_position_sp( dx,  2 );
-				set_tacho_speed_sp( sn, max_speed/6 );
-				set_tacho_speed_sp( dx, max_speed/6 );
-				set_tacho_time_sp( sn, 100 );
-				set_tacho_ramp_up_sp( sn,   0 );
-				set_tacho_ramp_down_sp( sn, 0 );
-				set_tacho_ramp_up_sp( dx,   0 );
-				set_tacho_ramp_down_sp( dx, 0 );
-				Sleep(100);*/
-				while(actual_angle<initial_angle)
-				{
-					/*set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-					Sleep(100);*/
-					void rotatedx(sn,dx,sn_compass,max_speed,minsize,sn_mag);
-					if ( !get_sensor_value0(sn_mag, &actual_angle)){
-					actual_angle=0;
-					}
-				
-				}
-			
-			}
-			if(actual_angle> (initial_angle + 4))	//too to the right turn left!!!
-			{
-				/*set_tacho_position_sp( sn,  2 );
-				set_tacho_position_sp( dx, -2 );
-				set_tacho_speed_sp( sn, max_speed/6 );
-				set_tacho_speed_sp( dx, max_speed/6 );
-				set_tacho_time_sp( sn, 100 );
-				set_tacho_ramp_up_sp( sn,   0 );
-				set_tacho_ramp_down_sp( sn, 0 );
-				set_tacho_ramp_up_sp( dx,   0 );
-				set_tacho_ramp_down_sp( dx, 0 );
-				Sleep(100);*/
-				while(actual_angle>initial_angle)
-				{	/*
-					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-					Sleep(100);*/
-					void rotatesx(sn,dx,sn_compass,max_speed,minsize,sn_mag);
-					 if ( !get_sensor_value0(sn_mag, &actual_angle)){
-                                        actual_angle=0;
-                                        }
-				}
-			
-			}
-			
-		}
-}
+
 void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
 	float wanted_c;
@@ -410,6 +347,70 @@ void rotatesx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rot
 
 }
 
+//function that hold the direction
+void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle,uint8_t sn_mag){
+		int minsize;
+		float actual_angle;
+		minsize=2;
+		if ( !get_sensor_value0(sn_mag, &actual_angle)) {
+			actual_angle = 0;
+		}
+		//printf("initial  %f\n",initial_angle);
+		//printf("final %f\n", actual_angle);
+		if(actual_angle!=initial_angle)
+		{	
+			if(actual_angle<(initial_angle - 4))	//too to the left turn right!!!
+			{
+				/*set_tacho_position_sp( sn, -2 );
+				set_tacho_position_sp( dx,  2 );
+				set_tacho_speed_sp( sn, max_speed/6 );
+				set_tacho_speed_sp( dx, max_speed/6 );
+				set_tacho_time_sp( sn, 100 );
+				set_tacho_ramp_up_sp( sn,   0 );
+				set_tacho_ramp_down_sp( sn, 0 );
+				set_tacho_ramp_up_sp( dx,   0 );
+				set_tacho_ramp_down_sp( dx, 0 );
+				Sleep(100);*/
+				while(actual_angle<initial_angle)
+				{
+					/*set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+					Sleep(100);*/
+					void rotatedx(sn,dx,sn_compass,max_speed,minsize,sn_mag);
+					if ( !get_sensor_value0(sn_mag, &actual_angle)){
+					actual_angle=0;
+					}
+				
+				}
+			
+			}
+			if(actual_angle> (initial_angle + 4))	//too to the right turn left!!!
+			{
+				/*set_tacho_position_sp( sn,  2 );
+				set_tacho_position_sp( dx, -2 );
+				set_tacho_speed_sp( sn, max_speed/6 );
+				set_tacho_speed_sp( dx, max_speed/6 );
+				set_tacho_time_sp( sn, 100 );
+				set_tacho_ramp_up_sp( sn,   0 );
+				set_tacho_ramp_down_sp( sn, 0 );
+				set_tacho_ramp_up_sp( dx,   0 );
+				set_tacho_ramp_down_sp( dx, 0 );
+				Sleep(100);*/
+				while(actual_angle>initial_angle)
+				{	/*
+					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+					Sleep(100);*/
+					void rotatesx(sn,dx,sn_compass,max_speed,minsize,sn_mag);
+					 if ( !get_sensor_value0(sn_mag, &actual_angle)){
+                                        actual_angle=0;
+                                        }
+				}
+			
+			}
+			
+		}
+}
 //function that allow to grab the ball. Raise the grabber, go ahead till 5*22 mm. and than release the grabber and wait 
 //few time till start moving
 void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
