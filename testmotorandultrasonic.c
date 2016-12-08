@@ -1013,7 +1013,7 @@ int main( void )
 	int act_pos;
         float value;
 	float elapsed_distance;        
-	pthread_t thread_movement, thread_position; 
+	pthread_t thread_movement, thread_position, thread_colorsense; 
         pthread_mutex_init(&mutex, NULL);
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
@@ -1045,17 +1045,29 @@ int main( void )
 	{
 	  perror("erreur thread sensor");
 	  exit(EXIT_FAILURE);
-	}	
+	}
+ 	pthread_create(&thread_colorsense, NULL, colorsense, donald);
+	if (retour != 0)
+	{
+	  perror("erreur thread sensor");
+	  exit(EXIT_FAILURE);
+	}
+ 	
 	if (pthread_join(thread_position, NULL)) 
 	{
-	  perror("pthread_join colorsens");
+	  perror("pthread_join position");
 	  return EXIT_FAILURE;
 	}
 	if (pthread_join(thread_movement, NULL)) 
 	{
-	  perror("pthread_join colorsens");
+	  perror("pthread_join movement");
 	  return EXIT_FAILURE;
 	} 
+ 	if (pthread_join(thread_colorsense, NULL)) 
+	{
+	  perror("pthread_join colorsens");
+	  return EXIT_FAILURE;
+	} 	
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
 
