@@ -351,7 +351,7 @@ void rotatesx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rot
 void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle,uint8_t sn_mag){
 		int minsize;
 		float actual_angle;
-		minsize=2;
+		minsize=1;
 		if ( !get_sensor_value0(sn_mag, &actual_angle)) {
 			actual_angle = 0;
 		}
