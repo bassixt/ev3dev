@@ -549,7 +549,7 @@ void put_down(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
  			
 } 
 
-void go_backward(uint8_t sn,uint8_t dx,int max_speed)
+void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			int i;
 			int act_pos,distance_el;
 			set_tacho_time_sp( sn, 100 );
@@ -749,6 +749,7 @@ switch(arena)
 		printf("I'am in movements after turn\n");	
 		Sleep(1500);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
+		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed)
 		//put_down(donald->sn,donald->dx,donald->med,donald->max_speed);
 		Sleep(1000);
 		break;
