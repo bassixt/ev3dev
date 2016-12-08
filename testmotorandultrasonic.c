@@ -688,12 +688,12 @@ while((finish - beginning - distance)<=0){
 	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 	Sleep(100);
 	get_tacho_position( dx, &partial);
-	control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
+	//control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
 	get_tacho_position( dx, &finish);
 	beginning+=(finish-partial);
 }
 get_tacho_position( dx, &finish);		
-control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);	
+//control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);	
 return (finish-beginning)/21; //return the distance in cm
 }
 
