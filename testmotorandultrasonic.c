@@ -567,9 +567,11 @@ void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 			get_tacho_position( dx, &act_pos);
  			distance_el=act_pos;
  			printf("sono qui in vai indietro");
+ 			for(i=0;i<10;i++){
  			set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 			set_tacho_command_inx( dx, TACHO_RUN_TIMED );
  			Sleep(500);
+			}
 			get_tacho_position( dx, &act_pos);
  			Sleep(500);
  			
