@@ -566,7 +566,7 @@ void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
  			Sleep(2000);
 			get_tacho_position( dx, &act_pos);
  			distance_el=act_pos;
- 			
+ 			printf("sono qui in vai indietro");
  			while((act_pos-(24*21)-distance_el)<=0)
 			{
 				set_tacho_command_inx( sn, TACHO_RUN_TIMED );
@@ -749,6 +749,7 @@ switch(arena)
 		printf("I'am in movements after turn\n");	
 		Sleep(1500);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
+		Sleep(200);
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		//put_down(donald->sn,donald->dx,donald->med,donald->max_speed);
 		Sleep(1000);
