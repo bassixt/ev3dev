@@ -595,7 +595,7 @@ float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sona
 	//can be used to take the ball once detected 
 	//we have to add the angle for the ball a routine to turn till this angle
 	//and than go and take te ball
-int beginning,finish;
+int beginning,finish,partial;
 int retour;
 float value;
 float initial_angle;
@@ -687,8 +687,10 @@ while((finish - beginning - distance)<=0){
 	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 	Sleep(100);
+	get_tacho_position( dx, &partial);
 	control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
 	get_tacho_position( dx, &finish);
+	beginning+=(finish-partial);
 }
 get_tacho_position( dx, &finish);		
 control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);	
