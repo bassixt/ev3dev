@@ -869,12 +869,12 @@ uint32_t n, ii;
 	Sleep(100);
 	prova3=ev3_search_tacho_plugged_in(67,0, &donald->med, 0 );
 	Sleep(100);
-	printf("prova 1 = %d ", prova1);
+	printf("prova 1 = %d \n", prova1);
 	Sleep(500);
-	printf("prova 2 = %d ", prova2);
+	printf("prova 2 = %d \n", prova2);
 	Sleep(500);
 
-	printf("prova 3 = %d ", prova3);
+	printf("prova 3 = %d \n", prova3);
 	Sleep(500);
       //if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->sn, 0 )){
                 get_tacho_max_speed( donald->sn, &donald->max_speed );
