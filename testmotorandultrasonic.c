@@ -828,27 +828,27 @@ switch(arena)
 		break;
 	case 4 : 
 		// go from beginning starting area to the beginner destination area without getting bump right side
-		//move from 1m
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass, donald->sn_mag);
+		//move from 1m// 19*90 =1710
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
 		//TURN RIGHT to avoid first obstacle
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		Sleep(1000);
 		//move from 1m to the right
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass,donald->sn_mag); 	
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
 		printf("I'am in movements after turn\n");	
 		Sleep(500);
 		//TURN LEFT
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass,donald->sn_mag); 
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1520,donald->sn_compass,donald->sn_mag); 
 		//TURN LEFT to avoid second obstacle
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		// go around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass,donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1273,donald->sn_compass,donald->sn_mag);
 		//TURN RIGHT 
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		// go until final base
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1500,donald->sn_compass,donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3192,donald->sn_compass,donald->sn_mag);
 		Sleep(500);
 		break;
 		
