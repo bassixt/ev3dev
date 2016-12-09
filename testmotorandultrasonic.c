@@ -689,7 +689,7 @@ void* colorsense(void * args)
 				val = 0;
 			}
 			strcpy(stricol,color[ color_aq(donald->sn_color) ]);
-			printf("stricolo: %s\n", stricol );
+			//printf("stricolo: %s\n", stricol );
 			if(( strcmp(stricol,"RED")==0) || ( strcmp(stricol,"GREEN")==0))
 			{
 				grab_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
@@ -887,7 +887,6 @@ switch(arena)
 		Sleep(1000);
 		//move from 1m to the right
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
-		printf("I'am in movements after turn\n");	
 		Sleep(500);
 		//TURN LEFT
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
