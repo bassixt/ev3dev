@@ -688,8 +688,7 @@ void* colorsense(void * args)
 				val = 0;
 			}
 			if( strcmp(color[ color_aq(donald->sn_color) ],"RED")==0 ||  strcmp(color[ color_aq(donald->sn_color) ],"BLUE"==0))
-			{	
-				//printf("Color = %s",color[color_aq(donald->sn_color)]);
+			{
 				grab_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 				Sleep(200);
 				
@@ -879,8 +878,6 @@ uint32_t n, ii;
         }*/
 //Second motor
 /*if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->dx, 1 )) {
-
-
                 printf( "LEGO_EV3_L_MOTOR 2 is found, run for 5 sec...\n" );
   */             
                 set_tacho_stop_action_inx( donald->dx, TACHO_COAST );
