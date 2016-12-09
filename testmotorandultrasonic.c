@@ -689,7 +689,7 @@ void* colorsense(void * args)
 			}
 			if( strcmp(color[ color_aq(donald->sn_color) ],"RED")==0 ||  strcmp(color[ color_aq(donald->sn_color) ],"BLUE"==0))
 			{	
-				printf("Color = %s",color[color_aq(donald->sn_color)]);
+				//printf("Color = %s",color[color_aq(donald->sn_color)]);
 				grab_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 				Sleep(200);
 				
