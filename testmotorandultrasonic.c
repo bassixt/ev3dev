@@ -881,26 +881,26 @@ switch(arena)
 	case 6 :
 	//big arena right, begin at down corner test 4 : place the ball 
 		//move from 1m
-	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass, donald->sn_mag);
+	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
 		//TURN RIGHT to avoid first obstacle
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		Sleep(1000);
 		//move from 1m to the right
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass,donald->sn_mag); 	
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
 		printf("I'am in movements after turn\n");	
 		Sleep(500);
 		//TURN LEFT
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass,donald->sn_mag); 
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1615,donald->sn_compass,donald->sn_mag); 
 		//TURN LEFT to avoid second obstacle
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		// go after ball area around 60 cm (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,600,donald->sn_compass,donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1121,donald->sn_compass,donald->sn_mag);
 		//turn around 
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180,donald->sn_mag);
 		//move to ball area (maybe won't be needed, depend on how much it goes backward)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,10,donald->sn_compass,donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,380,donald->sn_compass,donald->sn_mag);
 		// drop the ball in the ball area
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 		Sleep(1000);
