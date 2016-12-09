@@ -906,19 +906,10 @@ switch(arena)
 		Sleep(1000);
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		//TURN AROUND
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180,donald->sn_mag);
-		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,300,donald->sn_compass, donald->sn_mag);
-		// TURN RIGHT
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass, donald->sn_mag);
-		//TURN RIGHT 
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass, donald->sn_mag);
-		//TURN LEFT 
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
-		// go until final destination 
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,300,donald->sn_compass, donald->sn_mag);
+		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
+		
 		Sleep(1000);
 		break;	
 		
