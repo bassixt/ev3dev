@@ -76,7 +76,9 @@ struct pos {
   void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed);
   // go aheah with different speeds depending on if an obstacle is detected near by or not
   float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance,uint8_t sn_compass, uint8_t sn_mag);
-  // initialize motors and sensors
+// color sensor
+void* colorsense(void * args) ;
+// initialize motors and sensors
    struct motandsens* inizialization (struct motandsens *donald);
    // search for the ball
    void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_turn_degree, uint8_t med, uint8_t sn_mag, uint8_t sn_sonar);
