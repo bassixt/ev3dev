@@ -687,7 +687,7 @@ void* colorsense(void * args)
 	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
 			}
-			if( strcmp(color[ color_aq(donald->sn_color) ],"RED")==0)
+			if(( strcmp(color[ color_aq(donald->sn_color) ],"RED")==0) || ( strcmp(color[ color_aq(donald->sn_color) ],"BLUE")==0))
 			{
 				grab_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 				Sleep(200);
