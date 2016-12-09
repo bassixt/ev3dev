@@ -687,7 +687,7 @@ void* colorsense(void * args)
 	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
 			}
-			if(( strcmp(color[ color_aq(donald->sn_color) ],"RED")==0) || ( strcmp(color[ color_aq(donald->sn_color) ],"BLUE")==0))
+			if( strcmp(color[ color_aq(donald->sn_color) ],"RED")==0 ||  strcmp(color[ color_aq(donald->sn_color) ],"BLUE"==0))
 			{
 				grab_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 				Sleep(200);
@@ -860,7 +860,7 @@ uint32_t n, ii;
       //if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->sn, 0 )){
                 get_tacho_max_speed( donald->sn, &donald->max_speed );
                 printf("value of buffer :%d\n", donald->sn);
-                printf("  max_speed = %d\n", donald->max_speed );
+                //printf("  max_speed = %d\n", donald->max_speed );
                 set_tacho_stop_action_inx( donald->sn, TACHO_COAST );
                 set_tacho_polarity( donald->sn, "normal" );
                 set_tacho_speed_sp( donald->sn, donald->max_speed * 2 / 3 );
@@ -929,12 +929,12 @@ uint32_t n, ii;
                         printf( "  port = %s\n", ev3_sensor_port_name( i, s ));
 			fflush( stdout );
                         if ( get_sensor_mode( i, s, sizeof( s ))) {
-                                printf( "  mode = %s\n", s );
+                                //printf( "  mode = %s\n", s );
                         }
                         if ( get_sensor_num_values( i, &n )) {
                                 for ( ii = 0; ii < n; ii++ ) {
                                         if ( get_sensor_value( ii, i, &val )) {
-                                                printf( "  value%d = %d\n", ii, val );
+                                               // printf( "  value%d = %d\n", ii, val );
                                         }
                                 }
                         }
@@ -949,26 +949,26 @@ uint32_t n, ii;
                         if ( !get_sensor_value0(donald->sn_compass, &value )) {
                         value = 0;
                         }
-                        printf( "compass\r(%f) \n", value);
-                        fflush( stdout );
+                        //printf( "compass\r(%f) \n", value);
+                        //fflush( stdout );
                 }
                 if ( ev3_search_sensor( LEGO_EV3_COLOR, &donald->sn_color, 0 )) {
-			printf( "COLOR sensor is found, setting...\n" );
+			//printf( "COLOR sensor is found, setting...\n" );
 			set_sensor_mode( donald->sn_color, "COL-COLOR" );
 			if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
 			}
-			printf( "\r(%s) \n", color[ val ]);
-			printf( "valore del colore e': %d\n",val);
-			fflush( stdout );
+			//printf( "\r(%s) \n", color[ val ]);
+			//printf( "valore del colore e': %d\n",val);
+			//fflush( stdout );
 		}
                 if (ev3_search_sensor(LEGO_EV3_US, &donald->sn_sonar,0)){
                         //printf("SONAR found, reading sonar...\n");
                         if ( !get_sensor_value0(donald->sn_sonar, &value )) {
                                 value = 0;
                         }
-                        printf( "\r(%f) \n", value);
-			fflush( stdout );
+                        //printf( "\r(%f) \n", value);
+			//fflush( stdout );
                 }
                 if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
                         //printf("GYRO found, reading magnet...\n");
@@ -976,8 +976,8 @@ uint32_t n, ii;
                         if ( !get_sensor_value0(donald->sn_mag, &value )) {
                                 value = 0;
                         }
-                        printf( "\r(%f) \n", value);
-                        fflush( stdout );
+                        //printf( "\r(%f) \n", value);
+                        //fflush( stdout );
 		}
 return donald;
 }
