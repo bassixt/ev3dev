@@ -844,7 +844,7 @@ switch(arena)
 		//TURN LEFT to avoid second obstacle
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		// go around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1273,donald->sn_compass,donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1121,donald->sn_compass,donald->sn_mag);
 		//TURN RIGHT 
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		// go until final base
