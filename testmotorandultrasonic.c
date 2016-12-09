@@ -826,9 +826,16 @@ switch(arena)
 		//WE HOPE ARRIVED HOME
 		get_sensor_value0(donald->sn_compass, &degree);
 		break;
+	case 4 : 
+		// go from beginning starting area to the beginner destination area without getting bump right side
+		break;
 		
-	case 4 :
-	//big arena right, begin at down corner test 1 : place the ball 
+	case 5 :
+		// go from beginning starting area to the beginner destination area without getting bump left side
+		break;
+		
+	case 6 :
+	//big arena right, begin at down corner test 4 : place the ball 
 		//move from 1m
 	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass, donald->sn_mag);
 		//TURN RIGHT to avoid first obstacle
@@ -871,8 +878,8 @@ switch(arena)
 		Sleep(1000);
 		break;	
 		
-		case 5 :
-	//big arena left, begin at down corner test 1 : place the ball 
+		case 7 :
+	//big arena left, begin at down corner test 4 : place the ball 
 		//move from 1m
 	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass, donald->sn_mag);
 		//TURN LEFT to avoid first obstacle
@@ -914,6 +921,18 @@ switch(arena)
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		// go until final destination 
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,300,donald->sn_compass, donald->sn_mag);
+		Sleep(1000);
+		break;	
+		
+		case 8 :
+	//big arena right, begin at up corner test : grab the ball 
+	
+		Sleep(1000);
+		break;	
+		
+		case 9 :
+	//big arena left, begin at up corner test : grab the ball 
+	
 		Sleep(1000);
 		break;	
 		
