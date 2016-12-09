@@ -886,41 +886,41 @@ switch(arena)
 		//move from 1m
 	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
 		//TURN RIGHT to avoid first obstacle
-		Sleep(1000);
+		
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		
 		//move from 1m to the right
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
 		
 		//TURN LEFT
-		Sleep(1000);
+		
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		
 		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1615,donald->sn_compass,donald->sn_mag); 
 		//TURN LEFT to avoid second obstacle
-		Sleep(1000);
+		
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		
 		// go after ball area around 60 cm (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1121,donald->sn_compass,donald->sn_mag);
 		//turn around 
-		Sleep(1000);
+		
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180,donald->sn_mag);
 		
 		//move to ball area (maybe won't be needed, depend on how much it goes backward)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,380,donald->sn_compass,donald->sn_mag);
 		// drop the ball in the ball area
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-		Sleep(1000);
+		
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		//TURN AROUND
-		Sleep(1000);
+		
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
 		
-		Sleep(1000);
+		
 		break;	
 		
 		case 7 :
