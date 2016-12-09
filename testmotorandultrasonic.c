@@ -690,7 +690,7 @@ void* colorsense(void * args)
 			}
 			strcpy(stricol,color[ color_aq(donald->sn_color) ]);
 			printf("stricolo: %s\n", stricol );
-			if(( strcmp(stricol,"RED")==0) || ( strcmp(stricol,"BLUE")==0))
+			if(( strcmp(stricol,"RED")==0) || ( strcmp(stricol,"GREEN")==0))
 			{
 				grab_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 				Sleep(200);
