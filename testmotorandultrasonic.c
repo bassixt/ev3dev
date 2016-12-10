@@ -917,7 +917,7 @@ switch(arena)
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180,donald->sn_mag);
 		
 		//move to ball area (maybe won't be needed, depend on how much it goes backward)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,380,donald->sn_compass,donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,323,donald->sn_compass,donald->sn_mag);
 		// drop the ball in the ball area
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 		
