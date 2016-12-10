@@ -721,7 +721,7 @@ int arena;
 int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
 //arena  case 0 TEST #1 go straight ahead
 //arena  case 1 TEST #2 leave the ball at the center
-arena = 6;
+arena = 4;
 switch(arena)
 {
 	case 0 :
