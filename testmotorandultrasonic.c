@@ -492,37 +492,6 @@ int color_aq(uint8_t sn_color)
 	return maxval;
 }
 
-int compass_aq(uint8_t sn_compass)
-{	
-	int i;
-	int val,max,maxval;
-	int mod[10];
-	int count[8]={0};
-	for(i=0;i<10;i++)
-	{
-	if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
-				val = 0;
-			}
-		mod[i]=val;
-	
-	}
-	for(i=0;i<10;i++)
-	{
-		count[mod[i]]++;
-	}
-	max=0;
-	maxval=0;
-	for(i=0;i<8;i++)
-	{
-		if(count[i] > max)
-		{
-			max=count[i];
-			maxval=i;
-		}
-	}
-	return maxval;
-}
-
 
 void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			int i;
