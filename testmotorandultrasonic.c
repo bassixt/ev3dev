@@ -119,7 +119,7 @@ float get_compass_values(uint8_t sn_compass)
 	float sum;
 	float degree;
 	sum=0;
-	for(i=0;i<10;i++)
+	for(i=0;i<50;i++)
 	{
 		
 		get_sensor_value0(sn_compass, &degree);
@@ -127,10 +127,12 @@ float get_compass_values(uint8_t sn_compass)
 			{
 			   degree = 0;
 			} 
+		
+		
 		Sleep(100);
 		sum+=degree;
 	}
-	return sum/10;
+	return sum/50;
 		
 		
 	
@@ -490,6 +492,38 @@ int color_aq(uint8_t sn_color)
 	return maxval;
 }
 
+int compass_aq(uint8_t sn_compass)
+{	
+	int i;
+	int val,max,maxval;
+	int mod[10];
+	int count[8]={0};
+	for(i=0;i<10;i++)
+	{
+	if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
+				val = 0;
+			}
+		mod[i]=val;
+	
+	}
+	for(i=0;i<10;i++)
+	{
+		count[mod[i]]++;
+	}
+	max=0;
+	maxval=0;
+	for(i=0;i<8;i++)
+	{
+		if(count[i] > max)
+		{
+			max=count[i];
+			maxval=i;
+		}
+	}
+	return maxval;
+}
+
+
 void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			int i;
 			int act_pos,distance_el;
@@ -711,6 +745,9 @@ void* movements(void * args)
 int i,n;
 struct motandsens *donald = (struct motandsens *) args;
 float degree;
+float initial_pos;
+float final_pos;
+float turn_pos;
 int arena;
 int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
 //arena  case 0 TEST #1 go straight ahead
@@ -884,6 +921,8 @@ switch(arena)
 	case 6 :
 	//big arena right, begin at down corner test 4 : place the ball 
 		//move from 1m
+	initial_pos=get_compass_values(donald->sn_compass);
+	
 	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
 		//TURN RIGHT to avoid first obstacle
 		
@@ -915,8 +954,12 @@ switch(arena)
 		
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		//TURN AROUND
-		
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		final_pos=get_compass_values(donald->sn_compass);
+		if(final_pos<initial_pos)
+	   		turn_pos=359-initial_pos+final_pos;
+		else	
+			turn_pos=final_pos-initial_pos;
+		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,int(turn_pos),donald->sn_mag);
 		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
 		
