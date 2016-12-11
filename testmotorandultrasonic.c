@@ -1225,7 +1225,7 @@ return;
 
 
 	
-int main( int argc, char *argv[] )
+int main( int argc, char **argv )
 {	pid_t ret;
  	char *name;
         int i,d,n;
@@ -1256,11 +1256,11 @@ int main( int argc, char *argv[] )
 
  
  /* Lecture of the executions parameters */
-  if ((argc < 3) || (argc>4)){
+  /*if ((argc < 3) || (argc>4)){
     fputs("USAGE : run <caseNumber> \n",
 	  stderr);
     return EXIT_FAILURE;
-  }
+  }*/
  
   caseNumber = atoi(argv[1]);
  
