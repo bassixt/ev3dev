@@ -836,7 +836,7 @@ switch(donald->number)
 	case 4 : 
 		// go from beginning starting area to the beginner destination area without getting bump right side
 		//move from 1m// 19*90 =1710
-		//initial_pos=get_compass_values(donald->sn_compass);
+		initial_pos=get_compass_values(donald->sn_compass);
 		
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
 		//TURN RIGHT to avoid first obstacle
@@ -857,13 +857,13 @@ switch(donald->number)
 		// go around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1140,donald->sn_compass,donald->sn_mag);
 		//TURN RIGHT 
-		/*final_pos=get_compass_values(donald->sn_compass);
+		final_pos=get_compass_values(donald->sn_compass);
 		if(final_pos>initial_pos)
 			turn_pos=359-final_pos+initial_pos;	   		
 		else	
 			turn_pos=initial_pos-final_pos;
-		*/
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,(int)turn_pos,donald->sn_mag);
 		// go until final base
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass,donald->sn_mag);
 		
