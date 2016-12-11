@@ -1225,7 +1225,7 @@ return;
 
 
 	
-int main( void )
+int main( int argc, char *argv[] )
 {	pid_t ret;
  	char *name;
         int i,d,n;
