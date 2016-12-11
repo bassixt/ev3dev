@@ -44,7 +44,7 @@ struct motandsens {
         int role;/*0 beg 1 fin*/
         int arena;/*0 small1 big*/
         int side;/*0 right 1 left*/
-	int case;
+	int number;
     
 
 
@@ -1267,7 +1267,7 @@ int main( int argc, char *argv[] )
         printf( "*** ( EV3 ) Hello! ***\n" );
 	
 	donald = inizialization(donald);
- 	donald->case = caseNumber;
+ 	donald->number = caseNumber;
  
 	pthread_create(&thread_movement, NULL, movements, donald);
 	if (retour != 0)
