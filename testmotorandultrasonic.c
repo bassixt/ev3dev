@@ -282,7 +282,6 @@ void* position(void *args) //or we can pass all the struct
      		//	  exit(EXIT_FAILURE);
     		//	 }
 }
-f
 
 void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
