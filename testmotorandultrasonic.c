@@ -841,7 +841,7 @@ switch(donald->number)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
 		//TURN RIGHT to avoid first obstacle
 		
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,89,donald->sn_mag);
 		
 		//move from 1m to the right
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
@@ -863,7 +863,7 @@ switch(donald->number)
 		else	
 			turn_pos=initial_pos-final_pos;
 		*/
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,89,donald->sn_mag);
 		// go until final base
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass,donald->sn_mag);
 		
