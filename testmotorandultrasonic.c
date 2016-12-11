@@ -863,7 +863,7 @@ switch(donald->number)
 		else	
 			turn_pos=initial_pos-final_pos;
 		*/
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,(int)turn_pos,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		// go until final base
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass,donald->sn_mag);
 		
