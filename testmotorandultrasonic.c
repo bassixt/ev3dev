@@ -649,8 +649,8 @@ while((finish - beginning - distance)<=0){
 	if(value<250 && value >=70)
 		{
 	//multi_set_tacho_speed_sp(both, max_speed * 1 / 6);	
-	set_tacho_speed_sp( sn, max_speed * 1 / 8 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 8 );
+	set_tacho_speed_sp( sn, max_speed * 1 / 4 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 4 );
 			       }
 	if(value<70 && value >=40)
 		{
