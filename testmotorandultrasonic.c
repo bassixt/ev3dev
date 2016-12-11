@@ -44,6 +44,7 @@ struct motandsens {
         int role;/*0 beg 1 fin*/
         int arena;/*0 small1 big*/
         int side;/*0 right 1 left*/
+	int arena;
     
 
 
@@ -1234,8 +1235,10 @@ int main( void )
 	int act_pos;
         float value;
 	float elapsed_distance;        
+ 	int retour;		
 	pthread_t thread_movement, thread_position, thread_colorsense; 
         pthread_mutex_init(&mutex, NULL);
+ 	int caseNumber;
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
         ev3_brick_addr = "192.168.0.204";
@@ -1251,10 +1254,21 @@ int main( void )
 #endif
         while ( ev3_tacho_init() < 1 ) Sleep( 1000 );
 
+ 
+ /* Lecture of the executions parameters */
+  if ((argc < 3) || (argc>4)){
+    fputs("USAGE : run <caseNumber> \n",
+	  stderr);
+    return EXIT_FAILURE;
+  }
+ 
+  caseNumber = atoi(argv[1]);
+ 
         printf( "*** ( EV3 ) Hello! ***\n" );
 	
 	donald = inizialization(donald);
-	int retour;		
+ 	donald->arena = caseNumber;
+ 
 	pthread_create(&thread_movement, NULL, movements, donald);
 	if (retour != 0)
 	{
