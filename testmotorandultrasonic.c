@@ -362,7 +362,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 		//printf("final %f\n", actual_angle);
 		if(actual_angle!=initial_angle)
 		{	
-			if(actual_angle<(initial_angle - 3))	//too to the left turn right!!!
+			if(actual_angle<(initial_angle - 4))	//too to the left turn right!!!
 			{
 				set_tacho_position_sp( sn,  2 );
 				set_tacho_position_sp( dx, -2 );
@@ -386,7 +386,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				}
 			
 			}
-			if(actual_angle> (initial_angle + 3))	//too to the right turn left!!!
+			if(actual_angle> (initial_angle + 4))	//too to the right turn left!!!
 			{
 				set_tacho_position_sp( sn, -2 );
 				set_tacho_position_sp( dx,  2 );
@@ -584,10 +584,10 @@ int beginning,finish,partial;
 int retour;
 float value;
 float initial_angle;
-set_tacho_time_sp( sn, 100 );
+set_tacho_time_sp( sn, 200 );
 set_tacho_ramp_up_sp( sn, 1000 );
 set_tacho_ramp_down_sp( sn, 1000);
-set_tacho_time_sp( dx, 100 );
+set_tacho_time_sp( dx, 200 );
 set_tacho_ramp_up_sp( dx, 1000 );
 set_tacho_ramp_down_sp( dx, 1000 );
 get_tacho_position( dx, &beginning);
@@ -603,10 +603,10 @@ while((finish - beginning - distance)<=0){
 	multi_set_tacho_ramp_up_sp( both, 2000 );
 	multi_set_tacho_ramp_down_sp( both, 2000 );
 	*/
-	set_tacho_time_sp( sn, 100 );
+	set_tacho_time_sp( sn, 200 );
 	set_tacho_ramp_up_sp( sn, 1000 );
 	set_tacho_ramp_down_sp( sn, 1000 );
-	set_tacho_time_sp( dx, 100);
+	set_tacho_time_sp( dx, 200);
 	set_tacho_ramp_up_sp( dx, 1000 );
 	set_tacho_ramp_down_sp( dx, 1000 );
 	retour = pthread_mutex_lock(&mutex);
@@ -848,12 +848,12 @@ switch(donald->number)
 		//printf("I'am in movements after turn\n");	
 	
 		//TURN LEFT
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,89,donald->sn_mag);
 		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1615,donald->sn_compass,donald->sn_mag); 
 		//TURN LEFT to avoid second obstacle
 	
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,89,donald->sn_mag);
 		// go around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1140, donald->sn_compass,donald->sn_mag);
 		//TURN RIGHT 
