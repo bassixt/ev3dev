@@ -362,7 +362,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 		//printf("final %f\n", actual_angle);
 		if(actual_angle!=initial_angle)
 		{	
-			if(actual_angle<(initial_angle - 4))	//too to the left turn right!!!
+			if(actual_angle<(initial_angle - 2))	//too to the left turn right!!!
 			{
 				set_tacho_position_sp( sn,  2 );
 				set_tacho_position_sp( dx, -2 );
@@ -386,7 +386,7 @@ void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, f
 				}
 			
 			}
-			if(actual_angle> (initial_angle + 4))	//too to the right turn left!!!
+			if(actual_angle> (initial_angle + 2))	//too to the right turn left!!!
 			{
 				set_tacho_position_sp( sn, -2 );
 				set_tacho_position_sp( dx,  2 );
@@ -853,7 +853,7 @@ switch(donald->number)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1615,donald->sn_compass,donald->sn_mag); 
 		//TURN LEFT to avoid second obstacle
 	
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,89,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,87,donald->sn_mag);
 		// go around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1140, donald->sn_compass,donald->sn_mag);
 		//TURN RIGHT 
