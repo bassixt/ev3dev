@@ -864,7 +864,7 @@ switch(donald->number)
 		
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,84,donald->sn_mag);
 		// go until final base
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3250,donald->sn_compass,donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3220,donald->sn_compass,donald->sn_mag);
 		
 		break;
 		
