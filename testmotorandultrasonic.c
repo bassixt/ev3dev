@@ -725,7 +725,7 @@ int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=
 switch(donald->number)
 {
 	case 0 :
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,2727,donald->sn_compass, donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,2745,donald->sn_compass, donald->sn_mag);
 		break;
 	case 1 :
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1412,donald->sn_compass, donald->sn_mag);
@@ -740,7 +740,7 @@ switch(donald->number)
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);		
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1229,donald->sn_compass, donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1240,donald->sn_compass, donald->sn_mag);
 		//put_down(donald->sn,donald->dx,donald->med,donald->max_speed);
 		Sleep(1000);
 		break;
