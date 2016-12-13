@@ -1185,7 +1185,7 @@ flag_1=0;
 
 //turn right 45 ° and start moving 2° each step
 rotatedx(sn,dx,sn_compass,max_speed,45,sn_mag);	
-for(i=0;i<45;i++)
+for(i=0;i<90;i++)
 {
 printf("I'M here\n");
 Sleep(500);
@@ -1226,13 +1226,13 @@ Sleep(100);
 }
 //it has finished the search
 //restart from centre and go to the desired angle
-rotatedx(sn,dx,sn_compass,max_speed,90,sn_mag); 
-rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
+rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag); 
+/*rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 elapsed_dis=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,4000,sn_compass,sn_mag);
-rotatedx(sn,dx,sn_compass,max_speed,180,sn_mag);
-go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,elapsed_dis,sn_compass,sn_mag);
-rotatesx(sn,dx,sn_compass,max_speed,180,sn_mag);
-rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
+rotatedx(sn,dx,sn_compass,max_speed,180,sn_mag);*/
+go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,10000,sn_compass,sn_mag);
+/*rotatesx(sn,dx,sn_compass,max_speed,180,sn_mag);
+rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);*/
 //hope it will work=)
 return;
 }
