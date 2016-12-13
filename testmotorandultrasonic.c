@@ -728,9 +728,9 @@ switch(donald->number)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,2745,donald->sn_compass, donald->sn_mag);
 		break;
 	case 1 :
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1412,donald->sn_compass, donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1432,donald->sn_compass, donald->sn_mag);
 		//TURN LEFT
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,89,donald->sn_mag);
 		Sleep(1000);
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,600,donald->sn_compass,donald->sn_mag); 	
 		printf("I'am in movements after turn\n");	
