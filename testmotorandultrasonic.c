@@ -849,12 +849,12 @@ switch(donald->number)
 		//TURN LEFT
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,89,donald->sn_mag);
 		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1705,donald->sn_compass,donald->sn_mag); 
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1745,donald->sn_compass,donald->sn_mag); 
 		//TURN LEFT to avoid second obstacle
 	
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,85,donald->sn_mag);
 		// go around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1140, donald->sn_compass,donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1180, donald->sn_compass,donald->sn_mag);
 		//TURN RIGHT 
 		//final_pos=get_compass_values(donald->sn_compass);
 		/*if(final_pos>initial_pos)
