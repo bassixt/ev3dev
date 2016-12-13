@@ -870,28 +870,36 @@ switch(donald->number)
 		
 	case 5 :
 		// go from beginning starting area to the beginner destination area without getting bump left side
-		//move from 1m
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass, donald->sn_mag);
-		//TURN LEFT to avoid first obstacle
+		
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
+		//TURN RIGHT to avoid first obstacle
+		
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
-		Sleep(1000);
+		
 		//move from 1m to the right
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass,donald->sn_mag); 	
-		printf("I'am in movements after turn\n");	
-		Sleep(500);
-		//TURN RIGHT
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
+		//printf("I'am in movements after turn\n");	
+	
+		//TURN LEFT
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,89,donald->sn_mag);
 		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass,donald->sn_mag); 
-		//TURN RIGHT to avoid second obstacle
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1615,donald->sn_compass,donald->sn_mag); 
+		//TURN LEFT to avoid second obstacle
+	
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,87,donald->sn_mag);
 		// go around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass,donald->sn_mag);
-		//TURN LEFT 
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1140, donald->sn_compass,donald->sn_mag);
+		//TURN RIGHT 
+		//final_pos=get_compass_values(donald->sn_compass);
+		/*if(final_pos>initial_pos)
+			turn_pos=359-final_pos+initial_pos;	   		
+		else	
+			turn_pos=initial_pos-final_pos;*/
+		
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		// go until final base
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1500,donald->sn_compass,donald->sn_mag);
-		Sleep(500);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3250,donald->sn_compass,donald->sn_mag);
+		
 		break;
 		
 	case 6 :
@@ -945,47 +953,47 @@ switch(donald->number)
 		case 7 :
 	//big arena left, begin at down corner test 4 : place the ball 
 		//move from 1m
-	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass, donald->sn_mag);
-		//TURN LEFT to avoid first obstacle
+	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
+		//TURN RIGHT to avoid first obstacle
+		
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
-		Sleep(1000);
-		//move from 1m to the left
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass,donald->sn_mag); 	
-		printf("I'am in movements after turn\n");	
-		Sleep(500);
-		//TURN RIGHT
+		
+		//move from 1m to the right
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
+		
+		//TURN LEFT
+		
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		
 		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass,donald->sn_mag); 
-		//TURN RIGHT to avoid second obstacle
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1705,donald->sn_compass,donald->sn_mag); 
+		//TURN LEFT to avoid second obstacle
+		
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		
 		// go after ball area around 60 cm (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,600,donald->sn_compass,donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1159,donald->sn_compass,donald->sn_mag);
 		//turn around 
+		
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180,donald->sn_mag);
+		
 		//move to ball area (maybe won't be needed, depend on how much it goes backward)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,10,donald->sn_compass,donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,370,donald->sn_compass,donald->sn_mag);
 		// drop the ball in the ball area
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-		Sleep(1000);
+		
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		//TURN AROUND
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180,donald->sn_mag);
+		/*final_pos=get_compass_values(donald->sn_compass);
+		if(final_pos<initial_pos)
+	   		turn_pos=359-initial_pos+final_pos;
+		else	
+			turn_pos=final_pos-initial_pos;*/
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,84,donald->sn_mag);
 		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,300,donald->sn_compass, donald->sn_mag);
-		// TURN LEFT
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass, donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
 		
-		//TURN LEFT 
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1000,donald->sn_compass, donald->sn_mag);
 		
-		//TURN RIGHT 
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
-		// go until final destination 
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,300,donald->sn_compass, donald->sn_mag);
-		Sleep(1000);
 		break;	
 		
 		case 8 :
