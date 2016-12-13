@@ -1004,7 +1004,7 @@ switch(donald->number)
 		
 		case 9 :
 	//big arena left, begin at up corner test : grab the ball 
-	         research(donald->sn,donald->dx,donald->max_speed, donald->sn_compass, 45, donald->med, donald->sn_mag, donanld->sn_sonar);
+	         research(donald->sn,donald->dx,donald->max_speed, donald->sn_compass, 45, donald->med, donald->sn_mag, donald->sn_sonar);
 		Sleep(1000);
 		break;	
 		
