@@ -1017,8 +1017,8 @@ switch(donald->number)
 		while(1)
 		{
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,190,donald->sn_compass, donald->sn_mag);
-		POS_X = POS_X * cos(HEADING);
-		POS_Y = POS_Y * sin(HEADING);
+		POS_X = POS_X * cos(heading);
+		POS_Y = POS_Y * sin(heading);
 		if ( !get_sensor_value0(donald->sn_mag, &heading)){
 					heading=0;
 					}
