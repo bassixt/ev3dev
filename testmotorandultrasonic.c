@@ -722,6 +722,12 @@ int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=
 //arena  case 0 TEST #1 go straight ahead
 //arena  case 1 TEST #2 leave the ball at the center
 //arena = 6;
+float heading
+float POS_Y=0;
+float POS_X=0;
+if ( !get_sensor_value0(donald->sn_mag, &heading)){
+					heading=0;
+					}
 switch(donald->number)
 {
 	case 0 :
@@ -1007,6 +1013,19 @@ switch(donald->number)
 	         research(donald->sn,donald->dx,donald->max_speed, donald->sn_compass, 45, donald->med, donald->sn_mag, donald->sn_sonar);
 		Sleep(1000);
 		break;	
+	case 10 :
+		while(1)
+		{
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,190,donald->sn_compass, donald->sn_mag);
+		POS_X = POS_X * cos(HEADING);
+		POS_Y = POS_Y * sin(HEADING);
+		if ( !get_sensor_value0(donald->sn_mag, &heading)){
+					heading=0;
+					}
+		printf("POS_X=%f\n",POS_X);
+		printf("POS_Y=%f\n",POS_Y);
+		printf("heading=%f\n",heading);
+		}
 		
 }
 return;
