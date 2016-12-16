@@ -722,7 +722,7 @@ int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=
 //arena  case 0 TEST #1 go straight ahead
 //arena  case 1 TEST #2 leave the ball at the center
 //arena = 6;
-float heading
+float heading;
 float POS_Y=0;
 float POS_X=0;
 if ( !get_sensor_value0(donald->sn_mag, &heading)){
