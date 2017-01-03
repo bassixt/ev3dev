@@ -41,7 +41,7 @@ struct motandsens {
 	uint8_t sn_mag;
         int max_speed;
 	float x,y;
-	//float last_angle;
+	float last_angle;
         int role;/*0 beg 1 fin*/
         int arena;/*0 small1 big*/
         int side;/*0 right 1 left*/
@@ -283,7 +283,7 @@ void* position(void *args) //or we can pass all the struct
      		//	  exit(EXIT_FAILURE);
     		//	 }
 }
-/*
+
 float deg2rad(float m_rot)
 {
 	return m_rot * M_PI / 180.0;
@@ -321,7 +321,7 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag, float la
 	//printf("the angle in deg is:%f\n", rad2deg(m_rot));
 	
 }
-*/
+
 void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
 	float wanted_c;
@@ -725,7 +725,7 @@ void* colorsense(void * args)
  	struct motandsens *donald = (struct motandsens *) args;
  	while(1)
 	{
-        //positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag, donald->last_angle);
+        positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag, donald->last_angle);
 	Sleep(500);
 	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
@@ -1065,6 +1065,7 @@ switch(donald->number)
 		printf("POS_Y=%f\n",POS_Y);
 		printf("heading=%f\n",heading);
 		}
+		break;
 		
 }
 return;
@@ -1220,7 +1221,7 @@ uint32_t n, ii;
                         printf( "\r(%f) \n", value);
                         fflush( stdout );
 		}
-	//donald->last_angle=0;
+	donald->last_angle=0;
 return donald;
 }
 
