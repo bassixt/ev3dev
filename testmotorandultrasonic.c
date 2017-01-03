@@ -296,9 +296,9 @@ float rad2deg(float m_rot)
 
 float lim_rot(float m_rot)
 {
-	while(m_rot < -PI)
+	while(m_rot < -M_PI)
 		m_rot += 2.0 * M_PI;
-	while(m_rot >= -PI)
+	while(m_rot >= -M_PI)
 		m_rot -= 2.0 * M_PI;
 	return m_rot;
 
