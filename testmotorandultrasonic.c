@@ -1220,6 +1220,7 @@ uint32_t n, ii;
                         printf( "\r(%f) \n", value);
                         fflush( stdout );
 		}
+	donald->last_angle=0;
 return donald;
 }
 
