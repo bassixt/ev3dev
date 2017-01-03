@@ -746,7 +746,7 @@ void* colorsense(void * args)
  	struct motandsens *donald = (struct motandsens *) args;
  	while(1)
 	{
-        positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag, donald->last_angle);
+        positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag);
 	Sleep(500);
 	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
@@ -1242,7 +1242,7 @@ uint32_t n, ii;
                         printf( "\r(%f) \n", value);
                         fflush( stdout );
 		}
-	donald->last_angle=0;
+	
 return donald;
 }
 
