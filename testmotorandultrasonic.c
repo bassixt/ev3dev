@@ -307,16 +307,19 @@ float lim_rot(float m_rot)
 void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag, float last_angle)
 {
 	float new_angle;
+	short new_angs;
 	float m_rot;
 	
 	if ( !get_sensor_value0(sn_mag, &new_angle )) 
 	   {
 	   new_angle = 0;
 	   }
-	m_rot = - (new_angle - last_angle)/100.0;
+	printf("the value is : %f",new_angle);
+	new_angs= (short)new_angle;
+	m_rot = - (new_angs - last_angle)/100.0;
 	m_rot = deg2rad(m_rot);
 	m_rot = lim_rot(m_rot);
-	last_angle = new_angle;
+	last_angle = new_angs;
 	printf("the angle is: %f\n", m_rot);
 	printf("the angle in deg is:%f\n", rad2deg(m_rot));
 	
