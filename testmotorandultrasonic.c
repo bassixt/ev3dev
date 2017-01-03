@@ -304,7 +304,7 @@ float lim_rot(float m_rot)
 
 }
 
-void positioning(uint8_t sn, uint8_t dx, int max_speed, int rotation, uint8_t sn_mag, float last_angle)
+void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag, float last_angle)
 {
 	float new_angle;
 	float m_rot;
@@ -725,7 +725,7 @@ void* colorsense(void * args)
  	struct motandsens *donald = (struct motandsens *) args;
  	while(1)
 	{
-        positioning(donald->sn, donald->dx,donald->max_speed, donald->rotation, donald->sn_mag, donald->last_angle);
+        positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag, donald->last_angle);
 	Sleep(500);
 	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
