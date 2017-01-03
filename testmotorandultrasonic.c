@@ -286,20 +286,20 @@ void* position(void *args) //or we can pass all the struct
 
 float deg2rad(float m_rot)
 {
-	return m_rot * PI / 180.0;
+	return m_rot * M_PI / 180.0;
 }
 
 float rad2deg(float m_rot)
 {
-	return radians * 180 /PI;
+	return m_rot * 180 / M_PI;
 }
 
 float lim_rot(float m_rot)
 {
 	while(m_rot < -PI)
-		m_rot += 2.0 * PI;
+		m_rot += 2.0 * M_PI;
 	while(m_rot >= -PI)
-		m_rot -= 2.0 * PI;
+		m_rot -= 2.0 * M_PI;
 	return m_rot;
 
 }
