@@ -41,7 +41,6 @@ struct motandsens {
 	uint8_t sn_mag;
         int max_speed;
 	float x,y;
-	float last_angle;
         int role;/*0 beg 1 fin*/
         int arena;/*0 small1 big*/
         int side;/*0 right 1 left*/
@@ -304,24 +303,43 @@ float lim_rot(float m_rot)
 
 }
 
-void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag, float last_angle)
+void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 {
 	float new_angle;
 	short new_angs;
-	float m_rot;
-	static float vecchio  = 0;
+	float m_rot,disp_diff;
+	static float last_angle  = 0;
+	static float teta = 0;
+	static int old_sx = 0;
+	static int old_dx = 0;
+	static float old_x = 0;
+	static float old_y = 0;
+	int new_sx,new_dx,disp_sx,disp_dx;
+	float delta_x,delta_y;
 	if ( !get_sensor_value0(sn_mag, &new_angle )) 
 	   {
 	   new_angle = 0;
 	   }
-	printf("the value is : %f",new_angle);
-	new_angs= (short)new_angle;
-	m_rot = - (new_angs - vecchio);
+	printf("the value is : %f\n",new_angle);
+	new_angs = (short)new_angle;
+	m_rot = - (new_angs - last_angle);
 	m_rot = deg2rad(m_rot);
-	//m_rot = lim_rot(m_rot);
-	vecchio = new_angs;
+	last_angle = new_angs;
 	printf("the angle is: %f\n", m_rot);
 	printf("the angle in deg is:%f\n", rad2deg(m_rot));
+	get_tacho_position(donald->sn,&new_sx);
+	get_tacho_position(donald->dx,&new_dx);
+	teta = teta + m_rot;
+	disp_sx = new_sx - old_sx; 
+	disp_dx = new_dx - old_dx;
+	disp_diff = (disp_sx + disp_dx)/2;
+	old_sx = new_sx;
+	old_dx = new_dx;
+	delta_y = disp_diff * sin ( teta + m_rot/2);
+	delta_x = disp_diff * cos ( teta + m_rot/2);
+	old_y = old_y + delta_y;
+	old_x = old_y + delta_x;
+	printf("y=%f and x=%f\n",old_y,old_x);
 	
 }
 
