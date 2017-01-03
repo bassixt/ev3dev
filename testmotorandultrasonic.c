@@ -39,8 +39,9 @@ struct motandsens {
 	uint8_t sn_color;
 	uint8_t sn_compass;
 	uint8_t sn_mag;
-    int max_speed;
+        int max_speed;
 	float x,y;
+	float last_angle;
         int role;/*0 beg 1 fin*/
         int arena;/*0 small1 big*/
         int side;/*0 right 1 left*/
@@ -283,6 +284,43 @@ void* position(void *args) //or we can pass all the struct
     		//	 }
 }
 
+float deg2rad(float m_rot)
+{
+	return m_rot * PI / 180.0;
+}
+
+float rad2deg(float m_rot)
+{
+	return radians * 180 /PI;
+}
+
+float lim_rot(float m_rot)
+{
+	while(m_rot < -PI)
+		m_rot += 2.0 * PI;
+	while(m_rot >= -PI)
+		m_rot -= 2.0 * PI;
+	return m_rot;
+
+}
+
+void positioning(uint8_t sn, uint8_t dx, int max_speed, int rotation, uint8_t sn_mag, float last_angle)
+{
+	float new_angle;
+	float m_rot;
+	
+	if ( !get_sensor_value0(sn_mag, &new_angle )) 
+	   {
+	   new_angle = 0;
+	   }
+	m_rot = - (new_angle - last_angle)/100.0;
+	m_rot = deg2rad(m_rot);
+	m_rot = lim_rot(m_rot);
+	last_angle = new_angle;
+	printf("the angle is: %f\n", m_rot);
+	printf("the angle in deg is:%f\n", rad2deg(m_rot));
+	
+}
 
 void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
@@ -687,7 +725,8 @@ void* colorsense(void * args)
  	struct motandsens *donald = (struct motandsens *) args;
  	while(1)
 	{
- 
+        positioning(donald->sn, donald->dx,donald->max_speed, donald->rotation, donald->sn_mag, donald->last_angle);
+	Sleep(500);
 	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
 			}
