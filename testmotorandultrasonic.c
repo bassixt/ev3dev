@@ -283,12 +283,12 @@ void* position(void *args) //or we can pass all the struct
     		//	 }
 }
 
-float deg2rad(float m_rot)
+int deg2rad(int m_rot)
 {
 	return m_rot * M_PI / 180.0;
 }
 
-float rad2deg(float m_rot)
+int rad2deg(int m_rot)
 {
 	return m_rot * 180 / M_PI;
 }
