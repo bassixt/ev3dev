@@ -305,22 +305,22 @@ float lim_rot(float m_rot)
 
 void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 {
-	float new_angle;
-	short new_angs;
-	float m_rot,disp_diff;
-	static float last_angle  = 0;
-	static float teta = 0;
-	static float old_sx = 0;
-	static float old_dx = 0;
-	static float old_x = 0;
-	static float old_y = 0;
-	float new_sx,new_dx,disp_sx,disp_dx;
-	float delta_x,delta_y;
+	int new_angle;
+	int new_angs;
+	int m_rot,disp_diff;
+	static int last_angle  = 0;
+	static int teta = 0;
+	static int old_sx = 0;
+	static int old_dx = 0;
+	static int old_x = 0;
+	static int old_y = 0;
+	int new_sx,new_dx,disp_sx,disp_dx;
+	int delta_x,delta_y;
 	if ( !get_sensor_value0(sn_mag, &new_angle )) 
 	   {
 	   new_angle = 0;
 	   }
-	new_angs = (short)new_angle;
+	new_angs = new_angle;
 	m_rot = - (new_angs - last_angle);
 	m_rot = deg2rad(m_rot);
 	last_angle = new_angs;
