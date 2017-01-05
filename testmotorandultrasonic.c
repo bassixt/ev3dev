@@ -283,12 +283,12 @@ void* position(void *args) //or we can pass all the struct
     		//	 }
 }
 
-int deg2rad(int m_rot)
+float deg2rad(float m_rot)
 {
 	return m_rot * M_PI / 180.0;
 }
 
-int rad2deg(int m_rot)
+float rad2deg(float m_rot)
 {
 	return m_rot * 180 / M_PI;
 }
@@ -306,49 +306,49 @@ float lim_rot(float m_rot)
 void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 {
 	float new_angle;
-	int new_angs;
-	int m_rot,disp_diff;
-	static int last_angle  = 0;
-	static int teta = 0;
-	static int old_sx = 0;
-	static int old_dx = 0;
-	static int old_x = 0;
-	static int old_y = 0;
+	float new_angs;
+	float m_rot,disp_diff;
+	static float last_angle  = 0;
+	static float teta = 0;
+	static float old_sx = 0;
+	static float old_dx = 0;
+	static float old_x = 0;
+	static float old_y = 0;
 	float new_sx,new_dx;
-	int disp_sx,disp_dx;
-	int delta_x,delta_y;
+	float disp_sx,disp_dx;
+	float delta_x,delta_y;
 	if ( !get_sensor_value0(sn_mag, &new_angle )) 
 	   {
 	   new_angle = 0;
 	   }
 	
-	new_angs = (int)new_angle;
+	new_angs = new_angle;
 	m_rot =  (new_angs - last_angle);
 	m_rot = deg2rad(m_rot);
 	last_angle = new_angs;
-	printf("the angle in rad is: %d\n", m_rot);
-	printf("the angle in deg is:%d\n", rad2deg(m_rot));
+	printf("the angle in rad is: %f\n", m_rot);
+	printf("the angle in deg is:%f\n", rad2deg(m_rot));
 	get_tacho_position(sn,&new_sx);
 	get_tacho_position(dx,&new_dx);
 	//new_angle = deg2rad(new_angle);
 	teta = teta + m_rot;
-	printf("teta:%d\n", teta);
+	printf("teta:%f\n", teta);
 	//teta = teta + new_angle
-	disp_sx = (int)new_sx - old_sx; 
-	disp_dx = (int)new_dx - old_dx;
-	printf("disp_sx:%d and disp_dx:%d\n",disp_sx,disp_dx);
+	disp_sx = new_sx - old_sx; 
+	disp_dx = new_dx - old_dx;
+	printf("disp_sx:%f and disp_dx:%f\n",disp_sx,disp_dx);
 	disp_diff = (disp_sx + disp_dx)/2;
-	printf("dispdiff:%d\n",disp_diff);
-	old_sx = (int)new_sx;
-	old_dx = (int)new_dx;
+	printf("dispdiff:%f\n",disp_diff);
+	old_sx = new_sx;
+	old_dx = new_dx;
 	delta_y = disp_diff * sin ( teta + m_rot/2);
 	delta_x = disp_diff * cos ( teta + m_rot/2);
-	printf("deltay:%d and deltax:%d\n",delta_y,delta_x);
+	printf("deltay:%f and deltax:%f\n",delta_y,delta_x);
 	//delta_y = disp_diff * sin ( teta + new_angle/2);
 	//delta_x = disp_diff * cos ( teta + new_angle/2);
 	old_y = old_y + delta_y;
 	old_x = old_y + delta_x;
-	printf("y=%d and x=%d\n",old_y,old_x);
+	printf("y=%f and x=%f\n",old_y,old_x);
 	
 }
 
