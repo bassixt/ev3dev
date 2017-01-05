@@ -314,7 +314,7 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	static float old_dx = 0;
 	static float old_x = 0;
 	static float old_y = 0;
-	float new_sx,new_dx;
+	int new_sx,new_dx;
 	float disp_sx,disp_dx;
 	float delta_x,delta_y;
 	if ( !get_sensor_value0(sn_mag, &new_angle )) 
@@ -330,7 +330,7 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	printf("the angle in deg is:%f\n", rad2deg(m_rot));
 	get_tacho_position(sn,&new_sx);
 	get_tacho_position(dx,&new_dx);
-	printf("new_sx:%f and new_dx:%f",new_sx,new_dx);
+	printf("new_sx:%d and new_dx:%d",new_sx,new_dx);
 	//new_angle = deg2rad(new_angle);
 	teta = teta + m_rot;
 	printf("teta:%f\n", teta);
