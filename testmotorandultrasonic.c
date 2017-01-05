@@ -310,11 +310,11 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	float m_rot,disp_diff;
 	static float last_angle  = 0;
 	static float teta = 0;
-	static int old_sx = 0;
-	static int old_dx = 0;
+	static float old_sx = 0;
+	static float old_dx = 0;
 	static float old_x = 0;
 	static float old_y = 0;
-	int new_sx,new_dx,disp_sx,disp_dx;
+	float new_sx,new_dx,disp_sx,disp_dx;
 	float delta_x,delta_y;
 	if ( !get_sensor_value0(sn_mag, &new_angle )) 
 	   {
