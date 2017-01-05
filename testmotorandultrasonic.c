@@ -323,7 +323,7 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	   }
 	
 	new_angs = (int)new_angle;
-	m_rot = - (new_angs - last_angle);
+	m_rot =  (new_angs - last_angle);
 	m_rot = deg2rad(m_rot);
 	last_angle = new_angs;
 	printf("the angle in rad is: %d\n", m_rot);
