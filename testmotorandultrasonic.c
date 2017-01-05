@@ -757,7 +757,7 @@ void* colorsense(void * args)
  	while(1)
 	{
         positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag);
-	Sleep(500);
+	Sleep(50);
 	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
 			}
