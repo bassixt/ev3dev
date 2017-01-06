@@ -782,7 +782,7 @@ void* positioning_sys(void* args)
 	while(1)
 	{
         positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag);
-	Sleep(50);
+	Sleep(100);
 	}
 }
 void* colorsense(void * args)
