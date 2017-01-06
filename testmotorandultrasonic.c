@@ -1099,7 +1099,7 @@ switch(donald->number)
 		
 		case 9 :
 	//big arena left, begin at up corner test : grab the ball 
-	         research(donald->sn,donald->dx,donald->max_speed, donald->sn_compass, 45, donald->med, donald->sn_mag, donald->sn_sonar);
+	         research(donald->sn,donald->dx,donald->max_speed, donald->sn_compass, 45, donald->med,donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		Sleep(1000);
 		break;	
 	case 10 :
@@ -1275,7 +1275,7 @@ uint32_t n, ii;
 return donald;
 }
 
-void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_turn_degree, uint8_t med, uint8_t sn_mag, uint8_t sn_sonar)
+void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_turn_degree, uint8_t med, uint8_t sn_color,uint8_t sn_mag, uint8_t sn_sonar)
 {	//Take the initial position than move to 
 float initial_angle;
 float actual_angle;
