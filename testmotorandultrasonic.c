@@ -293,16 +293,6 @@ float rad2deg(float m_rot)
 	return m_rot * 180 / M_PI;
 }
 
-float lim_rot(float m_rot)
-{
-	while(m_rot < -M_PI)
-		m_rot += 2.0 * M_PI;
-	while(m_rot >= -M_PI)
-		m_rot -= 2.0 * M_PI;
-	return m_rot;
-
-}
-
 void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 {	float encod_scale = M_PI * 5.5 / 360;
 	float new_angle;
@@ -325,9 +315,9 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
     			   perror("erreur mutex lock");
      			  exit(EXIT_FAILURE);
     			 }
-	if ( !get_sensor_value0(sn_mag, &new_angle )) 
+	if ( !get_sensor_value0(sn_mag, &new_angs )) 
 	   {
-	   new_angle = 0;
+	   new_angs = 0;
 	   }
 	retour = pthread_mutex_unlock(&mutex_pos);
     			if (retour != 0)
@@ -335,15 +325,11 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
     			   perror("erreur mutex unlock");
      			  exit(EXIT_FAILURE);
     			 }
-	new_angs = new_angle;
 	m_rot =  -(new_angs - last_angle);		//rotation
-	m_rot = deg2rad(m_rot);
-	last_angle = new_angs;
-	printf("the angle in rad is: %f\n", m_rot);
-	printf("the angle in deg is:%f\n", rad2deg(m_rot));
-	get_tacho_position(sn,&new_sx);
+	m_rot = deg2rad(m_rot);				//rotation to rad
+	last_angle = new_angs;				//refresh last angle
+	get_tacho_position(sn,&new_sx);			
 	get_tacho_position(dx,&new_dx);
-	printf("new_sx:%d and new_dx:%d\n",new_sx,new_dx);
 	new_angs = deg2rad(new_angs);
 	if(flag==1)
 		teta = teta + m_rot;
@@ -352,26 +338,13 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 		teta = 0;
 		flag = 1;
 	}	
-	printf("newangs:%f\n", new_angs);
-	//teta = teta + new_angle
 	disp_sx = new_sx - old_sx; 
 	disp_dx = new_dx - old_dx;
-	printf("disp_sx:%f and disp_dx:%f\n",disp_sx,disp_dx);
 	disp_diff = (disp_sx + disp_dx)*encod_scale/2;		//displacement
-	//disp_diff = (new_sx + new_dx ) * encod_scale/2;
- 	printf("dispdiff:%f\n",disp_diff);
- 	printf("teta:%f\n",teta);
 	old_sx = new_sx;
 	old_dx = new_dx;
  	old_y = old_y + disp_diff * sin( teta );
 	old_x = old_x + disp_diff * cos( teta ); 	
-	//delta_y = disp_diff * sin ( teta + m_rot/2);
-	//delta_x = disp_diff * cos ( teta + m_rot/2);
-	//printf("deltay:%f and deltax:%f\n",delta_y,delta_x);
-	//delta_y = disp_diff * sin ( teta + new_angle/2);
-	//delta_x = disp_diff * cos ( teta + new_angle/2);
-	//old_y = old_y + delta_y;
-	//old_x = old_y + delta_x;
 	printf("y=%f and x=%f\n",old_y,old_x);
 	
 }
@@ -444,115 +417,118 @@ void rotatesx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rot
 
 //function that hold the direction
 void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle,uint8_t sn_mag){
-		int minsize;
-		float actual_angle;
-		minsize=1;
-		if ( !get_sensor_value0(sn_mag, &actual_angle)) {
-			actual_angle = 0;
-		}
-		//printf("initial  %f\n",initial_angle);
-		//printf("final %f\n", actual_angle);
-		if(actual_angle!=initial_angle)
-		{	
-			if(actual_angle<(initial_angle - 2))	//too to the left turn right!!!
+	int minsize;
+	float actual_angle;
+	minsize=1;
+	if ( !get_sensor_value0(sn_mag, &actual_angle)) {
+		actual_angle = 0;
+	}
+	//printf("initial  %f\n",initial_angle);
+	//printf("final %f\n", actual_angle);
+	if(actual_angle!=initial_angle)
+	{	
+		if(actual_angle<(initial_angle - 2))	//too to the left turn right!!!
+		{
+			set_tacho_position_sp( sn,  1 );
+			set_tacho_position_sp( dx, -1 );
+			set_tacho_speed_sp( sn, max_speed/6 );
+			set_tacho_speed_sp( dx, max_speed/6 );
+			set_tacho_time_sp( sn, 100 );
+			set_tacho_ramp_up_sp( sn,   0 );
+			set_tacho_ramp_down_sp( sn, 0 );
+			set_tacho_ramp_up_sp( dx,   0 );
+			set_tacho_ramp_down_sp( dx, 0 );
+			Sleep(100);
+			while(actual_angle<initial_angle)
 			{
-				set_tacho_position_sp( sn,  1 );
-				set_tacho_position_sp( dx, -1 );
-				set_tacho_speed_sp( sn, max_speed/6 );
-				set_tacho_speed_sp( dx, max_speed/6 );
-				set_tacho_time_sp( sn, 100 );
-				set_tacho_ramp_up_sp( sn,   0 );
-				set_tacho_ramp_down_sp( sn, 0 );
-				set_tacho_ramp_up_sp( dx,   0 );
-				set_tacho_ramp_down_sp( dx, 0 );
+				set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+				set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 				Sleep(100);
-				while(actual_angle<initial_angle)
-				{
-					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-					Sleep(100);
-					if ( !get_sensor_value0(sn_mag, &actual_angle)){
-					actual_angle=0;
-					}
-				
+				if ( !get_sensor_value0(sn_mag, &actual_angle)){
+				actual_angle=0;
 				}
-			
-			}
-			if(actual_angle> (initial_angle + 2))	//too to the right turn left!!!
-			{
-				set_tacho_position_sp( sn, -1 );
-				set_tacho_position_sp( dx,  1 );
-				set_tacho_speed_sp( sn, max_speed/6 );
-				set_tacho_speed_sp( dx, max_speed/6 );
-				set_tacho_time_sp( sn, 100 );
-				set_tacho_ramp_up_sp( sn,   0 );
-				set_tacho_ramp_down_sp( sn, 0 );
-				set_tacho_ramp_up_sp( dx,   0 );
-				set_tacho_ramp_down_sp( dx, 0 );
-				Sleep(100);
-				while(actual_angle>initial_angle)
-				{	
-					set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
-					set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
-					Sleep(100);
-					 if ( !get_sensor_value0(sn_mag, &actual_angle)){
-                                        actual_angle=0;
-                                        }
-				}
-			
+
 			}
 			
 		}
+		if(actual_angle> (initial_angle + 2))	//too to the right turn left!!!
+		{
+			set_tacho_position_sp( sn, -1 );
+			set_tacho_position_sp( dx,  1 );
+			set_tacho_speed_sp( sn, max_speed/6 );
+			set_tacho_speed_sp( dx, max_speed/6 );
+			set_tacho_time_sp( sn, 100 );
+			set_tacho_ramp_up_sp( sn,   0 );
+			set_tacho_ramp_down_sp( sn, 0 );
+			set_tacho_ramp_up_sp( dx,   0 );
+			set_tacho_ramp_down_sp( dx, 0 );
+			Sleep(100);
+			while(actual_angle>initial_angle)
+			{	
+				set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+				set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+				Sleep(100);
+				 if ( !get_sensor_value0(sn_mag, &actual_angle)){
+				actual_angle=0;
+				}
+			}
+
+		}
+
+	}
 }
 //function that allow to grab the ball. Raise the grabber, go ahead till 5*22 mm. and than release the grabber and wait 
 //few time till start moving
 void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
-{			int i;
- 			int retour;
-			int act_pos,distance_el;
-			set_tacho_time_sp( sn, 100 );
-			set_tacho_ramp_up_sp( sn, 2000 );
-			set_tacho_ramp_down_sp( sn, 2000 );
-			set_tacho_time_sp( dx, 100 );
-			set_tacho_ramp_up_sp( dx, 2000 );
-			set_tacho_ramp_down_sp( dx, 2000 );
- 			set_tacho_speed_sp( sn, max_speed * 1 / 6 );
-                        set_tacho_speed_sp( dx, max_speed * 1 / 6 );
-			//raise the grabber
- 			 retour = pthread_mutex_lock(&mutex);
-    			if (retour != 0)
-    			 {
-    			   perror("erreur mutex lock");
-     			  exit(EXIT_FAILURE);
-    			 }
-			set_tacho_position_sp( med, 90 );
-			Sleep(200);
-			for ( i = 0; i < 5; i++ ) {
-			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
-			Sleep( 200 );
-			}
- 			get_tacho_position( dx, &act_pos);
- 			distance_el=act_pos;
- 			while((act_pos-(8*26)-distance_el)<=0)
-			{
-				set_tacho_command_inx( sn, TACHO_RUN_TIMED );
-				set_tacho_command_inx( dx, TACHO_RUN_TIMED );
-				get_tacho_position( dx, &act_pos);
-			}
-			//release the grabber
-			set_tacho_position_sp( med, -80 );
-			Sleep(200);
-			for ( i = 0; i < 1; i++ ) {
-			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
-			Sleep( 200 );
-			} 
- 			Sleep(1000);
- 			 retour = pthread_mutex_unlock(&mutex);
-    			if (retour != 0)
-    			 {
-    			   perror("erreur mutex unlock");
-     			  exit(EXIT_FAILURE);
-    			 }
+{	
+	int i;
+	int retour;
+	int act_pos,distance_el;
+	set_tacho_time_sp( sn, 100 );
+	set_tacho_ramp_up_sp( sn, 2000 );
+	set_tacho_ramp_down_sp( sn, 2000 );
+	set_tacho_time_sp( dx, 100 );
+	set_tacho_ramp_up_sp( dx, 2000 );
+	set_tacho_ramp_down_sp( dx, 2000 );
+	set_tacho_speed_sp( sn, max_speed * 1 / 6 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 6 );
+	//raise the grabber
+	 retour = pthread_mutex_lock(&mutex);
+	if (retour != 0)
+	{
+		perror("erreur mutex lock");
+	        exit(EXIT_FAILURE);
+	}
+	set_tacho_position_sp( med, 90 );
+	Sleep(200);
+	for ( i = 0; i < 5; i++ ) 
+	{
+		set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
+		Sleep( 200 );
+	}
+	get_tacho_position( dx, &act_pos);
+	distance_el=act_pos;
+	while((act_pos-(8*26)-distance_el)<=0)
+	{
+		set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+		set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+		get_tacho_position( dx, &act_pos);
+	}
+	//release the grabber
+	set_tacho_position_sp( med, -80 );
+	Sleep(200);
+	for ( i = 0; i < 1; i++ ) 
+	{
+		set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
+		Sleep( 200 );
+	} 
+	Sleep(1000);
+	retour = pthread_mutex_unlock(&mutex);
+	if (retour != 0)
+	{
+		perror("erreur mutex unlock");
+		exit(EXIT_FAILURE);
+	}
 }   
 int color_aq(uint8_t sn_color)
 {	
@@ -562,11 +538,11 @@ int color_aq(uint8_t sn_color)
 	int count[8]={0};
 	for(i=0;i<10;i++)
 	{
-	if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
-				val = 0;
-			}
-		mod[i]=val;
-	
+		if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) 
+		{
+			val = 0;
+		}
+		mod[i]=val;	
 	}
 	for(i=0;i<10;i++)
 	{
@@ -587,80 +563,84 @@ int color_aq(uint8_t sn_color)
 
 
 void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
-{			int i;
-			int act_pos,distance_el;
-			set_tacho_time_sp( sn, 200 );
-			set_tacho_ramp_up_sp( sn, 1500 );
-			set_tacho_ramp_down_sp( sn, 1500 );
-			set_tacho_time_sp( dx, 200 );
-			set_tacho_ramp_up_sp( dx, 1500 );
-			set_tacho_ramp_down_sp( dx, 1500 );
- 			set_tacho_speed_sp( sn, max_speed * 1 / 4 );
-                        set_tacho_speed_sp( dx, max_speed * 1 / 4 );
- 			//stabilize the ball
- 			Sleep(2000);
-			//raise the grabber
-			set_tacho_position_sp( med, 90 );
-			Sleep(200);
-			for ( i = 0; i < 7; i++ ) {
-			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
-			Sleep( 200 );
-			}
- 			//get_tacho_position( dx, &act_pos);
- 			//distance_el=act_pos;
- 			/*
- 			while((act_pos-(24*21)-distance_el)<=0)
-			{
-				set_tacho_command_inx( sn, TACHO_RUN_TIMED );
-				set_tacho_command_inx( dx, TACHO_RUN_TIMED );
-				get_tacho_position( dx, &act_pos);
-			}
-			//release the grabber
-			set_tacho_position_sp( med, -90 );
-			Sleep(200);
-			for ( i = 0; i < 4; i++ ) {
-			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
-			Sleep( 200 );
-			} */
- 			Sleep(500);
+{			
+	int i;
+	int act_pos,distance_el;
+	set_tacho_time_sp( sn, 200 );
+	set_tacho_ramp_up_sp( sn, 1500 );
+	set_tacho_ramp_down_sp( sn, 1500 );
+	set_tacho_time_sp( dx, 200 );
+	set_tacho_ramp_up_sp( dx, 1500 );
+	set_tacho_ramp_down_sp( dx, 1500 );
+	set_tacho_speed_sp( sn, max_speed * 1 / 4 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 4 );
+	//stabilize the ball
+	Sleep(2000);
+	//raise the grabber
+	set_tacho_position_sp( med, 90 );
+	Sleep(200);
+	for ( i = 0; i < 7; i++ ) {
+	set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
+	Sleep( 200 );
+	}
+	//get_tacho_position( dx, &act_pos);
+	//distance_el=act_pos;
+	/*
+	while((act_pos-(24*21)-distance_el)<=0)
+	{
+		set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+		set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+		get_tacho_position( dx, &act_pos);
+	}
+	//release the grabber
+	set_tacho_position_sp( med, -90 );
+	Sleep(200);
+	for ( i = 0; i < 4; i++ ) {
+	set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
+	Sleep( 200 );
+	} */
+	Sleep(500);
  			
 }  
 void put_down(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
-{			int i;
-			int act_pos,distance_el;
-			//stabilize the ball
- 			set_tacho_position_sp( med, -90 );
-			Sleep(200);
-			for ( i = 0; i < 4; i++ ) {
-			set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
-			Sleep( 200 );
-			} 
- 			Sleep(500);
+{			
+	int i;
+	int act_pos,distance_el;
+	//stabilize the ball
+	set_tacho_position_sp( med, -90 );
+	Sleep(200);
+	for ( i = 0; i < 4; i++ ) {
+	set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
+	Sleep( 200 );
+	} 
+	Sleep(500);
  			
 } 
 
 void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
-{			int i;
-			int act_pos,distance_el;
-			set_tacho_time_sp( sn, 800 );
-			set_tacho_ramp_up_sp( sn, 2000 );
-			set_tacho_ramp_down_sp( sn, 2000 );
-			set_tacho_time_sp( dx, 800);
-			set_tacho_ramp_up_sp( dx, 2000 );
-			set_tacho_ramp_down_sp( dx, 2000 );
- 			set_tacho_speed_sp( sn, -max_speed * 1 / 6 );
-                        set_tacho_speed_sp( dx, -max_speed * 1 / 6 );
- 			//stabilize the ball
- 			Sleep(2000);
-			get_tacho_position( dx, &act_pos);
- 			distance_el=act_pos;
- 			for(i=0;i<6;i++){
- 			set_tacho_command_inx( sn, TACHO_RUN_TIMED );
-			set_tacho_command_inx( dx, TACHO_RUN_TIMED );
- 			Sleep(500);
-			}
-			get_tacho_position( dx, &act_pos);
- 			Sleep(500);
+{			
+	int i;
+	int act_pos,distance_el;
+	set_tacho_time_sp( sn, 800 );
+	set_tacho_ramp_up_sp( sn, 2000 );
+	set_tacho_ramp_down_sp( sn, 2000 );
+	set_tacho_time_sp( dx, 800);
+	set_tacho_ramp_up_sp( dx, 2000 );
+	set_tacho_ramp_down_sp( dx, 2000 );
+	set_tacho_speed_sp( sn, -max_speed * 1 / 6 );
+	set_tacho_speed_sp( dx, -max_speed * 1 / 6 );
+	//stabilize the ball
+	Sleep(2000);
+	get_tacho_position( dx, &act_pos);
+	distance_el=act_pos;
+	for(i=0;i<6;i++)
+	{
+		set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+		set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+		Sleep(500);
+	}
+	get_tacho_position( dx, &act_pos);
+	Sleep(500);
  			
 }  
 
