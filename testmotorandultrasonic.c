@@ -692,7 +692,7 @@ while((finish - beginning - distance)<=0){
 	set_tacho_time_sp( dx, 200);
 	set_tacho_ramp_up_sp( dx, 1500 );
 	set_tacho_ramp_down_sp( dx, 1500 );
-	retour = pthread_mutex_lock(&mutex);
+	/*retour = pthread_mutex_lock(&mutex);
     			if (retour != 0)
     			 {
     			   perror("erreur mutex lock");
@@ -703,7 +703,7 @@ while((finish - beginning - distance)<=0){
     			 {
     			   perror("erreur mutex unlock");
      			  exit(EXIT_FAILURE);
-    			 }
+    			 }*/
 	retour = pthread_mutex_lock(&mutex_pos);
     			if (retour != 0)
     			 {
@@ -1408,25 +1408,25 @@ int main( int argc, char **argv )
 	donald = inizialization(donald);
  	donald->number = caseNumber;
  
-	pthread_create(&thread_movement, NULL, movements, donald);
+	retour = pthread_create(&thread_movement, NULL, movements, donald);
 	if (retour != 0)
 	{
 	  perror("erreur thread movement");
 	  exit(EXIT_FAILURE);
 	}
  
- 	pthread_create(&thread_position, NULL, positioning_sys, donald);
+ 	retour = pthread_create(&thread_position, NULL, positioning_sys, donald);
 	if (retour != 0)
 	{
 	  perror("erreur thread sensor");
 	  exit(EXIT_FAILURE);
 	}
- 	pthread_create(&thread_colorsense, NULL, colorsense, donald);
+ 	/*retour = pthread_create(&thread_colorsense, NULL, colorsense, donald);
 	if (retour != 0)
 	{
 	  perror("erreur thread sensor");
 	  exit(EXIT_FAILURE);
-	}
+	}*/
  	
 	if (pthread_join(thread_position, NULL)) 
 	{
@@ -1438,11 +1438,11 @@ int main( int argc, char **argv )
 	  perror("pthread_join movement");
 	  return EXIT_FAILURE;
 	} 
- 	if (pthread_join(thread_colorsense, NULL)) 
+ 	/*if (pthread_join(thread_colorsense, NULL)) 
 	{
 	  perror("pthread_join colorsens");
 	  return EXIT_FAILURE;
-	} 	
+	} 	*/
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
 
