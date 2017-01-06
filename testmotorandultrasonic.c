@@ -342,10 +342,10 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	printf("the angle in deg is:%f\n", rad2deg(m_rot));
 	get_tacho_position(sn,&new_sx);
 	get_tacho_position(dx,&new_dx);
-	printf("new_sx:%d and new_dx:%d",new_sx,new_dx);
+	printf("new_sx:%d and new_dx:%d\n",new_sx,new_dx);
 	new_angs = deg2rad(new_angs);
 	teta = teta + new_angs;
-	printf("teta:%f\n", teta);
+	printf("newangs:%f\n", new_angs);
 	//teta = teta + new_angle
 	disp_sx = new_sx - old_sx; 
 	disp_dx = new_dx - old_dx;
