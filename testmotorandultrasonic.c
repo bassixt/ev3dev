@@ -324,17 +324,16 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
     			   perror("erreur mutex lock");
      			  exit(EXIT_FAILURE);
     			 }
+	if ( !get_sensor_value0(sn_mag, &new_angle )) 
+	   {
+	   new_angle = 0;
+	   }
 	retour = pthread_mutex_unlock(&mutex_pos);
     			if (retour != 0)
     			 {
     			   perror("erreur mutex unlock");
      			  exit(EXIT_FAILURE);
     			 }
-	if ( !get_sensor_value0(sn_mag, &new_angle )) 
-	   {
-	   new_angle = 0;
-	   }
-	
 	new_angs = new_angle;
 	m_rot =  -(new_angs - last_angle);		//rotation
 	m_rot = deg2rad(m_rot);
