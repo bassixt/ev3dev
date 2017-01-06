@@ -752,15 +752,22 @@ get_tacho_position( dx, &finish);
 control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);	
 return (finish-beginning)/21; //return the distance in cm
 }
-
+void* positioning_sys(void* args)
+{
+	struct motandsens *donald = (struct motandsens *) args;	
+	while(1)
+	{
+        positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag);
+	Sleep(25);
+	}
+}
 void* colorsense(void * args)
 { 	int val;
  	int stricol[10];
  	struct motandsens *donald = (struct motandsens *) args;
  	while(1)
 	{
-        positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag);
-	Sleep(500);
+
 	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
 			}
@@ -1383,25 +1390,25 @@ int main( int argc, char **argv )
 	  perror("erreur thread movement");
 	  exit(EXIT_FAILURE);
 	}
- /*
- 	pthread_create(&thread_position, NULL, position, donald);
+ 
+ 	pthread_create(&thread_position, NULL, positioning_sys, donald);
 	if (retour != 0)
 	{
 	  perror("erreur thread sensor");
 	  exit(EXIT_FAILURE);
-	}*/
+	}
  	pthread_create(&thread_colorsense, NULL, colorsense, donald);
 	if (retour != 0)
 	{
 	  perror("erreur thread sensor");
 	  exit(EXIT_FAILURE);
 	}
- 	/*
+ 	
 	if (pthread_join(thread_position, NULL)) 
 	{
 	  perror("pthread_join position");
 	  return EXIT_FAILURE;
-	}*/
+	}
 	if (pthread_join(thread_movement, NULL)) 
 	{
 	  perror("pthread_join movement");
