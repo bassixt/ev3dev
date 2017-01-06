@@ -1308,6 +1308,7 @@ if(i!=0 && ((points[i-1]-points[i])>=350) && flag_1==0)
 	{
 	start_angle = 0;
 	}
+	printf("first_angle%f\n",start_angle);
 	get_tacho_position(sn,&pos_in_ball_sn);
 	get_tacho_position(dx,&pos_in_ball_dx);
 	flag_1=1;
@@ -1319,6 +1320,7 @@ if(i!=0 && ((points[i]-points[i-1])>=350) && flag_1==1)
 	{
 	final_angle = 0;
 	}
+	printf("final_angle%f\n",final_angle);
 	get_tacho_position(sn,&pos_in_ball_sn);
 	get_tacho_position(dx,&pos_in_ball_dx);
 	flag_1=2;
@@ -1327,6 +1329,7 @@ if(i!=0 && ((points[i]-points[i-1])>=350) && flag_1==1)
 if(flag_1==2)
 {	
 	middle_angle = (final_angle + start_angle) / 2;
+	printf("middle_angle%f\n",middle_angle);
 	found_sn=(pos_fin_ball_sn - pos_in_ball_sn) / 2;
 	found_dx=(pos_fin_ball_dx - pos_in_ball_dx) / 2;
 	break;
