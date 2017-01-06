@@ -28,7 +28,7 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 #define COLOR_COUNT  (( int )( sizeof( color ) / sizeof( color[ 0 ])))
 
 #define MIN_STEP_VER 525 //minimum step covered going ahead in cm (25cm)
-pthread_mutex_t mutex;
+pthread_mutex_t mutex,mutex_pos;
 
 struct motandsens {
 	uint8_t sn;
@@ -307,6 +307,7 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 {	float encod_scale = M_PI * 5.5 / 360;
 	float new_angle;
 	float new_angs;
+ 	int retour;
 	float m_rot,disp_diff;
 	static float last_angle  = 0;
 	static float teta = 0;
@@ -317,6 +318,18 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	int new_sx,new_dx;
 	float disp_sx,disp_dx;
 	float delta_x,delta_y;
+ 	retour = pthread_mutex_lock(&mutex_pos);
+    			if (retour != 0)
+    			 {
+    			   perror("erreur mutex lock");
+     			  exit(EXIT_FAILURE);
+    			 }
+	retour = pthread_mutex_unlock(&mutex_pos);
+    			if (retour != 0)
+    			 {
+    			   perror("erreur mutex unlock");
+     			  exit(EXIT_FAILURE);
+    			 }
 	if ( !get_sensor_value0(sn_mag, &new_angle )) 
 	   {
 	   new_angle = 0;
@@ -687,6 +700,18 @@ while((finish - beginning - distance)<=0){
      			  exit(EXIT_FAILURE);
     			 }
 	retour = pthread_mutex_unlock(&mutex);
+    			if (retour != 0)
+    			 {
+    			   perror("erreur mutex unlock");
+     			  exit(EXIT_FAILURE);
+    			 }
+	retour = pthread_mutex_lock(&mutex_pos);
+    			if (retour != 0)
+    			 {
+    			   perror("erreur mutex lock");
+     			  exit(EXIT_FAILURE);
+    			 }
+	retour = pthread_mutex_unlock(&mutex_pos);
     			if (retour != 0)
     			 {
     			   perror("erreur mutex unlock");
