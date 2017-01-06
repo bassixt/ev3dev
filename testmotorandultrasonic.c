@@ -776,7 +776,7 @@ void* positioning_sys(void* args)
 int colorsense(uint8_t sn,uint8_t dx, uint8_t med, int max_speed, uint8_t sn_color)
 { 	int val;
  	int stricol[10];
- 	struct motandsens *donald = (struct motandsens *) args;
+ 	//struct motandsens *donald = (struct motandsens *) args;
  	if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
 			}
