@@ -1284,7 +1284,7 @@ float start_angle, final_angle, middle_angle;
 int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
 int i, k, flag_1;
-int points[1000]={0};
+float points[1000]={0};
 if ( !get_sensor_value0(sn_mag, &initial_angle )) 
    {
    initial_angle = 0;
@@ -1300,7 +1300,7 @@ for(i=0;i<90;i++)
 printf("I'M here\n");
 Sleep(500);
 get_sensor_value0(sn_sonar, &points[i]);
-printf("Il valore è %d:\n",points[i]);
+printf("Il valore è %f:\n",points[i]);
 if(i!=0 && ((points[i-1]-points[i])>=350) && flag_1==0)
 {
  //this is the first balls' extremity 
