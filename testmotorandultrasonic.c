@@ -304,7 +304,7 @@ float lim_rot(float m_rot)
 }
 
 void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
-{
+{	float encod_scale = M_PI * 5.5 / 360;
 	float new_angle;
 	float new_angs;
 	float m_rot,disp_diff;
@@ -323,7 +323,7 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	   }
 	
 	new_angs = new_angle;
-	m_rot =  -(new_angs - last_angle);
+	m_rot =  -(new_angs - last_angle);		//rotation
 	m_rot = deg2rad(m_rot);
 	last_angle = new_angs;
 	printf("the angle in rad is: %f\n", m_rot);
@@ -338,17 +338,19 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	disp_sx = new_sx - old_sx; 
 	disp_dx = new_dx - old_dx;
 	printf("disp_sx:%f and disp_dx:%f\n",disp_sx,disp_dx);
-	disp_diff = (disp_sx + disp_dx)/2;
+	disp_diff = (disp_sx + disp_dx)*encod_scale/2;		//displacement
 	printf("dispdiff:%f\n",disp_diff);
 	old_sx = new_sx;
 	old_dx = new_dx;
-	delta_y = disp_diff * sin ( teta + m_rot/2);
-	delta_x = disp_diff * cos ( teta + m_rot/2);
-	printf("deltay:%f and deltax:%f\n",delta_y,delta_x);
+ 	old_y = old_y + disp_diff * sin( new_angs );
+	old_x = old_x + disp_diff * cos( new_angs ); 	
+	//delta_y = disp_diff * sin ( teta + m_rot/2);
+	//delta_x = disp_diff * cos ( teta + m_rot/2);
+	//printf("deltay:%f and deltax:%f\n",delta_y,delta_x);
 	//delta_y = disp_diff * sin ( teta + new_angle/2);
 	//delta_x = disp_diff * cos ( teta + new_angle/2);
-	old_y = old_y + delta_y;
-	old_x = old_y + delta_x;
+	//old_y = old_y + delta_y;
+	//old_x = old_y + delta_x;
 	printf("y=%f and x=%f\n",old_y,old_x);
 	
 }
