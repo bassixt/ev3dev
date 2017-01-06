@@ -359,8 +359,8 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
 	float wanted_c;
-	set_tacho_position( sn,0);
-	set_tacho_position( dx,0);
+	//set_tacho_position( sn,0);
+	//set_tacho_position( dx,0);
 	set_tacho_speed_sp( sn, max_speed/5);
 	set_tacho_ramp_up_sp( sn, 0 );
 	set_tacho_ramp_down_sp( sn, 0 );
@@ -392,8 +392,8 @@ void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rot
 void rotatesx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
 	float wanted_c;
-	set_tacho_position( sn,0);
-	set_tacho_position( dx,0);
+	//set_tacho_position( sn,0);
+	//set_tacho_position( dx,0);
 	set_tacho_speed_sp( sn, max_speed/5);
 	set_tacho_ramp_up_sp( sn, 0 );
 	set_tacho_ramp_down_sp( sn, 0 );
