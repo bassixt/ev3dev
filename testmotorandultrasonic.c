@@ -338,8 +338,9 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	disp_sx = new_sx - old_sx; 
 	disp_dx = new_dx - old_dx;
 	printf("disp_sx:%f and disp_dx:%f\n",disp_sx,disp_dx);
-	disp_diff = (disp_sx + disp_dx)*encod_scale/2;		//displacement
-	printf("dispdiff:%f\n",disp_diff);
+	//disp_diff = (disp_sx + disp_dx)*encod_scale/2;		//displacement
+	disp_diff = (new_sx + new_dx ) * encod_scale/2;
+ 	printf("dispdiff:%f\n",disp_diff);
 	old_sx = new_sx;
 	old_dx = new_dx;
  	old_y = old_y + disp_diff * sin( new_angs );
