@@ -1280,7 +1280,7 @@ void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_t
 float initial_angle;
 float actual_angle;
 float elapsed_dis;
-float start_angle, final_angle, middle_angle;
+float start_angle, final_angle, middle_angle,turn_angle;
 int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
 int i, k, flag_1;
@@ -1339,6 +1339,10 @@ Sleep(100);
 }
 //it has finished the search
 //restart from centre and go to the desired angle
+if(final_angle<0)
+	turn_angle = middle_angle - final_angle;
+else
+	turn_angle=final_angle-middle_angle;
 rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag); 
 /*rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 elapsed_dis=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,4000,sn_compass,sn_mag);
