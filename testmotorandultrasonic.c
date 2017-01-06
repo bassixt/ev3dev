@@ -344,7 +344,7 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	get_tacho_position(dx,&new_dx);
 	printf("new_sx:%d and new_dx:%d\n",new_sx,new_dx);
 	new_angs = deg2rad(new_angs);
-	teta = teta + new_angs;
+	teta = teta + m_rot;
 	printf("newangs:%f\n", new_angs);
 	//teta = teta + new_angle
 	disp_sx = new_sx - old_sx; 
@@ -355,8 +355,8 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
  	printf("dispdiff:%f\n",disp_diff);
 	old_sx = new_sx;
 	old_dx = new_dx;
- 	old_y = old_y + disp_diff * sin( m_rot );
-	old_x = old_x + disp_diff * cos( m_rot ); 	
+ 	old_y = old_y + disp_diff * sin( teta );
+	old_x = old_x + disp_diff * cos( teta ); 	
 	//delta_y = disp_diff * sin ( teta + m_rot/2);
 	//delta_x = disp_diff * cos ( teta + m_rot/2);
 	//printf("deltay:%f and deltax:%f\n",delta_y,delta_x);
