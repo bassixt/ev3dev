@@ -773,26 +773,23 @@ void* positioning_sys(void* args)
 	Sleep(100);
 	}
 }
-void* colorsense(void * args)
+int colorsense(uint8_t sn,uint8_t dx, uint8_t med, int max_speed, uint8_t sn_color)
 { 	int val;
  	int stricol[10];
  	struct motandsens *donald = (struct motandsens *) args;
- 	while(1)
-	{
-
-	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
+ 	if ( !get_sensor_value( 0, sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
 				val = 0;
 			}
-			strcpy(stricol,color[ color_aq(donald->sn_color) ]);
+			strcpy(stricol,color[ color_aq(sn_color) ]);
 			//printf("stricolo: %s\n", stricol );
 			if(( strcmp(stricol,"RED")==0) || ( strcmp(stricol,"GREEN")==0))
 			{
-				grab_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
+				grab_ball(sn,dx,med,max_speed);
 				Sleep(200);
+				return 1;
 				
 			}
-	}
-	return;
+	return 0;
 }
 void* movements(void * args)
 {
@@ -1343,7 +1340,9 @@ rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 /*rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 elapsed_dis=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,4000,sn_compass,sn_mag);
 rotatedx(sn,dx,sn_compass,max_speed,180,sn_mag);*/
-go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,10000,sn_compass,sn_mag);
+while(!colorsense(sn,dx,med,max_speed,sn_color))
+go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,95,sn_compass,sn_mag);
+//colorsense(sn,dx,med,max_speed,sn_color);
 /*rotatesx(sn,dx,sn_compass,max_speed,180,sn_mag);
 rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);*/
 //hope it will work=)
