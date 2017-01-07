@@ -415,6 +415,21 @@ void rotatesx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rot
 
 }
 
+void rotateforscan(uint8_t sn, uint8_t dx, int max_speed)
+{
+	set_tacho_speed_sp( sn, max_speed/5);
+	set_tacho_ramp_up_sp( sn, 0 );
+	set_tacho_ramp_down_sp( sn, 0 );
+	set_tacho_speed_sp( dx, max_speed/5);
+	set_tacho_ramp_up_sp( dx, 0 );
+	set_tacho_ramp_down_sp( dx, 0 );
+	set_tacho_position_sp( sn,  -2);
+	set_tacho_position_sp( dx, 2);
+	set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+	set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+	Sleep(50);
+}
+
 //function that hold the direction
 void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle,uint8_t sn_mag){
 	int minsize;
@@ -1334,7 +1349,8 @@ for(i=0;i<45;i++)
 		found_dx=(pos_fin_ball_dx - pos_in_ball_dx) / 2;
 		break;
 	}
-	rotatesx(sn,dx,sn_compass,max_speed,1,sn_mag);
+	//rotatesx(sn,dx,sn_compass,max_speed,1,sn_mag);
+	rotateforscan(sn,dx,max_speed);
 	
 }
 //it has finished the search
