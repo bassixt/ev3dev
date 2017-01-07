@@ -1334,7 +1334,7 @@ for(i=0;i<45;i++)
 		found_dx=(pos_fin_ball_dx - pos_in_ball_dx) / 2;
 		break;
 	}
-	rotatesx(sn,dx,sn_compass,max_speed,2,sn_mag);
+	rotatesx(sn,dx,sn_compass,max_speed,1,sn_mag);
 	Sleep(100);
 }
 //it has finished the search
