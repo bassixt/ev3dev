@@ -1301,7 +1301,7 @@ for(i=0;i<45;i++)
 	Sleep(500);
 	get_sensor_value0(sn_sonar, &points[i]);
 	printf("Il valore è %f:\n",points[i]);
-	if(i!=0 && ((points[i-1]-points[i])>=450) && flag_1==0)
+	if(i!=0 && ((points[i-1]-points[i])>=250) && flag_1==0)
 	{
 	 //this is the first balls' extremity 
 		if ( !get_sensor_value0(sn_mag, &start_angle )) 
@@ -1313,7 +1313,7 @@ for(i=0;i<45;i++)
 		get_tacho_position(dx,&pos_in_ball_dx);
 		flag_1=1;
 	}
-	if(i!=0 && ((points[i]-points[i-1])>=450) && flag_1==1)
+	if(i!=0 && ((points[i]-points[i-1])>=250) && flag_1==1)
 	{
 	  //this is the last point of the ball detected
 		if ( !get_sensor_value0(sn_mag, &final_angle )) 
