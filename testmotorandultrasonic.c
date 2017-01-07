@@ -1344,12 +1344,12 @@ if(final_angle<0)
 else
 	turn_angle=final_angle-middle_angle;
 rotatedx(sn,dx,sn_compass,max_speed,turn_angle,sn_mag); 
-Sleep(500);
+Sleep(200);
 /*rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 elapsed_dis=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,4000,sn_compass,sn_mag);
 rotatedx(sn,dx,sn_compass,max_speed,180,sn_mag);*/
 while(!colorsense(sn,dx,med,max_speed,sn_color))
-go_ahead_till_obstacle(sn,dx,max_speed/5,sn_sonar,95,sn_compass,sn_mag);
+go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,95,sn_compass,sn_mag);
 //colorsense(sn,dx,med,max_speed,sn_color);
 /*rotatesx(sn,dx,sn_compass,max_speed,180,sn_mag);
 rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);*/
