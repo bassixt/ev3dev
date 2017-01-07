@@ -1295,47 +1295,47 @@ flag_1=0;
 
 //turn right 45 ° and start moving 2° each step
 rotatedx(sn,dx,sn_compass,max_speed,45,sn_mag);	
-for(i=0;i<90;i++)
+for(i=0;i<45;i++)
 {
-printf("I'M here\n");
-Sleep(500);
-get_sensor_value0(sn_sonar, &points[i]);
-printf("Il valore è %f:\n",points[i]);
-if(i!=0 && ((points[i-1]-points[i])>=350) && flag_1==0)
-{
- //this is the first balls' extremity 
-	if ( !get_sensor_value0(sn_mag, &start_angle )) 
+	printf("I'M here\n");
+	Sleep(500);
+	get_sensor_value0(sn_sonar, &points[i]);
+	printf("Il valore è %f:\n",points[i]);
+	if(i!=0 && ((points[i-1]-points[i])>=450) && flag_1==0)
 	{
-	start_angle = 0;
+	 //this is the first balls' extremity 
+		if ( !get_sensor_value0(sn_mag, &start_angle )) 
+		{
+		start_angle = 0;
+		}
+		printf("first_angle%f\n",start_angle);
+		get_tacho_position(sn,&pos_in_ball_sn);
+		get_tacho_position(dx,&pos_in_ball_dx);
+		flag_1=1;
 	}
-	printf("first_angle%f\n",start_angle);
-	get_tacho_position(sn,&pos_in_ball_sn);
-	get_tacho_position(dx,&pos_in_ball_dx);
-	flag_1=1;
-}
-if(i!=0 && ((points[i]-points[i-1])>=350) && flag_1==1)
-{
-  //this is the last point of the ball detected
-	if ( !get_sensor_value0(sn_mag, &final_angle )) 
+	if(i!=0 && ((points[i]-points[i-1])>=450) && flag_1==1)
 	{
-	final_angle = 0;
-	}
-	printf("final_angle%f\n",final_angle);
-	get_tacho_position(sn,&pos_in_ball_sn);
-	get_tacho_position(dx,&pos_in_ball_dx);
-	flag_1=2;
+	  //this is the last point of the ball detected
+		if ( !get_sensor_value0(sn_mag, &final_angle )) 
+		{
+		final_angle = 0;
+		}
+		printf("final_angle%f\n",final_angle);
+		get_tacho_position(sn,&pos_in_ball_sn);
+		get_tacho_position(dx,&pos_in_ball_dx);
+		flag_1=2;
 
-}
-if(flag_1==2)
-{	
-	middle_angle = (final_angle + start_angle) / 2;
-	printf("middle_angle%f\n",middle_angle);
-	found_sn=(pos_fin_ball_sn - pos_in_ball_sn) / 2;
-	found_dx=(pos_fin_ball_dx - pos_in_ball_dx) / 2;
-	break;
-}
-rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
-Sleep(100);
+	}
+	if(flag_1==2)
+	{	
+		middle_angle = (final_angle + start_angle) / 2;
+		printf("middle_angle%f\n",middle_angle);
+		found_sn=(pos_fin_ball_sn - pos_in_ball_sn) / 2;
+		found_dx=(pos_fin_ball_dx - pos_in_ball_dx) / 2;
+		break;
+	}
+	rotatesx(sn,dx,sn_compass,max_speed,2,sn_mag);
+	Sleep(100);
 }
 //it has finished the search
 //restart from centre and go to the desired angle
