@@ -1343,7 +1343,7 @@ if(final_angle<0)
 	turn_angle = middle_angle - final_angle;
 else
 	turn_angle=final_angle-middle_angle;
-rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag); 
+rotatedx(sn,dx,sn_compass,max_speed,turn_angle,sn_mag); 
 /*rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 elapsed_dis=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,4000,sn_compass,sn_mag);
 rotatedx(sn,dx,sn_compass,max_speed,180,sn_mag);*/
