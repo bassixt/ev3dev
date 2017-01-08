@@ -1300,7 +1300,7 @@ float elapsed_dis;
 float start_angle, final_angle, middle_angle,turn_angle;
 int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
-int i, k, flag_1;
+int i, k, flag_1,grab;
 float points[1000]={0};
 if ( !get_sensor_value0(sn_mag, &initial_angle )) 
    {
@@ -1368,8 +1368,14 @@ Sleep(200);
 /*rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 elapsed_dis=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,4000,sn_compass,sn_mag);
 rotatedx(sn,dx,sn_compass,max_speed,180,sn_mag);*/
-while(!colorsense(sn,dx,med,max_speed,sn_color))
-go_ahead_till_obstacle(sn,dx,max_speed/4,sn_sonar,500,sn_compass,sn_mag);
+grab=colorsense(sn,dx,med,max_speed,sn_color);
+printf("grab=%d\n",grab);
+while(grab==0)
+{
+	go_ahead_till_obstacle(sn,dx,max_speed/4,sn_sonar,500,sn_compass,sn_mag);
+	grab=colorsense(sn,dx,med,max_speed,sn_color);
+	printf("grab=%d\n",grab);
+}
 //colorsense(sn,dx,med,max_speed,sn_color);
 /*rotatesx(sn,dx,sn_compass,max_speed,180,sn_mag);
 rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);*/
