@@ -1309,7 +1309,7 @@ get_tacho_position(dx, &pos_in_dx);
 flag_1=0;
 
 //turn right 45 ° and start moving 2° each step
-rotatedx(sn,dx,sn_compass,max_speed,45,sn_mag);	
+rotatedx(sn,dx,sn_compass,max_speed,22,sn_mag);	
 for(i=0;i<45;i++)
 {
 	printf("I'M here\n");
