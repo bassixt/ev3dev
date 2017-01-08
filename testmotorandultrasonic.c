@@ -1372,7 +1372,7 @@ grab=colorsense(sn,dx,med,max_speed,sn_color);
 printf("grab=%d\n",grab);
 while(grab==0)
 {
-	go_ahead_till_obstacle(sn,dx,max_speed/4,sn_sonar,500,sn_compass,sn_mag);
+	go_ahead_till_obstacle(sn,dx,max_speed/4,sn_sonar,95,sn_compass,sn_mag);
 	grab=colorsense(sn,dx,med,max_speed,sn_color);
 	printf("grab=%d\n",grab);
 }
