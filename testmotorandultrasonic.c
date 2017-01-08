@@ -1362,7 +1362,7 @@ for(i=0;i<45;i++)
 	turn_angle = middle_angle - final_angle;
 else
 	turn_angle=final_angle-middle_angle;*/
-turn_angle = middle_angle - final_angle;
+turn_angle = abs( middle_angle - final_angle );
 rotatedx(sn,dx,sn_compass,max_speed,turn_angle,sn_mag); 
 Sleep(200);
 /*rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
