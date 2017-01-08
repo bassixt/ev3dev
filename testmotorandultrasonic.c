@@ -798,7 +798,7 @@ int colorsense(uint8_t sn,uint8_t dx, uint8_t med, int max_speed, uint8_t sn_col
 				val = 0;
 			}
 			strcpy(stricol,color[ color_aq(sn_color) ]);
-			//printf("stricolo: %s\n", stricol );
+			printf("stricolo: %s\n", stricol );
 			if(( strcmp(stricol,"RED")==0) || ( strcmp(stricol,"GREEN")==0))
 			{
 				grab_ball(sn,dx,med,max_speed);
