@@ -1358,10 +1358,11 @@ for(i=0;i<45;i++)
 }
 //it has finished the search
 //restart from centre and go to the desired angle
-if(final_angle<0)
+/*if(final_angle<0)
 	turn_angle = middle_angle - final_angle;
 else
-	turn_angle=final_angle-middle_angle;
+	turn_angle=final_angle-middle_angle;*/
+turn_angle = middle_angle - final_angle;
 rotatedx(sn,dx,sn_compass,max_speed,turn_angle,sn_mag); 
 Sleep(200);
 /*rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
