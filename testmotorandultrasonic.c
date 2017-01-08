@@ -1369,7 +1369,7 @@ Sleep(200);
 elapsed_dis=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,4000,sn_compass,sn_mag);
 rotatedx(sn,dx,sn_compass,max_speed,180,sn_mag);*/
 while(!colorsense(sn,dx,med,max_speed,sn_color))
-go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,95,sn_compass,sn_mag);
+go_ahead_till_obstacle(sn,dx,max_speed/4,sn_sonar,500,sn_compass,sn_mag);
 //colorsense(sn,dx,med,max_speed,sn_color);
 /*rotatesx(sn,dx,sn_compass,max_speed,180,sn_mag);
 rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);*/
