@@ -306,9 +306,11 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	static float old_dx = 0;
 	static float old_x = 0;
 	static float old_y = 0;
+ 	float sign;
 	int new_sx,new_dx;
 	float disp_sx,disp_dx;
 	float delta_x,delta_y;
+ 	sign = -1;
  	retour = pthread_mutex_lock(&mutex_pos);
     			if (retour != 0)
     			 {
@@ -343,8 +345,8 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	disp_diff = (disp_sx + disp_dx)*encod_scale/2;		//displacement
 	old_sx = new_sx;
 	old_dx = new_dx;
- 	old_y = old_y + disp_diff * sin( teta );
-	old_x = old_x + disp_diff * cos( teta ); 	
+ 	old_y = old_y + disp_diff * sign * sin( teta );
+	old_x = old_x + disp_diff * sign * cos( teta ); 	
 	printf("y=%f and x=%f\n",old_y,old_x);
 	
 }
