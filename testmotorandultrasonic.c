@@ -1311,7 +1311,7 @@ get_tacho_position(dx, &pos_in_dx);
 flag_1=0;
 
 //turn right 45 ° and start moving 2° each step
-rotatedx(sn,dx,sn_compass,max_speed,25,sn_mag);	
+rotatedx(sn,dx,sn_compass,max_speed,35,sn_mag);	
 Sleep(200);
 for(i=0;i<90;i++)
 {
