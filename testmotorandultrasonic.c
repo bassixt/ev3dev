@@ -1316,7 +1316,7 @@ Sleep(500);
 for(i=0;i<90;i++)
 {
 	//printf("I'M here\n");
-	//Sleep(200);
+	Sleep(500);
 	get_sensor_value0(sn_sonar, &points[i]);
 	printf("Il valore è %f:\n",points[i]);
 	if(i!=0 && ((points[i-1]-points[i])>=250) && flag_1==0)
@@ -1353,7 +1353,7 @@ for(i=0;i<90;i++)
 		break;
 	}
 	//rotatesx(sn,dx,sn_compass,max_speed,1,sn_mag);
-	rotateforscan(sn,dx,max_speed/5);
+	rotateforscan(sn,dx,max_speed);
 	
 }
 //it has finished the search
