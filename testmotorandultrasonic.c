@@ -532,7 +532,7 @@ void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 		get_tacho_position( dx, &act_pos);
 	}
 	//release the grabber
-	set_tacho_position_sp( med, -80 );
+	set_tacho_position_sp( med, -50 );
 	Sleep(200);
 	for ( i = 0; i < 1; i++ ) 
 	{
