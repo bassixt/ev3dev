@@ -1353,7 +1353,7 @@ for(i=0;i<90;i++)
 		break;
 	}
 	//rotatesx(sn,dx,sn_compass,max_speed,1,sn_mag);
-	rotateforscan(sn,dx,max_speed/8);
+	rotateforscan(sn,dx,max_speed/5);
 	
 }
 //it has finished the search
