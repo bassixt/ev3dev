@@ -1313,7 +1313,7 @@ flag_1=0;
 //turn right 45 ° and start moving 2° each step
 rotatedx(sn,dx,sn_compass,max_speed,25,sn_mag);	
 Sleep(500);
-for(i=0;i<45;i++)
+for(i=0;i<90;i++)
 {
 	//printf("I'M here\n");
 	//Sleep(200);
