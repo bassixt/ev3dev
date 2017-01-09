@@ -419,14 +419,14 @@ void rotatesx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rot
 
 void rotateforscan(uint8_t sn, uint8_t dx, int max_speed)
 {
-	set_tacho_speed_sp( sn, max_speed/5);
+	set_tacho_speed_sp( sn, max_speed/2);
 	set_tacho_ramp_up_sp( sn, 0 );
 	set_tacho_ramp_down_sp( sn, 0 );
-	set_tacho_speed_sp( dx, max_speed/5);
+	set_tacho_speed_sp( dx, max_speed/2);
 	set_tacho_ramp_up_sp( dx, 0 );
 	set_tacho_ramp_down_sp( dx, 0 );
-	set_tacho_position_sp( sn,  -2);
-	set_tacho_position_sp( dx, 2);
+	set_tacho_position_sp( sn,  -1);
+	set_tacho_position_sp( dx, 1);
 	set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 	set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 	Sleep(50);
@@ -1372,7 +1372,7 @@ grab=colorsense(sn,dx,med,max_speed,sn_color);
 printf("grab=%d\n",grab);
 while(grab==0)
 {
-	go_ahead_till_obstacle(sn,dx,max_speed/4,sn_sonar,95,sn_compass,sn_mag);
+	go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,95,sn_compass,sn_mag);
 	grab=colorsense(sn,dx,med,max_speed,sn_color);
 	printf("grab=%d\n",grab);
 }
