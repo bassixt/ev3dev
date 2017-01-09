@@ -1313,7 +1313,7 @@ if ( !get_sensor_value0(sn_mag, &initial_angle ))
 get_tacho_position(sn, &pos_in_sn);
 get_tacho_position(dx, &pos_in_dx);
 flag_1=0;
-
+flag_2=0;  // because of vibration the first value scanned after first angle must be cecked
 //turn right 45 ° and start moving 2° each step
 rotatedx(sn,dx,sn_compass,max_speed,35,sn_mag);	
 Sleep(200);
@@ -1322,6 +1322,13 @@ for(i=0;i<90;i++)
 	//printf("I'M here\n");
 	Sleep(500);
 	get_sensor_value0(sn_sonar, &points[i]);
+	if(flag==1 && flag_2=0)
+	{
+		if(points[i] > points[i-1] + 200)
+			points[i]=points[i-1];
+		flag_2=1;
+	}
+		
 	printf("Il valore è %f:\n",points[i]);
 	if(i!=0 && ((points[i-1]-points[i])>=250) && flag_1==0)
 	{
