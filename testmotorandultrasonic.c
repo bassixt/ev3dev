@@ -1315,8 +1315,8 @@ rotatedx(sn,dx,sn_compass,max_speed,25,sn_mag);
 Sleep(500);
 for(i=0;i<45;i++)
 {
-	printf("I'M here\n");
-	Sleep(200);
+	//printf("I'M here\n");
+	//Sleep(200);
 	get_sensor_value0(sn_sonar, &points[i]);
 	printf("Il valore è %f:\n",points[i]);
 	if(i!=0 && ((points[i-1]-points[i])>=250) && flag_1==0)
