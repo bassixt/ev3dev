@@ -1116,7 +1116,11 @@ switch(donald->number)
 		
 		case 9 :
 	//big arena left, begin at up corner test : grab the ball 
-	         research(donald->sn,donald->dx,donald->max_speed, donald->sn_compass, 45, donald->med,donald->sn_color, donald->sn_mag, donald->sn_sonar);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,722,donald->sn_compass, donald->sn_mag);
+		//TURN LEFT
+		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,45,donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,80,donald->sn_compass, donald->sn_mag);
+	        research(donald->sn,donald->dx,donald->max_speed, donald->sn_compass, 45, donald->med,donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		Sleep(1000);
 		break;	
 	case 10 :
