@@ -425,8 +425,8 @@ void rotateforscan(uint8_t sn, uint8_t dx, int max_speed)
 	set_tacho_speed_sp( dx, max_speed/2);
 	set_tacho_ramp_up_sp( dx, 0 );
 	set_tacho_ramp_down_sp( dx, 0 );
-	set_tacho_position_sp( sn,  -1);
-	set_tacho_position_sp( dx, 1);
+	set_tacho_position_sp( sn,  -2);
+	set_tacho_position_sp( dx, 2);
 	set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 	set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 	Sleep(50);
