@@ -632,6 +632,7 @@ void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			
 	int i;
 	int distance_el;
+	float act_pos;
 	set_tacho_time_sp( sn, 800 );
 	set_tacho_ramp_up_sp( sn, 2000 );
 	set_tacho_ramp_down_sp( sn, 2000 );
