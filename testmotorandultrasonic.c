@@ -19,7 +19,7 @@
 //////////////////////////////////
 //         FOR BT               //
 //////////////////////////////////
-#define SERV_ADDR   "dc:53:60:ad:61:90"     /* address of the server is */
+#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
 #define TEAM_ID     1                       /* team ID */
 
 #define MSG_ACK     0
