@@ -84,9 +84,10 @@ struct pos {
 /////			BT FUNCTIONS			////
 /////			   START			////
 ////////////////////////////////////////////////////////////
-int read_from_server (int sock, char *buffer, size_t maxSize,void *args) {
-    int bytes_read = read (sock, buffer, maxSize);
+int read_from_server (char *buffer, size_t maxSize,void *args) {
+   
     struct motandsens *donald = (struct motandsens *) args;
+    int bytes_read = read (donald->s, buffer, maxSize);
     if (bytes_read <= 0) {
         fprintf (stderr, "Server unexpectedly closed connection...\n");
         close (donald->s);
