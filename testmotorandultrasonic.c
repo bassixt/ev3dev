@@ -30,6 +30,7 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 #define MIN_STEP_VER 525 //minimum step covered going ahead in cm (25cm)
 pthread_mutex_t mutex,mutex_pos;
 
+typedef struct motandsens test;
 struct motandsens {
 	uint8_t sn;
 	uint8_t dx;
@@ -144,10 +145,9 @@ void* position(void *args) //or we can pass all the struct
 {
    int flag_rot; 
     struct motandsens *donald = (struct motandsens *) args;
-    int retour;
     float degree, first_comp;
     int motor_value,iniz_comp,res_cond;
-    float x_new,y_new,x_old,y_old,x_start,y_start,x_lim,y_lim;
+    float x_new,y_new,x_old,y_old,x_start,y_start;
 /////////////////////////do a switch case of if based on where you are ( small or big arena, side) and rol\\\\\
 //////thread
 //	retour = pthread_mutex_lock(&mutex);
@@ -295,7 +295,6 @@ float rad2deg(float m_rot)
 
 void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 {	float encod_scale = M_PI * 5.5 / 360;
-	float new_angle;
 	float new_angs;
  	int retour;
 	float m_rot,disp_diff;
@@ -309,7 +308,6 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
  	float sign;
 	int new_sx,new_dx;
 	float disp_sx,disp_dx;
-	float delta_x,delta_y;
  	sign = -1;
  	retour = pthread_mutex_lock(&mutex_pos);
     			if (retour != 0)
@@ -434,9 +432,7 @@ void rotateforscan(uint8_t sn, uint8_t dx, int max_speed)
 
 //function that hold the direction
 void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle,uint8_t sn_mag){
-	int minsize;
 	float actual_angle;
-	minsize=1;
 	if ( !get_sensor_value0(sn_mag, &actual_angle)) {
 		actual_angle = 0;
 	}
@@ -582,7 +578,6 @@ int color_aq(uint8_t sn_color)
 void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			
 	int i;
-	int act_pos,distance_el;
 	set_tacho_time_sp( sn, 200 );
 	set_tacho_ramp_up_sp( sn, 1500 );
 	set_tacho_ramp_down_sp( sn, 1500 );
@@ -622,7 +617,6 @@ void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 void put_down(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			
 	int i;
-	int act_pos,distance_el;
 	//stabilize the ball
 	set_tacho_position_sp( med, -90 );
 	Sleep(200);
@@ -637,7 +631,7 @@ void put_down(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			
 	int i;
-	int act_pos,distance_el;
+	int distance_el;
 	set_tacho_time_sp( sn, 800 );
 	set_tacho_ramp_up_sp( sn, 2000 );
 	set_tacho_ramp_down_sp( sn, 2000 );
@@ -799,7 +793,7 @@ int colorsense(uint8_t sn,uint8_t dx, uint8_t med, int max_speed, uint8_t sn_col
 			}
 			strcpy(stricol,color[ color_aq(sn_color) ]);
 			printf("stricolo: %s\n", stricol );
-			if(( strcmp(stricol,"RED")==0) /*|| ( strcmp(stricol,"GREEN")==0)*/)
+			if(( strcmp(stricol,"RED")==0) || ( strcmp(stricol,"GREEN")==0))
 			{
 				grab_ball(sn,dx,med,max_speed);
 				Sleep(200);
@@ -817,12 +811,9 @@ void* movements(void * args)
 		THE TRAJECTORY CHOSEN IS GO 1 TIME AHEAD FOR 10 CM + 2 TIMES AHEAD FOR 25 CM +
 		TURN LEFT + 1 TIME AHEAD FOR 10 CM + 2 TIMES AHEAD FOR 25 CM + TURN RIGHT + 
 		2 TIMES AHEAD FOR 25 C */
-int i,n;
+int i;
 struct motandsens *donald = (struct motandsens *) args;
 float degree;
-float initial_pos;
-float final_pos;
-float turn_pos;
 //int arena;
 int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=YES
 //arena  case 0 TEST #1 go straight ahead
@@ -1139,15 +1130,14 @@ switch(donald->number)
 		break;
 		
 }
-return;
+return EXIT_SUCCESS;
 }
+
 struct motandsens* inizialization (struct motandsens *donald)
 {
 int i;
-FLAGS_T state;
 char s[ 256 ];
 int val;
-int max_speed;
 float value;
 uint32_t n, ii;
 	int prova1, prova2, prova3;
@@ -1299,12 +1289,10 @@ return donald;
 void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_turn_degree, uint8_t med, uint8_t sn_color,uint8_t sn_mag, uint8_t sn_sonar)
 {	//Take the initial position than move to 
 float initial_angle;
-float actual_angle;
-float elapsed_dis;
 float start_angle, final_angle, middle_angle,turn_angle;
 int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
-int i, k, flag_1,flag_2,grab;
+int i, flag_1,flag_2,grab;
 float points[1000]={0};
 if ( !get_sensor_value0(sn_mag, &initial_angle )) 
    {
@@ -1404,8 +1392,7 @@ int main( int argc, char **argv )
         FLAGS_T state;
         int val;
 	int act_pos;
-        float value;
-	float elapsed_distance;        
+        float value;      
  	int retour;		
 	pthread_t thread_movement, thread_position, thread_colorsense; 
         pthread_mutex_init(&mutex, NULL);
