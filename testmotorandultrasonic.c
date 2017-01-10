@@ -1357,7 +1357,7 @@ for(i=0;i<90;i++)
 		break;
 	}
 	//rotatesx(sn,dx,sn_compass,max_speed,1,sn_mag);
-	rotateforscan(donald->sn,donald->dx,max_speed);
+	rotateforscan(donald->sn,donald->dx,donald->max_speed);
 	
 }
 //it has finished the search
