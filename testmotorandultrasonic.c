@@ -1299,12 +1299,12 @@ int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
 int i, flag_1,flag_2,grab;
 	middle_angle = 0;
 float points[1000]={0};
-if ( !get_sensor_value0(sn_mag, &initial_angle )) 
+if ( !get_sensor_value0(donald->sn_mag, &initial_angle )) 
    {
    initial_angle = 0;
    }
-get_tacho_position(sn, &pos_in_sn);
-get_tacho_position(dx, &pos_in_dx);
+get_tacho_position(donald->sn, &pos_in_sn);
+get_tacho_position(donald->dx, &pos_in_dx);
 flag_1=0;
 flag_2=0;  // because of vibration the first value scanned after first angle must be cecked
 //turn right 45 ° and start moving 2° each step
@@ -1314,7 +1314,7 @@ for(i=0;i<90;i++)
 {
 	//printf("I'M here\n");
 	Sleep(500);
-	get_sensor_value0(sn_sonar, &points[i]);
+	get_sensor_value0(donald->sn_sonar, &points[i]);
 	if(flag_1==1 && flag_2==0) //if you have found the ball the first value after that can be wrong due to vibrations
 	{
 		if(points[i] > points[i-1] + 200)
@@ -1326,25 +1326,25 @@ for(i=0;i<90;i++)
 	if(i!=0 && ((points[i-1]-points[i])>=250) && flag_1==0)
 	{
 	 //this is the first balls' extremity 
-		if ( !get_sensor_value0(sn_mag, &start_angle )) 
+		if ( !get_sensor_value0(donald->sn_mag, &start_angle )) 
 		{
 		start_angle = 0;
 		}
 		printf("first_angle%f\n",start_angle);
-		get_tacho_position(sn,&pos_in_ball_sn);
-		get_tacho_position(dx,&pos_in_ball_dx);
+		get_tacho_position(donald->sn,&pos_in_ball_sn);
+		get_tacho_position(donald->dx,&pos_in_ball_dx);
 		flag_1=1;
 	}
 	if(i!=0 && ((points[i]-points[i-1])>=250) && flag_1==1)
 	{
 	  //this is the last point of the ball detected
-		if ( !get_sensor_value0(sn_mag, &final_angle )) 
+		if ( !get_sensor_value0(donald->sn_mag, &final_angle )) 
 		{
 		final_angle = 0;
 		}
 		printf("final_angle%f\n",final_angle);
-		get_tacho_position(sn,&pos_in_ball_sn);
-		get_tacho_position(dx,&pos_in_ball_dx);
+		get_tacho_position(donald->sn,&pos_in_ball_sn);
+		get_tacho_position(donald->dx,&pos_in_ball_dx);
 		flag_1=2;
 
 	}
