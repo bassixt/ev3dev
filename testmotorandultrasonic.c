@@ -1304,7 +1304,7 @@ if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
 }
 
 //Init BT connection
-s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
+donald->s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 
 return donald;
 }
