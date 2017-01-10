@@ -66,6 +66,11 @@ struct motandsens {
         int side;/*0 right 1 left*/
 	int number;
 	int s; /*used to allocate the socket*/
+	unsigned char rank = 0;
+	unsigned char length = 0;
+	unsigned char previous = 0xFF;
+	unsigned char next = 0xFF;
+	unsigned char side=0;
 
 };
 
@@ -1460,7 +1465,7 @@ int main( int argc, char **argv )
 	addr.rc_family = AF_BLUETOOTH;
 	addr.rc_channel = (uint8_t) 1;
 	str2ba (SERV_ADDR, &addr.rc_bdaddr);
-	status = connect(donald->ss, (struct sockaddr *)&addr, sizeof(addr));
+	status = connect(donald, (struct sockaddr *)&addr, sizeof(addr));
 	    /* if connected */
 	    if( status == 0 ) {
 		char string[58];
