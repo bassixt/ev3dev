@@ -1357,7 +1357,7 @@ for(i=0;i<90;i++)
 		break;
 	}
 	//rotatesx(sn,dx,sn_compass,max_speed,1,sn_mag);
-	rotateforscan(sn,dx,max_speed);
+	rotateforscan(donald->sn,donald->dx,max_speed);
 	
 }
 //it has finished the search
@@ -1372,12 +1372,12 @@ Sleep(200);
 /*rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 elapsed_dis=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,4000,sn_compass,sn_mag);
 rotatedx(donald,180);*/
-grab=colorsense(sn,dx,med,max_speed,sn_color);
+grab=colorsense(donald->sn,donald->dx,med,donald->max_speed,donald->sn_color);
 printf("grab=%d\n",grab);
 while(grab==0)
 {
-	go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,95,sn_compass,sn_mag);
-	grab=colorsense(sn,dx,med,max_speed,sn_color);
+	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed/2,donald->sn_sonar,95,donald->sn_compass,donald->sn_mag);
+	grab=colorsense(donald->sn,donald->dx,donald->med,donald->max_speed,donald->sn_color);
 	printf("grab=%d\n",grab);
 }
 //colorsense(sn,dx,med,max_speed,sn_color);
