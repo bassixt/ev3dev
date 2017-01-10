@@ -1372,7 +1372,7 @@ Sleep(200);
 /*rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 elapsed_dis=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,4000,sn_compass,sn_mag);
 rotatedx(donald,180);*/
-grab=colorsense(donald->sn,donald->dx,med,donald->max_speed,donald->sn_color);
+grab=colorsense(donald->sn,donald->dx,donald->med,donald->max_speed,donald->sn_color);
 printf("grab=%d\n",grab);
 while(grab==0)
 {
