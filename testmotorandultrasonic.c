@@ -1491,7 +1491,7 @@ int main( int argc, char **argv )
 			    printf("I am on the left side\n");
 			}
 
-		if (rank == 0)
+		if (donald->rank == 0)
 		    beginner ();
 		else
 		    finisher ();
