@@ -614,7 +614,7 @@ void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 	Sleep(500);
  			
 }  
-void put_down(motandsens *donald)
+void put_down(struct motandsens *donald)
 {			
 	int i;
 	//stabilize the ball
