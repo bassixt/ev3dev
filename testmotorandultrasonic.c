@@ -66,11 +66,11 @@ struct motandsens {
         int side;/*0 right 1 left*/
 	int number;
 	int s; /*used to allocate the socket*/
-	unsigned char rank = 0;
-	unsigned char length = 0;
-	unsigned char previous = 0xFF;
-	unsigned char next = 0xFF;
-	unsigned char side=0;
+	unsigned char rank;
+	unsigned char length;
+	unsigned char previous;
+	unsigned char next;
+	unsigned char side;
 
 };
 
@@ -1306,7 +1306,11 @@ if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
 
 //Init BT connection
 donald->s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
-
+donald->rank = 0;
+donald->length = 0;
+donald->previous = 0xFF;
+donald-> next = 0xFF;
+donald->side=0;
 return donald;
 }
 
@@ -1480,7 +1484,7 @@ int main( int argc, char **argv )
 		    donald->next = (unsigned char) string[7];
 
 		}
-			if (side==0){
+			if (donald->side==0){
 			    printf("I am on the right side\n");
 			}
 			else {
