@@ -1283,12 +1283,12 @@ int main( int argc, char **argv )
 			else {
 			    printf("I am on the left side\n");
 			}
-
+	/*
 		if (donald->rank == 0)
 		    beginner ();
 		else
 		    finisher ();
-
+			*/
 		close (donald->s);
 
 		sleep (5);
