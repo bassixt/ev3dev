@@ -12,6 +12,24 @@
 #include "ev3_tacho.h"
 #include <math.h>
 #include "ev3_sensor.h"
+#include <stdarg.h>
+#include <sys/socket.h>
+#include <bluetooth/bluetooth.h>
+#include <bluetooth/rfcomm.h>
+//////////////////////////////////
+//         FOR BT               //
+//////////////////////////////////
+#define SERV_ADDR   "dc:53:60:ad:61:90"     /* address of the server is */
+#define TEAM_ID     1                       /* team ID */
+
+#define MSG_ACK     0
+#define MSG_NEXT    1
+#define MSG_START   2
+#define MSG_STOP    3
+#define MSG_CUSTOM  4
+#define MSG_KICK    5
+#define MSG_POSITION 6
+#define MSG_BALL 	7
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
 
@@ -47,6 +65,7 @@ struct motandsens {
         int arena;/*0 small1 big*/
         int side;/*0 right 1 left*/
 	int number;
+	int s; /*used to allocate the socket*/
 
 };
 
@@ -54,6 +73,31 @@ struct pos {
 	float x,y
 	};
 //calculate the the condition for the loop in the next function
+
+
+////////////////////////////////////////////////////////////
+/////			BT FUNCTIONS			////
+/////			   START			////
+////////////////////////////////////////////////////////////
+int read_from_server (int sock, char *buffer, size_t maxSize) {
+    int bytes_read = read (sock, buffer, maxSize);
+
+    if (bytes_read <= 0) {
+        fprintf (stderr, "Server unexpectedly closed connection...\n");
+        close (s);
+        exit (EXIT_FAILURE);
+    }
+
+    printf ("[DEBUG] received %d bytes\n", bytes_read);
+
+    return bytes_read;
+}
+////////////////////////////////////////////////////////////
+/////			BT FUNCTIONS			////
+/////			   FINISH			////
+////////////////////////////////////////////////////////////
+
+
 int getcondition(int role, int arena, int side,float real_posx, float real_posy)
 {
 	int res_cond;
@@ -1144,149 +1188,121 @@ char s[ 256 ];
 int val;
 float value;
 uint32_t n, ii;
-	int prova1, prova2, prova3;
-	/*
- 	printf( "Found tacho motors:\n" );
-        for ( i = 0; i < DESC_LIMIT; i++ ) {
-                if ( ev3_tacho[ i ].type_inx != TACHO_TYPE__NONE_ ) {
-                        printf( "  type = %s\n", ev3_tacho_type( ev3_tacho[ i ].type_inx ));
-                        printf( "  port = %s\n", ev3_tacho_port_name( i, s ));
-                }
-        }*/
-	prova1=ev3_search_tacho_plugged_in(65,0, &donald->dx, 0 );
-	Sleep(100);
-	prova2=ev3_search_tacho_plugged_in(68,0, &donald->sn, 0 );
-	Sleep(100);
-	prova3=ev3_search_tacho_plugged_in(67,0, &donald->med, 0 );
-	Sleep(100);
-	printf("prova 1 = %d \n", prova1);
-	Sleep(500);
-	printf("prova 2 = %d \n", prova2);
-	Sleep(500);
-
-	printf("prova 3 = %d \n", prova3);
-	Sleep(500);
-      //if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->sn, 0 )){
-                get_tacho_max_speed( donald->sn, &donald->max_speed );
-                printf("value of buffer :%d\n", donald->sn);
-                printf("  max_speed = %d\n", donald->max_speed );
-                set_tacho_stop_action_inx( donald->sn, TACHO_COAST );
-                set_tacho_polarity( donald->sn, "normal" );
-                set_tacho_speed_sp( donald->sn, donald->max_speed * 2 / 3 );
-                set_tacho_time_sp( donald->sn, 100 );
-                set_tacho_ramp_up_sp( donald->sn, 2000 );
-                set_tacho_ramp_down_sp( donald->sn, 2000 );
-		set_tacho_position( donald->sn,0);
-               // set_tacho_command_inx( donald->sn, TACHO_RUN_TIMED );
-                /* Wait tacho stop */
-                Sleep( 100 );
-
-    /*    } else {
-                printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
-                fflush( stdout );
-        }*/
-//Second motor
-/*if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->dx, 1 )) {
-                printf( "LEGO_EV3_L_MOTOR 2 is found, run for 5 sec...\n" );
-  */             
-                set_tacho_stop_action_inx( donald->dx, TACHO_COAST );
-                set_tacho_polarity( donald->dx, "normal" );
-                set_tacho_speed_sp( donald->dx, donald->max_speed * 2 / 3 );
-                set_tacho_time_sp( donald->dx, 100 );
-                set_tacho_ramp_up_sp( donald->dx, 2000 );
-	        set_tacho_ramp_down_sp( donald->dx, 2000 );
-		set_tacho_position( donald->dx,0);
-                //set_tacho_command_inx( donald->dx, TACHO_RUN_TIMED );
-                /* Wait tacho stop */
-                Sleep( 100 );
-		fflush( stdout );
-
-      /*  } else {
-                printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
-		fflush( stdout );
-        }*/
-//medium motor
-	//if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->med, 2 )) {
-		
-
-	//	printf( "LEGO_EV3_L_MOTOR 3 is found, \n" );
-		
-		set_tacho_stop_action_inx( donald->med, TACHO_COAST );
-		set_tacho_polarity( donald->med, "normal" );
-		set_tacho_speed_sp( donald->med, donald->max_speed/12);
-		set_tacho_time_sp( donald->med, 6000 );
-		set_tacho_ramp_up_sp( donald->med, 2000 );
-		set_tacho_ramp_down_sp( donald->med, 2000 );
-		//set_tacho_command_inx( donald->med, TACHO_RUN_TIMED );
-		/* Wait tacho stop */
-		Sleep( 100 );
+int prova1, prova2, prova3;
 	
-	/*} else {
-		printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
-		fflush( stdout );
-	} */
+//assign motors to proper pointer //
+prova1=ev3_search_tacho_plugged_in(65,0, &donald->dx, 0 );
+Sleep(100);
+prova2=ev3_search_tacho_plugged_in(68,0, &donald->sn, 0 );
+Sleep(100);
+prova3=ev3_search_tacho_plugged_in(67,0, &donald->med, 0 );
+Sleep(100);
+printf("prova 1 = %d \n", prova1);
+Sleep(500);
+printf("prova 2 = %d \n", prova2);
+Sleep(500);
+printf("prova 3 = %d \n", prova3);
 	
-//Run all sensors
-        ev3_sensor_init();
+//init left motor//
+get_tacho_max_speed( donald->sn, &donald->max_speed );
+printf("value of buffer :%d\n", donald->sn);
+printf("  max_speed = %d\n", donald->max_speed );
+set_tacho_stop_action_inx( donald->sn, TACHO_COAST );
+set_tacho_polarity( donald->sn, "normal" );
+set_tacho_speed_sp( donald->sn, donald->max_speed * 2 / 3 );
+set_tacho_time_sp( donald->sn, 100 );
+set_tacho_ramp_up_sp( donald->sn, 2000 );
+set_tacho_ramp_down_sp( donald->sn, 2000 );
+set_tacho_position( donald->sn,0);
+Sleep( 100 );
+	
+//init right motor//               
+set_tacho_stop_action_inx( donald->dx, TACHO_COAST );
+set_tacho_polarity( donald->dx, "normal" );
+set_tacho_speed_sp( donald->dx, donald->max_speed * 2 / 3 );
+set_tacho_time_sp( donald->dx, 100 );
+set_tacho_ramp_up_sp( donald->dx, 2000 );
+set_tacho_ramp_down_sp( donald->dx, 2000 );
+set_tacho_position( donald->dx,0);
+Sleep( 100 );
+fflush( stdout );
+	
+//init grabber motor//
+set_tacho_stop_action_inx( donald->med, TACHO_COAST );
+set_tacho_polarity( donald->med, "normal" );
+set_tacho_speed_sp( donald->med, donald->max_speed/12);
+set_tacho_time_sp( donald->med, 6000 );
+set_tacho_ramp_up_sp( donald->med, 2000 );
+set_tacho_ramp_down_sp( donald->med, 2000 );
+Sleep( 100 );
 
-        printf( "Found sensors:\n" );
-        for ( i = 0; i < DESC_LIMIT; i++ ) {
-                if ( ev3_sensor[ i ].type_inx != SENSOR_TYPE__NONE_ ) {
-                        printf( "  type = %s\n", ev3_sensor_type( ev3_sensor[ i ].type_inx ));
-                        printf( "  port = %s\n", ev3_sensor_port_name( i, s ));
-			fflush( stdout );
-                        if ( get_sensor_mode( i, s, sizeof( s ))) {
-                                printf( "  mode = %s\n", s );
-                        }
-                        if ( get_sensor_num_values( i, &n )) {
-                                for ( ii = 0; ii < n; ii++ ) {
-                                        if ( get_sensor_value( ii, i, &val )) {
-                                                printf( "  value%d = %d\n", ii, val );
-                                        }
-                                }
-                        }
-                }
-	}
-        if ( ev3_search_sensor( LEGO_EV3_TOUCH, &donald->sn_touch, 0 )) {
-                //printf( "TOUCH sensor is found, press BUTTON for EXIT...\n" );
-        }
+//Init all sensors
+ev3_sensor_init();
 
-                if (ev3_search_sensor(HT_NXT_COMPASS, &donald->sn_compass,0)){
-                        //printf("COMPASS found, reading compass...\n");
-                        if ( !get_sensor_value0(donald->sn_compass, &value )) {
-                        value = 0;
-                        }
-                        printf( "compass\r(%f) \n", value);
-                        fflush( stdout );
-                }
-                if ( ev3_search_sensor( LEGO_EV3_COLOR, &donald->sn_color, 0 )) {
-			printf( "COLOR sensor is found, setting...\n" );
-			set_sensor_mode( donald->sn_color, "COL-COLOR" );
-			if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
-				val = 0;
+printf( "Found sensors:\n" );
+for ( i = 0; i < DESC_LIMIT; i++ ) {
+	if ( ev3_sensor[ i ].type_inx != SENSOR_TYPE__NONE_ ) {
+		printf( "  type = %s\n", ev3_sensor_type( ev3_sensor[ i ].type_inx ));
+		printf( "  port = %s\n", ev3_sensor_port_name( i, s ));
+		fflush( stdout );
+		if ( get_sensor_mode( i, s, sizeof( s ))) {
+			printf( "  mode = %s\n", s );
+		}
+		if ( get_sensor_num_values( i, &n )) {
+			for ( ii = 0; ii < n; ii++ ) {
+				if ( get_sensor_value( ii, i, &val )) {
+					printf( "  value%d = %d\n", ii, val );
+				}
 			}
-			printf( "\r(%s) \n", color[ val ]);
-			printf( "valore del colore e': %d\n",val);
-			fflush( stdout );
 		}
-                if (ev3_search_sensor(LEGO_EV3_US, &donald->sn_sonar,0)){
-                        //printf("SONAR found, reading sonar...\n");
-                        if ( !get_sensor_value0(donald->sn_sonar, &value )) {
-                                value = 0;
-                        }
-                        printf( "\r(%f) \n", value);
-			fflush( stdout );
-                }
-                if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
-                        //printf("GYRO found, reading magnet...\n");
-			set_sensor_mode( donald->sn_mag, "GYRO-ANG" );
-                        if ( !get_sensor_value0(donald->sn_mag, &value )) {
-                                value = 0;
-                        }
-                        printf( "\r(%f) \n", value);
-                        fflush( stdout );
-		}
+	}
+}
 	
+//Init compass sensor
+if (ev3_search_sensor(HT_NXT_COMPASS, &donald->sn_compass,0)){
+	//printf("COMPASS found, reading compass...\n");
+	if ( !get_sensor_value0(donald->sn_compass, &value )) {
+	value = 0;
+	}
+	printf( "compass\r(%f) \n", value);
+	fflush( stdout );
+}
+	
+//Init color sensor
+if ( ev3_search_sensor( LEGO_EV3_COLOR, &donald->sn_color, 0 )) {
+	set_sensor_mode( donald->sn_color, "COL-COLOR" );
+	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
+		val = 0;
+	}
+	printf( "\r(%s) \n", color[ val ]);
+	printf( "valore del colore e': %d\n",val);
+	fflush( stdout );
+}
+	
+//Init sonar sensor
+if (ev3_search_sensor(LEGO_EV3_US, &donald->sn_sonar,0)){
+	if ( !get_sensor_value0(donald->sn_sonar, &value )) {
+		value = 0;
+	}
+	printf( "\r(%f) \n", value);
+	fflush( stdout );
+}
+
+//Init Gyro sensor
+if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
+	set_sensor_mode( donald->sn_mag, "GYRO-ANG" );
+	if ( !get_sensor_value0(donald->sn_mag, &value )) {
+		value = 0;
+	}
+	printf( "\r(%f) \n", value);
+	fflush( stdout );
+}
+
+//Init BT connection
+s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
+addr.rc_family = AF_BLUETOOTH;
+addr.rc_channel = (uint8_t) 1;
+str2ba (SERV_ADDR, &addr.rc_bdaddr);
 return donald;
 }
 
@@ -1402,6 +1418,10 @@ int main( int argc, char **argv )
 	pthread_t thread_movement, thread_position, thread_colorsense; 
         pthread_mutex_init(&mutex, NULL);
  	int caseNumber;
+	//for server //
+	int status;
+	char string[58];
+	//for server //
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
         ev3_brick_addr = "192.168.0.204";
@@ -1431,7 +1451,54 @@ int main( int argc, char **argv )
 	
 	donald = inizialization(donald);
  	donald->number = caseNumber;
- 
+ 	
+
+	///////////////////////////////////////////////////////////////////////
+	////								   ////
+	////			CONNECTION TO SERVER			   ////
+	////								   ////
+	///////////////////////////////////////////////////////////////////////
+	status = connect(donald->ss, (struct sockaddr *)&addr, sizeof(addr));
+	    /* if connected */
+	    if( status == 0 ) {
+		char string[58];
+
+		/* Wait for START message */
+		read_from_server (donald->s, string, 9);
+		if (string[4] == MSG_START) {
+		    printf ("Received start message!\n");
+		    rank = (unsigned char) string[5];
+		    side = (unsigned char) string[6];
+		    next = (unsigned char) string[7];
+
+		}
+			if (side==0){
+			    printf("I am on the right side\n");
+			}
+			else {
+			    printf("I am on the left side\n");
+			}
+
+		if (rank == 0)
+		    beginner ();
+		else
+		    finisher ();
+
+		close (donald->s);
+
+		sleep (5);
+
+	    } else {
+		fprintf (stderr, "Failed to connect to server...\n");
+		sleep (2);
+		exit (EXIT_FAILURE);
+	    }
+	///////////////////////////////////////////////////////////////////////
+	////								   ////
+	////			CONNECTION ESTABLISHED			   ////
+	////								   ////
+	///////////////////////////////////////////////////////////////////////
+	
 	retour = pthread_create(&thread_movement, NULL, movements, donald);
 	if (retour != 0)
 	{
@@ -1469,7 +1536,7 @@ int main( int argc, char **argv )
 	} 	*/
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
-
+	close(donald->s)
         return ( 0 );       
 
 }
