@@ -1322,7 +1322,7 @@ for(i=0;i<90;i++)
 	//printf("I'M here\n");
 	Sleep(500);
 	get_sensor_value0(sn_sonar, &points[i]);
-	if(flag==1 && flag_2=0)
+	if(flag==1 && flag_2=0) //if you have found the ball the first value after that can be wrong due to vibrations
 	{
 		if(points[i] > points[i-1] + 200)
 			points[i]=points[i-1];
