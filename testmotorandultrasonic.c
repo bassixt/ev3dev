@@ -79,12 +79,12 @@ struct pos {
 /////			BT FUNCTIONS			////
 /////			   START			////
 ////////////////////////////////////////////////////////////
-int read_from_server (int sock, char *buffer, size_t maxSize) {
+int read_from_server (int sock, char *buffer, size_t maxSize,void *args) {
     int bytes_read = read (sock, buffer, maxSize);
-
+    struct motandsens *donald = (struct motandsens *) args;
     if (bytes_read <= 0) {
         fprintf (stderr, "Server unexpectedly closed connection...\n");
-        close (s);
+        close (donald->s);
         exit (EXIT_FAILURE);
     }
 
@@ -1300,9 +1300,7 @@ if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
 
 //Init BT connection
 s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
-addr.rc_family = AF_BLUETOOTH;
-addr.rc_channel = (uint8_t) 1;
-str2ba (SERV_ADDR, &addr.rc_bdaddr);
+
 return donald;
 }
 
@@ -1419,6 +1417,7 @@ int main( int argc, char **argv )
         pthread_mutex_init(&mutex, NULL);
  	int caseNumber;
 	//for server //
+	struct sockaddr_rc addr = { 0 };
 	int status;
 	char string[58];
 	//for server //
@@ -1458,6 +1457,9 @@ int main( int argc, char **argv )
 	////			CONNECTION TO SERVER			   ////
 	////								   ////
 	///////////////////////////////////////////////////////////////////////
+	addr.rc_family = AF_BLUETOOTH;
+	addr.rc_channel = (uint8_t) 1;
+	str2ba (SERV_ADDR, &addr.rc_bdaddr);
 	status = connect(donald->ss, (struct sockaddr *)&addr, sizeof(addr));
 	    /* if connected */
 	    if( status == 0 ) {
