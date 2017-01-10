@@ -1475,9 +1475,9 @@ int main( int argc, char **argv )
 		read_from_server (donald->s, string, 9);
 		if (string[4] == MSG_START) {
 		    printf ("Received start message!\n");
-		    rank = (unsigned char) string[5];
-		    side = (unsigned char) string[6];
-		    next = (unsigned char) string[7];
+		    donald->rank = (unsigned char) string[5];
+		    donald->side = (unsigned char) string[6];
+		    donald->next = (unsigned char) string[7];
 
 		}
 			if (side==0){
@@ -1544,7 +1544,7 @@ int main( int argc, char **argv )
 	} 	*/
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
-	close(donald->s)
+	close(donald->s);
         return ( 0 );       
 
 }
