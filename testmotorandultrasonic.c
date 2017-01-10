@@ -1304,7 +1304,7 @@ float elapsed_dis;
 float start_angle, final_angle, middle_angle,turn_angle;
 int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
-int i, k, flag_1,grab;
+int i, k, flag_1,flag_2,grab;
 float points[1000]={0};
 if ( !get_sensor_value0(sn_mag, &initial_angle )) 
    {
