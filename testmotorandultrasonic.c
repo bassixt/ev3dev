@@ -614,14 +614,14 @@ void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 	Sleep(500);
  			
 }  
-void put_down(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
+void put_down(motandsens *donald)
 {			
 	int i;
 	//stabilize the ball
-	set_tacho_position_sp( med, -90 );
+	set_tacho_position_sp(donald->med, -90 );
 	Sleep(200);
 	for ( i = 0; i < 4; i++ ) {
-	set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
+	set_tacho_command_inx(donald->med, TACHO_RUN_TO_REL_POS );
 	Sleep( 200 );
 	} 
 	Sleep(500);
@@ -843,7 +843,7 @@ switch(donald->number)
 		Sleep(1000);
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
-		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);		
+		put_down(donald);		
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1240,donald->sn_compass, donald->sn_mag);
 		//put_down(donald->sn,donald->dx,donald->med,donald->max_speed);
 		Sleep(1000);
@@ -1048,7 +1048,7 @@ switch(donald->number)
 		else	
 			turn_pos=final_pos-initial_pos;*/
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,84,donald->sn_mag);
-		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
+		put_down(donald);	
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
 		
 		
@@ -1094,7 +1094,7 @@ switch(donald->number)
 		else	
 			turn_pos=final_pos-initial_pos;*/
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,84,donald->sn_mag);
-		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
+		put_down(donald);	
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
 		
 		
