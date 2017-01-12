@@ -36,7 +36,7 @@ unsigned char previous = 0xFF;
 unsigned char next = 0xFF;
 unsigned char side=0;
 int s;
-uint16_t msgId = 0;
+
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
 
@@ -75,6 +75,7 @@ struct motandsens {
 	unsigned char previous;
 	unsigned char next;
 	unsigned char side;
+	uint16_t msgId;
 
 };
 
@@ -212,7 +213,9 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	old_sx = new_sx;
 	old_dx = new_dx;
  	old_y = old_y + disp_diff * sign * sin( teta );
-	old_x = old_x + disp_diff * sign * cos( teta ); 	
+	old_x = old_x + disp_diff * sign * cos( teta ); 
+ 	donald->x=old_x;
+ 	donald->y=old_y;
 	printf("y=%f and x=%f\n",old_y,old_x);
 	
 }
@@ -1170,14 +1173,7 @@ if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
 }
 
 //Init BT connection
-	/*
-donald->s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
-donald->rank = 0;
-donald->length = 0;
-donald->previous = 0xFF;
-donald-> next = 0xFF;
-donald->side=0;
-*/
+donald->msgId = 0;
 return donald;
 }
 
@@ -1334,45 +1330,7 @@ int main( int argc, char **argv )
 	////			CONNECTION TO SERVER			   ////
 	////								   ////
 	///////////////////////////////////////////////////////////////////////
-/*	addr.rc_family = AF_BLUETOOTH;
-	addr.rc_channel = (uint8_t) 1;
-	str2ba (SERV_ADDR, &addr.rc_bdaddr);
-	status = connect(donald, (struct sockaddr *)&addr, sizeof(addr));
-	    /* if connected */
-	  /*  if( status == 0 ) {
-		char string[58];
-
-		/* Wait for START message */
-	/*	read_from_server (donald->s, string, 9);
-		if (string[4] == MSG_START) {
-		    printf ("Received start message!\n");
-		    donald->rank = (unsigned char) string[5];
-		    donald->side = (unsigned char) string[6];
-		    donald->next = (unsigned char) string[7];
-
-		}
-			if (donald->side==0){
-			    printf("I am on the right side\n");
-			}
-			else {
-			    printf("I am on the left side\n");
-			}*/
-	/*
-		if (donald->rank == 0)
-		    beginner ();
-		else
-		    finisher ();
-			*/
-	/*	close (donald->s);
-
-		sleep (5);
-
-	    } else {
-		fprintf (stderr, "Failed to connect to server...\n");
-		sleep (2);
-		exit (EXIT_FAILURE);
-	    }*/
-	struct sockaddr_rc addr = { 0 };
+    struct sockaddr_rc addr = { 0 };
     int status;
     
     /* allocate a socket */
@@ -1395,7 +1353,7 @@ int main( int argc, char **argv )
         if (string[4] == MSG_START) {
             printf ("Received start message!\n");
             rank = (unsigned char) string[5];
-			side = (unsigned char) string[6];
+	    side = (unsigned char) string[6];
             next = (unsigned char) string[7];
 			
         }
@@ -1408,6 +1366,17 @@ int main( int argc, char **argv )
 		
         if (rank == 0)
             printf("beginner\n");
+	    //send a position
+	    *((uint16_t *) string) = msgId++;
+	    string[2] = TEAM_ID;
+	    string[3] = 0xFF;
+	    string[4] = MSG_POSITION;
+	    string[5] = int(donald->x);          /* x */
+	    string[6]= 0x00;
+	    string[7] = int(donald->y);	    /* y */
+	    string[8] = 0x00;
+	    write(s, string, 9);
+	    
         else
             printf("beginner\n");
 
