@@ -1364,7 +1364,7 @@ int main( int argc, char **argv )
 			printf("I am on the left side\n");
 		}
 		
-        if (rank == 0)
+        if (rank == 0){
             printf("beginner\n");
 	    //send a position
 	    *((uint16_t *) string) = msgId++;
@@ -1376,7 +1376,7 @@ int main( int argc, char **argv )
 	    string[7] = int(donald->y);	    /* y */
 	    string[8] = 0x00;
 	    write(s, string, 9);
-	    
+	}
         else
             printf("beginner\n");
 
@@ -1434,7 +1434,7 @@ int main( int argc, char **argv )
 	} 	*/
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
-	close(donald->s);
+	
         return ( 0 );       
 
 }
