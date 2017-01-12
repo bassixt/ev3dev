@@ -1294,9 +1294,9 @@ int main( int argc, char **argv )
         pthread_mutex_init(&mutex, NULL);
  	int caseNumber;
 	//for server //
-	struct sockaddr_rc addr = { 0 };
-	int status;
-	char string[58];
+	//struct sockaddr_rc addr = { 0 };
+	//int status;
+	//char string[58];
 	//for server //
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
