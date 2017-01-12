@@ -693,16 +693,16 @@ void* positioning_sys(void* args)
 		if(i==20)
 		{
 			//send position
-			//send a position
+			/*
 			*((uint16_t *) string) = donald->msgId++;
 			string[2] = TEAM_ID;
 			string[3] = 0xFF;
 			string[4] = MSG_POSITION;
 			string[5] = (int)donald->x;          /* x */
-			string[6]= 0x00;
+			/*string[6]= 0x00;
 			string[7] = (int)donald->y;	    /* y */
-			string[8] = 0x00;
-			write(s, string, 9);
+			/*string[8] = 0x00;
+			write(s, string, 9);*/
 			i=0;
 		}
 	}
