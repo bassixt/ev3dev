@@ -161,8 +161,9 @@ float rad2deg(float m_rot)
 	return m_rot * 180 / M_PI;
 }
 
-void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
-{	float encod_scale = M_PI * 5.5 / 360;
+void positioning(void* args)
+{	struct motandsens *donald = (struct motandsens *) args;
+	float encod_scale = M_PI * 5.5 / 360;
 	float new_angs;
  	int retour;
 	float m_rot,disp_diff;
@@ -184,7 +185,7 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
     			   perror("erreur mutex lock");
      			  exit(EXIT_FAILURE);
     			 }
-	if ( !get_sensor_value0(sn_mag, &new_angs )) 
+	if ( !get_sensor_value0(donald->sn_mag, &new_angs )) 
 	   {
 	   new_angs = 0;
 	   }
@@ -197,8 +198,8 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	m_rot =  -(new_angs - last_angle);		//rotation
 	m_rot = deg2rad(m_rot);				//rotation to rad
 	last_angle = new_angs;				//refresh last angle
-	get_tacho_position(sn,&new_sx);			
-	get_tacho_position(dx,&new_dx);
+	get_tacho_position(donald->sn,&new_sx);			
+	get_tacho_position(donald->dx,&new_dx);
 	new_angs = deg2rad(new_angs);
 	if(flag==1)
 		teta = teta + m_rot;
@@ -214,8 +215,8 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	old_dx = new_dx;
  	old_y = old_y + disp_diff * sign * sin( teta );
 	old_x = old_x + disp_diff * sign * cos( teta ); 
- 	//donald->x=old_x;
- 	//donald->y=old_y;
+ 	donald->x=old_x;
+ 	donald->y=old_y;
 	printf("y=%f and x=%f\n",old_y,old_x);
 	
 }
@@ -223,8 +224,6 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 void rotatedx(struct motandsens *donald, int rotation)
 {	float actual_angle;
 	float wanted_c;
-	//set_tacho_position( sn,0);
-	//set_tacho_position( dx,0);
 	set_tacho_speed_sp( donald->sn, donald->max_speed/5);
 	set_tacho_ramp_up_sp( donald->sn, 0 );
 	set_tacho_ramp_down_sp( donald->sn, 0 );
@@ -256,8 +255,6 @@ void rotatedx(struct motandsens *donald, int rotation)
 void rotatesx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
 	float wanted_c;
-	//set_tacho_position( sn,0);
-	//set_tacho_position( dx,0);
 	set_tacho_speed_sp( sn, max_speed/5);
 	set_tacho_ramp_up_sp( sn, 0 );
 	set_tacho_ramp_down_sp( sn, 0 );
@@ -685,12 +682,29 @@ control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
 return (finish-beginning)/21; //return the distance in cm
 }
 void* positioning_sys(void* args)
-{
+{	int i = 0;
+ 	char string[58];
 	struct motandsens *donald = (struct motandsens *) args;	
 	while(1)
 	{
-        positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag);
-	Sleep(100);
+	        positioning(donald);
+		Sleep(100);
+		i+=1;
+		if(i==20)
+		{
+			//send position
+			//send a position
+			*((uint16_t *) string) = donald->msgId++;
+			string[2] = TEAM_ID;
+			string[3] = 0xFF;
+			string[4] = MSG_POSITION;
+			string[5] = (int)donald->x;          /* x */
+			string[6]= 0x00;
+			string[7] = (int)donald->y;	    /* y */
+			string[8] = 0x00;
+			write(s, string, 9);
+			i=0;
+		}
 	}
 }
 int colorsense(uint8_t sn,uint8_t dx, uint8_t med, int max_speed, uint8_t sn_color)
@@ -1366,31 +1380,20 @@ int main( int argc, char **argv )
 		
         if (rank == 0){
             printf("beginner\n");
-	    //send a position
-	    *((uint16_t *) string) = donald->msgId++;
-	    string[2] = TEAM_ID;
-	    string[3] = 0xFF;
-	    string[4] = MSG_POSITION;
-	    string[5] = 50;//(int)donald->x;          /* x */
-	    string[6]= 0x00;
-	    string[7] = 0;//(int)donald->y;	    /* y */
-	    string[8] = 0x00;
-	    write(s, string, 9);
-	}
+	    }
         else
             printf("beginner\n");
 
-        close (s);
 
-        sleep (5);
 
     } else {
         fprintf (stderr, "Failed to connect to server...\n");
         sleep (2);
+	close(s);
         exit (EXIT_FAILURE);
     }
 
-    close(s);
+   
 	///////////////////////////////////////////////////////////////////////
 	////								   ////
 	////			CONNECTION ESTABLISHED			   ////
@@ -1432,6 +1435,8 @@ int main( int argc, char **argv )
 	  perror("pthread_join colorsens");
 	  return EXIT_FAILURE;
 	} 	*/
+	close (s);
+        sleep (5);
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
 	
