@@ -215,8 +215,8 @@ void positioning(void* args)
 	old_dx = new_dx;
  	old_y = old_y + disp_diff * sign * sin( teta );
 	old_x = old_x + disp_diff * sign * cos( teta ); 
- 	donald->x=old_x;
- 	donald->y=old_y;
+ 	//donald->x=old_x;
+ 	//donald->y=old_y;
 	printf("y=%f and x=%f\n",old_y,old_x);
 	
 }
