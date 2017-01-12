@@ -30,6 +30,13 @@
 #define MSG_KICK    5
 #define MSG_POSITION 6
 #define MSG_BALL 	7
+unsigned char rank = 0;
+unsigned char length = 0;
+unsigned char previous = 0xFF;
+unsigned char next = 0xFF;
+unsigned char side=0;
+int s;
+uint16_t msgId = 0;
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
 
@@ -81,13 +88,26 @@ struct pos {
 /////			BT FUNCTIONS			////
 /////			   START			////
 ////////////////////////////////////////////////////////////
-int read_from_server (char *buffer, size_t maxSize,void *args) {
+/*int read_from_server (char *buffer, size_t maxSize,void *args) {
    
     struct motandsens *donald = (struct motandsens *) args;
     int bytes_read = read (donald->s, buffer, maxSize);
     if (bytes_read <= 0) {
         fprintf (stderr, "Server unexpectedly closed connection...\n");
         close (donald->s);
+        exit (EXIT_FAILURE);
+    }
+
+    printf ("[DEBUG] received %d bytes\n", bytes_read);
+
+    return bytes_read;
+}*/
+int read_from_server (int sock, char *buffer, size_t maxSize) {
+    int bytes_read = read (sock, buffer, maxSize);
+
+    if (bytes_read <= 0) {
+        fprintf (stderr, "Server unexpectedly closed connection...\n");
+        close (s);
         exit (EXIT_FAILURE);
     }
 
@@ -1150,12 +1170,14 @@ if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
 }
 
 //Init BT connection
+	/*
 donald->s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 donald->rank = 0;
 donald->length = 0;
 donald->previous = 0xFF;
 donald-> next = 0xFF;
 donald->side=0;
+*/
 return donald;
 }
 
@@ -1299,7 +1321,7 @@ int main( int argc, char **argv )
     return EXIT_FAILURE;
   }*/
  
-  caseNumber = atoi(argv[1]);
+        caseNumber = atoi(argv[1]);
  
         printf( "*** ( EV3 ) Hello! ***\n" );
 	
@@ -1312,16 +1334,16 @@ int main( int argc, char **argv )
 	////			CONNECTION TO SERVER			   ////
 	////								   ////
 	///////////////////////////////////////////////////////////////////////
-	addr.rc_family = AF_BLUETOOTH;
+/*	addr.rc_family = AF_BLUETOOTH;
 	addr.rc_channel = (uint8_t) 1;
 	str2ba (SERV_ADDR, &addr.rc_bdaddr);
 	status = connect(donald, (struct sockaddr *)&addr, sizeof(addr));
 	    /* if connected */
-	    if( status == 0 ) {
+	  /*  if( status == 0 ) {
 		char string[58];
 
 		/* Wait for START message */
-		read_from_server (donald->s, string, 9);
+	/*	read_from_server (donald->s, string, 9);
 		if (string[4] == MSG_START) {
 		    printf ("Received start message!\n");
 		    donald->rank = (unsigned char) string[5];
@@ -1334,14 +1356,14 @@ int main( int argc, char **argv )
 			}
 			else {
 			    printf("I am on the left side\n");
-			}
+			}*/
 	/*
 		if (donald->rank == 0)
 		    beginner ();
 		else
 		    finisher ();
 			*/
-		close (donald->s);
+	/*	close (donald->s);
 
 		sleep (5);
 
@@ -1349,7 +1371,57 @@ int main( int argc, char **argv )
 		fprintf (stderr, "Failed to connect to server...\n");
 		sleep (2);
 		exit (EXIT_FAILURE);
-	    }
+	    }*/
+	struct sockaddr_rc addr = { 0 };
+    int status;
+    
+    /* allocate a socket */
+    s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
+
+    /* set the connection parameters (who to connect to) */
+    addr.rc_family = AF_BLUETOOTH;
+    addr.rc_channel = (uint8_t) 1;
+    str2ba (SERV_ADDR, &addr.rc_bdaddr);
+
+    /* connect to server */
+    status = connect(s, (struct sockaddr *)&addr, sizeof(addr));
+
+    /* if connected */
+    if( status == 0 ) {
+        char string[58];
+
+        /* Wait for START message */
+        read_from_server (s, string, 9);
+        if (string[4] == MSG_START) {
+            printf ("Received start message!\n");
+            rank = (unsigned char) string[5];
+			side = (unsigned char) string[6];
+            next = (unsigned char) string[7];
+			
+        }
+		if (side==0){
+		    printf("I am on the right side\n");
+		}
+		else {
+			printf("I am on the left side\n");
+		}
+		
+        if (rank == 0)
+            printf("beginner\n");
+        else
+            printf("beginner\n");
+
+        close (s);
+
+        sleep (5);
+
+    } else {
+        fprintf (stderr, "Failed to connect to server...\n");
+        sleep (2);
+        exit (EXIT_FAILURE);
+    }
+
+    close(s);
 	///////////////////////////////////////////////////////////////////////
 	////								   ////
 	////			CONNECTION ESTABLISHED			   ////
