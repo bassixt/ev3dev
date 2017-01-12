@@ -19,8 +19,8 @@
 //////////////////////////////////
 //         FOR BT               //
 //////////////////////////////////
-#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
-#define TEAM_ID     1                       /* team ID */
+#define SERV_ADDR   "86:82:19:03:05:31"     /* address of the server is */
+#define TEAM_ID     10                       /* team ID */
 
 #define MSG_ACK     0
 #define MSG_NEXT    1
@@ -501,7 +501,32 @@ void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 	Sleep(500);
  			
 }  
+/*void go_back(uint8_t sn,uint8_t dx,int distance,int max_speed)
+{
+float beginning, finish;
+float value;
+set_tacho_time_sp( sn, 200 );
+set_tacho_ramp_up_sp( sn, 1500 );
+set_tacho_ramp_down_sp( sn, 1500);
+set_tacho_time_sp( dx, 200 );
+set_tacho_ramp_up_sp( dx, 1000 );
+set_tacho_ramp_down_sp( dx, 1000 );
+get_tacho_position( dx, &beginning);
+finish = beginning;
+while(finish > beginning-distance)
+{
 
+
+       get_tacho_position( dx, &partial);
+	control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
+	get_tacho_position( dx, &finish);
+	beginning+=(finish-partial);
+}
+
+
+
+
+}*/
 float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance,uint8_t sn_compass, uint8_t sn_mag)
 {	//aggiungere funzione che controlla anche il motore 
 	//sinistro e vede se sono andati dritti tutti e due 
@@ -956,9 +981,20 @@ switch(donald->number)
 	//big arena left, begin at up corner test : grab the ball 
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,722,donald->sn_compass, donald->sn_mag);
 		//TURN LEFT
+		/*float xbefore,ybefore;*/
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,45,donald->sn_mag);
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,240,donald->sn_compass, donald->sn_mag);
 	        research(donald, 45);
+		////////////////////////////////////////////////////////
+	/*	float angleofrotationback;
+		float deltax,deltay;
+		deltax=(donald->x)-xbefore;
+		deltay=(donald->y)-xbefore;
+		angleofrotationback=atang(deltax/deltay)*180/M_PI;
+		printf("angle of turning back: %f",angleofrotationback);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,45,donald->sn_mag);
+		*/
+			
 		Sleep(1000);
 		break;	
 	case 10 :
