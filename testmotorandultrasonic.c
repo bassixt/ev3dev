@@ -1019,8 +1019,8 @@ switch(donald->number)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,722,donald->sn_compass, donald->sn_mag);
 		//TURN LEFT
 		
-		//xbefore=donald->x;
-		//ybefore=donald->y;
+		xbefore=donald->x;
+		ybefore=donald->y;
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,45,donald->sn_mag);
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,240,donald->sn_compass, donald->sn_mag);
 	        research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 45 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
