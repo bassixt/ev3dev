@@ -627,7 +627,7 @@ void* positioning_sys(void* args)
 {	int seconds_bt=0;
  	char string[58];
  	int16_t x_conv,y_conv;
- 	char x_conv_MSB,x_conv_LSB,y_conv_MSB,y_conv_LSB;
+ 	int8_t x_conv_MSB,x_conv_LSB,y_conv_MSB,y_conv_LSB;
 	struct motandsens *donald = (struct motandsens *) args;	
 	while(1)
 	{
@@ -636,20 +636,20 @@ void* positioning_sys(void* args)
 	seconds_bt=seconds_bt+1;
 	if (seconds_bt == 20)
 	{	//send position
-	 	x_conv_MSB = (0xFF && ((int16_t)donald->x>>8));
-	 	x_conv_LSB = (0xFF &&  ((int16_t)donald->x));
-		y_conv_MSB = (0xFF && ((int16_t)donald->y>>8));
-		y_conv_LSB = (0xFF &&  ((int16_t)donald->y));
-		printf("x: %c x: %c\n",x_conv_LSB,x_conv_MSB);
-		printf("y: %c y: %c\n",y_conv_LSB,y_conv_MSB);
+	 	x_conv_MSB = (0xFF & ((int16_t)donald->x>>8));
+	 	x_conv_LSB = (0xFF &  ((int16_t)donald->x));
+		y_conv_MSB = (0xFF & ((int16_t)donald->y>>8));
+		y_conv_LSB = (0xFF &  ((int16_t)donald->y));
+		printf("x: %d x: %d\n",x_conv_LSB,x_conv_MSB);
+		printf("y: %d y: %d\n",y_conv_LSB,y_conv_MSB);
 		*((uint16_t *) string) = msgId++;
 		string[2] = TEAM_ID;
 		string[3] = 0xFF;
 		string[4] = MSG_POSITION;
-		string[5] = 20;          // x 
-		string[6] = 0;
-		string[7] = -57;	    // y 
-		string[8] = -1;
+		string[5] = x_conv_LSB;          // x 
+		string[6] = x_conv_MSB;
+		string[7] = y_conv_LSB;	    // y 
+		string[8] = y_conv_MSB;
 		write(s, string, 9);
 		seconds_bt = 0;
 	}
