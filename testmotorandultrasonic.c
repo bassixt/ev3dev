@@ -830,6 +830,8 @@ return (finish-beginning)/21; //return the distance in cm
 }
 void* positioning_sys(void* args)
 {	int seconds_bt=0;
+ 	char string[58];
+ 	uint16_t msgId=0;
 	struct motandsens *donald = (struct motandsens *) args;	
 	while(1)
 	{
