@@ -638,7 +638,7 @@ void* positioning_sys(void* args)
 	if (seconds_bt == 20)
 	{	
 		//send position
-		
+		printf("x: %f y: %f\n",donald->x,donald->y);
 		*((uint16_t *) string) = msgId++;
 		string[2] = TEAM_ID;
 		string[3] = 0xFF;
