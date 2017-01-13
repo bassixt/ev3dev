@@ -12,7 +12,7 @@
 #include "ev3_tacho.h"
 #include <math.h>
 #include "ev3_sensor.h"
-#include <stdarg.h>
+//#include <stdarg.h>
 #include <sys/socket.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
