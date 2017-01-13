@@ -1150,7 +1150,8 @@ uint32_t n, ii;
                         printf( "\r(%f) \n", value);
                         fflush( stdout );
 		}
-	
+donald->x=0;
+donald->y=0;
 return donald;
 }
 
