@@ -154,8 +154,9 @@ float rad2deg(float m_rot)
 	return m_rot * 180 / M_PI;
 }
 
-void positioning(void* args)
-{	struct motandsens *donald = (struct motandsens *) args;
+//void positioning(void* args)
+void positioning(uint8_t sn_mag,uint8_t sn, uint8_t dx)
+{	//struct motandsens *donald = (struct motandsens *) args;
 	float encod_scale = M_PI * 5.5 / 360;
 	float new_angs;
  	int retour;
@@ -178,7 +179,7 @@ void positioning(void* args)
     			   perror("erreur mutex lock");
      			  exit(EXIT_FAILURE);
     			 }
-	if ( !get_sensor_value0(donald->sn_mag, &new_angs )) 
+	if ( !get_sensor_value0(sn_mag, &new_angs )) 
 	   {
 	   new_angs = 0;
 	   }
@@ -191,8 +192,8 @@ void positioning(void* args)
 	m_rot =  -(new_angs - last_angle);		//rotation
 	m_rot = deg2rad(m_rot);				//rotation to rad
 	last_angle = new_angs;				//refresh last angle
-	get_tacho_position(donald->sn,&new_sx);			
-	get_tacho_position(donald->dx,&new_dx);
+	get_tacho_position(sn,&new_sx);			
+	get_tacho_position(dx,&new_dx);
 	new_angs = deg2rad(new_angs);
 	if(flag==1)
 		teta = teta + m_rot;
@@ -678,7 +679,7 @@ void* positioning_sys(void* args)
 	struct motandsens *donald = (struct motandsens *) args;	
 	while(1)
 	{
-	        positioning(donald);
+	        positioning(donald->sn_mag, donald->sn, donald->dx);
 		Sleep(100);
 		/*i+=1;
 		if(i==20)
