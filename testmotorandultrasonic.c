@@ -727,6 +727,9 @@ int found=0; //this is a flag used to know if the ball has been detected 0=NO 1=
 float heading;
 float POS_Y=0;
 float POS_X=0;
+float angleofrotationback;
+float deltax,deltay;
+float xbefore,ybefore,distanceback;
 if ( !get_sensor_value0(donald->sn_mag, &heading)){
 					heading=0;
 					}
@@ -1015,20 +1018,21 @@ switch(donald->number)
 	//big arena left, begin at up corner test : grab the ball 
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,722,donald->sn_compass, donald->sn_mag);
 		//TURN LEFT
-		/*float xbefore,ybefore;*/
+		
+		xbefore=donald->x;
+		ybefore=donald->y;
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,45,donald->sn_mag);
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,240,donald->sn_compass, donald->sn_mag);
 	        research(donald, 45);
 		////////////////////////////////////////////////////////
-		float angleofrotationback;
-		float deltax,deltay;
+
 		deltax=(donald->x)-xbefore;
 		deltay=(donald->y)-xbefore;
-		distanceback=sqrt(((donald->x)-xbefore)^2+((donald->x)-xbefore)^2)*19
+		distanceback=sqrt(((donald->x)-xbefore)^2+((donald->x)-xbefore)^2)*19;
 		angleofrotationback=atang(deltax/deltay)*180/M_PI;
 		printf("angle of turning back: %f",angleofrotationback);
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,45,donald->sn_mag);
-		go_back(uint8_t sn,uint8_t dx,int distanceback,int max_speed,uint8_t sn_compass,uint8_t sn_mag)
+		go_back(donald->sn,donald->dx,donald->distanceback,donald->max_speed,donald->sn_compass,donald->sn_mag);
 		
 		Sleep(1000);
 		break; 
