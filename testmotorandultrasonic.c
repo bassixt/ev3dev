@@ -1284,16 +1284,11 @@ return;
 
 	
 int main( int argc, char **argv )
-{	//pid_t ret;
- 	//char *name;
-        //int i,d,n;
-	struct motandsens *donald=malloc(sizeof(struct motandsens));
-        FLAGS_T state;
-        int val;
-	int act_pos;
-        //float value;      
+{
+	struct motandsens *donald=malloc(sizeof(struct motandsens));  
  	int retour;		
-	pthread_t thread_movement, thread_position, thread_colorsense; 
+	pthread_t thread_movement, thread_position; 
+	pthread_t thread_colorsense;
         pthread_mutex_init(&mutex, NULL);
  	int caseNumber;
 	//for server //
