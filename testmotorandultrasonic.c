@@ -6,37 +6,11 @@
 #include <mqueue.h>
 #include <pthread.h>
 #include <sys/types.h>
-//#include <stdint.h>
 #include "ev3.h"
 #include "ev3_port.h"
 #include "ev3_tacho.h"
 #include <math.h>
 #include "ev3_sensor.h"
-//#include <stdarg.h>
-#include <sys/socket.h>
-#include <bluetooth/bluetooth.h>
-#include <bluetooth/rfcomm.h>
-//////////////////////////////////
-//         FOR BT               //
-//////////////////////////////////
-#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
-#define TEAM_ID     10                       /* team ID */
-
-#define MSG_ACK     0
-#define MSG_NEXT    1
-#define MSG_START   2
-#define MSG_STOP    3
-#define MSG_CUSTOM  4
-#define MSG_KICK    5
-#define MSG_POSITION 6
-#define MSG_BALL 	7
-unsigned char rank = 0;
-unsigned char length = 0;
-unsigned char previous = 0xFF;
-unsigned char next = 0xFF;
-unsigned char side=0;
-int s;
-
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
 
@@ -68,14 +42,12 @@ struct motandsens {
 	uint8_t sn_mag;
         int max_speed;
 	float x,y;
-	int number;
-	int s; /*used to allocate the socket*/
-	unsigned char rank;
-	unsigned char length;
-	unsigned char previous;
-	unsigned char next;
-	unsigned char side;
-	uint16_t msgId;
+        int role;/*0 beg 1 fin*/
+        int arena;/*0 small1 big*/
+        int side;/*0 right 1 left*/
+	int number;	
+    
+
 
 };
 
@@ -83,43 +55,64 @@ struct pos {
 	float x,y
 	};
 //calculate the the condition for the loop in the next function
+int getcondition(int role, int arena, int side,float real_posx, float real_posy)
+{
+	int res_cond;
+        res_cond=0;
+	switch (arena)
+	{
+       case 0 :
+         switch (role)
+         {
+       		case 0 :
+       		  if(real_posx>=80 && real_posy>=165)
+       		   {res_cond=1;}
+       		  break;
+    		case 1:
+    		   if(real_posx<=40 && real_posy<=35)
+       		   {res_cond=1;}
+       		  break;
+
+         }
+         break;
+       case 1:
+         switch (side)
+         {
+ 			case 0:
+ 			   switch (role)
+               {
+       		      case 0:
+       		          if(real_posx>=40 && real_posy>=365)
+       		           {res_cond=1;}
+       		          break;
+    		      case 1:
+    		        if(real_posx>=80 && real_posy<=35)
+       		           {res_cond=1;}
+       		         break;
+               }
+                break;
+            case 1 :
+ 			   switch (role)
+               {
+       		      case 0 :
+       		         if(real_posx<=-40 && real_posy>=365)
+       		           {res_cond=1;}
+       		          break;
+    		      case 1 :
+    		         if(real_posx<=-80 && real_posy<=35)
+       		           {res_cond=1;}
+       		          break;
+               }
+                break;
+
+         }
+         break;
+    } 
 
 
-////////////////////////////////////////////////////////////
-/////			BT FUNCTIONS			////
-/////			   START			////
-////////////////////////////////////////////////////////////
-/*int read_from_server (char *buffer, size_t maxSize,void *args) {
-   
-    struct motandsens *donald = (struct motandsens *) args;
-    int bytes_read = read (donald->s, buffer, maxSize);
-    if (bytes_read <= 0) {
-        fprintf (stderr, "Server unexpectedly closed connection...\n");
-        close (donald->s);
-        exit (EXIT_FAILURE);
-    }
-    printf ("[DEBUG] received %d bytes\n", bytes_read);
-    return bytes_read;
-}*/
-int read_from_server (int sock, char *buffer, size_t maxSize) {
-    int bytes_read = read (sock, buffer, maxSize);
+return res_cond;
 
-    if (bytes_read <= 0) {
-        fprintf (stderr, "Server unexpectedly closed connection...\n");
-        close (s);
-        exit (EXIT_FAILURE);
-    }
-
-    printf ("[DEBUG] received %d bytes\n", bytes_read);
-
-    return bytes_read;
 }
-////////////////////////////////////////////////////////////
-/////			BT FUNCTIONS			////
-/////			   FINISH			////
-////////////////////////////////////////////////////////////
-
-
 
 //position
 float get_compass_values(uint8_t sn_compass)
@@ -148,6 +141,147 @@ float get_compass_values(uint8_t sn_compass)
 	
 }
 
+void* position(void *args) //or we can pass all the struct
+{
+   int flag_rot; 
+    struct motandsens *donald = (struct motandsens *) args;
+    float degree, first_comp;
+    int motor_value,iniz_comp,res_cond;
+    float x_new,y_new,x_old,y_old,x_start,y_start;
+/////////////////////////do a switch case of if based on where you are ( small or big arena, side) and rol\\\\\
+//////thread
+//	retour = pthread_mutex_lock(&mutex);
+//	 retour = pthread_mutex_lock(&mutex);
+  //  			if (retour != 0)
+    //			 {
+    //			   perror("erreur mutex lock");
+     //			  exit(EXIT_FAILURE);
+    	//		 }
+/////////	
+	flag_rot=0;
+	switch (donald->arena)
+	{
+       case 0 :
+         switch (donald->role)
+         {
+       		case 0 :
+       		  x_start=90;
+        	  y_start=25;
+        	  iniz_comp=0;
+              break;
+    		case 1 :
+    		  x_start=30;
+        	  y_start=175;
+        	  iniz_comp=180;
+     		  break;
+
+         }
+         break;
+       case 1 :
+         switch (donald->side)
+         {
+ 			case 0 :
+ 			   switch (donald->role)
+               {
+       		      case 0 :
+       		         x_start=30;
+        	         y_start=25;
+        	         iniz_comp=0;
+     		         break;
+    		      case 1 :
+    		         x_start=90;
+        	         y_start=375;
+        	         iniz_comp=180;
+        	         break;
+               }
+                break;
+            case 1:
+ 			   switch (donald->role)
+               {
+       		      case 0 :
+       		         x_start=-30;
+        	         y_start=25;
+        	         iniz_comp=0;
+                     break;
+    		      case 1 :
+    		         x_start=-90;
+        	         y_start=375;
+        	         iniz_comp=180;
+       		         break;
+               }
+                break;
+
+         }
+         break;
+    } 
+ //////////////////////////////////////////
+   int  i=0;
+    res_cond=0;
+     while ( res_cond==0 )
+     {
+        get_tacho_position(donald->sn,&motor_value);
+        /*
+	if ( !get_sensor_value0(donald->sn_compass, &degree )) {
+                        degree = 0;
+                        }   */
+	degree = get_compass_values(donald->sn_compass);
+        if(i==0)
+        {   
+            first_comp=degree;
+		
+  			x_new=x_start+motor_value/21*sin(M_PI/180*(degree-first_comp+iniz_comp));
+  			y_new=y_start+motor_value/21*cos(M_PI/180*(degree-first_comp+iniz_comp));
+  			i=1;
+  			donald->x=x_new;
+  			donald->y=y_new;
+  			//send realpos.x and .y/
+  			printf( "x=%f  y=%f \n" ,donald->x, donald->y);
+  			
+        }
+        else
+        {    
+   			x_old=x_new;
+   			y_old=y_new;
+   			if(flag_rot==0)   /*go haed*/
+   			{       printf("sono nell'if cond, degree:%f , firstcomp:%f, diff:%d ", degree,first_comp,degree-first_comp);
+   				x_new=x_old+(motor_value/21-x_old)*sin(M_PI/180*(degree-first_comp+iniz_comp));
+   				y_new=y_old+(motor_value/21-y_old)*cos(M_PI/180*(degree-first_comp+iniz_comp));
+   				donald->x=x_new;
+  			        donald->y=y_new;
+				//send realpos.x and .y/
+				printf( "x=%f  y=%f \n" , donald->x, donald->y);
+  				
+			}
+			else   /*turning*/
+			{
+ 				//x_old=x_new;
+   				//y_old=y_new;
+   				x_new=motor_value/21*sin(M_PI/180*(degree-first_comp+iniz_comp));
+   				y_new=motor_value/21*cos(M_PI/180*(degree-first_comp+iniz_comp));
+   				donald->x=x_old;
+  				donald->y=y_old;
+  				//send realpos.x and .y/    /setta flag sulla fifo s per dire che il robot può girare/
+  				printf( "x=%f  y=%f \n" , donald->x, donald->y);
+  				
+	               	}
+	
+        }
+	     Sleep(2000);
+    	res_cond=getcondition(0,0,0,donald->x,donald->y);
+  printf(" res_cond=%d\n" , res_cond); 
+        //gira se sei arrivato ai limiti dell'arena/
+        //void dont_pass_arena_limits (realpox.x,realpos.y, sn, dx, sn_compass, max_speed,role,side,arena,first_comp,degree)
+     }
+   //send start to the finisher or stop if you are the finisher/
+	//trhead
+		
+ 		//	 retour = pthread_mutex_unlock(&mutex);
+    		//	if (retour != 0)
+    		//	 {
+    		//	   perror("erreur mutex unlock");
+     		//	  exit(EXIT_FAILURE);
+    		//	 }
+}
 
 float deg2rad(float m_rot)
 {
@@ -159,9 +293,8 @@ float rad2deg(float m_rot)
 	return m_rot * 180 / M_PI;
 }
 
-void positioning(void* args)
-{	struct motandsens *donald = (struct motandsens *) args;
-	float encod_scale = M_PI * 5.5 / 360;
+void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
+{	float encod_scale = M_PI * 5.5 / 360;
 	float new_angs;
  	int retour;
 	float m_rot,disp_diff;
@@ -172,7 +305,6 @@ void positioning(void* args)
 	static float old_dx = 0;
 	static float old_x = 0;
 	static float old_y = 0;
- 	
  	float sign;
 	int new_sx,new_dx;
 	float disp_sx,disp_dx;
@@ -183,7 +315,7 @@ void positioning(void* args)
     			   perror("erreur mutex lock");
      			  exit(EXIT_FAILURE);
     			 }
-	if ( !get_sensor_value0(donald->sn_mag, &new_angs )) 
+	if ( !get_sensor_value0(sn_mag, &new_angs )) 
 	   {
 	   new_angs = 0;
 	   }
@@ -196,8 +328,8 @@ void positioning(void* args)
 	m_rot =  -(new_angs - last_angle);		//rotation
 	m_rot = deg2rad(m_rot);				//rotation to rad
 	last_angle = new_angs;				//refresh last angle
-	get_tacho_position(donald->sn,&new_sx);			
-	get_tacho_position(donald->dx,&new_dx);
+	get_tacho_position(sn,&new_sx);			
+	get_tacho_position(dx,&new_dx);
 	new_angs = deg2rad(new_angs);
 	if(flag==1)
 		teta = teta + m_rot;
@@ -212,35 +344,35 @@ void positioning(void* args)
 	old_sx = new_sx;
 	old_dx = new_dx;
  	old_y = old_y + disp_diff * sign * sin( teta );
-	old_x = old_x + disp_diff * sign * cos( teta ); 
- 	//donald->x=old_x;
- 	//donald->y=old_y;
+	old_x = old_x + disp_diff * sign * cos( teta ); 	
 	printf("y=%f and x=%f\n",old_y,old_x);
 	
 }
 
-void rotatedx(struct motandsens *donald, int rotation)
+void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
 	float wanted_c;
-	set_tacho_speed_sp( donald->sn, donald->max_speed/5);
-	set_tacho_ramp_up_sp( donald->sn, 0 );
-	set_tacho_ramp_down_sp( donald->sn, 0 );
-	set_tacho_speed_sp( donald->dx, donald->max_speed/5);
-	set_tacho_ramp_up_sp( donald->dx, 0 );
-	set_tacho_ramp_down_sp( donald->dx, 0 );
-	set_tacho_position_sp( donald->sn, 2 );
-	set_tacho_position_sp( donald->dx, -2);
-	if ( !get_sensor_value0(donald->sn_mag, &actual_angle )) {
+	//set_tacho_position( sn,0);
+	//set_tacho_position( dx,0);
+	set_tacho_speed_sp( sn, max_speed/5);
+	set_tacho_ramp_up_sp( sn, 0 );
+	set_tacho_ramp_down_sp( sn, 0 );
+	set_tacho_speed_sp( dx, max_speed/5);
+	set_tacho_ramp_up_sp( dx, 0 );
+	set_tacho_ramp_down_sp( dx, 0 );
+	set_tacho_position_sp( sn, 2 );
+	set_tacho_position_sp( dx, -2);
+	if ( !get_sensor_value0(sn_mag, &actual_angle )) {
                         actual_angle = 0;
 		}
 	wanted_c= actual_angle + rotation;
 
 	while((actual_angle-wanted_c)<=0)
 			{
-			set_tacho_command_inx( donald->sn, TACHO_RUN_TO_REL_POS );
-			set_tacho_command_inx( donald->dx, TACHO_RUN_TO_REL_POS );
+			set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+			set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 			Sleep(50);
-			if ( !get_sensor_value0(donald->sn_mag, &actual_angle )) 
+			if ( !get_sensor_value0(sn_mag, &actual_angle )) 
 				{
                 actual_angle = 0;
 				}
@@ -253,6 +385,8 @@ void rotatedx(struct motandsens *donald, int rotation)
 void rotatesx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
 	float wanted_c;
+	//set_tacho_position( sn,0);
+	//set_tacho_position( dx,0);
 	set_tacho_speed_sp( sn, max_speed/5);
 	set_tacho_ramp_up_sp( sn, 0 );
 	set_tacho_ramp_down_sp( sn, 0 );
@@ -362,7 +496,7 @@ void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {	
 	int i;
 	int retour;
-	float act_pos,distance_el;
+	int act_pos,distance_el;
 	set_tacho_time_sp( sn, 100 );
 	set_tacho_ramp_up_sp( sn, 2000 );
 	set_tacho_ramp_down_sp( sn, 2000 );
@@ -480,14 +614,14 @@ void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 	Sleep(500);
  			
 }  
-void put_down(struct motandsens *donald)
+void put_down(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			
 	int i;
 	//stabilize the ball
-	set_tacho_position_sp(donald->med, -90 );
+	set_tacho_position_sp( med, -90 );
 	Sleep(200);
 	for ( i = 0; i < 4; i++ ) {
-	set_tacho_command_inx(donald->med, TACHO_RUN_TO_REL_POS );
+	set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 	Sleep( 200 );
 	} 
 	Sleep(500);
@@ -497,7 +631,8 @@ void put_down(struct motandsens *donald)
 void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 {			
 	int i;
-	float distance_el, act_pos;
+	int distance_el;
+	float act_pos;
 	set_tacho_time_sp( sn, 800 );
 	set_tacho_ramp_up_sp( sn, 2000 );
 	set_tacho_ramp_down_sp( sn, 2000 );
@@ -520,45 +655,7 @@ void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 	Sleep(500);
  			
 }  
-void go_back(uint8_t sn,uint8_t dx,int distance,int max_speed,uint8_t sn_compass,uint8_t sn_mag)
-{
-float beginning, finish,partial;
-float value,initial_angle;
-set_tacho_time_sp( sn, 200 );
-set_tacho_ramp_up_sp( sn, 1500 );
-set_tacho_ramp_down_sp( sn, 1500);
-set_tacho_time_sp( dx, 200 );
-set_tacho_ramp_up_sp( dx, 1000 );
-set_tacho_ramp_down_sp( dx, 1000 );
-get_tacho_position( dx, &beginning);
-if ( !get_sensor_value0(sn_mag, &initial_angle)){
-                        initial_angle=0;
-                        }
-	
-finish = beginning;
-	
-while(finish > beginning-distance)
-{
-	set_tacho_time_sp( sn, 200 );
-	set_tacho_ramp_up_sp( sn, 1500 );
-	set_tacho_ramp_down_sp( sn, 1500 );
-	set_tacho_time_sp( dx, 200);
-	set_tacho_ramp_up_sp( dx, 1500 );
-	set_tacho_ramp_down_sp( dx, 1500 );
-        set_tacho_speed_sp( sn, -max_speed * 1 / 6 );
-	set_tacho_speed_sp( dx, -max_speed * 1 / 6 );
-       	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
-	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
-        get_tacho_position( dx, &partial);
-	control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
-	get_tacho_position( dx, &finish);
-	finish+=(finish-partial);
-}
 
-
-
-
-}
 float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance,uint8_t sn_compass, uint8_t sn_mag)
 {	//aggiungere funzione che controlla anche il motore 
 	//sinistro e vede se sono andati dritti tutti e due 
@@ -566,7 +663,7 @@ float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sona
 	//can be used to take the ball once detected 
 	//we have to add the angle for the ball a routine to turn till this angle
 	//and than go and take te ball
-float beginning, finish,partial;
+int beginning,finish,partial;
 int retour;
 float value;
 float initial_angle;
@@ -680,29 +777,12 @@ control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
 return (finish-beginning)/21; //return the distance in cm
 }
 void* positioning_sys(void* args)
-{	int i = 0;
- 	char string[58];
+{
 	struct motandsens *donald = (struct motandsens *) args;	
 	while(1)
 	{
-	        positioning(donald);
-		Sleep(100);
-		i+=1;
-		if(i==20)
-		{
-			//send position
-			/*
-			*((uint16_t *) string) = donald->msgId++;
-			string[2] = TEAM_ID;
-			string[3] = 0xFF;
-			string[4] = MSG_POSITION;
-			string[5] = (int)donald->x;          /* x */
-			/*string[6]= 0x00;
-			string[7] = (int)donald->y;	    /* y */
-			/*string[8] = 0x00;
-			write(s, string, 9);*/
-			i=0;
-		}
+        positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag);
+	Sleep(100);
 	}
 }
 int colorsense(uint8_t sn,uint8_t dx, uint8_t med, int max_speed, uint8_t sn_color)
@@ -762,8 +842,8 @@ switch(donald->number)
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 		Sleep(1000);
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-		rotatedx(donald,90);
-		put_down(donald);		
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);		
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1240,donald->sn_compass, donald->sn_mag);
 		//put_down(donald->sn,donald->dx,donald->med,donald->max_speed);
 		Sleep(1000);
@@ -824,7 +904,7 @@ switch(donald->number)
 		//	}
 
 		//TURN RIGHT
-		rotatedx(donald, 180);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed, 180, donald->sn_mag);
 		Sleep(1000);
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag);
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
@@ -864,7 +944,7 @@ switch(donald->number)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
 		//TURN RIGHT to avoid first obstacle
 		
-		rotatedx(donald,88);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,88,donald->sn_mag);
 		
 		//move from 1m to the right
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
@@ -886,7 +966,7 @@ switch(donald->number)
 		else	
 			turn_pos=initial_pos-final_pos;*/
 		
-		rotatedx(donald,87);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,87,donald->sn_mag);
 		// go until final base
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3220,donald->sn_compass,donald->sn_mag);
 		
@@ -905,12 +985,12 @@ switch(donald->number)
 		//printf("I'am in movements after turn\n");	
 	
 		//TURN LEFT
-		rotatedx(donald,89);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,89,donald->sn_mag);
 		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1615,donald->sn_compass,donald->sn_mag); 
 		//TURN LEFT to avoid second obstacle
 	
-		rotatedx(donald,87);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,87,donald->sn_mag);
 		// go around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1140, donald->sn_compass,donald->sn_mag);
 		//TURN RIGHT 
@@ -934,7 +1014,7 @@ switch(donald->number)
 	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
 		//TURN RIGHT to avoid first obstacle
 		
-		rotatedx(donald,90);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		
 		//move from 1m to the right
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
@@ -953,7 +1033,7 @@ switch(donald->number)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1159,donald->sn_compass,donald->sn_mag);
 		//turn around 
 		
-		rotatedx(donald,180);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180,donald->sn_mag);
 		
 		//move to ball area (maybe won't be needed, depend on how much it goes backward)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,370,donald->sn_compass,donald->sn_mag);
@@ -968,7 +1048,7 @@ switch(donald->number)
 		else	
 			turn_pos=final_pos-initial_pos;*/
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,84,donald->sn_mag);
-		put_down(donald);	
+		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
 		
 		
@@ -987,13 +1067,13 @@ switch(donald->number)
 		
 		//TURN LEFT
 		
-		rotatedx(donald,90);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		
 		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1705,donald->sn_compass,donald->sn_mag); 
 		//TURN LEFT to avoid second obstacle
 		
-		rotatedx(donald,90);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		
 		// go after ball area around 60 cm (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1159,donald->sn_compass,donald->sn_mag);
@@ -1013,8 +1093,8 @@ switch(donald->number)
 	   		turn_pos=359-initial_pos+final_pos;
 		else	
 			turn_pos=final_pos-initial_pos;*/
-		rotatedx(donald,84);
-		put_down(donald);	
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,84,donald->sn_mag);
+		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
 		
 		
@@ -1030,22 +1110,9 @@ switch(donald->number)
 	//big arena left, begin at up corner test : grab the ball 
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,722,donald->sn_compass, donald->sn_mag);
 		//TURN LEFT
-		/*float xbefore,ybefore;*/
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,45,donald->sn_mag);
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,240,donald->sn_compass, donald->sn_mag);
-	        research(donald, 45);
-		////////////////////////////////////////////////////////
-	/*	float angleofrotationback;
-		float deltax,deltay;
-		deltax=(donald->x)-xbefore;
-		deltay=(donald->y)-xbefore;
-		distanceback=sqrt(((donald->x)-xbefore)^2+((donald->x)-xbefore)^2)*19
-		angleofrotationback=atang(deltax/deltay)*180/M_PI;
-		printf("angle of turning back: %f",angleofrotationback);
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,45,donald->sn_mag);
-		go_back(uint8_t sn,uint8_t dx,int distanceback,int max_speed,uint8_t sn_compass,uint8_t sn_mag)
-		*/
-			
+	        research(donald->sn,donald->dx,donald->max_speed, donald->sn_compass, 45, donald->med,donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		Sleep(1000);
 		break;	
 	case 10 :
@@ -1074,146 +1141,176 @@ char s[ 256 ];
 int val;
 float value;
 uint32_t n, ii;
-int prova1, prova2, prova3;
-	
-//assign motors to proper pointer //
-prova1=ev3_search_tacho_plugged_in(65,0, &donald->dx, 0 );
-Sleep(100);
-prova2=ev3_search_tacho_plugged_in(68,0, &donald->sn, 0 );
-Sleep(100);
-prova3=ev3_search_tacho_plugged_in(67,0, &donald->med, 0 );
-Sleep(100);
-printf("prova 1 = %d \n", prova1);
-Sleep(500);
-printf("prova 2 = %d \n", prova2);
-Sleep(500);
-printf("prova 3 = %d \n", prova3);
-	
-//init left motor//
-get_tacho_max_speed( donald->sn, &donald->max_speed );
-printf("value of buffer :%d\n", donald->sn);
-printf("  max_speed = %d\n", donald->max_speed );
-set_tacho_stop_action_inx( donald->sn, TACHO_COAST );
-set_tacho_polarity( donald->sn, "normal" );
-set_tacho_speed_sp( donald->sn, donald->max_speed * 2 / 3 );
-set_tacho_time_sp( donald->sn, 100 );
-set_tacho_ramp_up_sp( donald->sn, 2000 );
-set_tacho_ramp_down_sp( donald->sn, 2000 );
-set_tacho_position( donald->sn,0);
-Sleep( 100 );
-	
-//init right motor//               
-set_tacho_stop_action_inx( donald->dx, TACHO_COAST );
-set_tacho_polarity( donald->dx, "normal" );
-set_tacho_speed_sp( donald->dx, donald->max_speed * 2 / 3 );
-set_tacho_time_sp( donald->dx, 100 );
-set_tacho_ramp_up_sp( donald->dx, 2000 );
-set_tacho_ramp_down_sp( donald->dx, 2000 );
-set_tacho_position( donald->dx,0);
-Sleep( 100 );
-fflush( stdout );
-	
-//init grabber motor//
-set_tacho_stop_action_inx( donald->med, TACHO_COAST );
-set_tacho_polarity( donald->med, "normal" );
-set_tacho_speed_sp( donald->med, donald->max_speed/12);
-set_tacho_time_sp( donald->med, 6000 );
-set_tacho_ramp_up_sp( donald->med, 2000 );
-set_tacho_ramp_down_sp( donald->med, 2000 );
-Sleep( 100 );
+	int prova1, prova2, prova3;
+	/*
+ 	printf( "Found tacho motors:\n" );
+        for ( i = 0; i < DESC_LIMIT; i++ ) {
+                if ( ev3_tacho[ i ].type_inx != TACHO_TYPE__NONE_ ) {
+                        printf( "  type = %s\n", ev3_tacho_type( ev3_tacho[ i ].type_inx ));
+                        printf( "  port = %s\n", ev3_tacho_port_name( i, s ));
+                }
+        }*/
+	prova1=ev3_search_tacho_plugged_in(65,0, &donald->dx, 0 );
+	Sleep(100);
+	prova2=ev3_search_tacho_plugged_in(68,0, &donald->sn, 0 );
+	Sleep(100);
+	prova3=ev3_search_tacho_plugged_in(67,0, &donald->med, 0 );
+	Sleep(100);
+	printf("prova 1 = %d \n", prova1);
+	Sleep(500);
+	printf("prova 2 = %d \n", prova2);
+	Sleep(500);
 
-//Init all sensors
-ev3_sensor_init();
+	printf("prova 3 = %d \n", prova3);
+	Sleep(500);
+      //if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->sn, 0 )){
+                get_tacho_max_speed( donald->sn, &donald->max_speed );
+                printf("value of buffer :%d\n", donald->sn);
+                printf("  max_speed = %d\n", donald->max_speed );
+                set_tacho_stop_action_inx( donald->sn, TACHO_COAST );
+                set_tacho_polarity( donald->sn, "normal" );
+                set_tacho_speed_sp( donald->sn, donald->max_speed * 2 / 3 );
+                set_tacho_time_sp( donald->sn, 100 );
+                set_tacho_ramp_up_sp( donald->sn, 2000 );
+                set_tacho_ramp_down_sp( donald->sn, 2000 );
+		set_tacho_position( donald->sn,0);
+               // set_tacho_command_inx( donald->sn, TACHO_RUN_TIMED );
+                /* Wait tacho stop */
+                Sleep( 100 );
 
-printf( "Found sensors:\n" );
-for ( i = 0; i < DESC_LIMIT; i++ ) {
-	if ( ev3_sensor[ i ].type_inx != SENSOR_TYPE__NONE_ ) {
-		printf( "  type = %s\n", ev3_sensor_type( ev3_sensor[ i ].type_inx ));
-		printf( "  port = %s\n", ev3_sensor_port_name( i, s ));
+    /*    } else {
+                printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
+                fflush( stdout );
+        }*/
+//Second motor
+/*if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->dx, 1 )) {
+                printf( "LEGO_EV3_L_MOTOR 2 is found, run for 5 sec...\n" );
+  */             
+                set_tacho_stop_action_inx( donald->dx, TACHO_COAST );
+                set_tacho_polarity( donald->dx, "normal" );
+                set_tacho_speed_sp( donald->dx, donald->max_speed * 2 / 3 );
+                set_tacho_time_sp( donald->dx, 100 );
+                set_tacho_ramp_up_sp( donald->dx, 2000 );
+	        set_tacho_ramp_down_sp( donald->dx, 2000 );
+		set_tacho_position( donald->dx,0);
+                //set_tacho_command_inx( donald->dx, TACHO_RUN_TIMED );
+                /* Wait tacho stop */
+                Sleep( 100 );
 		fflush( stdout );
-		if ( get_sensor_mode( i, s, sizeof( s ))) {
-			printf( "  mode = %s\n", s );
-		}
-		if ( get_sensor_num_values( i, &n )) {
-			for ( ii = 0; ii < n; ii++ ) {
-				if ( get_sensor_value( ii, i, &val )) {
-					printf( "  value%d = %d\n", ii, val );
-				}
+
+      /*  } else {
+                printf( "LEGO_EV3_L_MOTOR 2 is NOT found\n" );
+		fflush( stdout );
+        }*/
+//medium motor
+	//if ( ev3_search_tacho( LEGO_EV3_L_MOTOR, &donald->med, 2 )) {
+		
+
+	//	printf( "LEGO_EV3_L_MOTOR 3 is found, \n" );
+		
+		set_tacho_stop_action_inx( donald->med, TACHO_COAST );
+		set_tacho_polarity( donald->med, "normal" );
+		set_tacho_speed_sp( donald->med, donald->max_speed/12);
+		set_tacho_time_sp( donald->med, 6000 );
+		set_tacho_ramp_up_sp( donald->med, 2000 );
+		set_tacho_ramp_down_sp( donald->med, 2000 );
+		//set_tacho_command_inx( donald->med, TACHO_RUN_TIMED );
+		/* Wait tacho stop */
+		Sleep( 100 );
+	
+	/*} else {
+		printf( "LEGO_EV3_L_MOTOR 1 is NOT found\n" );
+		fflush( stdout );
+	} */
+	
+//Run all sensors
+        ev3_sensor_init();
+
+        printf( "Found sensors:\n" );
+        for ( i = 0; i < DESC_LIMIT; i++ ) {
+                if ( ev3_sensor[ i ].type_inx != SENSOR_TYPE__NONE_ ) {
+                        printf( "  type = %s\n", ev3_sensor_type( ev3_sensor[ i ].type_inx ));
+                        printf( "  port = %s\n", ev3_sensor_port_name( i, s ));
+			fflush( stdout );
+                        if ( get_sensor_mode( i, s, sizeof( s ))) {
+                                printf( "  mode = %s\n", s );
+                        }
+                        if ( get_sensor_num_values( i, &n )) {
+                                for ( ii = 0; ii < n; ii++ ) {
+                                        if ( get_sensor_value( ii, i, &val )) {
+                                                printf( "  value%d = %d\n", ii, val );
+                                        }
+                                }
+                        }
+                }
+	}
+        if ( ev3_search_sensor( LEGO_EV3_TOUCH, &donald->sn_touch, 0 )) {
+                //printf( "TOUCH sensor is found, press BUTTON for EXIT...\n" );
+        }
+
+                if (ev3_search_sensor(HT_NXT_COMPASS, &donald->sn_compass,0)){
+                        //printf("COMPASS found, reading compass...\n");
+                        if ( !get_sensor_value0(donald->sn_compass, &value )) {
+                        value = 0;
+                        }
+                        printf( "compass\r(%f) \n", value);
+                        fflush( stdout );
+                }
+                if ( ev3_search_sensor( LEGO_EV3_COLOR, &donald->sn_color, 0 )) {
+			printf( "COLOR sensor is found, setting...\n" );
+			set_sensor_mode( donald->sn_color, "COL-COLOR" );
+			if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
+				val = 0;
 			}
+			printf( "\r(%s) \n", color[ val ]);
+			printf( "valore del colore e': %d\n",val);
+			fflush( stdout );
 		}
-	}
-}
+                if (ev3_search_sensor(LEGO_EV3_US, &donald->sn_sonar,0)){
+                        //printf("SONAR found, reading sonar...\n");
+                        if ( !get_sensor_value0(donald->sn_sonar, &value )) {
+                                value = 0;
+                        }
+                        printf( "\r(%f) \n", value);
+			fflush( stdout );
+                }
+                if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
+                        //printf("GYRO found, reading magnet...\n");
+			set_sensor_mode( donald->sn_mag, "GYRO-ANG" );
+                        if ( !get_sensor_value0(donald->sn_mag, &value )) {
+                                value = 0;
+                        }
+                        printf( "\r(%f) \n", value);
+                        fflush( stdout );
+		}
 	
-//Init compass sensor
-if (ev3_search_sensor(HT_NXT_COMPASS, &donald->sn_compass,0)){
-	//printf("COMPASS found, reading compass...\n");
-	if ( !get_sensor_value0(donald->sn_compass, &value )) {
-	value = 0;
-	}
-	printf( "compass\r(%f) \n", value);
-	fflush( stdout );
-}
-	
-//Init color sensor
-if ( ev3_search_sensor( LEGO_EV3_COLOR, &donald->sn_color, 0 )) {
-	set_sensor_mode( donald->sn_color, "COL-COLOR" );
-	if ( !get_sensor_value( 0, donald->sn_color, &val ) || ( val < 0 ) || ( val >= COLOR_COUNT )) {
-		val = 0;
-	}
-	printf( "\r(%s) \n", color[ val ]);
-	printf( "valore del colore e': %d\n",val);
-	fflush( stdout );
-}
-	
-//Init sonar sensor
-if (ev3_search_sensor(LEGO_EV3_US, &donald->sn_sonar,0)){
-	if ( !get_sensor_value0(donald->sn_sonar, &value )) {
-		value = 0;
-	}
-	printf( "\r(%f) \n", value);
-	fflush( stdout );
-}
-
-//Init Gyro sensor
-if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
-	set_sensor_mode( donald->sn_mag, "GYRO-ANG" );
-	if ( !get_sensor_value0(donald->sn_mag, &value )) {
-		value = 0;
-	}
-	printf( "\r(%f) \n", value);
-	fflush( stdout );
-}
-
-//Init BT connection
-donald->msgId = 0;
 return donald;
 }
 
-void research(struct motandsens *donald, int max_turn_degree)
+void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_turn_degree, uint8_t med, uint8_t sn_color,uint8_t sn_mag, uint8_t sn_sonar)
 {	//Take the initial position than move to 
 float initial_angle;
 float start_angle, final_angle, middle_angle,turn_angle;
-float pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
+int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
 int i, flag_1,flag_2,grab;
-	middle_angle = 0;
 float points[1000]={0};
-if ( !get_sensor_value0(donald->sn_mag, &initial_angle )) 
+if ( !get_sensor_value0(sn_mag, &initial_angle )) 
    {
    initial_angle = 0;
    }
-get_tacho_position(donald->sn, &pos_in_sn);
-get_tacho_position(donald->dx, &pos_in_dx);
+get_tacho_position(sn, &pos_in_sn);
+get_tacho_position(dx, &pos_in_dx);
 flag_1=0;
 flag_2=0;  // because of vibration the first value scanned after first angle must be cecked
 //turn right 45 ° and start moving 2° each step
-rotatedx(donald,35);	
+rotatedx(sn,dx,sn_compass,max_speed,35,sn_mag);	
 Sleep(200);
 for(i=0;i<90;i++)
 {
 	//printf("I'M here\n");
 	Sleep(500);
-	get_sensor_value0(donald->sn_sonar, &points[i]);
+	get_sensor_value0(sn_sonar, &points[i]);
 	if(flag_1==1 && flag_2==0) //if you have found the ball the first value after that can be wrong due to vibrations
 	{
 		if(points[i] > points[i-1] + 200)
@@ -1225,25 +1322,25 @@ for(i=0;i<90;i++)
 	if(i!=0 && ((points[i-1]-points[i])>=250) && flag_1==0)
 	{
 	 //this is the first balls' extremity 
-		if ( !get_sensor_value0(donald->sn_mag, &start_angle )) 
+		if ( !get_sensor_value0(sn_mag, &start_angle )) 
 		{
 		start_angle = 0;
 		}
 		printf("first_angle%f\n",start_angle);
-		get_tacho_position(donald->sn,&pos_in_ball_sn);
-		get_tacho_position(donald->dx,&pos_in_ball_dx);
+		get_tacho_position(sn,&pos_in_ball_sn);
+		get_tacho_position(dx,&pos_in_ball_dx);
 		flag_1=1;
 	}
 	if(i!=0 && ((points[i]-points[i-1])>=250) && flag_1==1)
 	{
 	  //this is the last point of the ball detected
-		if ( !get_sensor_value0(donald->sn_mag, &final_angle )) 
+		if ( !get_sensor_value0(sn_mag, &final_angle )) 
 		{
 		final_angle = 0;
 		}
 		printf("final_angle%f\n",final_angle);
-		get_tacho_position(donald->sn,&pos_in_ball_sn);
-		get_tacho_position(donald->dx,&pos_in_ball_dx);
+		get_tacho_position(sn,&pos_in_ball_sn);
+		get_tacho_position(dx,&pos_in_ball_dx);
 		flag_1=2;
 
 	}
@@ -1256,7 +1353,7 @@ for(i=0;i<90;i++)
 		break;
 	}
 	//rotatesx(sn,dx,sn_compass,max_speed,1,sn_mag);
-	rotateforscan(donald->sn,donald->dx,donald->max_speed);
+	rotateforscan(sn,dx,max_speed);
 	
 }
 //it has finished the search
@@ -1266,22 +1363,22 @@ for(i=0;i<90;i++)
 else
 	turn_angle=final_angle-middle_angle;*/
 turn_angle = abs( middle_angle - final_angle );
-rotatedx(donald,turn_angle); 
+rotatedx(sn,dx,sn_compass,max_speed,turn_angle,sn_mag); 
 Sleep(200);
 /*rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 elapsed_dis=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,4000,sn_compass,sn_mag);
-rotatedx(donald,180);*/
-grab=colorsense(donald->sn,donald->dx,donald->med,donald->max_speed,donald->sn_color);
+rotatedx(sn,dx,sn_compass,max_speed,180,sn_mag);*/
+grab=colorsense(sn,dx,med,max_speed,sn_color);
 printf("grab=%d\n",grab);
 while(grab==0)
 {
-	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed/2,donald->sn_sonar,95,donald->sn_compass,donald->sn_mag);
-	grab=colorsense(donald->sn,donald->dx,donald->med,donald->max_speed,donald->sn_color);
+	go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,95,sn_compass,sn_mag);
+	grab=colorsense(sn,dx,med,max_speed,sn_color);
 	printf("grab=%d\n",grab);
 }
 //colorsense(sn,dx,med,max_speed,sn_color);
 /*rotatesx(sn,dx,sn_compass,max_speed,180,sn_mag);
-rotatedx(donald,middle_angle);*/
+rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);*/
 //hope it will work=)
 return;
 }
@@ -1289,23 +1386,18 @@ return;
 
 	
 int main( int argc, char **argv )
-{	//pid_t ret;
- 	//char *name;
-        //int i,d,n;
+{	pid_t ret;
+ 	char *name;
+        int i,d,n;
 	struct motandsens *donald=malloc(sizeof(struct motandsens));
         FLAGS_T state;
         int val;
 	int act_pos;
-        //float value;      
+        float value;      
  	int retour;		
 	pthread_t thread_movement, thread_position, thread_colorsense; 
         pthread_mutex_init(&mutex, NULL);
  	int caseNumber;
-	//for server //
-	//struct sockaddr_rc addr = { 0 };
-	//int status;
-	//char string[58];
-	//for server //
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
         ev3_brick_addr = "192.168.0.204";
@@ -1329,75 +1421,13 @@ int main( int argc, char **argv )
     return EXIT_FAILURE;
   }*/
  
-        caseNumber = atoi(argv[1]);
+  caseNumber = atoi(argv[1]);
  
         printf( "*** ( EV3 ) Hello! ***\n" );
 	
 	donald = inizialization(donald);
  	donald->number = caseNumber;
- 	
-
-	///////////////////////////////////////////////////////////////////////
-	////								   ////
-	////			CONNECTION TO SERVER			   ////
-	////								   ////
-	///////////////////////////////////////////////////////////////////////
-    struct sockaddr_rc addr = { 0 };
-    int status;
-    
-    /* allocate a socket */
-    s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
-
-    /* set the connection parameters (who to connect to) */
-    addr.rc_family = AF_BLUETOOTH;
-    addr.rc_channel = (uint8_t) 1;
-    str2ba (SERV_ADDR, &addr.rc_bdaddr);
-
-    /* connect to server */
-    status = connect(s, (struct sockaddr *)&addr, sizeof(addr));
-
-    /* if connected */
-    if( status == 0 ) {
-        char string[58];
-
-        /* Wait for START message */
-        read_from_server (s, string, 9);
-        if (string[4] == MSG_START) {
-            printf ("Received start message!\n");
-            rank = (unsigned char) string[5];
-	    side = (unsigned char) string[6];
-            next = (unsigned char) string[7];
-			
-        }
-		if (side==0){
-		    printf("I am on the right side\n");
-		}
-		else {
-			printf("I am on the left side\n");
-		}
-		
-        if (rank == 0){
-            printf("beginner\n");
-	    }
-        else
-            printf("beginner\n");
-
-
-
-    } else {
-        fprintf (stderr, "Failed to connect to server...\n");
-        sleep (2);
-	close(s);
-        exit (EXIT_FAILURE);
-    }
-
-   
-	///////////////////////////////////////////////////////////////////////
-	////								   ////
-	////			CONNECTION ESTABLISHED			   ////
-	////								   ////
-	///////////////////////////////////////////////////////////////////////
-	
+ 
 	retour = pthread_create(&thread_movement, NULL, movements, donald);
 	if (retour != 0)
 	{
@@ -1433,11 +1463,9 @@ int main( int argc, char **argv )
 	  perror("pthread_join colorsens");
 	  return EXIT_FAILURE;
 	} 	*/
-	close (s);
-        sleep (5);
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
-	
+
         return ( 0 );       
 
 }
