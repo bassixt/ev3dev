@@ -646,10 +646,10 @@ void* positioning_sys(void* args)
 		string[2] = TEAM_ID;
 		string[3] = 0xFF;
 		string[4] = MSG_POSITION;
-		string[5] = x_conv_LSB;          // x 
-		string[6]= x_conv_MSB;
-		string[7] = y_conv_LSB;	    // y 
-		string[8] = y_conv_MSB;
+		string[5] = 51;          // x 
+		string[6] = 20;
+		string[7] = 20;	    // y 
+		string[8] = 51;
 		write(s, string, 9);
 		seconds_bt = 0;
 	}
