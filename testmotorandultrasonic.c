@@ -514,7 +514,8 @@ void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 	get_tacho_position( dx, &act_pos);
 	Sleep(500);
  			
-}  
+} 
+/*
 void go_back(uint8_t sn,uint8_t dx,int distance,int max_speed,uint8_t sn_compass,uint8_t sn_mag)
 {
 float beginning, finish,partial;
@@ -549,7 +550,7 @@ while(finish > beginning-distance)
 	get_tacho_position( dx, &finish);
 	finish+=(finish-partial);
 }
-
+*/
 
 
 
