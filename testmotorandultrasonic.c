@@ -627,7 +627,7 @@ void* positioning_sys(void* args)
 {	int seconds_bt=0;
  	char string[58];
  	int16_t x_conv,y_conv;
- 	int8_t x_conv_MSB,x_conv_LSB,y_conv_MSB,y_conv_LSB;
+ 	char x_conv_MSB,x_conv_LSB,y_conv_MSB,y_conv_LSB;
 	struct motandsens *donald = (struct motandsens *) args;	
 	while(1)
 	{
