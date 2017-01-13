@@ -1019,21 +1019,21 @@ switch(donald->number)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,722,donald->sn_compass, donald->sn_mag);
 		//TURN LEFT
 		
-		xbefore=donald->x;
-		ybefore=donald->y;
+		//xbefore=donald->x;
+		//ybefore=donald->y;
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,45,donald->sn_mag);
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,240,donald->sn_compass, donald->sn_mag);
 	        research(donald, 45);
 		////////////////////////////////////////////////////////
 
-		deltax=(donald->x)-xbefore;
+	/*	deltax=(donald->x)-xbefore;
 		deltay=(donald->y)-xbefore;
 		distanceback=sqrt(pow(((donald->x)-xbefore),2)+pow(((donald->x)-xbefore),2))*19;
 		angleofrotationback=atan(abs(deltax)/abs(deltay))*180/M_PI;
 		printf("angle of turning back: %f",angleofrotationback);
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,45,donald->sn_mag);
 		go_back(donald->sn,donald->dx,distanceback,donald->max_speed,donald->sn_compass,donald->sn_mag);
-		
+	*/	
 		Sleep(1000);
 		break; 
 	case 10 :
