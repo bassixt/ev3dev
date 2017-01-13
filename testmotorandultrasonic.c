@@ -829,12 +829,17 @@ control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
 return (finish-beginning)/21; //return the distance in cm
 }
 void* positioning_sys(void* args)
-{
+{	int seconds_bt=0;
 	struct motandsens *donald = (struct motandsens *) args;	
 	while(1)
 	{
-        positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag);
+	positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag);
 	Sleep(100);
+	seconds_bt=seconds_bt+1;
+	if (seconds_bt == 20)
+	{
+		seconds_bt = 0;
+	}
 	}
 }
 int colorsense(uint8_t sn,uint8_t dx, uint8_t med, int max_speed, uint8_t sn_color)
