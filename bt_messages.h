@@ -57,7 +57,7 @@ unsigned char side=0;
 int s;
 uint16_t msgId=0;
 
-/*
+
 typedef struct motandsens test;
 struct motandsens {
 	uint8_t sn;
@@ -70,13 +70,13 @@ struct motandsens {
 	uint8_t sn_mag;
         int max_speed;
 	float x,y;
-        int role;/*0 beg 1 fin*/
-     //   int arena;/*0 small1 big*/
-      //  int side;/*0 right 1 left*/
-//	int number;	   
-/*
+       // int role;/*0 beg 1 fin*/
+       // int arena;/*0 small1 big*/
+       //int side;/*0 right 1 left*/
+	int number;	   
 
-};*/
+
+};
 
 //function to read from server
 int read_from_server (int sock, char *buffer, size_t maxSize);
