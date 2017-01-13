@@ -636,10 +636,10 @@ void* positioning_sys(void* args)
 	seconds_bt=seconds_bt+1;
 	if (seconds_bt == 20)
 	{	//send position
-	 	x_conv_MSB = (0xFF && ((int16_t)donald->x<<8);
-	 	x_conv_LSB = (0xFF &&  ((int16_t)donald->x);
-		y_conv_MSB = (0xFF && ((int16_t)donald->y<<8);
-		y_conv_LSB = (0xFF &&  ((int16_t)donald->y);
+	 	x_conv_MSB = (0xFF && ((int16_t)donald->x<<8));
+	 	x_conv_LSB = (0xFF &&  ((int16_t)donald->x));
+		y_conv_MSB = (0xFF && ((int16_t)donald->y<<8));
+		y_conv_LSB = (0xFF &&  ((int16_t)donald->y));
 		printf("x: %d y: %d\n",x_conv,y_conv);
 		*((uint16_t *) string) = msgId++;
 		string[2] = TEAM_ID;
