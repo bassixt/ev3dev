@@ -14,6 +14,7 @@
 #include <sys/socket.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
+#include "bt_messages.h"
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
 
@@ -83,7 +84,7 @@ struct motandsens {
 /////			BT FUNCTIONS			////
 /////			   START			////
 ////////////////////////////////////////////////////////////
-int read_from_server (int sock, char *buffer, size_t maxSize) {
+/*int read_from_server (int sock, char *buffer, size_t maxSize) {
     int bytes_read = read (sock, buffer, maxSize);
 
     if (bytes_read <= 0) {
@@ -95,7 +96,7 @@ int read_from_server (int sock, char *buffer, size_t maxSize) {
     printf ("[DEBUG] received %d bytes\n", bytes_read);
 
     return bytes_read;
-}
+}*/
 ////////////////////////////////////////////////////////////
 /////			BT FUNCTIONS			////
 /////			   FINISH			////
