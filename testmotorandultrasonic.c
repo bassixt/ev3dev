@@ -53,6 +53,7 @@ unsigned char previous = 0xFF;
 unsigned char next = 0xFF;
 unsigned char side=0;
 int s;
+uint16_t msgId=0;
 
 
 typedef struct motandsens test;
@@ -70,15 +71,11 @@ struct motandsens {
         int role;/*0 beg 1 fin*/
         int arena;/*0 small1 big*/
         int side;/*0 right 1 left*/
-	int number;	
-    
+	int number;	   
 
 
 };
 
-struct pos {
-	float x,y
-	};
 //calculate the the condition for the loop in the next function
 
 
@@ -628,7 +625,7 @@ return (finish-beginning)/21; //return the distance in cm
 void* positioning_sys(void* args)
 {	int seconds_bt=0;
  	char string[58];
- 	uint16_t msgId=0;
+ 	
 	struct motandsens *donald = (struct motandsens *) args;	
 	while(1)
 	{
