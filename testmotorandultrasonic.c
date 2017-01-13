@@ -634,7 +634,7 @@ void* positioning_sys(void* args)
 	Sleep(100);
 	seconds_bt=seconds_bt+1;
 	if (seconds_bt == 20)
-	{	
+	{	printf("provauint x:\n",(uint16_t)donald->x)
 		//send position
 		printf("x: %f y: %f\n",donald->x,donald->y);
 		*((uint16_t *) string) = msgId++;
