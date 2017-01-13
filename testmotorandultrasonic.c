@@ -640,15 +640,16 @@ void* positioning_sys(void* args)
 	 	x_conv_LSB = (0xFF &&  ((int16_t)donald->x));
 		y_conv_MSB = (0xFF && ((int16_t)donald->y<<8));
 		y_conv_LSB = (0xFF &&  ((int16_t)donald->y));
-		printf("x: %d y: %d\n",x_conv,y_conv);
+		printf("x: %d x: %d\n",x_conv_LSB,x_conv_MSB);
+		printf("y: %d y: %d\n",y_conv_LSB,y_conv_MSB);
 		*((uint16_t *) string) = msgId++;
 		string[2] = TEAM_ID;
 		string[3] = 0xFF;
 		string[4] = MSG_POSITION;
-		string[5] = x_conv_MSB;          // x 
-		string[6]= x_conv_LSB;
-		string[7] = y_conv_MSB;	    // y 
-		string[8] = y_conv_LSB;
+		string[5] = x_conv_LSB;          // x 
+		string[6]= x_conv_MSB;
+		string[7] = y_conv_LSB;	    // y 
+		string[8] = y_conv_MSB;
 		write(s, string, 9);
 		seconds_bt = 0;
 	}
