@@ -19,8 +19,8 @@
 //////////////////////////////////
 //         FOR BT               //
 //////////////////////////////////
-#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
-#define TEAM_ID     10                       /* team ID */
+/*#define SERV_ADDR   "00:1E:10:00:06:2B"     // address of the server is 
+#define TEAM_ID     10                      // team ID 
 
 #define MSG_ACK     0
 #define MSG_NEXT    1
@@ -36,7 +36,7 @@ unsigned char previous = 0xFF;
 unsigned char next = 0xFF;
 unsigned char side=0;
 int s;
-
+*/
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
 
@@ -69,21 +69,15 @@ struct motandsens {
         int max_speed;
 	float x,y;
 	int number;
-	int s; /*used to allocate the socket*/
 	unsigned char rank;
 	unsigned char length;
 	unsigned char previous;
 	unsigned char next;
 	unsigned char side;
-	uint16_t msgId;
+	/*int s; //used to allocate the socket
+	uint16_t msgId;*/
 
 };
-
-struct pos {
-	float x,y
-	};
-//calculate the the condition for the loop in the next function
-
 
 ////////////////////////////////////////////////////////////
 /////			BT FUNCTIONS			////
@@ -101,6 +95,7 @@ struct pos {
     printf ("[DEBUG] received %d bytes\n", bytes_read);
     return bytes_read;
 }*/
+/*
 int read_from_server (int sock, char *buffer, size_t maxSize) {
     int bytes_read = read (sock, buffer, maxSize);
 
@@ -113,7 +108,7 @@ int read_from_server (int sock, char *buffer, size_t maxSize) {
     printf ("[DEBUG] received %d bytes\n", bytes_read);
 
     return bytes_read;
-}
+}*/
 ////////////////////////////////////////////////////////////
 /////			BT FUNCTIONS			////
 /////			   FINISH			////
@@ -1185,7 +1180,7 @@ if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
 }
 
 //Init BT connection
-donald->msgId = 0;
+//donald->msgId = 0;
 return donald;
 }
 
@@ -1328,7 +1323,7 @@ int main( int argc, char **argv )
 	  stderr);
     return EXIT_FAILURE;
   }*/
- 
+ 	(void)argc;
         caseNumber = atoi(argv[1]);
  
         printf( "*** ( EV3 ) Hello! ***\n" );
@@ -1342,25 +1337,25 @@ int main( int argc, char **argv )
 	////			CONNECTION TO SERVER			   ////
 	////								   ////
 	///////////////////////////////////////////////////////////////////////
-    struct sockaddr_rc addr = { 0 };
+/*    struct sockaddr_rc addr = { 0 };
     int status;
     
-    /* allocate a socket */
-    s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
+    // allocate a socket
+     s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 
-    /* set the connection parameters (who to connect to) */
+     set the connection parameters (who to connect to) 
     addr.rc_family = AF_BLUETOOTH;
     addr.rc_channel = (uint8_t) 1;
     str2ba (SERV_ADDR, &addr.rc_bdaddr);
 
-    /* connect to server */
+    // connect to server 
     status = connect(s, (struct sockaddr *)&addr, sizeof(addr));
 
-    /* if connected */
+    // if connected 
     if( status == 0 ) {
         char string[58];
 
-        /* Wait for START message */
+        // Wait for START message 
         read_from_server (s, string, 9);
         if (string[4] == MSG_START) {
             printf ("Received start message!\n");
@@ -1390,7 +1385,7 @@ int main( int argc, char **argv )
 	close(s);
         exit (EXIT_FAILURE);
     }
-
+*/
    
 	///////////////////////////////////////////////////////////////////////
 	////								   ////
