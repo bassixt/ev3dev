@@ -21,7 +21,7 @@
 
 // UNIX //////////////////////////////////////////
 #else
-
+/*
 #include <unistd.h>
 #define Sleep( msec ) usleep(( msec ) * 1000 )
 
@@ -32,6 +32,7 @@ const char const *color[] = { "?", "BLACK", "BLUE", "GREEN", "YELLOW", "RED", "W
 
 #define MIN_STEP_VER 525 //minimum step covered going ahead in cm (25cm)
 pthread_mutex_t mutex,mutex_pos;
+*/
 
 //////////////////////////////////
 //         FOR BT               //
@@ -55,7 +56,7 @@ unsigned char side=0;
 int s;
 uint16_t msgId=0;
 
-
+/*
 typedef struct motandsens test;
 struct motandsens {
 	uint8_t sn;
@@ -69,12 +70,12 @@ struct motandsens {
         int max_speed;
 	float x,y;
         int role;/*0 beg 1 fin*/
-        int arena;/*0 small1 big*/
-        int side;/*0 right 1 left*/
-	int number;	   
+     //   int arena;/*0 small1 big*/
+      //  int side;/*0 right 1 left*/
+//	int number;	   
+/*
 
-
-};
+};*/
 
 //function to read from server
 int read_from_server (int sock, char *buffer, size_t maxSize);
