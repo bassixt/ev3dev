@@ -502,7 +502,7 @@ void go_backward(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 	Sleep(500);
  			
 }  
-void go_back(uint8_t sn,uint8_t dx,int distance,int max_speed,uint8_t sn_compass,uint8_t sn_mag)
+void go_back(uint8_t sn,uint8_t dx,float distanceback,int max_speed,uint8_t sn_compass,uint8_t sn_mag)
 {
 float beginning, finish,partial;
 float value,initial_angle;
@@ -519,7 +519,7 @@ if ( !get_sensor_value0(sn_mag, &initial_angle)){
 	
 finish = beginning;
 	
-while(finish > beginning-distance)
+while(finish > beginning-distanceback)
 {
 	set_tacho_time_sp( sn, 200 );
 	set_tacho_ramp_up_sp( sn, 1500 );
