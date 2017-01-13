@@ -641,7 +641,7 @@ void* positioning_sys(void* args)
 		string[2] = TEAM_ID;
 		string[3] = 0xFF;
 		string[4] = MSG_POSITION;
-		string[5] = (int16)donald->x;          // x 
+		string[5] = (int16_t)donald->x;          // x 
 		string[6]= 0x00;
 		string[7] = (int16_t)donald->y;	    // y 
 		string[8] = 0x00;
