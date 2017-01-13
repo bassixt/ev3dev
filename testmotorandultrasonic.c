@@ -536,7 +536,7 @@ while(finish > beginning-distanceback)
 	get_tacho_position( dx, &finish);
 	finish+=(finish-partial);
 }
-
+}
 float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance,uint8_t sn_compass, uint8_t sn_mag)
 {	//aggiungere funzione che controlla anche il motore 
 	//sinistro e vede se sono andati dritti tutti e due 
