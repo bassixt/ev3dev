@@ -37,9 +37,9 @@ pthread_mutex_t mutex,mutex_pos;
 //////////////////////////////////
 //         FOR BT               //
 //////////////////////////////////
-#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
-#define TEAM_ID     10                       /* team ID */
-
+//#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
+//#define TEAM_ID     10                       /* team ID */
+/*
 #define MSG_ACK     0
 #define MSG_NEXT    1
 #define MSG_START   2
@@ -56,7 +56,7 @@ unsigned char side=0;
 int s;
 uint16_t msgId=0;
 
-
+*/
 typedef struct motandsens test;
 struct motandsens {
 	uint8_t sn;
