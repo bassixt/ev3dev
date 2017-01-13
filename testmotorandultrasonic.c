@@ -1428,8 +1428,8 @@ int main( int argc, char **argv )
 	  perror("pthread_join colorsens");
 	  return EXIT_FAILURE;
 	} 	*/
-	close (s);
-        sleep (5);
+	//close (s);
+        //sleep (5);
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
 	
