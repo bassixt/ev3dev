@@ -196,7 +196,7 @@ void positioning(void * args)
 	
 }
 
-void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
+	void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
 	float wanted_c;
 	//set_tacho_position( sn,0);
@@ -630,7 +630,7 @@ void* positioning_sys(void* args)
 	struct motandsens *donald = (struct motandsens *) args;	
 	while(1)
 	{
-	positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag, donald->x, donald->y);
+	positioning(donald);
 	Sleep(100);
 	seconds_bt=seconds_bt+1;
 	if (seconds_bt == 20)
