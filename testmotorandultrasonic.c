@@ -104,68 +104,6 @@ int read_from_server (int sock, char *buffer, size_t maxSize) {
 /////			   FINISH			////
 ////////////////////////////////////////////////////////////
 
-
-
-
-int getcondition(int role, int arena, int side,float real_posx, float real_posy)
-{
-	int res_cond;
-        res_cond=0;
-	switch (arena)
-	{
-       case 0 :
-         switch (role)
-         {
-       		case 0 :
-       		  if(real_posx>=80 && real_posy>=165)
-       		   {res_cond=1;}
-       		  break;
-    		case 1:
-    		   if(real_posx<=40 && real_posy<=35)
-       		   {res_cond=1;}
-       		  break;
-
-         }
-         break;
-       case 1:
-         switch (side)
-         {
- 			case 0:
- 			   switch (role)
-               {
-       		      case 0:
-       		          if(real_posx>=40 && real_posy>=365)
-       		           {res_cond=1;}
-       		          break;
-    		      case 1:
-    		        if(real_posx>=80 && real_posy<=35)
-       		           {res_cond=1;}
-       		         break;
-               }
-                break;
-            case 1 :
- 			   switch (role)
-               {
-       		      case 0 :
-       		         if(real_posx<=-40 && real_posy>=365)
-       		           {res_cond=1;}
-       		          break;
-    		      case 1 :
-    		         if(real_posx<=-80 && real_posy<=35)
-       		           {res_cond=1;}
-       		          break;
-               }
-                break;
-
-         }
-         break;
-    } 
-
-
-return res_cond;
-
-}
-
 //position
 float get_compass_values(uint8_t sn_compass)
 {
@@ -187,153 +125,10 @@ float get_compass_values(uint8_t sn_compass)
 		sum+=degree;
 	}
 	return sum/50;
-		
-		
-	
 	
 }
 
-void* position(void *args) //or we can pass all the struct
-{
-   int flag_rot; 
-    struct motandsens *donald = (struct motandsens *) args;
-    float degree, first_comp;
-    int motor_value,iniz_comp,res_cond;
-    float x_new,y_new,x_old,y_old,x_start,y_start;
-/////////////////////////do a switch case of if based on where you are ( small or big arena, side) and rol\\\\\
-//////thread
-//	retour = pthread_mutex_lock(&mutex);
-//	 retour = pthread_mutex_lock(&mutex);
-  //  			if (retour != 0)
-    //			 {
-    //			   perror("erreur mutex lock");
-     //			  exit(EXIT_FAILURE);
-    	//		 }
-/////////	
-	flag_rot=0;
-	switch (donald->arena)
-	{
-       case 0 :
-         switch (donald->role)
-         {
-       		case 0 :
-       		  x_start=90;
-        	  y_start=25;
-        	  iniz_comp=0;
-              break;
-    		case 1 :
-    		  x_start=30;
-        	  y_start=175;
-        	  iniz_comp=180;
-     		  break;
 
-         }
-         break;
-       case 1 :
-         switch (donald->side)
-         {
- 			case 0 :
- 			   switch (donald->role)
-               {
-       		      case 0 :
-       		         x_start=30;
-        	         y_start=25;
-        	         iniz_comp=0;
-     		         break;
-    		      case 1 :
-    		         x_start=90;
-        	         y_start=375;
-        	         iniz_comp=180;
-        	         break;
-               }
-                break;
-            case 1:
- 			   switch (donald->role)
-               {
-       		      case 0 :
-       		         x_start=-30;
-        	         y_start=25;
-        	         iniz_comp=0;
-                     break;
-    		      case 1 :
-    		         x_start=-90;
-        	         y_start=375;
-        	         iniz_comp=180;
-       		         break;
-               }
-                break;
-
-         }
-         break;
-    } 
- //////////////////////////////////////////
-   int  i=0;
-    res_cond=0;
-     while ( res_cond==0 )
-     {
-        get_tacho_position(donald->sn,&motor_value);
-        /*
-	if ( !get_sensor_value0(donald->sn_compass, &degree )) {
-                        degree = 0;
-                        }   */
-	degree = get_compass_values(donald->sn_compass);
-        if(i==0)
-        {   
-            first_comp=degree;
-		
-  			x_new=x_start+motor_value/21*sin(M_PI/180*(degree-first_comp+iniz_comp));
-  			y_new=y_start+motor_value/21*cos(M_PI/180*(degree-first_comp+iniz_comp));
-  			i=1;
-  			donald->x=x_new;
-  			donald->y=y_new;
-  			//send realpos.x and .y/
-  			printf( "x=%f  y=%f \n" ,donald->x, donald->y);
-  			
-        }
-        else
-        {    
-   			x_old=x_new;
-   			y_old=y_new;
-   			if(flag_rot==0)   /*go haed*/
-   			{       printf("sono nell'if cond, degree:%f , firstcomp:%f, diff:%d ", degree,first_comp,degree-first_comp);
-   				x_new=x_old+(motor_value/21-x_old)*sin(M_PI/180*(degree-first_comp+iniz_comp));
-   				y_new=y_old+(motor_value/21-y_old)*cos(M_PI/180*(degree-first_comp+iniz_comp));
-   				donald->x=x_new;
-  			        donald->y=y_new;
-				//send realpos.x and .y/
-				printf( "x=%f  y=%f \n" , donald->x, donald->y);
-  				
-			}
-			else   /*turning*/
-			{
- 				//x_old=x_new;
-   				//y_old=y_new;
-   				x_new=motor_value/21*sin(M_PI/180*(degree-first_comp+iniz_comp));
-   				y_new=motor_value/21*cos(M_PI/180*(degree-first_comp+iniz_comp));
-   				donald->x=x_old;
-  				donald->y=y_old;
-  				//send realpos.x and .y/    /setta flag sulla fifo s per dire che il robot può girare/
-  				printf( "x=%f  y=%f \n" , donald->x, donald->y);
-  				
-	               	}
-	
-        }
-	     Sleep(2000);
-    	res_cond=getcondition(0,0,0,donald->x,donald->y);
-  printf(" res_cond=%d\n" , res_cond); 
-        //gira se sei arrivato ai limiti dell'arena/
-        //void dont_pass_arena_limits (realpox.x,realpos.y, sn, dx, sn_compass, max_speed,role,side,arena,first_comp,degree)
-     }
-   //send start to the finisher or stop if you are the finisher/
-	//trhead
-		
- 		//	 retour = pthread_mutex_unlock(&mutex);
-    		//	if (retour != 0)
-    		//	 {
-    		//	   perror("erreur mutex unlock");
-     		//	  exit(EXIT_FAILURE);
-    		//	 }
-}
 
 float deg2rad(float m_rot)
 {
@@ -345,7 +140,7 @@ float rad2deg(float m_rot)
 	return m_rot * 180 / M_PI;
 }
 
-void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
+void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag, float x, float y)
 {	float encod_scale = M_PI * 5.5 / 360;
 	float new_angs;
  	int retour;
@@ -396,7 +191,9 @@ void positioning(uint8_t sn, uint8_t dx, int max_speed, uint8_t sn_mag)
 	old_sx = new_sx;
 	old_dx = new_dx;
  	old_y = old_y + disp_diff * sign * sin( teta );
-	old_x = old_x + disp_diff * sign * cos( teta ); 	
+	old_x = old_x + disp_diff * sign * cos( teta ); 
+ 	x = old_x;
+ 	y = old_y;
 	printf("y=%f and x=%f\n",old_y,old_x);
 	
 }
@@ -835,7 +632,7 @@ void* positioning_sys(void* args)
 	struct motandsens *donald = (struct motandsens *) args;	
 	while(1)
 	{
-	positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag);
+	positioning(donald->sn, donald->dx,donald->max_speed, donald->sn_mag, donald->x, donald->y);
 	Sleep(100);
 	seconds_bt=seconds_bt+1;
 	if (seconds_bt == 20)
@@ -846,9 +643,9 @@ void* positioning_sys(void* args)
 		string[2] = TEAM_ID;
 		string[3] = 0xFF;
 		string[4] = MSG_POSITION;
-		string[5] = 12;          // x 
+		string[5] = (int)donald->x;          // x 
 		string[6]= 0x00;
-		string[7] = 10;	    // y 
+		string[7] = (int)donald->y;	    // y 
 		string[8] = 0x00;
 		write(s, string, 9);
 		seconds_bt = 0;
