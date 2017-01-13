@@ -842,7 +842,7 @@ void* positioning_sys(void* args)
 	{	
 		//send position
 		
-		*((uint16_t *) string) = donald->msgId++;
+		*((uint16_t *) string) = msgId++;
 		string[2] = TEAM_ID;
 		string[3] = 0xFF;
 		string[4] = MSG_POSITION;
