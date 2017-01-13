@@ -837,7 +837,18 @@ void* positioning_sys(void* args)
 	Sleep(100);
 	seconds_bt=seconds_bt+1;
 	if (seconds_bt == 20)
-	{
+	{	
+		//send position
+		
+		*((uint16_t *) string) = donald->msgId++;
+		string[2] = TEAM_ID;
+		string[3] = 0xFF;
+		string[4] = MSG_POSITION;
+		string[5] = 12;          // x 
+		string[6]= 0x00;
+		string[7] = 10;	    // y 
+		string[8] = 0x00;
+		write(s, string, 9);
 		seconds_bt = 0;
 	}
 	}
