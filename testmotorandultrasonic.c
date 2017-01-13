@@ -674,13 +674,13 @@ return (finish-beginning)/21; //return the distance in cm
 }
 void* positioning_sys(void* args)
 {	int i = 0;
- 	char string[58];
+ 	//char string[58];
 	struct motandsens *donald = (struct motandsens *) args;	
 	while(1)
 	{
 	        positioning(donald);
 		Sleep(100);
-		i+=1;
+		/*i+=1;
 		if(i==20)
 		{
 			//send position
@@ -689,13 +689,13 @@ void* positioning_sys(void* args)
 			string[2] = TEAM_ID;
 			string[3] = 0xFF;
 			string[4] = MSG_POSITION;
-			string[5] = (int)donald->x;          /* x */
-			/*string[6]= 0x00;
-			string[7] = (int)donald->y;	    /* y */
-			/*string[8] = 0x00;
-			write(s, string, 9);*/
+			string[5] = (int)donald->x;          // x 
+			string[6]= 0x00;
+			string[7] = (int)donald->y;	    // y 
+			string[8] = 0x00;
+			write(s, string, 9);
 			i=0;
-		}
+		}*/
 	}
 }
 int colorsense(uint8_t sn,uint8_t dx, uint8_t med, int max_speed, uint8_t sn_color)
