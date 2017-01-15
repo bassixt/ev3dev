@@ -14,8 +14,6 @@
 #include <sys/socket.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
-#include "mystructures.h"
-#include "btmessages.h"
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
 
@@ -38,9 +36,9 @@ pthread_mutex_t mutex,mutex_pos;
 //////////////////////////////////
 //         FOR BT               //
 //////////////////////////////////
-//#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
-//#define TEAM_ID     10                       /* team ID */
-/*
+#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
+#define TEAM_ID     10                       /* team ID */
+
 #define MSG_ACK     0
 #define MSG_NEXT    1
 #define MSG_START   2
@@ -71,13 +69,12 @@ struct motandsens {
         int max_speed;
 	float x,y;
         int role;/*0 beg 1 fin*/
-    //    int arena;/*0 small1 big*/
-    //    int side;/*0 right 1 left*/
-//	int number;	   
+        int arena;/*0 small1 big*/
+        int side;/*0 right 1 left*/
+	int number;	   
 
-/*
+
 };
-*/
 
 //calculate the the condition for the loop in the next function
 
@@ -86,7 +83,7 @@ struct motandsens {
 /////			BT FUNCTIONS			////
 /////			   START			////
 ////////////////////////////////////////////////////////////
-/*int read_from_server (int sock, char *buffer, size_t maxSize) {
+int read_from_server (int sock, char *buffer, size_t maxSize) {
     int bytes_read = read (sock, buffer, maxSize);
 
     if (bytes_read <= 0) {
@@ -98,7 +95,7 @@ struct motandsens {
     printf ("[DEBUG] received %d bytes\n", bytes_read);
 
     return bytes_read;
-}*/
+}
 ////////////////////////////////////////////////////////////
 /////			BT FUNCTIONS			////
 /////			   FINISH			////
