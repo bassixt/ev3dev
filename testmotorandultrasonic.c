@@ -14,6 +14,7 @@
 #include <sys/socket.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/rfcomm.h>
+#include "mystructures.h"
 #include "btmessages.h"
 // WIN32 /////////////////////////////////////////
 #ifdef __WIN32__
