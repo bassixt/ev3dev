@@ -1246,7 +1246,7 @@ float initial_angle;
 float start_angle, final_angle, middle_angle,turn_angle;
 int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
-int i, flag_1,flag_2,grab;
+int i, flag_1,flag_2,grab, ball_dist, status_re;
 float points[1000]={0};
 if ( !get_sensor_value0(sn_mag, &initial_angle )) 
    {
@@ -1254,70 +1254,96 @@ if ( !get_sensor_value0(sn_mag, &initial_angle ))
    }
 get_tacho_position(sn, &pos_in_sn);
 get_tacho_position(dx, &pos_in_dx);
-flag_1=0;
-flag_2=0;  // because of vibration the first value scanned after first angle must be cecked
-//turn right 45 ° and start moving 2° each step
-rotatedx(sn,dx,sn_compass,max_speed,35,sn_mag);	
-Sleep(200);
-for(i=0;i<90;i++)
-{
-	//printf("I'M here\n");
-	Sleep(500);
-	get_sensor_value0(sn_sonar, &points[i]);
-	if(flag_1==1 && flag_2==0) //if you have found the ball the first value after that can be wrong due to vibrations
+status_re = 0;
+while(status_re==0)
 	{
-		if(points[i] > points[i-1] + 200)
-			points[i]=points[i-1];
-		flag_2=1;
-	}
-		
-	printf("Il valore è %f:\n",points[i]);
-	if(i!=0 && ((points[i-1]-points[i])>=250) && flag_1==0)
-	{
-	 //this is the first balls' extremity 
-		if ( !get_sensor_value0(sn_mag, &start_angle )) 
+		flag_1=0;
+		flag_2=0;  // because of vibration the first value scanned after first angle must be cecked
+		//turn right 45 ° and start moving 2° each step
+		rotatedx(sn,dx,sn_compass,max_speed,35,sn_mag);	
+		Sleep(200);
+		for(i=0;i<90;i++)
 		{
-		start_angle = 0;
-		}
-		printf("first_angle%f\n",start_angle);
-		get_tacho_position(sn,&pos_in_ball_sn);
-		get_tacho_position(dx,&pos_in_ball_dx);
-		flag_1=1;
-	}
-	if(i!=0 && ((points[i]-points[i-1])>=250) && flag_1==1)
-	{
-	  //this is the last point of the ball detected
-		if ( !get_sensor_value0(sn_mag, &final_angle )) 
-		{
-		final_angle = 0;
-		}
-		printf("final_angle%f\n",final_angle);
-		get_tacho_position(sn,&pos_in_ball_sn);
-		get_tacho_position(dx,&pos_in_ball_dx);
-		flag_1=2;
+			//printf("I'M here\n");
+			Sleep(500);
+			get_sensor_value0(sn_sonar, &points[i]);
+			if(flag_1==1 && flag_2==0) //if you have found the ball the first value after that can be wrong due to vibrations
+			{
+				if(points[i] > points[i-1] + 200)
+					points[i]=points[i-1];
+				flag_2=1;
+			}
+				
+			printf("Il valore è %f:\n",points[i]);
+			if(i!=0 && ((points[i-1]-points[i])>=250) && flag_1==0)
+			{
+			 //this is the first balls' extremity 
+				if ( !get_sensor_value0(sn_mag, &start_angle )) 
+				{
+				start_angle = 0;
+				}
+				printf("first_angle%f\n",start_angle);
+				get_tacho_position(sn,&pos_in_ball_sn);
+				get_tacho_position(dx,&pos_in_ball_dx);
+				flag_1=1;
+			}
+			if(i!=0 && ((points[i]-points[i-1])>=250) && flag_1==1)
+			{
+			  //this is the last point of the ball detected
+				if ( !get_sensor_value0(sn_mag, &final_angle )) 
+				{
+				final_angle = 0;
+				}
+				printf("final_angle%f\n",final_angle);
+				get_tacho_position(sn,&pos_in_ball_sn);
+				get_tacho_position(dx,&pos_in_ball_dx);
+				ball_dist = points[i-2];
+				flag_1=2;
 
-	}
-	if(flag_1==2)
-	{	
-		middle_angle = (final_angle + start_angle) / 2;
-		printf("middle_angle%f\n",middle_angle);
-		found_sn=(pos_fin_ball_sn - pos_in_ball_sn) / 2;
-		found_dx=(pos_fin_ball_dx - pos_in_ball_dx) / 2;
-		break;
-	}
-	//rotatesx(sn,dx,sn_compass,max_speed,1,sn_mag);
-	rotateforscan(sn,dx,max_speed);
-	
+			}
+			if(flag_1==2)
+			{	
+				middle_angle = (final_angle + start_angle) / 2;
+				printf("middle_angle%f\n",middle_angle);
+				found_sn=(pos_fin_ball_sn - pos_in_ball_sn) / 2;
+				found_dx=(pos_fin_ball_dx - pos_in_ball_dx) / 2;
+				break;
+			}
+			//rotatesx(sn,dx,sn_compass,max_speed,1,sn_mag);
+			rotateforscan(sn,dx,max_speed);
+			
+		}
+
+		
+
+		//it has finished the search
+		//restart from centre and go to the desired angle
+		/*if(final_angle<0)
+			turn_angle = middle_angle - final_angle;
+		else
+			turn_angle=final_angle-middle_angle;*/
+		turn_angle = abs( middle_angle - final_angle );
+		rotatedx(sn,dx,sn_compass,max_speed,turn_angle,sn_mag); 
+		Sleep(200);
+		
+		if (ball_dist > 300)
+		{	
+			get_sensor_value0(sn_sonar, &points[0]);
+			while(ball_dist-points[0]>300)
+			{
+				go_ahead_till_obstacle(sn,dx,max_speed/2,190,sn_compass,sn_mag);
+				get_sensor_value0(sn_sonar, &points[0]);
+
+			}
+			for(i=0;i<1000;i++)
+				points[i]=0; //TO BE CONTROLLED
+		}
+		else
+		{
+			status_re=1; //LEAVE THE RESEARCH TAKE THE BALL
+		}
+
 }
-//it has finished the search
-//restart from centre and go to the desired angle
-/*if(final_angle<0)
-	turn_angle = middle_angle - final_angle;
-else
-	turn_angle=final_angle-middle_angle;*/
-turn_angle = abs( middle_angle - final_angle );
-rotatedx(sn,dx,sn_compass,max_speed,turn_angle,sn_mag); 
-Sleep(200);
 /*rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 elapsed_dis=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,4000,sn_compass,sn_mag);
 rotatedx(sn,dx,sn_compass,max_speed,180,sn_mag);*/
