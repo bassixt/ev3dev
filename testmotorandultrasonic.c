@@ -548,7 +548,7 @@ void gotoxyfinisher(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t s
 	deltax=(xnewf-xoldf);
 	deltay=(ynewf-ynewf);
 	distanceto=sqrt(pow(deltax,2)+pow(deltay,2))*19;
-	printf("distance to do: %f",distanceback);
+	printf("distance to do: %f",distanceto);
 	//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
 	deltax=(double)abs(deltax);
 	deltay=(double)abs(deltay);
