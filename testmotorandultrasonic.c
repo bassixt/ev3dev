@@ -1031,9 +1031,9 @@ switch(donald->number)
 		distanceback=sqrt(pow(((donald->x)-xbefore),2)+pow(((donald->x)-xbefore),2))*19;
 		angleofrotationback=atan(abs(deltax)/abs(deltay))*180/M_PI;
 		printf("angle of turning back: %f",angleofrotationback);
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,45,donald->sn_mag);
-		go_back(donald->sn,donald->dx,distanceback,donald->max_speed,donald->sn_compass,donald->sn_mag);
 		
+		go_back(donald->sn,donald->dx,distanceback,donald->max_speed,donald->sn_compass,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,angleofrotationback,donald->sn_mag);
 		Sleep(1000);
 		break; 
 	case 10 :
