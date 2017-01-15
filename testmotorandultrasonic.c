@@ -1018,7 +1018,7 @@ switch(donald->number)
 	//big arena left, begin at up corner test : grab the ball 
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,722,donald->sn_compass, donald->sn_mag);
 		//TURN LEFT
-		Sleep(200);
+		Sleep(300);
 		xbefore=donald->x;
 		ybefore=donald->y;
 		printf("---------------- x and y before turning : x=%f , y=%f\n", xbefore,ybefore);
@@ -1026,7 +1026,7 @@ switch(donald->number)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,240,donald->sn_compass, donald->sn_mag);
 	        research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 45 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		////////////////////////////////////////////////////////
-		Sleep(200);
+		Sleep(300);
                 printf("--------- x and y after ball taken : x=%f , y=%f\n", donald->x,donald->y);
 		deltax=(donald->x)-xbefore;
 		deltay=(donald->y)-ybefore;
