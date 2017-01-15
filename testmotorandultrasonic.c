@@ -728,7 +728,7 @@ float heading;
 float POS_Y=0;
 float POS_X=0;
 float angleofrotationback;
-float deltax,deltay;
+double deltax,deltay;
 float xbefore,ybefore,distanceback;
 if ( !get_sensor_value0(donald->sn_mag, &heading)){
 					heading=0;
@@ -1033,7 +1033,9 @@ switch(donald->number)
 		distanceback=sqrt(pow(((donald->x)-xbefore),2)+pow(((donald->y)-ybefore),2))*19;
 		printf("distance to come back: %f",distanceback);
 		//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
-		angleofrotationback=atan2((double)(abs(deltax),(double)(abs(deltay))))*180/M_PI;
+		deltax=(double)abs(deltax);
+		deltay=(double)abs(deltay);
+		angleofrotationback=atan2(deltay,deltax)*180/M_PI;
 		printf("angle of turning back: %f",angleofrotationback);
 		
 		go_back(donald->sn,donald->dx,distanceback,donald->max_speed,donald->sn_compass,donald->sn_mag);
