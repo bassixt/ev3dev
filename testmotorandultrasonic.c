@@ -1035,7 +1035,7 @@ switch(donald->number)
 		//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
 		deltax=(double)abs(deltax);
 		deltay=(double)abs(deltay);
-		angleofrotationback=atan2(deltay,deltax)*180/M_PI;
+		angleofrotationback=atan2(deltax,deltay)*180/M_PI;
 		printf("angle of turning back: %f",angleofrotationback);
 		
 		go_back(donald->sn,donald->dx,distanceback,donald->max_speed,donald->sn_compass,donald->sn_mag);
