@@ -1328,13 +1328,7 @@ while(status_re==0)
 		
 		if (ball_dist > 300)
 		{	
-			get_sensor_value0(sn_sonar, &points[0]);
-			while(ball_dist-points[0]>300)
-			{
-				go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,190,sn_compass,sn_mag);
-				get_sensor_value0(sn_sonar, &points[0]);
-
-			}
+			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,ball_dist/2,sn_compass,sn_mag);
 			for(i=0;i<1000;i++)
 				points[i]=0; //TO BE CONTROLLED
 		}
