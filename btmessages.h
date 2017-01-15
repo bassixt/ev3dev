@@ -28,6 +28,8 @@
 //////////////////////////////////////////////////
 #endif
 
+#ifndef BTMESSAGES_H_
+#define BTMESSAGES_H_
 //////////////////////////////////
 //         FOR BT               //
 //////////////////////////////////
@@ -84,3 +86,5 @@ int read_from_server (int sock, char *buffer, size_t maxSize);
 //function to send position to server
 void send_pos_to_bt (void* args);
 
+
+#endif
