@@ -1080,8 +1080,8 @@ switch(donald->number)
 		}
 		break;
 	case 11:
-	gotoxyfinisher(donald->x, donald->y, 40.0, 80.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag)	
-		
+	gotoxyfinisher(donald->x, donald->y, 40.0, 80.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);	
+	break;	
 }
 return EXIT_SUCCESS;
 }
