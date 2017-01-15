@@ -697,7 +697,7 @@ void* positioning_sys(void* args)
 }
 void gotoxyfinisher(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_mag)
 {
-	float deltax, deltay ,distanceto, angleoftoration;
+	float deltax, deltay ,distanceto, angleofrotation;
 	deltax=(xnewf-xoldf);
 	deltay=(ynewf-ynewf);
 	distanceto=sqrt(pow(deltax,2)+pow(deltay,2))*19;
