@@ -699,7 +699,7 @@ void gotoxyfinisher(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t s
 {
 	float deltax, deltay ,distanceto, angleofrotation;
 	deltax=(xnewf-xoldf);
-	deltay=(ynewf-ynewf);
+	deltay=(ynewf-yoldf);
 	distanceto=sqrt(pow(deltax,2)+pow(deltay,2))*19;
 	printf("distance to do: %f",distanceto);
 	//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
@@ -707,7 +707,7 @@ void gotoxyfinisher(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t s
 	deltay=(double)abs(deltay);
 	angleofrotation=atan2(deltax,deltay)*180/M_PI;
 	printf("angle of turning : %f",angleofrotation);
-	rotatedx(sn,dx,sn_compass,max_speed,angleofrotation,sn_mag);
+	rotatesx(sn,dx,sn_compass,max_speed,angleofrotation,sn_mag);
 	go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,distanceto,sn_compass,sn_mag);
 
 
