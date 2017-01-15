@@ -1331,7 +1331,7 @@ while(status_re==0)
 			get_sensor_value0(sn_sonar, &points[0]);
 			while(ball_dist-points[0]>300)
 			{
-				go_ahead_till_obstacle(sn,dx,max_speed/2,190,sn_compass,sn_mag);
+				go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,190,sn_compass,sn_mag);
 				get_sensor_value0(sn_sonar, &points[0]);
 
 			}
