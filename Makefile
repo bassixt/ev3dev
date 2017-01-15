@@ -1,4 +1,4 @@
-all: btmessages.o testmotorandultrasonic.o 
+all: testmotorandultrasonic.o btmessages.o 
 	gcc btmessages.o testmotorandultrasonic.o -Wall -lm -pthread -lev3dev-c -o testmotorandultrasonic -lrt -lbluetooth
 
 btmessages.o : mystructures.h btmessages.h btmessages.c
