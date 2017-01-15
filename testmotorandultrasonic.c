@@ -1079,6 +1079,8 @@ switch(donald->number)
 		printf("heading=%f\n",heading);
 		}
 		break;
+	case 11:
+	gotoxyfinisher(donald->x, donald->y, 40.0, 80.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag)	
 		
 }
 return EXIT_SUCCESS;
