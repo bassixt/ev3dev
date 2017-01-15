@@ -542,23 +542,7 @@ while(finish - beginning <= -distanceback)
 	beginning+=(finish-partial);
 }
 }
-void gotoxyfinisher(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_mag)
-{
-	float deltax, deltay ,distanceto, angleoftoration;
-	deltax=(xnewf-xoldf);
-	deltay=(ynewf-ynewf);
-	distanceto=sqrt(pow(deltax,2)+pow(deltay,2))*19;
-	printf("distance to do: %f",distanceto);
-	//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
-	deltax=(double)abs(deltax);
-	deltay=(double)abs(deltay);
-	angleofrotation=atan2(deltax,deltay)*180/M_PI;
-	printf("angle of turning : %f",angleofrotation);
-	rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,angleofrotation,donald->sn_mag);
-	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,distanceto,donald->sn_compass, donald->sn_mag);
 
-
-}
 float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance,uint8_t sn_compass, uint8_t sn_mag)
 {	//aggiungere funzione che controlla anche il motore 
 	//sinistro e vede se sono andati dritti tutti e due 
@@ -710,6 +694,23 @@ void* positioning_sys(void* args)
 		seconds_bt = 0;
 	}
 	}
+}
+void gotoxyfinisher(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_mag)
+{
+	float deltax, deltay ,distanceto, angleoftoration;
+	deltax=(xnewf-xoldf);
+	deltay=(ynewf-ynewf);
+	distanceto=sqrt(pow(deltax,2)+pow(deltay,2))*19;
+	printf("distance to do: %f",distanceto);
+	//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
+	deltax=(double)abs(deltax);
+	deltay=(double)abs(deltay);
+	angleofrotation=atan2(deltax,deltay)*180/M_PI;
+	printf("angle of turning : %f",angleofrotation);
+	rotatedx(sn,dx,sn_compass,max_speed,angleofrotation,sn_mag);
+	go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,distanceto,sn_compass,sn_mag);
+
+
 }
 int colorsense(uint8_t sn,uint8_t dx, uint8_t med, int max_speed, uint8_t sn_color)
 { 	int val;
