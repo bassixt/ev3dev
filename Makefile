@@ -9,3 +9,7 @@ testmotorandultrasonic.o: testmotorandultrasonic.c
 
 run:
 	./testmotorandultrasonic
+	
+clean:
+	rm -f *.o
+	rm testmotorandultrasonic
