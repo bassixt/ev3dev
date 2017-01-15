@@ -153,7 +153,7 @@ void positioning(void * args)
  	float sign;
 	int new_sx,new_dx;
 	float disp_sx,disp_dx;
- 	sign = -1;
+ 	sign = 1;
  	retour = pthread_mutex_lock(&mutex_pos);
     			if (retour != 0)
     			 {
@@ -188,8 +188,8 @@ void positioning(void * args)
 	disp_diff = (disp_sx + disp_dx)*encod_scale/2;		//displacement
 	old_sx = new_sx;
 	old_dx = new_dx;
- 	old_y = old_y + disp_diff * sign * sin( teta );
-	old_x = old_x + disp_diff * sign * cos( teta ); 
+ 	old_x = old_x + disp_diff * sign * sin( teta );
+	old_y = old_y + disp_diff * sign * cos( teta ); 
  	donald->x = old_x;
  	donald->y = old_y;
 	printf("y=%f and x=%f\n",old_y,old_x);
