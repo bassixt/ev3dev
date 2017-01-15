@@ -1021,14 +1021,16 @@ switch(donald->number)
 		
 		xbefore=donald->x;
 		ybefore=donald->y;
+		printf(" x and y before turning : x=%f , y=%f", xbefore,ybefore);
 		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,45,donald->sn_mag);
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,240,donald->sn_compass, donald->sn_mag);
 	        research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 45 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		////////////////////////////////////////////////////////
-
+                printf(" x and y after ball taken : x=%f , y=%f", donald->x,donald->y);
 		deltax=(donald->x)-xbefore;
 		deltay=(donald->y)-ybefore;
-		distanceback=sqrt(pow(((donald->x)-xbefore),2)+pow(((donald->x)-xbefore),2))*19;
+		distanceback=sqrt(pow(((donald->x)-xbefore),2)+pow(((donald->y)-ybefore),2))*19;
+		printf("distance to come back: %f",distanceback);
 		angleofrotationback=atan(abs(deltax)/abs(deltay))*180/M_PI;
 		printf("angle of turning back: %f",angleofrotationback);
 		
