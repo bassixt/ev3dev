@@ -519,7 +519,7 @@ if ( !get_sensor_value0(sn_mag, &initial_angle)){
 	
 finish = beginning;
 	
-while(finish > beginning-distanceback)
+while(finish - beginning <= -distanceback)
 {
 	set_tacho_time_sp( sn, 200 );
 	set_tacho_ramp_up_sp( sn, 1500 );
@@ -534,7 +534,7 @@ while(finish > beginning-distanceback)
         get_tacho_position( dx, &partial);
 	control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
 	get_tacho_position( dx, &finish);
-	finish+=(finish-partial);
+	beginning+=(finish-partial);
 }
 }
 float go_ahead_till_obstacle(uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar,int distance,uint8_t sn_compass, uint8_t sn_mag)
