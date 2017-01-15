@@ -368,10 +368,14 @@ void grab_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 	}
 	get_tacho_position( dx, &act_pos);
 	distance_el=act_pos;
+	set_tacho_position_sp(sn,90);  //prova
+	set_tacho_position_sp(dx,90);	//prova
 	while((act_pos-(8*26)-distance_el)<=0)
-	{
-		set_tacho_command_inx( sn, TACHO_RUN_TIMED );
-		set_tacho_command_inx( dx, TACHO_RUN_TIMED );
+	{	
+		set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
+		set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
+		//set_tacho_command_inx( sn, TACHO_RUN_TIMED );
+		//set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 		get_tacho_position( dx, &act_pos);
 	}
 	Sleep(200);
