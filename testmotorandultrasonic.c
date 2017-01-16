@@ -707,7 +707,7 @@ void gotoxyfinisher(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t s
 	deltay=(double)abs(deltay);
 	angleofrotation=atan2(deltax,deltay)*180/M_PI;
 	printf("angle of turning : %f",angleofrotation);
-	rotatesx(sn,dx,sn_compass,max_speed,angleofrotation,sn_mag);
+	rotatedx(sn,dx,sn_compass,max_speed,angleofrotation,sn_mag);
 	go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,distanceto,sn_compass,sn_mag);
 
 
@@ -1063,6 +1063,7 @@ switch(donald->number)
 		
 		go_back(donald->sn,donald->dx,distanceback,donald->max_speed,donald->sn_compass,donald->sn_mag);
 		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,angleofrotationback,donald->sn_mag);
+		gotoxyfinisher(donald->x, donald->y, 0.0, 200.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
 		Sleep(1000);
 		break; 
 	case 10 :
@@ -1275,7 +1276,7 @@ while(status_re==0)
 			}
 				
 			printf("Il valore è %f:\n",points[i]);
-			if(i!=0 && ((points[i-1]-points[i])>=250) && flag_1==0)
+			if(i!=0 && ((points[i-1]-points[i])>=350) && flag_1==0)
 			{
 			 //this is the first balls' extremity 
 				if ( !get_sensor_value0(sn_mag, &start_angle )) 
@@ -1287,7 +1288,7 @@ while(status_re==0)
 				get_tacho_position(dx,&pos_in_ball_dx);
 				flag_1=1;
 			}
-			if(i!=0 && ((points[i]-points[i-1])>=250) && flag_1==1)
+			if(i!=0 && ((points[i]-points[i-1])>=350) && flag_1==1)
 			{
 			  //this is the last point of the ball detected
 				if ( !get_sensor_value0(sn_mag, &final_angle )) 
