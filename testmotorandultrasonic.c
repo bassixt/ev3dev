@@ -1329,7 +1329,7 @@ while(status_re==0)
 		
 		if (ball_dist > 300)
 		{	
-			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,ball_dist/2,sn_compass,sn_mag);
+			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,ball_dist-150,sn_compass,sn_mag);
 			for(i=0;i<1000;i++)
 				points[i]=0; //TO BE CONTROLLED
 		}
