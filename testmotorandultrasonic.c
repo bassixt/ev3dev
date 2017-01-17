@@ -131,7 +131,7 @@ float get_sonar_values(uint8_t sn_sonar)
 	float sum;
 	float sonar_val;
 	sum=0;
-	for(i=0;i<50;i++)
+	for(i=0;i<20;i++)
 	{
 		
 
@@ -144,7 +144,7 @@ float get_sonar_values(uint8_t sn_sonar)
 		
 		sum+=sonar_val;
 	}
-	return sum/50;
+	return sum/20;
 	
 }
 
@@ -1297,7 +1297,7 @@ while(status_re==0)
 		for(i=0;i<90;i++)
 		{
 			//printf("I'M here\n");
-			Sleep(500);
+			Sleep(100);
 			//get_sensor_value0(sn_sonar, &points[i]);
 			points[i]=get_sonar_values(sn_sonar);
 			if(flag_1==1 && flag_2==0) //if you have found the ball the first value after that can be wrong due to vibrations
