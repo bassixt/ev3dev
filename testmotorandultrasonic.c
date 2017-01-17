@@ -799,7 +799,7 @@ switch(donald->number)
 {
 	case 0 :
 		gotoxyfinisher(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);	
-		research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
+		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		//gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
 		break;
 	case 1 :
@@ -1410,6 +1410,72 @@ rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);*/
 return;
 }
 
+void research2(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_turn_degree, uint8_t med, uint8_t sn_color,uint8_t sn_mag, uint8_t sn_sonar)
+{	//Take the initial position than move to 
+float initial_angle;
+float start_angle, final_angle, middle_angle,turn_angle,end_angle;
+int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx,init_turn; 
+int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
+int i, flag_1,flag_2,grab, ball_dist, status_re;
+float points[1000]={8000000};
+float angle[i]={0}
+init_turn = max_turn_degree;
+//init_turn=35;   TO BE CHANGED WITH 
+if ( !get_sensor_value0(sn_mag, &initial_angle )) 
+   {
+   initial_angle = 0;
+   }
+get_tacho_position(sn, &pos_in_sn);
+get_tacho_position(dx, &pos_in_dx);
+status_re = 0;
+flag_1=0;
+while(status_re==0)
+	{
+		
+		//flag_2=0;  // because of vibration the first value scanned after first angle must be cecked
+		//turn right 45 ° and start moving 2° each step
+		rotatedx(sn,dx,sn_compass,max_speed,init_turn,sn_mag);	
+		Sleep(200);
+		for(i=0;i<30;i++)
+		{	points[i]=get_sonar_values(sn_sonar);
+			get_sensor_value0(sn_mag, &angle[i] )
+			rotateforscan(sn,dx,max_speed);
+		}
+		int max=8000000;
+		int index=0
+	      for(i=0;i<500;i++)
+		{	
+		  if(point[i]<max)
+		  {
+			  max=point[i];
+			  intex=i;
+		  }
+		}
+	if ( !get_sensor_value0(sn_mag, &final_angle)) 
+   {
+   final_angle = 0;
+   }
+	middle_angle=abs(final_angle-angle[index])
+	rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
+	if (flag_1==0)
+	{go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,3/4*point[index],sn_compass,sn_mag);
+	flag_1==1;
+	 }
+	else
+	{
+		status_re==1
+	}
+}
+grab=colorsense(sn,dx,med,max_speed,sn_color);
+printf("grab=%d\n",grab);
+while(grab==0)
+{
+	go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,20,sn_compass,sn_mag);
+	grab=colorsense(sn,dx,med,max_speed,sn_color);
+	printf("grab=%d\n",grab);
+}
+return;
+}
 
 	
 int main( int argc, char **argv )
