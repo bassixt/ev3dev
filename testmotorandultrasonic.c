@@ -1277,7 +1277,8 @@ while(status_re==0)
 				{
 				angles[i] = 0;
 				}
-				
+			printf("distanza:%f\n",points[i]);
+			printf("distanza:%f\n",angles[i]);
 			rotateforscan(sn,dx,max_speed/2);
 			
 		}
