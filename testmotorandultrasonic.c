@@ -777,7 +777,7 @@ switch(donald->number)
 {
 	case 0 :
 		gotoxyfinisher(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);	
-		research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 0 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
+		research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 30 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
 		break;
 	case 1 :
@@ -1270,7 +1270,7 @@ while(status_re==0)
 		flag_1=0;
 		flag_2=0;  // because of vibration the first value scanned after first angle must be cecked
 		//turn right 45 ° and start moving 2° each step
-		rotatedx(sn,dx,sn_compass,max_speed,35,sn_mag);	
+		rotatedx(sn,dx,sn_compass,max_speed,max_turn_degree,sn_mag);	
 		Sleep(200);
 		for(i=0;i<90;i++)
 		{
@@ -1335,12 +1335,13 @@ while(status_re==0)
 		turn_angle = abs( middle_angle - final_angle );
 		rotatedx(sn,dx,sn_compass,max_speed,(int)turn_angle,sn_mag); 
 		Sleep(200);
-		
+		for(i=0;i<1000;i++){
+			points[i]=0; //TO BE CONTROLLED
+		}
 		if (ball_dist > 300)
 		{	
 			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,(int)ball_dist-150,sn_compass,sn_mag);
-			for(i=0;i<1000;i++)
-				points[i]=0; //TO BE CONTROLLED
+			
 		}
 		else
 		{
