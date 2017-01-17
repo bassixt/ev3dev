@@ -799,7 +799,7 @@ switch(donald->number)
 {
 	case 0 :
 		gotoxyfinisher(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);	
-		research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 30 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
+		research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		//gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
 		break;
 	case 1 :
@@ -1280,7 +1280,8 @@ int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx,init_turn;
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
 int i, flag_1,flag_2,grab, ball_dist, status_re;
 float points[1000]={0};
-init_turn=35;  // TO BE CHANGED WITH init_turn=max_turn_degree;
+init_turn = max_turn_degree;
+//init_turn=35;   TO BE CHANGED WITH 
 if ( !get_sensor_value0(sn_mag, &initial_angle )) 
    {
    initial_angle = 0;
