@@ -1451,7 +1451,7 @@ while(status_re==0)
 			  index=i;
 		  }
 		}
-		printf("point[index]:%f\n",point[index]);
+		printf("point[index]:%f\n",points[index]);
 		printf("angle[index]:%f\n",angle[index]);
 	if ( !get_sensor_value0(sn_mag, &final_angle)) 
    {
