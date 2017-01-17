@@ -737,8 +737,9 @@ void gotoxyfinisher(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t s
 
 
 }
-void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_mag, uint8_t teta)
+void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_mag, float teta)
 {
+	
 	float deltax, deltay ,distanceto, angleofrotation, rot;
 	deltax=(xnewf-xoldf);
 	deltay=(ynewf-yoldf);
@@ -749,7 +750,7 @@ void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uin
 	deltay=(double)deltay;
 	angleofrotation=atan2(deltax,deltay)*180/M_PI;
 	printf("teta is :%f\n",teta);
-	rot = teta + angleofrotation;
+	rot = rad2deg(teta) + angleofrotation;
 	printf("angle of turning : %f",rot);
 	if(rot<0)
 		rotatesx(sn,dx,sn_compass,max_speed,rot,sn_mag);
