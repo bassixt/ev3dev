@@ -1275,11 +1275,12 @@ return donald;
 void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_turn_degree, uint8_t med, uint8_t sn_color,uint8_t sn_mag, uint8_t sn_sonar)
 {	//Take the initial position than move to 
 float initial_angle;
-float start_angle, final_angle, middle_angle,turn_angle;
-int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
+float start_angle, final_angle, middle_angle,turn_angle,end_angle;
+int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx,init_turn; 
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
 int i, flag_1,flag_2,grab, ball_dist, status_re;
 float points[1000]={0};
+init_turn=35;  // TO BE CHANGED WITH init_turn=max_turn_degree;
 if ( !get_sensor_value0(sn_mag, &initial_angle )) 
    {
    initial_angle = 0;
@@ -1292,9 +1293,9 @@ while(status_re==0)
 		flag_1=0;
 		flag_2=0;  // because of vibration the first value scanned after first angle must be cecked
 		//turn right 45 ° and start moving 2° each step
-		rotatedx(sn,dx,sn_compass,max_speed,35,sn_mag);	
+		rotatedx(sn,dx,sn_compass,max_speed,init_turn,sn_mag);	
 		Sleep(200);
-		for(i=0;i<90;i++)
+		for(i=0;i<30;i++)
 		{
 			//printf("I'M here\n");
 			Sleep(100);
@@ -1346,28 +1347,46 @@ while(status_re==0)
 			rotateforscan(sn,dx,max_speed);
 			
 		}
-
 		
-
-		//it has finished the search
-		//restart from centre and go to the desired angle
-		/*if(final_angle<0)
-			turn_angle = middle_angle - final_angle;
-		else
-			turn_angle=final_angle-middle_angle;*/
-		turn_angle = abs( middle_angle - final_angle );
-		rotatedx(sn,dx,sn_compass,max_speed,(int)turn_angle,sn_mag); 
-		Sleep(200);
+		if ( !get_sensor_value0(sn_mag, &end_angle )) 
+		   {
+		   end_angle = 0;
+		   }
+	
 		
-		if (ball_dist > 300)
-		{	
-			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,(int)ball_dist*4/5,sn_compass,sn_mag);
-			for(i=0;i<1000;i++)
-				points[i]=0; //TO BE CONTROLLED
+		if(flag_1==2)
+		{
+			
+		
+			//it has finished the search
+			//restart from centre and go to the desired angle
+			/*if(final_angle<0)
+				turn_angle = middle_angle - final_angle;
+			else
+				turn_angle=final_angle-middle_angle;*/
+			turn_angle = abs( middle_angle - final_angle );
+			rotatedx(sn,dx,sn_compass,max_speed,(int)turn_angle,sn_mag); 
+			Sleep(200);
+
+			if (ball_dist > 300)
+			{	
+				go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,(int)ball_dist*4/5,sn_compass,sn_mag);
+				for(i=0;i<1000;i++)
+					points[i]=0; //TO BE CONTROLLED
+				init_turn=init_turn - 15;
+			}
+			else
+			{
+				status_re=1; //LEAVE THE RESEARCH TAKE THE BALL
+			}
 		}
 		else
 		{
-			status_re=1; //LEAVE THE RESEARCH TAKE THE BALL
+			rotatedx(sn,dx,sn_compass,max_speed,(int)end_angle-initial_angle,sn_mag);
+			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,380,sn_compass,sn_mag);
+			for(i=0;i<1000;i++)
+					points[i]=0; //TO BE CONTROLLED
+			
 		}
 
 }
