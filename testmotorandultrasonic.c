@@ -776,25 +776,16 @@ if ( !get_sensor_value0(donald->sn_mag, &heading)){
 switch(donald->number)
 {
 	case 0 :
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,2745,donald->sn_compass, donald->sn_mag);
+		gotoxyfinisher(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);	
+		research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 0 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
+		gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
 		break;
 	case 1 :
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1432,donald->sn_compass, donald->sn_mag);
-		//TURN LEFT
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,89,donald->sn_mag);
-		Sleep(1000);
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,600,donald->sn_compass,donald->sn_mag); 	
-		printf("I'am in movements after turn\n");	
-		Sleep(500);
+		gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-		Sleep(1000);
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);		
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1240,donald->sn_compass, donald->sn_mag);
-		//put_down(donald->sn,donald->dx,donald->med,donald->max_speed);
-		Sleep(1000);
-		break;
+		gotoxyfinisher(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
 	case 2:
 
 		Sleep(500); //time elapsed to scan
