@@ -1418,7 +1418,7 @@ int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx,init_turn;
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
 int i, flag_1,flag_2,grab, ball_dist, status_re;
 float points[1000]={8000000};
-float angle[i]={0}
+float angle[1000]={0};
 init_turn = max_turn_degree;
 //init_turn=35;   TO BE CHANGED WITH 
 if ( !get_sensor_value0(sn_mag, &initial_angle )) 
@@ -1442,12 +1442,12 @@ while(status_re==0)
 			rotateforscan(sn,dx,max_speed);
 		}
 		int max=8000000;
-		int index=0
+		int index=0;
 	      	for(i=0;i<500;i++)
 		{	
-		  if(point[i]<max)
+		  if(points[i]<max)
 		  {
-			  max=point[i];
+			  max=points[i];
 			  index=i;
 		  }
 		}
@@ -1458,7 +1458,7 @@ while(status_re==0)
 	middle_angle=abs(final_angle-angle[index]);
 	rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 	if (flag_1==0)
-	{go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,3/4*point[index],sn_compass,sn_mag);
+	{go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,3/4*points[index],sn_compass,sn_mag);
 	flag_1==1;
 	 }
 	else
