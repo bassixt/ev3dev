@@ -1463,7 +1463,7 @@ while(status_re==0)
 	if (flag_1==0)
 	{
 		go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,points[index]*3/4,sn_compass,sn_mag);
-		flag_1==1;
+		flag_1=1;
 		for(i=0;i<500;i++)
 			{
 				points[i]=800000;
