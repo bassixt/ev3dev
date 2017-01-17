@@ -1471,14 +1471,14 @@ while(status_re==0)
 	}
 	else
 	{
-		status_re==1;
+		status_re=1;
 	}
 }
 grab=colorsense(sn,dx,med,max_speed,sn_color);
 printf("grab=%d\n",grab);
 while(grab==0)
 {
-	go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,20,sn_compass,sn_mag);
+	go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,40,sn_compass,sn_mag);
 	grab=colorsense(sn,dx,med,max_speed,sn_color);
 	printf("grab=%d\n",grab);
 }
