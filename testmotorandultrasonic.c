@@ -52,6 +52,7 @@ unsigned char length = 0;
 unsigned char previous = 0xFF;
 unsigned char next = 0xFF;
 unsigned char side=0;
+float teta=0;
 int s;
 uint16_t msgId=0;
 
@@ -167,7 +168,7 @@ void positioning(void * args)
 	float m_rot,disp_diff;
  	static short flag = 0;
 	static float last_angle  = 0;
-	static float teta = 0;
+	//static float teta = 0;
 	static float old_sx = 0;
 	static float old_dx = 0;
 	static float old_x = 0;
@@ -199,10 +200,10 @@ void positioning(void * args)
 	get_tacho_position(donald->dx,&new_dx);
 	new_angs = deg2rad(new_angs);
 	if(flag==1)
-		teta = teta + m_rot;
+		donald->teta = donald->teta + m_rot;
  	else
 	{
-		teta = 0;
+		donald->teta = 0;
 		flag = 1;
 	}	
 	disp_sx = new_sx - old_sx; 
@@ -210,8 +211,8 @@ void positioning(void * args)
 	disp_diff = (disp_sx + disp_dx)*encod_scale/2;		//displacement
 	old_sx = new_sx;
 	old_dx = new_dx;
- 	old_x = old_x + disp_diff * sign * sin( teta );
-	old_y = old_y + disp_diff * sign * cos( teta ); 
+ 	old_x = old_x + disp_diff * sign * sin( donald->teta );
+	old_y = old_y + disp_diff * sign * cos( donald->teta ); 
  	donald->x = old_x;
  	donald->y = old_y;
 	printf("y=%f and x=%f\n",old_y,old_x);
@@ -734,19 +735,23 @@ void gotoxyfinisher(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t s
 
 
 }
-void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_mag)
+void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_mag, uint8_t teta)
 {
-	float deltax, deltay ,distanceto, angleofrotation;
+	float deltax, deltay ,distanceto, angleofrotation, rot;
 	deltax=(xnewf-xoldf);
 	deltay=(ynewf-yoldf);
 	distanceto=sqrt(pow(deltax,2)+pow(deltay,2))*19;
 	printf("distance to do: %f",distanceto);
 	//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
-	deltax=(double)abs(deltax);
-	deltay=(double)abs(deltay);
+	deltax=(double)deltax;
+	deltay=(double)deltay;
 	angleofrotation=atan2(deltax,deltay)*180/M_PI;
+	rot = 90 - donald->teta + angleofrotation;
 	printf("angle of turning : %f",angleofrotation);
-	rotatesx(sn,dx,sn_compass,max_speed,angleofrotation,sn_mag);
+	if(rot<0)
+		rotatesx(sn,dx,sn_compass,max_speed,rot,sn_mag);
+	else
+		rotatesx(sn,dx,sn_compass,max_speed,rot,sn_mag);
 	go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,distanceto,sn_compass,sn_mag);
 
 
@@ -798,7 +803,7 @@ if ( !get_sensor_value0(donald->sn_mag, &heading)){
 switch(donald->number)
 {
 	case 0 :
-		gotoxyfinisher(donald->x, donald->y, 19.0, 43.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);	
+		gotoxybeg(donald->x, donald->y, 19.0, 43.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		//gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
 		break;
