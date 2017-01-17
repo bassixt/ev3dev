@@ -135,7 +135,7 @@ float get_sonar_values(uint8_t sn_sonar)
 	{
 		
 
-		if ( !get_sensor_value0(sn_compass, &sonar_val)) 
+		if ( !get_sensor_value0(sn_sonar, &sonar_val)) 
 			{
 			   sonar_val = 0;
 			} 
