@@ -1267,7 +1267,7 @@ get_tacho_position(sn, &pos_in_sn);
 get_tacho_position(dx, &pos_in_dx);
 status_re = 0;
 while(status_re==0)
-	{
+	{	rotatedx(sn,dx,sn_compass,max_speed,max_turn_degree,sn_mag);
 		for(i=0;i<30;i++)
 		{
 			//printf("I'M here\n");
