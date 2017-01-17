@@ -1272,7 +1272,7 @@ while(status_re==0)
 		//turn right 45 ° and start moving 2° each step
 		rotatedx(sn,dx,sn_compass,max_speed,max_turn_degree,sn_mag);	
 		Sleep(200);
-		for(i=0;i<90;i++)
+		for(i=0;i<45;i++)
 		{
 			//printf("I'M here\n");
 			//Sleep(500);
