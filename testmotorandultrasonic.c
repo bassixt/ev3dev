@@ -1462,7 +1462,7 @@ while(status_re==0)
 	rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 	if (flag_1==0)
 	{
-		go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,3/4*points[index],sn_compass,sn_mag);
+		go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,points[index]*3/4,sn_compass,sn_mag);
 		flag_1==1;
 		for(i=0;i<500;i++)
 			{
