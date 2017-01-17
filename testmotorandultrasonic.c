@@ -52,7 +52,6 @@ unsigned char length = 0;
 unsigned char previous = 0xFF;
 unsigned char next = 0xFF;
 unsigned char side=0;
-float teta=0;
 int s;
 uint16_t msgId=0;
 
@@ -71,6 +70,7 @@ struct motandsens {
 	float x,y;
         int role;/*0 beg 1 fin*/
         int arena;/*0 small1 big*/
+	float teta=0;
         int side;/*0 right 1 left*/
 	int number;	   
 
