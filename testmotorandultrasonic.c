@@ -1323,7 +1323,7 @@ while(status_re==0)
 				break;
 			}
 			//rotatesx(sn,dx,sn_compass,max_speed,1,sn_mag);
-			rotateforscan(sn,dx,max_speed);
+			rotateforscan(sn,dx,max_speed/4);
 			
 		}
 
