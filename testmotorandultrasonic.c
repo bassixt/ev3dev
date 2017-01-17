@@ -1417,6 +1417,7 @@ float start_angle, final_angle, middle_angle,turn_angle,end_angle;
 int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx,init_turn; 
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
 int i, flag_1,flag_2,grab, ball_dist, status_re;
+int angles_to_scan=20;
 float points[1000]={8000000};
 float angle[1000]={0};
 init_turn = max_turn_degree;
@@ -1436,14 +1437,14 @@ while(status_re==0)
 		//turn right 45 ° and start moving 2° each step
 		rotatedx(sn,dx,sn_compass,max_speed,init_turn,sn_mag);	
 		Sleep(200);
-		for(i=0;i<30;i++)
+		for(i=0;i<angles_to_scan;i++)
 		{	points[i]=get_sonar_values(sn_sonar);
 			get_sensor_value0(sn_mag, &angle[i] );
 			rotateforscan(sn,dx,max_speed);
 		}
 		int max=8000000;
 		int index=0;
-	      	for(i=0;i<30;i++)
+	      	for(i=0;i<angles_to_scan;i++)
 		{	
 		  if(points[i]<max)
 		  {
