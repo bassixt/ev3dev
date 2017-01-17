@@ -1443,7 +1443,7 @@ while(status_re==0)
 		}
 		int max=8000000;
 		int index=0;
-	      	for(i=0;i<500;i++)
+	      	for(i=0;i<30;i++)
 		{	
 		  if(points[i]<max)
 		  {
@@ -1451,16 +1451,24 @@ while(status_re==0)
 			  index=i;
 		  }
 		}
+		printf("point[index]:%f\n",point[index]);
+		printf("angle[index]:%f\n",angle[index]);
 	if ( !get_sensor_value0(sn_mag, &final_angle)) 
    {
    final_angle = 0;
    }
-	middle_angle=abs(final_angle-angle[index]);
+	middle_angle=abs(angle[index]-final_angle);
+	printf("final angle:%f and middle angle:%f\n",final_angle,middle_angle);
 	rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 	if (flag_1==0)
-	{go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,3/4*points[index],sn_compass,sn_mag);
-	flag_1==1;
-	 }
+	{
+		go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,3/4*points[index],sn_compass,sn_mag);
+		flag_1==1;
+		for(i=0;i<500;i++)
+			{
+				points[i]=800000;
+			}
+	}
 	else
 	{
 		status_re==1;
