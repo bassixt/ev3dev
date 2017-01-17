@@ -776,16 +776,25 @@ if ( !get_sensor_value0(donald->sn_mag, &heading)){
 switch(donald->number)
 {
 	case 0 :
-		//gotoxyfinisher(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);	
-		 research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 30 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-		//gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,2745,donald->sn_compass, donald->sn_mag);
 		break;
 	case 1 :
-		gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1432,donald->sn_compass, donald->sn_mag);
+		//TURN LEFT
+		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,89,donald->sn_mag);
+		Sleep(1000);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,600,donald->sn_compass,donald->sn_mag); 	
+		printf("I'am in movements after turn\n");	
+		Sleep(500);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
+		Sleep(1000);
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
+		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
 		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);		
-		gotoxyfinisher(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
+		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1240,donald->sn_compass, donald->sn_mag);
+		//put_down(donald->sn,donald->dx,donald->med,donald->max_speed);
+		Sleep(1000);
+		break;
 	case 2:
 
 		Sleep(500); //time elapsed to scan
@@ -1250,17 +1259,14 @@ donald->y=0;
 return donald;
 }
 
-
-
 void research(uint8_t sn,uint8_t dx,int max_speed, uint8_t sn_compass, int max_turn_degree, uint8_t med, uint8_t sn_color,uint8_t sn_mag, uint8_t sn_sonar)
 {	//Take the initial position than move to 
 float initial_angle;
 float start_angle, final_angle, middle_angle,turn_angle;
 int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
-int i, flag_1,flag_2,grab, ball_dist, status_re,t;
+int i, flag_1,flag_2,grab, ball_dist, status_re;
 float points[1000]={0};
-t=0;
 if ( !get_sensor_value0(sn_mag, &initial_angle )) 
    {
    initial_angle = 0;
@@ -1273,12 +1279,12 @@ while(status_re==0)
 		flag_1=0;
 		flag_2=0;  // because of vibration the first value scanned after first angle must be cecked
 		//turn right 45 ° and start moving 2° each step
-		rotatedx(sn,dx,sn_compass,max_speed,max_turn_degree,sn_mag);	
+		rotatedx(sn,dx,sn_compass,max_speed,35,sn_mag);	
 		Sleep(200);
-		for(i=0;i<30;i++)
+		for(i=0;i<90;i++)
 		{
 			//printf("I'M here\n");
-			//Sleep(500);
+			Sleep(500);
 			get_sensor_value0(sn_sonar, &points[i]);
 			if(flag_1==1 && flag_2==0) //if you have found the ball the first value after that can be wrong due to vibrations
 			{
@@ -1323,7 +1329,7 @@ while(status_re==0)
 				break;
 			}
 			//rotatesx(sn,dx,sn_compass,max_speed,1,sn_mag);
-			rotateforscan(sn,dx,max_speed/4);
+			rotateforscan(sn,dx,max_speed);
 			
 		}
 
@@ -1338,26 +1344,16 @@ while(status_re==0)
 		turn_angle = abs( middle_angle - final_angle );
 		rotatedx(sn,dx,sn_compass,max_speed,(int)turn_angle,sn_mag); 
 		Sleep(200);
-		for(i=0;i<1000;i++){
-			points[i]=0; //TO BE CONTROLLED
-		}
-		/*if (ball_dist > 300)
+		
+		if (ball_dist > 300)
 		{	
 			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,(int)ball_dist-150,sn_compass,sn_mag);
-			
+			for(i=0;i<1000;i++)
+				points[i]=0; //TO BE CONTROLLED
 		}
 		else
 		{
 			status_re=1; //LEAVE THE RESEARCH TAKE THE BALL
-		}*/
-	        if(t==0)
-		{
-		go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,ball_dist*3/4,sn_compass,sn_mag);	
-		t=1;	
-		}
-		else
-		{
-		   status_re=1;	
 		}
 
 }
