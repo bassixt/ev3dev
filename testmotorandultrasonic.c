@@ -798,7 +798,7 @@ if ( !get_sensor_value0(donald->sn_mag, &heading)){
 switch(donald->number)
 {
 	case 0 :
-		gotoxyfinisher(donald->x, donald->y, 16.0, 40.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);	
+		gotoxyfinisher(donald->x, donald->y, 19.0, 43.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);	
 		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		//gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
 		break;
