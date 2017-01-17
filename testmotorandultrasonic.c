@@ -70,9 +70,9 @@ struct motandsens {
 	float x,y;
         int role;/*0 beg 1 fin*/
         int arena;/*0 small1 big*/
-	float teta=0;
+	float teta;
         int side;/*0 right 1 left*/
-	int number;	   
+	int number;	
 
 
 };
@@ -1274,6 +1274,7 @@ uint32_t n, ii;
 		}
 donald->x=0;
 donald->y=0;
+donald->teta=0;
 return donald;
 }
 
