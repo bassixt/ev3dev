@@ -1381,8 +1381,9 @@ while(status_re==0)
 			}
 		}
 		else
-		{
-			rotatedx(sn,dx,sn_compass,max_speed,(int)end_angle-initial_angle,sn_mag);
+		{	
+			turn_angle = abs( end_angle-initial_angle );
+			rotatedx(sn,dx,sn_compass,max_speed,(int)turn_angle,sn_mag);
 			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,380,sn_compass,sn_mag);
 			for(i=0;i<1000;i++)
 					points[i]=0; //TO BE CONTROLLED
