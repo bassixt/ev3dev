@@ -1258,8 +1258,9 @@ float initial_angle;
 float start_angle, final_angle, middle_angle,turn_angle;
 int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx; 
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
-int i, flag_1,flag_2,grab, ball_dist, status_re;
+int i, flag_1,flag_2,grab, ball_dist, status_re,t;
 float points[1000]={0};
+t=0;
 if ( !get_sensor_value0(sn_mag, &initial_angle )) 
    {
    initial_angle = 0;
@@ -1340,7 +1341,7 @@ while(status_re==0)
 		for(i=0;i<1000;i++){
 			points[i]=0; //TO BE CONTROLLED
 		}
-		if (ball_dist > 300)
+		/*if (ball_dist > 300)
 		{	
 			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,(int)ball_dist-150,sn_compass,sn_mag);
 			
@@ -1348,6 +1349,15 @@ while(status_re==0)
 		else
 		{
 			status_re=1; //LEAVE THE RESEARCH TAKE THE BALL
+		}*/
+	        if(t==0)
+		{
+		go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,ball_dist*3/4,sn_compass,sn_mag);	
+			
+		}
+		else
+		{
+		   status_re=1;	
 		}
 
 }
