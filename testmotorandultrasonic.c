@@ -1459,7 +1459,7 @@ while(status_re==0)
    }
 	middle_angle=abs(angle[index]-final_angle);
 	printf("final angle:%f and middle angle:%f\n",final_angle,middle_angle);
-	rotatedx(sn,dx,sn_compass,max_speed,middle_angle-5,sn_mag);
+	rotatedx(sn,dx,sn_compass,max_speed,middle_angle-4,sn_mag);
 	if (flag_1==0)
 	{
 		go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,points[index]*3/4,sn_compass,sn_mag);
