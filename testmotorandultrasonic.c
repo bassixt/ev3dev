@@ -168,7 +168,7 @@ void positioning(void * args)
 	float m_rot,disp_diff;
  	static short flag = 0;
 	static float last_angle  = 0;
-	//static float teta = 0;
+	static float teta_calc = 0;
 	static float old_sx = 0;
 	static float old_dx = 0;
 	static float old_x = 0;
@@ -200,10 +200,10 @@ void positioning(void * args)
 	get_tacho_position(donald->dx,&new_dx);
 	new_angs = deg2rad(new_angs);
 	if(flag==1)
-		donald->teta = donald->teta + m_rot;
+		teta_calc = teta_calc + m_rot;
  	else
 	{
-		donald->teta = 0;
+		teta_calc = 0;
 		flag = 1;
 	}	
 	disp_sx = new_sx - old_sx; 
@@ -211,8 +211,10 @@ void positioning(void * args)
 	disp_diff = (disp_sx + disp_dx)*encod_scale/2;		//displacement
 	old_sx = new_sx;
 	old_dx = new_dx;
- 	old_x = old_x + disp_diff * sign * sin( donald->teta );
-	old_y = old_y + disp_diff * sign * cos( donald->teta ); 
+ 	old_x = old_x + disp_diff * sign * sin( teta_calc );
+	old_y = old_y + disp_diff * sign * cos( teta_calc ); 
+ 	printf("teta calc: %f:\n",teta_calc);
+ 	donald->teta=teta_calc;
  	donald->x = old_x;
  	donald->y = old_y;
 	printf("y=%f and x=%f\n",old_y,old_x);
