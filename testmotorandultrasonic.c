@@ -125,6 +125,28 @@ float get_compass_values(uint8_t sn_compass)
 	
 }
 
+float get_sonar_values(uint8_t sn_sonar)
+{
+	int i;
+	float sum;
+	float sonar_val;
+	sum=0;
+	for(i=0;i<50;i++)
+	{
+		
+
+		if ( !get_sensor_value0(sn_compass, &sonar_val)) 
+			{
+			   sonar_val = 0;
+			} 
+		
+		Sleep(50);
+		
+		sum+=sonar_val;
+	}
+	return sum/50;
+	
+}
 
 
 float deg2rad(float m_rot)
@@ -1276,7 +1298,8 @@ while(status_re==0)
 		{
 			//printf("I'M here\n");
 			Sleep(500);
-			get_sensor_value0(sn_sonar, &points[i]);
+			//get_sensor_value0(sn_sonar, &points[i]);
+			points[i]=get_sonar_values(sn_sonar);
 			if(flag_1==1 && flag_2==0) //if you have found the ball the first value after that can be wrong due to vibrations
 			{
 				if(points[i] > points[i-1] + 200)
