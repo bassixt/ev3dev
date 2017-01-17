@@ -221,7 +221,8 @@ void positioning(void * args)
 	
 }
 
-	void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
+
+void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
 	float wanted_c;
 	//set_tacho_position( sn,0);
@@ -755,7 +756,7 @@ void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uin
 	if(rot<0)
 		rotatesx(sn,dx,sn_compass,max_speed,rot,sn_mag);
 	else
-		rotatesx(sn,dx,sn_compass,max_speed,rot,sn_mag);
+		rotatedx(sn,dx,sn_compass,max_speed,rot,sn_mag);
 	go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,distanceto,sn_compass,sn_mag);
 
 
