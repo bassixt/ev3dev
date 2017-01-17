@@ -1438,24 +1438,24 @@ while(status_re==0)
 		Sleep(200);
 		for(i=0;i<30;i++)
 		{	points[i]=get_sonar_values(sn_sonar);
-			get_sensor_value0(sn_mag, &angle[i] )
+			get_sensor_value0(sn_mag, &angle[i] );
 			rotateforscan(sn,dx,max_speed);
 		}
 		int max=8000000;
 		int index=0
-	      for(i=0;i<500;i++)
+	      	for(i=0;i<500;i++)
 		{	
 		  if(point[i]<max)
 		  {
 			  max=point[i];
-			  intex=i;
+			  index=i;
 		  }
 		}
 	if ( !get_sensor_value0(sn_mag, &final_angle)) 
    {
    final_angle = 0;
    }
-	middle_angle=abs(final_angle-angle[index])
+	middle_angle=abs(final_angle-angle[index]);
 	rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
 	if (flag_1==0)
 	{go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,3/4*point[index],sn_compass,sn_mag);
@@ -1463,7 +1463,7 @@ while(status_re==0)
 	 }
 	else
 	{
-		status_re==1
+		status_re==1;
 	}
 }
 grab=colorsense(sn,dx,med,max_speed,sn_color);
