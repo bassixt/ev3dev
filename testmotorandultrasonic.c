@@ -712,6 +712,23 @@ void gotoxyfinisher(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t s
 
 
 }
+void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uint8_t dx,int max_speed,uint8_t sn_sonar, uint8_t sn_compass, uint8_t sn_mag)
+{
+	float deltax, deltay ,distanceto, angleofrotation;
+	deltax=(xnewf-xoldf);
+	deltay=(ynewf-yoldf);
+	distanceto=sqrt(pow(deltax,2)+pow(deltay,2))*19;
+	printf("distance to do: %f",distanceto);
+	//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
+	deltax=(double)abs(deltax);
+	deltay=(double)abs(deltay);
+	angleofrotation=atan2(deltax,deltay)*180/M_PI;
+	printf("angle of turning : %f",angleofrotation);
+	rotatesx(sn,dx,sn_compass,max_speed,angleofrotation,sn_mag);
+	go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,distanceto,sn_compass,sn_mag);
+
+
+}
 int colorsense(uint8_t sn,uint8_t dx, uint8_t med, int max_speed, uint8_t sn_color)
 { 	int val;
  	int stricol[10];
