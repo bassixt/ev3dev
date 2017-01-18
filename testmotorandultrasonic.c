@@ -167,7 +167,7 @@ void positioning(void * args)
  	int retour;
 	float m_rot,disp_diff;
  	static short flag = 0;
-	static float last_angle  = M_PI;
+	static float last_angle  = 180;
 	static float teta_calc = M_PI;
 	static float old_sx = 0;
 	static float old_dx = 0;
