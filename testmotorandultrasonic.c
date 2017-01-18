@@ -203,7 +203,7 @@ void positioning(void * args)
 		teta_calc = teta_calc + m_rot;
  	else
 	{
-		teta_calc = 0;
+		teta_calc = M_PI;
 		flag = 1;
 	}	
 	disp_sx = new_sx - old_sx; 
