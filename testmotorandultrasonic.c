@@ -752,7 +752,7 @@ void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uin
 	angleofrotation=atan2(deltax,deltay)*180/M_PI;
 	printf("teta is :%f\n",teta);
 	printf("delta aangle is :%f\n",angleofrotation);
-	rot = rad2deg(teta) + angleofrotation;
+	rot = teta + angleofrotation;
 	printf("angle of turning : %f",rot);
 	if(rot<0)
 		rotatesx(sn,dx,sn_compass,max_speed,rot,sn_mag);
