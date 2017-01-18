@@ -193,7 +193,9 @@ void positioning(void * args)
     			   perror("erreur mutex unlock");
      			  exit(EXIT_FAILURE);
     			 }
+ 	printf("new_angs: %f   last_angle: %f\n",new_angs, last_angle);
 	m_rot =  -(new_angs - last_angle);		//rotation
+ 	printf("m_rot: %f\n",m_rot);
 	m_rot = deg2rad(m_rot);				//rotation to rad
 	last_angle = new_angs;				//refresh last angle
 	get_tacho_position(donald->sn,&new_sx);			
