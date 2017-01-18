@@ -168,11 +168,11 @@ void positioning(void * args)
 	float m_rot,disp_diff;
  	static short flag = 0;
 	static float last_angle  = 0;
-	static float teta_calc = deg2rad(donald->teta);
+	static float teta_calc = deg2rad(180);
 	static float old_sx = 0;
 	static float old_dx = 0;
-	static float old_x = donald->x;
-	static float old_y = donald->y;
+	static float old_x = 10;
+	static float old_y = 190;
  	float sign;
 	int new_sx,new_dx;
 	float disp_sx,disp_dx;
