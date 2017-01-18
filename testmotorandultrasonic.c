@@ -194,7 +194,7 @@ void positioning(void * args)
      			  exit(EXIT_FAILURE);
     			 }
  	printf("new_angs: %f   last_angle: %f\n",new_angs, last_angle);
-	m_rot =  -(new_angs - last_angle);		//rotation
+	m_rot =  new_angs - last_angle;		//rotation
  	printf("m_rot: %f\n",m_rot);
 	m_rot = deg2rad(m_rot);				//rotation to rad
 	last_angle = new_angs;				//refresh last angle
@@ -213,7 +213,7 @@ void positioning(void * args)
 	disp_diff = (disp_sx + disp_dx)*encod_scale/2;		//displacement
 	old_sx = new_sx;
 	old_dx = new_dx;
- 	old_x = old_x + disp_diff * (-1) * sin( teta_calc );
+ 	old_x = old_x + disp_diff * sign * sin( teta_calc );
 	old_y = old_y + disp_diff * sign * cos( teta_calc ); 
  	printf("teta calc: %f:\n",teta_calc);
  	donald->teta=teta_calc;
