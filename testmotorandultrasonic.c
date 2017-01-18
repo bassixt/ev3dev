@@ -168,11 +168,11 @@ void positioning(void * args)
 	float m_rot,disp_diff;
  	static short flag = 0;
 	static float last_angle  = 0;
-	static float teta_calc = 0;
+	static float teta_calc = deg2rad(donald->teta);
 	static float old_sx = 0;
 	static float old_dx = 0;
-	static float old_x = 0;
-	static float old_y = 0;
+	static float old_x = donald->x;
+	static float old_y = donald->y;
  	float sign;
 	int new_sx,new_dx;
 	float disp_sx,disp_dx;
@@ -807,10 +807,11 @@ if ( !get_sensor_value0(donald->sn_mag, &heading)){
 					}
 switch(donald->number)
 {
-	case 0 :
-		gotoxybeg(donald->x, donald->y, 19.0, 43.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
+	case 0 ://prima era x=19 y=43 e 1 e 150
+		gotoxybeg(donald->x, donald->y, 29.0, 147.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-		gotoxybeg(donald->x, donald->y, 1.0, 150.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+		gotoxybeg(donald->x, donald->y, 44.0, 39.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+		
 		break;
 	case 1 :
 		gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
@@ -1277,9 +1278,10 @@ uint32_t n, ii;
                         printf( "\r(%f) \n", value);
                         fflush( stdout );
 		}
-donald->x=0;
-donald->y=0;
-donald->teta=0;
+//FINISHER
+donald->x=10;
+donald->y=190;
+donald->teta=180;
 return donald;
 }
 
