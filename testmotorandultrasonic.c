@@ -751,9 +751,9 @@ void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uin
 	//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
 	deltax=(double)deltax;
 	deltay=(double)deltay;
-	angleofrotation=atan2(deltax,deltay)*180/M_PI;
+	angleofrotation=atan2(deltay,deltax)*180/M_PI;   // solo per prova
 	printf("teta is :%f\n",teta);
-	printf("delta aangle is :%f\n",angleofrotation);
+	printf("delta aangle is :%f\n",angleofrotation); 
 	rot =-360+ teta + angleofrotation;
 	printf("angle of turning : %f",rot);
 	if(rot<0)
