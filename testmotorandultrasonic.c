@@ -757,7 +757,7 @@ void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uin
 	rot =-360+ teta + angleofrotation;
 	printf("angle of turning : %f",rot);
 	if(rot<0)
-		rotatesx(sn,dx,sn_compass,max_speed,rot,sn_mag);
+		rotatesx(sn,dx,sn_compass,max_speed,abs(rot),sn_mag);
 	else
 		rotatedx(sn,dx,sn_compass,max_speed,rot,sn_mag);
 	go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,distanceto,sn_compass,sn_mag);
