@@ -813,7 +813,8 @@ switch(donald->number)
 	case 0 ://prima era x=19 y=43 e 1 e 150
 		gotoxybeg(donald->x, donald->y, 29.0, 147.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-		printf("\n################################################\n########      HO TROVATO LA PALLA      #########\n################################################\n");
+		printf("\n################################################\n########      HO TROVATO LA PALLA      #########\n");
+		printf("################################################\n");
 		gotoxybeg(donald->x, donald->y, 44.0, 39.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		
 		break;
