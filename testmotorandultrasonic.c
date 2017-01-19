@@ -754,7 +754,7 @@ void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uin
 	angleofrotation=atan2(deltax,deltay)*180/M_PI;  
 	printf("teta is :%f\n",teta);
 	printf("delta aangle is :%f\n",angleofrotation); 
-	rot = -180+teta + angleofrotation;		//solo per prova era -360+ teta+angle ofrotation
+	rot = -90+teta + angleofrotation;		//solo per prova era -360+ teta+angle ofrotation
 	printf("angle of turning : %f",rot);
 	if(rot<0)
 		rotatesx(sn,dx,sn_compass,max_speed,abs(rot),sn_mag);
@@ -1278,6 +1278,9 @@ uint32_t n, ii;
                 if (ev3_search_sensor(LEGO_EV3_GYRO, &donald->sn_mag,0)){
                         //printf("GYRO found, reading magnet...\n");
 			set_sensor_mode( donald->sn_mag, "GYRO-ANG" );
+			set_sensor_mode( donald->sn_mag, "GYRO-CAL" );
+			set_sensor_mode( donald->sn_mag, "GYRO-ANG" );
+			
                         if ( !get_sensor_value0(donald->sn_mag, &value )) {
                                 value = 0;
                         }
