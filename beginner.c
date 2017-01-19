@@ -69,8 +69,7 @@ struct motandsens {
 	uint8_t sn_mag;
         int max_speed;
 	float x,y;
-        int role;/*0 beg 1 fin*/
-        int arena;/*0 small1 big*/
+        int role;/*0 beg 1 fin only at the init*/
 	float teta;
         int side;/*0 right 1 left*/
 	int number;	
@@ -476,22 +475,6 @@ void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 	set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
 	Sleep( 200 );
 	}
-	//get_tacho_position( dx, &act_pos);
-	//distance_el=act_pos;
-	/*
-	while((act_pos-(24*21)-distance_el)<=0)
-	{
-		set_tacho_command_inx( sn, TACHO_RUN_TIMED );
-		set_tacho_command_inx( dx, TACHO_RUN_TIMED );
-		get_tacho_position( dx, &act_pos);
-	}
-	//release the grabber
-	set_tacho_position_sp( med, -90 );
-	Sleep(200);
-	for ( i = 0; i < 4; i++ ) {
-	set_tacho_command_inx( med, TACHO_RUN_TO_REL_POS );
-	Sleep( 200 );
-	} */
 	Sleep(500);
  			
 }  
@@ -597,29 +580,12 @@ if ( !get_sensor_value0(sn_mag, &initial_angle)){
 	
 while((finish - beginning - distance)<=0){
 	
-	/*
-	multi_set_tacho_time_sp( both, 100);
-	multi_set_tacho_ramp_up_sp( both, 2000 );
-	multi_set_tacho_ramp_down_sp( both, 2000 );
-	*/
 	set_tacho_time_sp( sn, 200 );
 	set_tacho_ramp_up_sp( sn, 1500 );
 	set_tacho_ramp_down_sp( sn, 1500 );
 	set_tacho_time_sp( dx, 200);
 	set_tacho_ramp_up_sp( dx, 1500 );
 	set_tacho_ramp_down_sp( dx, 1500 );
-	/*retour = pthread_mutex_lock(&mutex);
-    			if (retour != 0)
-    			 {
-    			   perror("erreur mutex lock");
-     			  exit(EXIT_FAILURE);
-    			 }
-	retour = pthread_mutex_unlock(&mutex);
-    			if (retour != 0)
-    			 {
-    			   perror("erreur mutex unlock");
-     			  exit(EXIT_FAILURE);
-    			 }*/
 	retour = pthread_mutex_lock(&mutex_pos);
     			if (retour != 0)
     			 {
@@ -634,52 +600,31 @@ while((finish - beginning - distance)<=0){
     			 }
 	if ( !get_sensor_value0(sn_sonar, &value )) {
                                 value = 0;
-                        }
-                        //printf( "\r(%f) \n", value);
-			fflush( stdout );
-     /*  if(value<2500 && value>=1500)
-		{
-	set_tacho_speed_sp( sn, max_speed );
-	set_tacho_speed_sp( dx, max_speed );
-			}
-	if(value<1500 && value >=500)
-		{
-	set_tacho_speed_sp( sn, max_speed * 2 / 3 );
-	set_tacho_speed_sp( dx, max_speed * 2 / 3 );
-			}
-	if(value<500 && value >=350)
-		{
-	set_tacho_speed_sp( sn, max_speed * 1 / 3 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 3 );
-			       } */   
+                        } 
 	if(value<2500 && value >=250)
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 4 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 4 );
 			       }         		
 	if(value<250 && value >=70)
-		{
-	//multi_set_tacho_speed_sp(both, max_speed * 1 / 6);	
+		{	
 	set_tacho_speed_sp( sn, max_speed * 1 / 4 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 4 );
 			       }
 	if(value<70 && value >=40)
 		{
-	//multi_set_tacho_speed_sp(both, max_speed * 1 / 24);	
 	set_tacho_speed_sp( sn, max_speed * 1 / 24 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 24);
 		 }
 	if(value<40 && value >=0)
 		 {
 		printf("sono nello zero\n");
-		fflush( stdout );
-	 //multi_set_tacho_speed_sp(both, max_speed * 0);	
+		fflush( stdout );	
 	 set_tacho_speed_sp( sn, max_speed * 0 );
 	 set_tacho_speed_sp( dx, max_speed * 0 );
 	 Sleep(100);
 	 break;
 		}
-	//multi_set_tacho_command_inx(both , TACHO_RUN_TIMED );
 	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 	Sleep(100);
@@ -785,14 +730,8 @@ int colorsense(uint8_t sn,uint8_t dx, uint8_t med, int max_speed, uint8_t sn_col
 }
 void* movements(void * args)
 {
-	/*	We decide a certain movements to do in order to go from the beginning to the destination and than
-		at certain point we scan for the ball.
-		Than after we found the ball we can go till the ball, than return back, and restart to follow fixed 
-		trajectory, without searching the ball.	
-		THE TRAJECTORY CHOSEN IS GO 1 TIME AHEAD FOR 10 CM + 2 TIMES AHEAD FOR 25 CM +
-		TURN LEFT + 1 TIME AHEAD FOR 10 CM + 2 TIMES AHEAD FOR 25 CM + TURN RIGHT + 
-		2 TIMES AHEAD FOR 25 C */
 int i;
+int actual_role;
 struct motandsens *donald = (struct motandsens *) args;
 float degree;
 //int arena;
@@ -809,399 +748,72 @@ float xbefore,ybefore,distanceback;
 if ( !get_sensor_value0(donald->sn_mag, &heading)){
 					heading=0;
 					}
-switch(donald->number)
+actual_role=donald->role;
+while(1)
 {
-	case 0 ://prima era x=19 y=43 e 1 e 150
-		//waitning for the next
-		Sleep(1000);
-		gotoxybeg(donald->x, donald->y, 29.0, 147.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
-		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-		printf("\n################################################\n########      HO TROVATO LA PALLA      #########\n");
-		printf("################################################\n");
-		//send ball position
-		x_ball = donald->x+5*cos(donald->teta);
-		y_ball = donald->x+5*sin(donald->teta);
-		x_conv_MSB = (0xFF & ((int16_t)x_ball>>8));
-	 	x_conv_LSB = (0xFF &  ((int16_t)x_ball));
-		y_conv_MSB = (0xFF & ((int16_t)y_ball>>8));
-		y_conv_LSB = (0xFF &  ((int16_t)y_ball));
-		*((uint16_t *) string) = msgId++;
-		string[2] = TEAM_ID;
-		string[3] = 0xFF;
-		string[4] = MSG_BALL;
-		string[5] = 0; // robot leaved the ball
-		string[6] = x_conv_LSB;          // x 
-		string[7] = x_conv_MSB;
-		string[8] = y_conv_LSB;	    // y 
-		string[9] = y_conv_MSB;
-		write(s, string, 10);
-		
-		gotoxybeg(donald->x, donald->y, 24.0, 45.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-		Sleep(500);
-		//receive ball signal
-		//wait for next signal
-		gotoxybeg(donald->x, donald->y, 45.0, 100.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
-		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-		//send ball position
-		x_ball = donald->x+5*cos(donald->teta);
-		y_ball = donald->x+5*sin(donald->teta);
-		x_conv_MSB = (0xFF & ((int16_t)x_ball>>8));
-	 	x_conv_LSB = (0xFF &  ((int16_t)x_ball));
-		y_conv_MSB = (0xFF & ((int16_t)y_ball>>8));
-		y_conv_LSB = (0xFF &  ((int16_t)y_ball));
-		*((uint16_t *) string) = msgId++;
-		string[2] = TEAM_ID;
-		string[3] = 0xFF;
-		string[4] = MSG_BALL;
-		string[5] = 1; // robot picked up the ball
-		string[6] = x_conv_LSB;          // x 
-		string[7] = x_conv_MSB;
-		string[8] = y_conv_LSB;	    // y 
-		string[9] = y_conv_MSB;
-		write(s, string, 10);
-		
-		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-		put_down(donald->med,donald->max_speed);
-		gotoxybeg(donald->x, donald->y, 24.0, 167.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-		// SEND NEXT msg
-		
-		*((uint16_t *) string) = msgId++;
-		string[2] = TEAM_ID;
-		string[3] = 0xFF;
-		string[4] = MSG_NEXT;
-		write(s, string, 5);
-		
-		break;
-	case 1 :
-		//waiting for start
-		if(flag == 1){
-		Sleep(1000);
-		gotoxybeg(donald->x, donald->y, 75, 75.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-		put_down(donald->med,donald->max_speed);
-		//send ball position
-		gotoxybeg(donald->x, donald->y, 95.0, 150.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag,donald->teta);
-		//receive the ball signal
-		//send next message
-		gotoxybeg(donald->x, donald->y,85 , 125.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-		gotoxybeg(donald->x, donald->y, 90.0, 25,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-		// SEND NEXT msg
-		*((uint16_t *) string) = msgId++;
-		string[2] = TEAM_ID;
-		string[3] = 0xFF;
-		string[4] = MSG_NEXT;
-		write(s, string, 5);
-		
-		break;
-		}
-	case 2:
-
-		Sleep(500); //time elapsed to scan
-
-		// research(donald->sn, donald->dx,donald->max_speed, donald->sn_compass,0, donald->med, donald->sn_mag, donald->sn_sonar);
-		/*if(research(sn, dx, max_speed, sn_compass, 45)==1)
-			{	
-				found=1;
-					//funtion to take the ball and return back}
-			else
-				*/
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass, donald->sn_mag);
-
-		printf("I'am in movements\n");
-		for(i=0;i<2;i++)
-		{
-		/*if(found != 1)
-			if(research(sn, dx, max_speed, sn_compass, 90)==1)
-			{	
-				found=1;
-					//funtion to take the ball and return back}
-			else*/
-				go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,donald->sn_mag);
-
-				printf("I'am in movements' for1\n");
-				Sleep(1000);
-		}
-		//TURN LEFT
-		rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
-		Sleep(1000);
-			if(found != 1)
-			/*
-			if(research(sn, dx, max_speed, sn_compass, 90)==1)
-			{	
-				found=1;
-					//funtion to take the ball and return back}
-			else*/	
-				go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag); 	
-
-				printf("I'am in movements after turn\n");	
-				Sleep(1000);
-
-		//	for(i=0;i<2;i++)
-		//	{
-		/*if(found != 1)
-			if(research(sn, dx, max_speed, sn_compass, 90)==1)
-			{	
-				found=1;
-					//funtion to take the ball and return back}
-			else*/
-		//			go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,MIN_STEP_VER,sn_compass);
-		//			printf("I'am in movements turn left\n");
-		//			Sleep(1000);
-		//	}
-
-		//TURN RIGHT
-		rotatedx(donald->sn,donald->dx,donald->max_speed, 180, donald->sn_mag);
-		Sleep(1000);
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag);
-		rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
-		Sleep(1000);
-		for(i=0;i<2;i++)
-		{
-		/*if(found != 1)
-			if(research(sn, dx, max_speed, sn_compass, 90)==1)
-			{	
-				found=1;
-					//funtion to take the ball and return back}
-			else*/
-				go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER,donald->sn_compass,donald->sn_mag);
-
-				printf("I'am in movements turn right\n");
-				Sleep(1000);
-		}
-		/*if(found != 1)
-			if(research(sn, dx, max_speed, sn_compass, 90)==1)
-			{	
-				found=1;
-					//funtion to take the ball and return back}
-			else*/
-				go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-295,donald->sn_compass,donald->sn_mag);
-
-
-				printf("I'am in movements finish\n");
-				Sleep(1000);
-		//WE HOPE ARRIVED HOME
-		get_sensor_value0(donald->sn_compass, &degree);
-		break;
-	case 4 : 
-		// go from beginning starting area to the beginner destination area without getting bump right side
-		//move from 1m// 19*90 =1710
-		//initial_pos=get_compass_values(donald->sn_compass);
-		
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
-		//TURN RIGHT to avoid first obstacle
-		
-		rotatedx(donald->sn,donald->dx,donald->max_speed,88,donald->sn_mag);
-		
-		//move from 1m to the right
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
-		//printf("I'am in movements after turn\n");	
-	
-		//TURN LEFT
-		rotatesx(donald->sn,donald->dx,donald->max_speed,86,donald->sn_mag);
-		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1745,donald->sn_compass,donald->sn_mag); 
-		//TURN LEFT to avoid second obstacle
-	
-		rotatesx(donald->sn,donald->dx,(donald->max_speed)/2,90,donald->sn_mag);
-		// go around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1180, donald->sn_compass,donald->sn_mag);
-		//TURN RIGHT 
-		//final_pos=get_compass_values(donald->sn_compass);
-		/*if(final_pos>initial_pos)
-			turn_pos=359-final_pos+initial_pos;	   		
-		else	
-			turn_pos=initial_pos-final_pos;*/
-		
-		rotatedx(donald->sn,donald->dx,donald->max_speed,87,donald->sn_mag);
-		// go until final base
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3220,donald->sn_compass,donald->sn_mag);
-		
-		break;
-		
-	case 5 :
-		// go from beginning starting area to the beginner destination area without getting bump left side
-		
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
-		//TURN RIGHT to avoid first obstacle
-		
-		rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
-		
-		//move from 1m to the right
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
-		//printf("I'am in movements after turn\n");	
-	
-		//TURN LEFT
-		rotatedx(donald->sn,donald->dx,donald->max_speed,89,donald->sn_mag);
-		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1615,donald->sn_compass,donald->sn_mag); 
-		//TURN LEFT to avoid second obstacle
-	
-		rotatedx(donald->sn,donald->dx,donald->max_speed,87,donald->sn_mag);
-		// go around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1140, donald->sn_compass,donald->sn_mag);
-		//TURN RIGHT 
-		//final_pos=get_compass_values(donald->sn_compass);
-		/*if(final_pos>initial_pos)
-			turn_pos=359-final_pos+initial_pos;	   		
-		else	
-			turn_pos=initial_pos-final_pos;*/
-		
-		rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
-		// go until final base
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3250,donald->sn_compass,donald->sn_mag);
-		
-		break;
-		
-	case 6 :
-	//big arena right, begin at down corner test 4 : place the ball 
-		//move from 1m
-	//initial_pos=get_compass_values(donald->sn_compass);
-	
-	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
-		//TURN RIGHT to avoid first obstacle
-		
-		rotatedx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
-		
-		//move from 1m to the right
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
-		
-		//TURN LEFT
-		
-		rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
-		
-		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1765,donald->sn_compass,donald->sn_mag); 
-		//TURN LEFT to avoid second obstacle
-		
-		rotatesx(donald->sn,donald->dx,donald->max_speed,87,donald->sn_mag);
-		
-		// go after ball area around 60 cm (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1159,donald->sn_compass,donald->sn_mag);
-		//turn around 
-		
-		rotatedx(donald->sn,donald->dx,donald->max_speed,180,donald->sn_mag);
-		
-		//move to ball area (maybe won't be needed, depend on how much it goes backward)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,370,donald->sn_compass,donald->sn_mag);
-		// drop the ball in the ball area
-		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-		
-		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-		//TURN AROUND
-		/*final_pos=get_compass_values(donald->sn_compass);
-		if(final_pos<initial_pos)
-	   		turn_pos=359-initial_pos+final_pos;
-		else	
-			turn_pos=final_pos-initial_pos;*/
-		rotatesx(donald->sn,donald->dx,donald->max_speed,84,donald->sn_mag);
-		put_down(donald->med,donald->max_speed);	
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
-		
-		
-		break;	
-		
-		case 7 :
-	//big arena left, begin at down corner test 4 : place the ball 
-		//move from 1m
-	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
-		//TURN RIGHT to avoid first obstacle
-		
-		rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
-		
-		//move from 1m to the right
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
-		
-		//TURN LEFT
-		
-		rotatedx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
-		
-		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1705,donald->sn_compass,donald->sn_mag); 
-		//TURN LEFT to avoid second obstacle
-		
-		rotatedx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
-		
-		// go after ball area around 60 cm (TO TEST !!! and mesure on the arena)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1159,donald->sn_compass,donald->sn_mag);
-		//turn around 
-		
-		rotatesx(donald->sn,donald->dx,donald->max_speed,180,donald->sn_mag);
-		
-		//move to ball area (maybe won't be needed, depend on how much it goes backward)
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,370,donald->sn_compass,donald->sn_mag);
-		// drop the ball in the ball area
-		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-		
-		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-		//TURN AROUND
-		/*final_pos=get_compass_values(donald->sn_compass);
-		if(final_pos<initial_pos)
-	   		turn_pos=359-initial_pos+final_pos;
-		else	
-			turn_pos=final_pos-initial_pos;*/
-		rotatedx(donald->sn,donald->dx,donald->max_speed,84,donald->sn_mag);
-		put_down(donald->med,donald->max_speed);	
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
-		
-		
-		break;	
-		
-		case 8 :
-	//big arena right, begin at up corner test : grab the ball 
-	
-		Sleep(1000);
-		break;	
-		
-		
-		case 9 :
-	//big arena left, begin at up corner test : grab the ball 
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,722,donald->sn_compass, donald->sn_mag);
-		//TURN LEFT
-		Sleep(300);
-		xbefore=donald->x;
-		ybefore=donald->y;
-		printf("---------------- x and y before turning : x=%f , y=%f\n", xbefore,ybefore);
-		rotatesx(donald->sn,donald->dx,donald->max_speed,45,donald->sn_mag);
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,240,donald->sn_compass, donald->sn_mag);
-	        research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 45 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-		////////////////////////////////////////////////////////
-		Sleep(300);
-                printf("--------- x and y after ball taken : x=%f , y=%f\n", donald->x,donald->y);
-		deltax=(donald->x)-xbefore;
-		deltay=(donald->y)-ybefore;
-		distanceback=sqrt(pow(((donald->x)-xbefore),2)+pow(((donald->y)-ybefore),2))*19;
-		printf("distance to come back: %f",distanceback);
-		//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
-		deltax=(double)abs(deltax);
-		deltay=(double)abs(deltay);
-		angleofrotationback=atan2(deltax,deltay)*180/M_PI;
-		printf("angle of turning back: %f",angleofrotationback);
-		
-		go_back(donald->sn,donald->dx,distanceback,donald->max_speed,donald->sn_compass,donald->sn_mag);
-		rotatedx(donald->sn,donald->dx,donald->max_speed,angleofrotationback,donald->sn_mag);
-		gotoxyfinisher(donald->x, donald->y, 0.0, 150.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
-		Sleep(1000);
-		break; 
-	case 10 :
-		while(1)
-		{
-		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,190,donald->sn_compass, donald->sn_mag);
-		POS_X = POS_X * cos(heading);
-		POS_Y = POS_Y * sin(heading);
-		if ( !get_sensor_value0(donald->sn_mag, &heading)){
-					heading=0;
-					}
-		printf("POS_X=%f\n",POS_X);
-		printf("POS_Y=%f\n",POS_Y);
-		printf("heading=%f\n",heading);
-		}
-		break;
-case 11:
-	gotoxyfinisher(donald->x, donald->y, 16.0, 55.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);	
-	research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 0 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-	break;	
+	while(donald->number==1);
+	switch(actual_role)
+	{
+		case 0 :Sleep(1000);
+			gotoxybeg(donald->x, donald->y, 75, 75.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+			leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
+			go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
+			put_down(donald->med,donald->max_speed);
+			//send ball position
+			x_ball = donald->x+5*cos(donald->teta);
+			y_ball = donald->x+5*sin(donald->teta);
+			x_conv_MSB = (0xFF & ((int16_t)x_ball>>8));
+			x_conv_LSB = (0xFF &  ((int16_t)x_ball));
+			y_conv_MSB = (0xFF & ((int16_t)y_ball>>8));
+			y_conv_LSB = (0xFF &  ((int16_t)y_ball));
+			*((uint16_t *) string) = msgId++;
+			string[2] = TEAM_ID;
+			string[3] = 0xFF;
+			string[4] = MSG_BALL;
+			string[5] = 0; // robot leaved the ball
+			string[6] = x_conv_LSB;          // x 
+			string[7] = x_conv_MSB;
+			string[8] = y_conv_LSB;	    // y 
+			string[9] = y_conv_MSB;
+			write(s, string, 10);
+			gotoxybeg(donald->x, donald->y, 95.0, 150.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag,donald->teta);
+			//send next message
+			actual_role=1;
+			break;
+		case 1 :
+			//waiting for start
+			if(flag == 1){
+			gotoxybeg(donald->x, donald->y,85 , 125.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+			research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
+			//send ball position
+			x_ball = donald->x+5*cos(donald->teta);
+			y_ball = donald->x+5*sin(donald->teta);
+			x_conv_MSB = (0xFF & ((int16_t)x_ball>>8));
+			x_conv_LSB = (0xFF &  ((int16_t)x_ball));
+			y_conv_MSB = (0xFF & ((int16_t)y_ball>>8));
+			y_conv_LSB = (0xFF &  ((int16_t)y_ball));
+			*((uint16_t *) string) = msgId++;
+			string[2] = TEAM_ID;
+			string[3] = 0xFF;
+			string[4] = MSG_BALL;
+			string[5] = 0; // robot leaved the ball
+			string[6] = x_conv_LSB;          // x 
+			string[7] = x_conv_MSB;
+			string[8] = y_conv_LSB;	    // y 
+			string[9] = y_conv_MSB;
+			write(s, string, 10);
+			gotoxybeg(donald->x, donald->y, 95.0, 150.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag,donald->teta);
+			gotoxybeg(donald->x, donald->y, 90.0, 25,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+			// SEND NEXT msg
+			*((uint16_t *) string) = msgId++;
+			string[2] = TEAM_ID;
+			string[3] = 0xFF;
+			string[4] = MSG_NEXT;
+			write(s, string, 5);
+			actual_role=0;
+			break;
+			}	
+	}
 }
 return EXIT_SUCCESS;
 }
@@ -1593,6 +1205,8 @@ int main( int argc, char **argv )
 	pthread_t thread_movement, thread_position, thread_colorsense; 
         pthread_mutex_init(&mutex, NULL);
  	int caseNumber;
+ 	int game_status_flag=0;	// is set to one if a kick message or a stop message is received
+	char string[58];
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
         ev3_brick_addr = "192.168.0.204";
@@ -1637,59 +1251,81 @@ int main( int argc, char **argv )
     status = connect(s, (struct sockaddr *)&addr, sizeof(addr));
 
     /* if connected */
-    if( status == 0 ) {
-        char string[58];
+    while( status != 0 );
+ 
 
-        /* Wait for START message */
-         read_from_server (s, string, 9);
-        if (string[4] == MSG_START) {
+ 	
+        
+ while(game_status_flag==0)
+ {
+ read_from_server (s, string, 9);
+ switch (string[4])	
+ { 	
+	case MSG_START:
             printf ("Received start message!\n");
             rank = (unsigned char) string[5];
 	    side = (unsigned char) string[6];
             next = (unsigned char) string[7];
-			
-        }
-		if (rank== 0){
+	    if (rank== 0)
+	    {
 		    printf("I am beginner\n");
-			donald->number = 0 ;
+		    donald->role = 0;	//only at the init to know how to start
+		    donald->number = 0 ;
+		    //THE BEGINNER CAN START
 			
-		}
-		else {
-			printf("I am finisher\n");
-			donald->number =  1;
-	// wait for a ball msg
-	read_from_server (s, string, 10);
-        if (string[4] == MSG_BALL && string[5] == 1) {
-            printf ("Received ball message! Ball has been left \n");
+	    }
+	    else 
+	    {
+		    printf("I am finisher\n");
+		    donald->role = 1;
+		    donald->number =  1;
+		    //WAIT NEXT MESSAGE
+	    }
+	    break;
+	case MSG_BALL:
+       	     if (string[5] == 1) 
+	     	{
+            		printf ("Received ball message! Ball has been left \n");
            		string[2] = TEAM_ID;
-		x_LSB = string[6];          // get x of the ball
-		x_MSB = string[7];
-		y_LSB = string[8];	    //get y of the ball
-		y_MSB = string[9];
+			x_LSB = string[6];          // get x of the ball
+			x_MSB = string[7];
+			y_LSB = string[8];	    //get y of the ball
+			y_MSB = string[9];
 			
-        }	
+       		 }	
 	// need to reconvert + create a specific variable x_ball and y_ball
 	//x_ball = ;
 	//y_ball = ;
 	// wait for a start msg
-	read_from_server (s, string, 9);
-        if (string[4] == MSG_START) {
-            printf ("Finisher can go now!\n");
-	flag = 1; // movement can begin with case 1
-			
+	      break;
+	 case MSG_KICK :
+	     game_status_flag =1;
+	     break;
+	 case MSG_STOP:
+	     game_status_flag =1;
+	     break;
+	 case MSG_NEXT:
+	     donald->number =  0;
+	     //OK let start!!
+             
+	     
         }
 				
-        }
-			
-		}
+}
+ }		
 
-    else {
-        fprintf (stderr, "Failed to connect to server...\n");
-        sleep (2);
-	close(s);
-        exit (EXIT_FAILURE);
-    }
+/*
+#define MSG_ACK     0
+#define MSG_NEXT    1  
+#define MSG_START   2  V
+#define MSG_STOP    3  V
+#define MSG_CUSTOM  4  X
+#define MSG_KICK    5  V
+#define MSG_POSITION 6 V
+#define MSG_BALL       ?
 
+
+*/
    
 	///////////////////////////////////////////////////////////////////////
 	////								   ////
