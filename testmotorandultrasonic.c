@@ -826,7 +826,7 @@ switch(donald->number)
 		break;
 	case 1 :
 		Sleep(1000);
-		gotoxybeg(donald->x, donald->y, 55, 85.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+		gotoxybeg(donald->x, donald->y, 75, 85.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		put_down(donald->med,donald->max_speed);		
