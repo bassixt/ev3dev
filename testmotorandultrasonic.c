@@ -205,7 +205,7 @@ void positioning(void * args)
 		teta_calc = teta_calc + m_rot;
  	else
 	{
-		teta_calc = -M_PI/2;  //prima era M_PI
+		teta_calc = M_PI/2;  //-M_PI/2 per il finisher
 		flag = 1;
 	}	
 	disp_sx = new_sx - old_sx; 
@@ -825,11 +825,12 @@ switch(donald->number)
 		gotoxybeg(donald->x, donald->y, 24.0, 167.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		break;
 	case 1 :
-		gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+		Sleep(1000);
+		gotoxybeg(donald->x, donald->y, 60, 95.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		put_down(donald->med,donald->max_speed);		
-		gotoxyfinisher(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
+		gotoxyfinisher(donald->x, donald->y, 10.0, 170.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
 	case 2:
 
 		Sleep(500); //time elapsed to scan
@@ -1293,9 +1294,9 @@ uint32_t n, ii;
                         fflush( stdout );
 		}
 //FINISHER
-donald->x=10;
-donald->y=190;
-donald->teta=-90;//180
+donald->x=10; //finisher=10
+donald->y=190;//finisher=190
+donald->teta=90;//finisher=-90
 return donald;
 }
 
