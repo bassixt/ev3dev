@@ -132,7 +132,7 @@ float get_sonar_values(uint8_t sn_sonar)
 	float sum;
 	float sonar_val;
 	sum=0;
-	for(i=0;i<20;i++)
+	for(i=0;i<5;i++)
 	{
 		
 
@@ -145,7 +145,7 @@ float get_sonar_values(uint8_t sn_sonar)
 		
 		sum+=sonar_val;
 	}
-	return sum/20;
+	return sum/5;
 	
 }
 
@@ -819,7 +819,9 @@ switch(donald->number)
 		gotoxybeg(donald->x, donald->y, 24.0, 45.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		Sleep(500);
 		gotoxybeg(donald->x, donald->y, 45.0, 100.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
-
+		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
+		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
+		put_down(donald->med,donald->max_speed);	
 		break;
 	case 1 :
 		gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
