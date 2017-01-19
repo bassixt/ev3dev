@@ -816,8 +816,10 @@ switch(donald->number)
 		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		printf("\n################################################\n########      HO TROVATO LA PALLA      #########\n");
 		printf("################################################\n");
-		gotoxybeg(donald->x, donald->y, 34.0, 39.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-		
+		gotoxybeg(donald->x, donald->y, 24.0, 45.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+		Sleep(500);
+		gotoxybeg(donald->x, donald->y, 29.0, 147.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
+
 		break;
 	case 1 :
 		gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
@@ -1485,7 +1487,7 @@ while(status_re==0)
 	rotatedx(sn,dx,max_speed,middle_angle-4,sn_mag);
 	if (flag_1==0)
 	{
-		go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,points[index]*3/4,sn_compass,sn_mag);
+		go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,points[index]*3/4,sn_compass,sn_mag);
 		flag_1=1;
 		for(i=0;i<500;i++)
 			{
@@ -1501,7 +1503,7 @@ grab=colorsense(sn,dx,med,max_speed,sn_color);
 printf("grab=%d\n",grab);
 while(grab==0)
 {
-	go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,40,sn_compass,sn_mag);
+	go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,40,sn_compass,sn_mag);
 	grab=colorsense(sn,dx,med,max_speed,sn_color);
 	printf("grab=%d\n",grab);
 }
