@@ -168,7 +168,7 @@ void positioning(void * args)
 	float m_rot,disp_diff;
  	static short flag = 0;
 	static float last_angle  = 180;
-	static float teta_calc = M_PI;
+	static float teta_calc = -M_PI/2;//prima era M_PI
 	static float old_sx = 0;
 	static float old_dx = 0;
 	static float old_x = 10;
@@ -205,7 +205,7 @@ void positioning(void * args)
 		teta_calc = teta_calc + m_rot;
  	else
 	{
-		teta_calc = M_PI;
+		teta_calc = -M_PI/2;  //prima era M_PI
 		flag = 1;
 	}	
 	disp_sx = new_sx - old_sx; 
@@ -754,7 +754,7 @@ void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uin
 	angleofrotation=atan2(deltax,deltay)*180/M_PI;  
 	printf("teta is :%f\n",teta);
 	printf("delta aangle is :%f\n",angleofrotation); 
-	rot =teta + angleofrotation;		//solo per prova era -360+ teta+angle ofrotation
+	rot = 90-teta + angleofrotation;		//solo per prova era -360+ teta+angle ofrotation
 	printf("angle of turning : %f",rot);
 	if(rot<0)
 		rotatesx(sn,dx,sn_compass,max_speed,abs(rot),sn_mag);
