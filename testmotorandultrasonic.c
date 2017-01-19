@@ -213,8 +213,8 @@ void positioning(void * args)
 	disp_diff = (disp_sx + disp_dx)*encod_scale/2;		//displacement
 	old_sx = new_sx;
 	old_dx = new_dx;
- 	old_x = old_x + disp_diff * sign * sin( teta_calc );
-	old_y = old_y + disp_diff * sign * cos( teta_calc ); 
+ 	old_x = old_x + disp_diff * -sign * sin( teta_calc );
+	old_y = old_y + disp_diff * -sign * cos( teta_calc ); 
  	printf("teta calc: %f:\n",teta_calc);
  	donald->teta=teta_calc;
  	donald->x = old_x;
