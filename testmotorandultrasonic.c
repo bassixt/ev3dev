@@ -1024,7 +1024,7 @@ switch(donald->number)
 	   		turn_pos=359-initial_pos+final_pos;
 		else	
 			turn_pos=final_pos-initial_pos;*/
-		rotatesx(donald->sn,donald->dxs,donald->max_speed,84,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->max_speed,84,donald->sn_mag);
 		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
 		
