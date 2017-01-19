@@ -11,9 +11,9 @@ struct motandsens {
 
 void positioning (donald){
 // to protect the access to sensor
-	mutex_lock;
-	check_sensor;
-	mutex_unlock;
+	mutex_lock();
+	check_sensor();
+	mutex_unlock();
 	
 // calculation of the rotation
 	rotation = - ( new_angle - last_angle);
@@ -33,8 +33,8 @@ void positioning (donald){
 	old_left = new_left;
 	old_right = new_right;
 // calculating the displacements (straigh or turned) = odometry
-	old_x = old_x + disp * sign * cos( new_teta );
-	old_y = old_y + disp * sign * sin( new_teta ); 
+	old_x = old_x + disp * cos( new_teta );
+	old_y = old_y + disp * sin( new_teta ); 
 //update the Donald structure 
 	donald->teta=new_teta;
  	donald->x = old_x;

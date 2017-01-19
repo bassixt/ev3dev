@@ -10,13 +10,14 @@ for (i = -45 ; i+2 ; i<= 45) {
 	
 	// calculate the average of measure per each direction to make it more precise
 	points[i] = (tmp[0] + tmp[1] + tmp[2] + tmp[3] + tmp[4])/5
+	angles[]
 }
 //looking for the smallest value + correponding direction
 	for (i = -45 ; i+2 ; i<= 45i ){
 		minimum = min(points[i]);
-			index = i ;
 	}	
-diretion = angle[index];
+diretion = angle[indexOfMinimum];
+
 // move in this direction for 3/4 of the distance
 go_ahead(donald, 3/4*minimum, direction);
 
