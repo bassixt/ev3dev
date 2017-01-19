@@ -306,7 +306,7 @@ void rotateforscan(uint8_t sn, uint8_t dx, int max_speed)
 }
 
 //function that hold the direction
-void control_direction(uint8_t sn,uint8_t dx,uint8_t sn_compass,int max_speed, float initial_angle,uint8_t sn_mag){
+void control_direction(uint8_t sn,uint8_t dx,int max_speed, float initial_angle,uint8_t sn_mag){
 	float actual_angle;
 	if ( !get_sensor_value0(sn_mag, &actual_angle)) {
 		actual_angle = 0;
@@ -565,7 +565,7 @@ while(finish - beginning <= -distanceback)
        	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
 	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
         get_tacho_position( dx, &partial);
-	control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
+	control_direction(sn,dx,max_speed,initial_angle, sn_mag);
 	get_tacho_position( dx, &finish);
 	beginning+=(finish-partial);
 }
@@ -683,12 +683,12 @@ while((finish - beginning - distance)<=0){
 	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 	Sleep(100);
 	get_tacho_position( dx, &partial);
-	control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);
+	control_direction(sn,dx,max_speed,initial_angle, sn_mag);
 	get_tacho_position( dx, &finish);
 	beginning+=(finish-partial);
 }
 get_tacho_position( dx, &finish);		
-control_direction(sn,dx,sn_compass,max_speed,initial_angle, sn_mag);	
+control_direction(sn,dx,max_speed,initial_angle, sn_mag);	
 return (finish-beginning)/21; //return the distance in cm
 }
 void* positioning_sys(void* args)
@@ -816,7 +816,7 @@ switch(donald->number)
 		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		printf("\n################################################\n########      HO TROVATO LA PALLA      #########\n");
 		printf("################################################\n");
-		gotoxybeg(donald->x, donald->y, 44.0, 39.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+		gotoxybeg(donald->x, donald->y, 34.0, 39.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		
 		break;
 	case 1 :
