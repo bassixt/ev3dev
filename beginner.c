@@ -55,7 +55,7 @@ unsigned char side=0;
 int s;
 uint16_t msgId=0;
 int flag;
-
+float x_ball, y_ball;
 
 typedef struct motandsens test;
 struct motandsens {
@@ -1664,7 +1664,9 @@ int main( int argc, char **argv )
 		y_MSB = string[9];
 			
         }	
-			// need to reconvert + create a specific variable x_ball and y_ball
+	// need to reconvert + create a specific variable x_ball and y_ball
+	//x_ball = ;
+	//y_ball = ;
 	// wait for a start msg
 	read_from_server (s, string, 9);
         if (string[4] == MSG_START) {
