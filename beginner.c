@@ -819,10 +819,12 @@ switch(donald->number)
 		printf("\n################################################\n########      HO TROVATO LA PALLA      #########\n");
 		printf("################################################\n");
 		//send ball position
-		x_conv_MSB = (0xFF & ((int16_t)donald->x>>8));
-	 	x_conv_LSB = (0xFF &  ((int16_t)donald->x));
-		y_conv_MSB = (0xFF & ((int16_t)donald->y>>8));
-		y_conv_LSB = (0xFF &  ((int16_t)donald->y));
+		x_ball = donald->x+5*cos(donald->teta);
+		y_ball = donald->x+5*sin(donald->teta);
+		x_conv_MSB = (0xFF & ((int16_t)x_ball>>8));
+	 	x_conv_LSB = (0xFF &  ((int16_t)x_ball));
+		y_conv_MSB = (0xFF & ((int16_t)y_ball>>8));
+		y_conv_LSB = (0xFF &  ((int16_t)y_ball));
 		*((uint16_t *) string) = msgId++;
 		string[2] = TEAM_ID;
 		string[3] = 0xFF;
@@ -841,10 +843,12 @@ switch(donald->number)
 		gotoxybeg(donald->x, donald->y, 45.0, 100.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 		//send ball position
-		x_conv_MSB = (0xFF & ((int16_t)donald->x>>8));
-	 	x_conv_LSB = (0xFF &  ((int16_t)donald->x));
-		y_conv_MSB = (0xFF & ((int16_t)donald->y>>8));
-		y_conv_LSB = (0xFF &  ((int16_t)donald->y));
+		x_ball = donald->x+5*cos(donald->teta);
+		y_ball = donald->x+5*sin(donald->teta);
+		x_conv_MSB = (0xFF & ((int16_t)x_ball>>8));
+	 	x_conv_LSB = (0xFF &  ((int16_t)x_ball));
+		y_conv_MSB = (0xFF & ((int16_t)y_ball>>8));
+		y_conv_LSB = (0xFF &  ((int16_t)y_ball));
 		*((uint16_t *) string) = msgId++;
 		string[2] = TEAM_ID;
 		string[3] = 0xFF;
