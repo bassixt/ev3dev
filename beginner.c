@@ -1653,6 +1653,7 @@ int main( int argc, char **argv )
 		else {
 			printf("I am finisher\n");
 			donald->number =  1;
+	// wait for a ball msg
 	read_from_server (s, string, 10);
         if (string[4] == MSG_BALL && string[5] == 1) {
             printf ("Received ball message! Ball has been left \n");
@@ -1663,7 +1664,15 @@ int main( int argc, char **argv )
 		y_MSB = string[9];
 			
         }	
+			// need to reconvert + create a specific variable x_ball and y_ball
+	// wait for a start msg
+	read_from_server (s, string, 9);
+        if (string[4] == MSG_START) {
+            printf ("Finisher can go now!\n");
+	flag = 1; // movement can begin with case 1
 			
+        }
+				
         }
 			
 		}
