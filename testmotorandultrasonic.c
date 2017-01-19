@@ -831,6 +831,7 @@ switch(donald->number)
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		put_down(donald->med,donald->max_speed);		
 		gotoxybeg(donald->x, donald->y, 100.0, 135.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag,donald->teta);
+		break;
 	case 2:
 
 		Sleep(500); //time elapsed to scan
