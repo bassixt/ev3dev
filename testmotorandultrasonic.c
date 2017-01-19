@@ -494,7 +494,7 @@ void leave_ball(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
 	Sleep(500);
  			
 }  
-void put_down(uint8_t sn,uint8_t dx,uint8_t med,int max_speed)
+void put_down(uint8_t med,int max_speed)
 {			
 	int i;
 	//stabilize the ball
@@ -825,7 +825,7 @@ switch(donald->number)
 		gotoxybeg(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);		
+		put_down(donald->med,donald->max_speed);		
 		gotoxyfinisher(donald->x, donald->y, 20.0, 35.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
 	case 2:
 
@@ -1027,7 +1027,7 @@ switch(donald->number)
 		else	
 			turn_pos=final_pos-initial_pos;*/
 		rotatesx(donald->sn,donald->dx,donald->max_speed,84,donald->sn_mag);
-		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
+		put_down(donald->med,donald->max_speed);	
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
 		
 		
@@ -1073,7 +1073,7 @@ switch(donald->number)
 		else	
 			turn_pos=final_pos-initial_pos;*/
 		rotatedx(donald->sn,donald->dx,donald->max_speed,84,donald->sn_mag);
-		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
+		put_down(donald->med,donald->max_speed);	
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
 		
 		
