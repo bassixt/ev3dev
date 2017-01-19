@@ -171,8 +171,8 @@ void positioning(void * args)
 	static float teta_calc = -M_PI/2;//prima era M_PI
 	static float old_sx = 0;
 	static float old_dx = 0;
-	static float old_x = 110;//finisher 10
-	static float old_y = 10;//finisher 190
+	static float old_x = 10;//finisher 10
+	static float old_y = 190;//finisher 190
  	float sign;
 	int new_sx,new_dx;
 	float disp_sx,disp_dx;
@@ -205,7 +205,7 @@ void positioning(void * args)
 		teta_calc = teta_calc + m_rot;
  	else
 	{
-		teta_calc = M_PI/2;  //-M_PI/2 per il finisher
+		teta_calc = -M_PI/2;  //-M_PI/2 per il finisher
 		flag = 1;
 	}	
 	disp_sx = new_sx - old_sx; 
@@ -1307,9 +1307,9 @@ uint32_t n, ii;
                         fflush( stdout );
 		}
 //FINISHER
-donald->x=110; //finisher=10
-donald->y=10;//finisher=190
-donald->teta=90;//finisher=-90
+donald->x=10; //finisher=10
+donald->y=190;//finisher=190
+donald->teta=-90;//finisher=-90
 return donald;
 }
 
