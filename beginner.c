@@ -54,6 +54,7 @@ unsigned char next = 0xFF;
 unsigned char side=0;
 int s;
 uint16_t msgId=0;
+int flag;
 
 
 typedef struct motandsens test;
@@ -869,6 +870,7 @@ switch(donald->number)
 		break;
 	case 1 :
 		//waiting for start
+		if(flag == 1){
 		Sleep(1000);
 		gotoxybeg(donald->x, donald->y, 75, 75.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
@@ -889,6 +891,7 @@ switch(donald->number)
 		write(s, string, 5);
 		
 		break;
+		}
 	case 2:
 
 		Sleep(500); //time elapsed to scan
@@ -1634,7 +1637,7 @@ int main( int argc, char **argv )
         char string[58];
 
         /* Wait for START message */
-        read_from_server (s, string, 9);
+         read_from_server (s, string, 9);
         if (string[4] == MSG_START) {
             printf ("Received start message!\n");
             rank = (unsigned char) string[5];
@@ -1650,6 +1653,18 @@ int main( int argc, char **argv )
 		else {
 			printf("I am finisher\n");
 			donald->number =  1;
+	read_from_server (s, string, 10);
+        if (string[4] == MSG_BALL && string[5] == 1) {
+            printf ("Received ball message! Ball has been left \n");
+           		string[2] = TEAM_ID;
+		x_LSB = string[6];          // get x of the ball
+		x_MSB = string[7];
+		y_LSB = string[8];	    //get y of the ball
+		y_MSB = string[9];
+			
+        }	
+			
+        }
 			
 		}
 
