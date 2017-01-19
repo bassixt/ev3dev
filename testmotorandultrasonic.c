@@ -167,7 +167,7 @@ void positioning(void * args)
  	int retour;
 	float m_rot,disp_diff;
  	static short flag = 0;
-	static float last_angle  = 180;
+	static float last_angle  = 0;//prima era 180
 	static float teta_calc = -M_PI/2;//prima era M_PI
 	static float old_sx = 0;
 	static float old_dx = 0;
@@ -811,6 +811,7 @@ if ( !get_sensor_value0(donald->sn_mag, &heading)){
 switch(donald->number)
 {
 	case 0 ://prima era x=19 y=43 e 1 e 150
+		Sleep(1000);
 		gotoxybeg(donald->x, donald->y, 29.0, 147.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		printf("\n################################################\n########      HO TROVATO LA PALLA      #########\n");
@@ -1286,7 +1287,7 @@ uint32_t n, ii;
 //FINISHER
 donald->x=10;
 donald->y=190;
-donald->teta=180;
+donald->teta=-90;//180
 return donald;
 }
 
