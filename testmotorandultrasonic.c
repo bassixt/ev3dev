@@ -811,26 +811,35 @@ if ( !get_sensor_value0(donald->sn_mag, &heading)){
 switch(donald->number)
 {
 	case 0 ://prima era x=19 y=43 e 1 e 150
+		//waitning for the next
 		Sleep(1000);
 		gotoxybeg(donald->x, donald->y, 29.0, 147.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		printf("\n################################################\n########      HO TROVATO LA PALLA      #########\n");
 		printf("################################################\n");
+		//send ball position
 		gotoxybeg(donald->x, donald->y, 24.0, 45.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		Sleep(500);
+		//receive ball signal
+		//wait for next signal
 		gotoxybeg(donald->x, donald->y, 45.0, 100.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
+		//send ball position
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		put_down(donald->med,donald->max_speed);
 		gotoxybeg(donald->x, donald->y, 24.0, 167.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		break;
 	case 1 :
+		//waiting for start
 		Sleep(1000);
 		gotoxybeg(donald->x, donald->y, 75, 75.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-		put_down(donald->med,donald->max_speed);		
+		put_down(donald->med,donald->max_speed);
+		//send ball position
 		gotoxybeg(donald->x, donald->y, 95.0, 150.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag,donald->teta);
+		//receive the ball signal
+		//send next message
 		gotoxybeg(donald->x, donald->y,85 , 125.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		gotoxybeg(donald->x, donald->y, 90.0, 25,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
