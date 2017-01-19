@@ -818,6 +818,21 @@ switch(donald->number)
 		printf("\n################################################\n########      HO TROVATO LA PALLA      #########\n");
 		printf("################################################\n");
 		//send ball position
+		x_conv_MSB = (0xFF & ((int16_t)donald->x>>8));
+	 	x_conv_LSB = (0xFF &  ((int16_t)donald->x));
+		y_conv_MSB = (0xFF & ((int16_t)donald->y>>8));
+		y_conv_LSB = (0xFF &  ((int16_t)donald->y));
+		*((uint16_t *) string) = msgId++;
+		string[2] = TEAM_ID;
+		string[3] = 0xFF;
+		string[4] = MSG_BALL;
+		string[5] = 0; // robot leaved the ball
+		string[6] = x_conv_LSB;          // x 
+		string[7] = x_conv_MSB;
+		string[8] = y_conv_LSB;	    // y 
+		string[9] = y_conv_MSB;
+		write(s, string, 10);
+		
 		gotoxybeg(donald->x, donald->y, 24.0, 45.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		Sleep(500);
 		//receive ball signal
@@ -825,6 +840,21 @@ switch(donald->number)
 		gotoxybeg(donald->x, donald->y, 45.0, 100.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 		//send ball position
+		x_conv_MSB = (0xFF & ((int16_t)donald->x>>8));
+	 	x_conv_LSB = (0xFF &  ((int16_t)donald->x));
+		y_conv_MSB = (0xFF & ((int16_t)donald->y>>8));
+		y_conv_LSB = (0xFF &  ((int16_t)donald->y));
+		*((uint16_t *) string) = msgId++;
+		string[2] = TEAM_ID;
+		string[3] = 0xFF;
+		string[4] = MSG_BALL;
+		string[5] = 1; // robot picked up the ball
+		string[6] = x_conv_LSB;          // x 
+		string[7] = x_conv_MSB;
+		string[8] = y_conv_LSB;	    // y 
+		string[9] = y_conv_MSB;
+		write(s, string, 10);
+		
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		put_down(donald->med,donald->max_speed);
 		gotoxybeg(donald->x, donald->y, 24.0, 167.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
@@ -1597,22 +1627,18 @@ int main( int argc, char **argv )
             next = (unsigned char) string[7];
 			
         }
-		if (side==0){
-		    printf("I am on the right side\n");
+		if (rank== 0){
+		    printf("I am beginner\n");
+			donald->number = 0 ;
+			
 		}
 		else {
-			printf("I am on the left side\n");
+			printf("I am finisher\n");
+			donald->number =  1;
+			
 		}
-		
-        if (rank == 0){
-            printf("beginner\n");
-	    }
-        else
-            printf("beginner\n");
 
-
-
-    } else {
+    else {
         fprintf (stderr, "Failed to connect to server...\n");
         sleep (2);
 	close(s);
