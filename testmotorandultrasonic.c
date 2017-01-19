@@ -1294,8 +1294,8 @@ uint32_t n, ii;
                         fflush( stdout );
 		}
 //FINISHER
-donald->x=10; //finisher=10
-donald->y=190;//finisher=190
+donald->x=110; //finisher=10
+donald->y=10;//finisher=190
 donald->teta=90;//finisher=-90
 return donald;
 }
