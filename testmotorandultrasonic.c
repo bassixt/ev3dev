@@ -224,7 +224,7 @@ void positioning(void * args)
 }
 
 
-void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
+void rotatedx(uint8_t sn, uint8_t dx, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
 	float wanted_c;
 	//set_tacho_position( sn,0);
@@ -257,7 +257,7 @@ void rotatedx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rot
 
 }
 
-void rotatesx(uint8_t sn, uint8_t dx, uint8_t sn_compass, int max_speed, int rotation, uint8_t sn_mag)
+void rotatesx(uint8_t sn, uint8_t dx, int max_speed, int rotation, uint8_t sn_mag)
 {	float actual_angle;
 	float wanted_c;
 	//set_tacho_position( sn,0);
@@ -735,7 +735,7 @@ void gotoxyfinisher(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t s
 	deltay=(double)abs(deltay);
 	angleofrotation=atan2(deltax,deltay)*180/M_PI;
 	printf("angle of turning : %f",angleofrotation);
-	rotatedx(sn,dx,sn_compass,max_speed,angleofrotation,sn_mag);
+	rotatedx(sn,dx,max_speed,angleofrotation,sn_mag);
 	go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,distanceto,sn_compass,sn_mag);
 
 
@@ -757,9 +757,9 @@ void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uin
 	rot = -90+rad2deg(teta) + angleofrotation;		//solo per prova era -360+ teta+angle ofrotation
 	printf("angle of turning : %f",rot);
 	if(rot<0)
-		rotatesx(sn,dx,sn_compass,max_speed,abs(rot),sn_mag);
+		rotatesx(sn,dx,max_speed,abs(rot),sn_mag);
 	else
-		rotatedx(sn,dx,sn_compass,max_speed,rot,sn_mag);
+		rotatedx(sn,dx,max_speed,rot,sn_mag);
 	go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,distanceto,sn_compass,sn_mag);
 
 
@@ -853,7 +853,7 @@ switch(donald->number)
 				Sleep(1000);
 		}
 		//TURN LEFT
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
 		Sleep(1000);
 			if(found != 1)
 			/*
@@ -881,10 +881,10 @@ switch(donald->number)
 		//	}
 
 		//TURN RIGHT
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed, 180, donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->max_speed, 180, donald->sn_mag);
 		Sleep(1000);
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,MIN_STEP_VER-315,donald->sn_compass,donald->sn_mag);
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
 		Sleep(1000);
 		for(i=0;i<2;i++)
 		{
@@ -921,19 +921,19 @@ switch(donald->number)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
 		//TURN RIGHT to avoid first obstacle
 		
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,88,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->max_speed,88,donald->sn_mag);
 		
 		//move from 1m to the right
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
 		//printf("I'am in movements after turn\n");	
 	
 		//TURN LEFT
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,86,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->max_speed,86,donald->sn_mag);
 		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1745,donald->sn_compass,donald->sn_mag); 
 		//TURN LEFT to avoid second obstacle
 	
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,(donald->max_speed)/2,90,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,(donald->max_speed)/2,90,donald->sn_mag);
 		// go around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1180, donald->sn_compass,donald->sn_mag);
 		//TURN RIGHT 
@@ -943,7 +943,7 @@ switch(donald->number)
 		else	
 			turn_pos=initial_pos-final_pos;*/
 		
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,87,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->max_speed,87,donald->sn_mag);
 		// go until final base
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3220,donald->sn_compass,donald->sn_mag);
 		
@@ -955,19 +955,19 @@ switch(donald->number)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
 		//TURN RIGHT to avoid first obstacle
 		
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
 		
 		//move from 1m to the right
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
 		//printf("I'am in movements after turn\n");	
 	
 		//TURN LEFT
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,89,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->max_speed,89,donald->sn_mag);
 		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1615,donald->sn_compass,donald->sn_mag); 
 		//TURN LEFT to avoid second obstacle
 	
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,87,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->max_speed,87,donald->sn_mag);
 		// go around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1140, donald->sn_compass,donald->sn_mag);
 		//TURN RIGHT 
@@ -977,7 +977,7 @@ switch(donald->number)
 		else	
 			turn_pos=initial_pos-final_pos;*/
 		
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
 		// go until final base
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3250,donald->sn_compass,donald->sn_mag);
 		
@@ -991,26 +991,26 @@ switch(donald->number)
 	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
 		//TURN RIGHT to avoid first obstacle
 		
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
 		
 		//move from 1m to the right
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
 		
 		//TURN LEFT
 		
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
 		
 		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1765,donald->sn_compass,donald->sn_mag); 
 		//TURN LEFT to avoid second obstacle
 		
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,87,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->max_speed,87,donald->sn_mag);
 		
 		// go after ball area around 60 cm (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1159,donald->sn_compass,donald->sn_mag);
 		//turn around 
 		
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->max_speed,180,donald->sn_mag);
 		
 		//move to ball area (maybe won't be needed, depend on how much it goes backward)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,370,donald->sn_compass,donald->sn_mag);
@@ -1024,7 +1024,7 @@ switch(donald->number)
 	   		turn_pos=359-initial_pos+final_pos;
 		else	
 			turn_pos=final_pos-initial_pos;*/
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,84,donald->sn_mag);
+		rotatesx(donald->sn,donald->dxs,donald->max_speed,84,donald->sn_mag);
 		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
 		
@@ -1037,26 +1037,26 @@ switch(donald->number)
 	go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1710,donald->sn_compass, donald->sn_mag);
 		//TURN RIGHT to avoid first obstacle
 		
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
 		
 		//move from 1m to the right
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1368,donald->sn_compass,donald->sn_mag); 	
 		
 		//TURN LEFT
 		
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
 		
 		// go until obstacle around 1m (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1705,donald->sn_compass,donald->sn_mag); 
 		//TURN LEFT to avoid second obstacle
 		
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,90,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
 		
 		// go after ball area around 60 cm (TO TEST !!! and mesure on the arena)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,1159,donald->sn_compass,donald->sn_mag);
 		//turn around 
 		
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,180,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->max_speed,180,donald->sn_mag);
 		
 		//move to ball area (maybe won't be needed, depend on how much it goes backward)
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,370,donald->sn_compass,donald->sn_mag);
@@ -1070,7 +1070,7 @@ switch(donald->number)
 	   		turn_pos=359-initial_pos+final_pos;
 		else	
 			turn_pos=final_pos-initial_pos;*/
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,84,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->max_speed,84,donald->sn_mag);
 		put_down(donald->sn,donald->dx,donald->med,donald->max_speed);	
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,3230,donald->sn_compass, donald->sn_mag);
 		
@@ -1092,7 +1092,7 @@ switch(donald->number)
 		xbefore=donald->x;
 		ybefore=donald->y;
 		printf("---------------- x and y before turning : x=%f , y=%f\n", xbefore,ybefore);
-		rotatesx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,45,donald->sn_mag);
+		rotatesx(donald->sn,donald->dx,donald->max_speed,45,donald->sn_mag);
 		go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,240,donald->sn_compass, donald->sn_mag);
 	        research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 45 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		////////////////////////////////////////////////////////
@@ -1109,7 +1109,7 @@ switch(donald->number)
 		printf("angle of turning back: %f",angleofrotationback);
 		
 		go_back(donald->sn,donald->dx,distanceback,donald->max_speed,donald->sn_compass,donald->sn_mag);
-		rotatedx(donald->sn,donald->dx,donald->sn_compass,donald->max_speed,angleofrotationback,donald->sn_mag);
+		rotatedx(donald->sn,donald->dx,donald->max_speed,angleofrotationback,donald->sn_mag);
 		gotoxyfinisher(donald->x, donald->y, 0.0, 150.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag);
 		Sleep(1000);
 		break; 
@@ -1316,7 +1316,7 @@ while(status_re==0)
 		flag_1=0;
 		flag_2=0;  // because of vibration the first value scanned after first angle must be cecked
 		//turn right 45 ° and start moving 2° each step
-		rotatedx(sn,dx,sn_compass,max_speed,init_turn,sn_mag);	
+		rotatedx(sn,dx,max_speed,init_turn,sn_mag);	
 		Sleep(200);
 		for(i=0;i<30;i++)
 		{
@@ -1388,7 +1388,7 @@ while(status_re==0)
 			else
 				turn_angle=final_angle-middle_angle;*/
 			turn_angle = abs( middle_angle - final_angle );
-			rotatedx(sn,dx,sn_compass,max_speed,(int)turn_angle,sn_mag); 
+			rotatedx(sn,dx,max_speed,(int)turn_angle,sn_mag); 
 			Sleep(200);
 
 			if (ball_dist > 300)
@@ -1406,7 +1406,7 @@ while(status_re==0)
 		else
 		{	
 			turn_angle = abs( end_angle-initial_angle );
-			rotatedx(sn,dx,sn_compass,max_speed,(int)turn_angle,sn_mag);
+			rotatedx(sn,dx,max_speed,(int)turn_angle,sn_mag);
 			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,380,sn_compass,sn_mag);
 			for(i=0;i<1000;i++)
 					points[i]=0; //TO BE CONTROLLED
@@ -1457,7 +1457,7 @@ while(status_re==0)
 		
 		//flag_2=0;  // because of vibration the first value scanned after first angle must be cecked
 		//turn right 45 ° and start moving 2° each step
-		rotatedx(sn,dx,sn_compass,max_speed,init_turn,sn_mag);	
+		rotatedx(sn,dx,max_speed,init_turn,sn_mag);	
 		Sleep(200);
 		for(i=0;i<angles_to_scan;i++)
 		{	points[i]=get_sonar_values(sn_sonar);
@@ -1482,7 +1482,7 @@ while(status_re==0)
    }
 	middle_angle=abs(angle[index]-final_angle);
 	printf("final angle:%f and middle angle:%f\n",final_angle,middle_angle);
-	rotatedx(sn,dx,sn_compass,max_speed,middle_angle-4,sn_mag);
+	rotatedx(sn,dx,max_speed,middle_angle-4,sn_mag);
 	if (flag_1==0)
 	{
 		go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,points[index]*3/4,sn_compass,sn_mag);
