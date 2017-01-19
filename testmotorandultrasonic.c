@@ -229,10 +229,10 @@ void rotatedx(uint8_t sn, uint8_t dx, int max_speed, int rotation, uint8_t sn_ma
 	float wanted_c;
 	//set_tacho_position( sn,0);
 	//set_tacho_position( dx,0);
-	set_tacho_speed_sp( sn, max_speed/5);
+	set_tacho_speed_sp( sn, max_speed/2);
 	set_tacho_ramp_up_sp( sn, 0 );
 	set_tacho_ramp_down_sp( sn, 0 );
-	set_tacho_speed_sp( dx, max_speed/5);
+	set_tacho_speed_sp( dx, max_speed/2);
 	set_tacho_ramp_up_sp( dx, 0 );
 	set_tacho_ramp_down_sp( dx, 0 );
 	set_tacho_position_sp( sn, 2 );
@@ -262,10 +262,10 @@ void rotatesx(uint8_t sn, uint8_t dx, int max_speed, int rotation, uint8_t sn_ma
 	float wanted_c;
 	//set_tacho_position( sn,0);
 	//set_tacho_position( dx,0);
-	set_tacho_speed_sp( sn, max_speed/5);
+	set_tacho_speed_sp( sn, max_speed/2);
 	set_tacho_ramp_up_sp( sn, 0 );
 	set_tacho_ramp_down_sp( sn, 0 );
-	set_tacho_speed_sp( dx, max_speed/5);
+	set_tacho_speed_sp( dx, max_speed/2);
 	set_tacho_ramp_up_sp( dx, 0 );
 	set_tacho_ramp_down_sp( dx, 0 );
 	set_tacho_position_sp( sn,  -2);
@@ -818,7 +818,7 @@ switch(donald->number)
 		printf("################################################\n");
 		gotoxybeg(donald->x, donald->y, 24.0, 45.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		Sleep(500);
-		gotoxybeg(donald->x, donald->y, 35.0, 100.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
+		gotoxybeg(donald->x, donald->y, 40.0, 100.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 
 		break;
 	case 1 :
