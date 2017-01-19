@@ -831,7 +831,7 @@ switch(donald->number)
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		put_down(donald->med,donald->max_speed);		
 		gotoxybeg(donald->x, donald->y, 100.0, 150.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag,donald->teta);
-		gotoxybeg(donald->x, donald->y,75 , 125.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+		gotoxybeg(donald->x, donald->y,55 , 115.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		break;
 	case 2:
