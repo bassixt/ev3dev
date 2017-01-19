@@ -41,3 +41,4 @@ void positioning (donald){
  	donald->y = old_y;
 	
 }
+
