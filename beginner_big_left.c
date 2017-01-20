@@ -168,11 +168,11 @@ void positioning(void * args)
 	float m_rot,disp_diff;
  	static short flag = 0;
 	static float last_angle  = 0;//prima era 180
-	static float teta_calc = -M_PI/2;//prima era M_PI
+	static float teta_calc = M_PI/2;//prima era M_PI
 	static float old_sx = 0;
 	static float old_dx = 0;
-	static float old_x = 10;//finisher 10
-	static float old_y = 190;//finisher 190
+	static float old_x = -10;
+	static float old_y = 10;//finisher 190
  	float sign;
 	int new_sx,new_dx;
 	float disp_sx,disp_dx;
@@ -205,7 +205,7 @@ void positioning(void * args)
 		teta_calc = teta_calc + m_rot;
  	else
 	{
-		teta_calc = -M_PI/2;  //-M_PI/2 per il finisher
+		teta_calc = M_PI/2;  //-M_PI/2 per il finisher
 		flag = 1;
 	}	
 	disp_sx = new_sx - old_sx; 
@@ -813,21 +813,21 @@ switch(donald->number)
 	case 0 ://prima era x=19 y=43 e 1 e 150
 		//waitning for the next
 		Sleep(1000);
-		gotoxybeg(donald->x, donald->y, 29.0, 147.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
-		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-		printf("\n################################################\n########      HO TROVATO LA PALLA      #########\n");
+		gotoxybeg(donald->x, donald->y, -110.0, 160.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
+		//research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
+		printf("\n################################################\n########      HO LASCIATO LA PALLA      #########\n");
 		printf("################################################\n");
 		//send ball position
-		gotoxybeg(donald->x, donald->y, 24.0, 45.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+		//gotoxybeg(donald->x, donald->y, 24.0, 45.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		Sleep(500);
 		//receive ball signal
 		//wait for next signal
-		gotoxybeg(donald->x, donald->y, 45.0, 100.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
-		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
+		//gotoxybeg(donald->x, donald->y, 45.0, 100.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
+		//leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 		//send ball position
-		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-		put_down(donald->med,donald->max_speed);
-		gotoxybeg(donald->x, donald->y, 24.0, 167.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+		//go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
+		//put_down(donald->med,donald->max_speed);
+		//gotoxybeg(donald->x, donald->y, 24.0, 167.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		break;
 	case 1 :
 		//waiting for start
@@ -1307,9 +1307,9 @@ uint32_t n, ii;
                         fflush( stdout );
 		}
 //FINISHER
-donald->x=10; //finisher=10
-donald->y=190;//finisher=190
-donald->teta=-90;//finisher=-90
+donald->x=-10; 
+donald->y=10;//finisher=190
+donald->teta=90;//finisher=-90
 return donald;
 }
 
