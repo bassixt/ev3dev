@@ -1316,6 +1316,7 @@ if (retour != 0)
 		    donald->number =  1;
 		    //WAIT NEXT MESSAGE
 	    }
+ 	    printf("##########################################\n##########    Next is %d    ###########\n#########################################\n\n",next);
 	    break;
 	case MSG_BALL:
        	     if (string[5] == 1) 
