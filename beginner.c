@@ -769,7 +769,7 @@ while(1)
 			y_conv_LSB = (0xFF &  ((int16_t)y_ball));
 			*((uint16_t *) string) = msgId++;
 			string[2] = TEAM_ID;
-			string[3] = 0xFF;
+			string[3] = next;
 			string[4] = MSG_BALL;
 			string[5] = 0; // robot leaved the ball
 			string[6] = x_conv_LSB;          // x 
@@ -804,9 +804,9 @@ while(1)
 			y_conv_LSB = (0xFF &  ((int16_t)y_ball));
 			*((uint16_t *) string) = msgId++;
 			string[2] = TEAM_ID;
-			string[3] = 0xFF;
+			string[3] = next;
 			string[4] = MSG_BALL;
-			string[5] = 0; // robot leaved the ball
+			string[5] = 1; // robot leaved the ball
 			string[6] = x_conv_LSB;          // x 
 			string[7] = x_conv_MSB;
 			string[8] = y_conv_LSB;	    // y 
