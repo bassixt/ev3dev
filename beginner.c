@@ -1247,9 +1247,9 @@ int main( int argc, char **argv )
  	caseNumber = atoi(argv[1]);
  
         printf( "*** ( EV3 ) Hello! ***\n" );
-	
+	donald->number = caseNumber;
 	donald = inizialization(donald);
- 	donald->number = caseNumber;
+ 	
  	///////////////////////////////////////////////////////////////////////
 	////								   ////
 	////			CONNECTION TO SERVER			   ////
