@@ -648,7 +648,7 @@ void* positioning_sys(void* args)
 	positioning(donald);
 	Sleep(100);
 	seconds_bt=seconds_bt+1;
-	if (seconds_bt == 20)
+	if (seconds_bt == 20 && donald->number==0)  //if you have reached the counter and if you are moving
 	{	//send position
 	 	x_conv_MSB = (0xFF & ((int16_t)donald->x>>8));
 	 	x_conv_LSB = (0xFF &  ((int16_t)donald->x));
@@ -782,6 +782,11 @@ while(1)
 			put_down(donald->med,donald->max_speed);
 			gotoxybeg(donald->x, donald->y, 95.0, 150.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag,donald->teta);
 			//send next message
+			*((uint16_t *) string) = msgId++;
+			string[2] = TEAM_ID;
+			string[3] = donald->next;
+			string[4] = MSG_NEXT;
+			write(s, string, 10);
 			actual_role=1;
 			donald->number=1; // stop wait for the next signal
 			break;
@@ -809,11 +814,12 @@ while(1)
 			write(s, string, 10);
 			gotoxybeg(donald->x, donald->y, 90.0, 25,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 			// SEND NEXT msg
+			//send next message
 			*((uint16_t *) string) = msgId++;
 			string[2] = TEAM_ID;
-			string[3] = 0xFF;
+			string[3] = donald->next;
 			string[4] = MSG_NEXT;
-			write(s, string, 5);
+			write(s, string, 10);
 			actual_role=0;
 			donald->number=1; // stop wait for the next signal
 			break;
