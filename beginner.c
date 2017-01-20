@@ -754,7 +754,11 @@ if ( !get_sensor_value0(donald->sn_mag, &heading)){
 actual_role=donald->role;
 while(1)
 {
-	while(donald->number==1);
+	while(donald->number==1)
+	{
+	    Sleep(200);
+	}
+	
 	switch(actual_role)
 	{
 		case 0 :Sleep(1000);
@@ -985,6 +989,7 @@ uint32_t n, ii;
 donald->x=110; //finisher=10
 donald->y=10;//finisher=190
 donald->teta=90;//finisher=-90
+donald->number=1;
 return donald;
 }
 
