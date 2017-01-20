@@ -814,7 +814,7 @@ switch(donald->number)
 		//waitning for the next
 		Sleep(1000);
 		gotoxybeg(donald->x, donald->y, -90.0, 130.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
-		gotoxybeg(donald->x, donald->y, -48.0, 215.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+		gotoxybeg(donald->x, donald->y, -38.0, 214.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		//research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		printf("\n################################################\n########      HO LASCIATO LA PALLA      #########\n");
 		printf("################################################\n");
