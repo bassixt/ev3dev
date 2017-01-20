@@ -814,7 +814,7 @@ switch(donald->number)
 		//waitning for the next
 		Sleep(1000);
 		gotoxybeg(donald->x, donald->y, -90.0, 130.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
-		gotoxybeg(donald->x, donald->y, -38.0, 214.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+		gotoxybeg(donald->x, donald->y, -30.0, 214.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		//rotatedx of 180
 		//leave the ball
 		//send ball position
