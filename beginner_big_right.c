@@ -813,12 +813,12 @@ switch(donald->number)
 	case 0 ://prima era x=19 y=43 e 1 e 150
 		//waitning for the next
 		Sleep(1000);
-		gotoxybeg(donald->x, donald->y, 87.0, 130.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
+		gotoxybeg(donald->x, donald->y, 75.0, 125.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 		gotoxybeg(donald->x, donald->y, 55.0, 190.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		rotatedx(donald->sn,donald->dx,donald->max_speed,180,donald->sn_mag);
 		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-		rotatedx(donald->sn,donald->dx,donald->max_speed,180,donald->sn_mag);
+		
 		put_down(donald->med,donald->max_speed);
 		gotoxybeg(donald->x, donald->y, 20, 360.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		//rotatedx of 180
