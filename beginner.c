@@ -760,8 +760,6 @@ while(1)
 		case 0 :Sleep(1000);
 			gotoxybeg(donald->x, donald->y, 75, 75.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 			leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-			go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-			put_down(donald->med,donald->max_speed);
 			//send ball position
 			x_ball = donald->x+5*cos(donald->teta);
 			y_ball = donald->x+5*sin(donald->teta);
@@ -779,9 +777,13 @@ while(1)
 			string[8] = y_conv_LSB;	    // y 
 			string[9] = y_conv_MSB;
 			write(s, string, 10);
+			Sleep(500);
+			go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
+			put_down(donald->med,donald->max_speed);
 			gotoxybeg(donald->x, donald->y, 95.0, 150.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag,donald->teta);
 			//send next message
 			actual_role=1;
+			donald->number=1; // stop wait for the next signal
 			break;
 		case 1 :
 			//waiting for start
@@ -805,7 +807,6 @@ while(1)
 			string[8] = y_conv_LSB;	    // y 
 			string[9] = y_conv_MSB;
 			write(s, string, 10);
-			gotoxybeg(donald->x, donald->y, 95.0, 150.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag,donald->teta);
 			gotoxybeg(donald->x, donald->y, 90.0, 25,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 			// SEND NEXT msg
 			*((uint16_t *) string) = msgId++;
@@ -814,6 +815,7 @@ while(1)
 			string[4] = MSG_NEXT;
 			write(s, string, 5);
 			actual_role=0;
+			donald->number=1; // stop wait for the next signal
 			break;
 			}	
 	}
@@ -1255,8 +1257,24 @@ int main( int argc, char **argv )
     status = connect(s, (struct sockaddr *)&addr, sizeof(addr));
 
     /* if connected */
-    while( status != 0 );
- 
+    while( status != 0 )
+    {
+	printf("I'm connecting....\n\n\n\n");    
+    }
+			
+retour = pthread_create(&thread_movement, NULL, movements, donald);
+if (retour != 0)
+{
+  perror("erreur thread movement");
+  exit(EXIT_FAILURE);
+}
+
+retour = pthread_create(&thread_position, NULL, positioning_sys, donald);
+if (retour != 0)
+{
+  perror("erreur thread sensor");
+  exit(EXIT_FAILURE);
+}
 
  	
         
@@ -1316,20 +1334,6 @@ int main( int argc, char **argv )
         }
 				
 }
- 		
-
-/*
-#define MSG_ACK     0
-#define MSG_NEXT    1  
-#define MSG_START   2  V
-#define MSG_STOP    3  V
-#define MSG_CUSTOM  4  X
-#define MSG_KICK    5  V
-#define MSG_POSITION 6 V
-#define MSG_BALL       ?
-
-
-*/
    
 	///////////////////////////////////////////////////////////////////////
 	////								   ////
@@ -1337,26 +1341,7 @@ int main( int argc, char **argv )
 	////								   ////
 	///////////////////////////////////////////////////////////////////////
 
-	retour = pthread_create(&thread_movement, NULL, movements, donald);
-	if (retour != 0)
-	{
-	  perror("erreur thread movement");
-	  exit(EXIT_FAILURE);
-	}
- 
- 	retour = pthread_create(&thread_position, NULL, positioning_sys, donald);
-	if (retour != 0)
-	{
-	  perror("erreur thread sensor");
-	  exit(EXIT_FAILURE);
-	}
- 	/*retour = pthread_create(&thread_colorsense, NULL, colorsense, donald);
-	if (retour != 0)
-	{
-	  perror("erreur thread sensor");
-	  exit(EXIT_FAILURE);
-	}*/
- 	
+
 	if (pthread_join(thread_position, NULL)) 
 	{
 	  perror("pthread_join position");
@@ -1367,11 +1352,6 @@ int main( int argc, char **argv )
 	  perror("pthread_join movement");
 	  return EXIT_FAILURE;
 	} 
- 	/*if (pthread_join(thread_colorsense, NULL)) 
-	{
-	  perror("pthread_join colorsens");
-	  return EXIT_FAILURE;
-	} 	*/
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
 
