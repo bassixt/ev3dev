@@ -1226,7 +1226,14 @@ return;
 
 	
 int main( int argc, char **argv )
-{	pid_t ret;
+{	//ONLY FOR MAPPING ARENA
+	
+	FILE *fd;
+	int numerorighe;
+	int vett[100];
+	int indexi;
+ 	// FINISH MAPPING
+	pid_t ret;
  	char *name;
         int i,d,n;
 	struct motandsens *donald=malloc(sizeof(struct motandsens));
@@ -1253,7 +1260,42 @@ int main( int argc, char **argv )
 #endif
         while ( ev3_tacho_init() < 1 ) Sleep( 1000 );
 
- 
+ 	FILE *fd;
+	int numerorighe;
+	int vett[100];
+	int indexi;
+	//ONLY FOR MAPPING
+	/* apre il file */
+	  fd=fopen("maps.txt", "r"); 
+
+			/* verifica errori in apertura */
+	  if( fd==NULL ) {
+	    perror("Errore in apertura del file");
+	    exit(1);
+	  }
+
+			/* legge il numero di elementi del vettore */
+	  fscanf(fd, "%d", &numerorighe);
+
+
+			/* legge l'array */
+	  if(numerorighe>=100) 
+	    printf("Troppi elementi da leggere\n");
+	  else
+	    for(indexi=0; indexi=numerorighe-1; indexi++)
+	      fscanf(fd, "%d", &vett[indexi]);
+
+
+			/* stampa l'array */
+	  for(indexi=0; indexi<=numerorighe-1; indexi++)
+	    printf("%d\n", vett[indexi]);
+
+			/* chiude il file */
+	  fclose(fd);
+	
+	
+	//FINISH MAPPING
+	
 
  
  	caseNumber = atoi(argv[1]);
