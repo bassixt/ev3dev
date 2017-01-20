@@ -28,3 +28,7 @@ new_direction
 // move to grab the ball
 go_ahead(3/4*minimum);
 grab();
+
+
+
+
