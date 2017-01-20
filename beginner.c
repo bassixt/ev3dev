@@ -1294,6 +1294,7 @@ if (retour != 0)
  while(game_status_flag==0)
  {
  read_from_server (s, string, 9);
+ printf("message type %d\n",string[4]);
  switch (string[4])	
  { 	
 	case MSG_START:
