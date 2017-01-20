@@ -784,7 +784,7 @@ while(1)
 			//send next message
 			*((uint16_t *) string) = msgId++;
 			string[2] = TEAM_ID;
-			string[3] = donald->next;
+			string[3] = next;
 			string[4] = MSG_NEXT;
 			write(s, string, 10);
 			actual_role=1;
@@ -817,7 +817,7 @@ while(1)
 			//send next message
 			*((uint16_t *) string) = msgId++;
 			string[2] = TEAM_ID;
-			string[3] = donald->next;
+			string[3] = next;
 			string[4] = MSG_NEXT;
 			write(s, string, 10);
 			actual_role=0;
