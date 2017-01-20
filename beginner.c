@@ -751,6 +751,8 @@ int8_t x_conv_MSB,x_conv_LSB,y_conv_MSB,y_conv_LSB;
 if ( !get_sensor_value0(donald->sn_mag, &heading)){
 					heading=0;
 					}
+	
+printf("donaldnumber:%d\n",donald->number);
 actual_role=donald->role;
 while(1)
 {
