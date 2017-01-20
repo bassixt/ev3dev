@@ -815,20 +815,14 @@ switch(donald->number)
 		Sleep(1000);
 		gotoxybeg(donald->x, donald->y, -90.0, 130.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 		gotoxybeg(donald->x, donald->y, -38.0, 214.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-		//research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-		printf("\n################################################\n########      HO LASCIATO LA PALLA      #########\n");
-		printf("################################################\n");
+		//rotatedx of 180
+		//leave the ball
 		//send ball position
-		//gotoxybeg(donald->x, donald->y, 24.0, 45.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-		Sleep(500);
-		//receive ball signal
-		//wait for next signal
-		//gotoxybeg(donald->x, donald->y, 45.0, 100.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
-		//leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-		//send ball position
-		//go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-		//put_down(donald->med,donald->max_speed);
-		//gotoxybeg(donald->x, donald->y, 24.0, 167.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+		//rotatesx 180
+		//gotoxy (go ahead for a little bit
+		//gotoxy to the end
+		//send next maessage
+		
 		break;
 	case 1 :
 		//waiting for start
