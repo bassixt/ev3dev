@@ -745,6 +745,9 @@ float POS_X=0;
 float angleofrotationback;
 double deltax,deltay;
 float xbefore,ybefore,distanceback;
+char string[58];
+int16_t x_conv,y_conv;
+int8_t x_conv_MSB,x_conv_LSB,y_conv_MSB,y_conv_LSB;
 if ( !get_sensor_value0(donald->sn_mag, &heading)){
 					heading=0;
 					}
@@ -1207,6 +1210,7 @@ int main( int argc, char **argv )
  	int caseNumber;
  	int game_status_flag=0;	// is set to one if a kick message or a stop message is received
 	char string[58];
+ 	int8_t x_LSB,x_LSB,y_MSB,y_LSB;
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
         ev3_brick_addr = "192.168.0.204";
