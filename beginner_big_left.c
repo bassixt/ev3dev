@@ -820,7 +820,7 @@ switch(donald->number)
 		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 		
 		put_down(donald->med,donald->max_speed);
-		gotoxybeg(donald->x, donald->y, -15, 350.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+		gotoxybeg(donald->x, donald->y, -20, 363.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 		//rotatedx of 180
 		//leave the ball
 		//send ball position
