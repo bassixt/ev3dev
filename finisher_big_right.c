@@ -1233,6 +1233,8 @@ int main( int argc, char **argv )
 	int vett[100];
 	int indexi;
  	// FINISH MAPPING
+	
+	
 	pid_t ret;
  	char *name;
         int i,d,n;
@@ -1260,10 +1262,7 @@ int main( int argc, char **argv )
 #endif
         while ( ev3_tacho_init() < 1 ) Sleep( 1000 );
 
- 	FILE *fd;
-	int numerorighe;
-	int vett[100];
-	int indexi;
+ 	
 	//ONLY FOR MAPPING
 	/* apre il file */
 	  fd=fopen("maps.txt", "r"); 
