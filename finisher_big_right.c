@@ -978,7 +978,7 @@ uint32_t n, ii;
                         fflush( stdout );
 		}
 //FINISHER
-donald->x=110; 
+donald->x=84; 
 donald->y=390;//finisher=190
 donald->teta=-90;//finisher=-90
 donald->number=1;
