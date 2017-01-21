@@ -1275,10 +1275,9 @@ int main( int argc, char **argv )
 	  }
 		
 			/* legge il numero di elementi del vettore */
-	  fscanf(fd, "%d", &numerorighe);
-printf("sono dopo fscanf:%d\n",numerorighe);
-
-			/* legge l'array */
+	  fscanf(fd, "%d %d %d %d %d %d",&vett[0],&vett[1],&vett[2],&vett[3],&vett[4],&vett[5]);
+	  printf("sono dopo fscanf:%d %d %d %d %d %d \n",vett[0],vett[1],vett[2],vett[3],vett[4],vett[5]);
+	/*		
 	  if(numerorighe>=100) 
 	    printf("Troppi elementi da leggere\n");
 	  else
@@ -1286,11 +1285,12 @@ printf("sono dopo fscanf:%d\n",numerorighe);
 	      fscanf(fd, "%d", &vett[indexi]);
 
 
-			/* stampa l'array */
+		
 	  for(indexi=0; indexi<=numerorighe-1; indexi++)
 	    printf("%d\n", vett[indexi]);
+	    */
 
-			/* chiude il file */
+			 
 	  fclose(fd);
 	
 	
