@@ -708,8 +708,8 @@ void* positioning_sys(void* args)
 	 	x_conv_LSB = (0xFF &  ((int16_t)donald->x));
 		y_conv_MSB = (0xFF & ((int16_t)donald->y>>8));
 		y_conv_LSB = (0xFF &  ((int16_t)donald->y));
-		printf("x: %d x: %d\n",x_conv_LSB,x_conv_MSB);
-		printf("y: %d y: %d\n",y_conv_LSB,y_conv_MSB);
+		//printf("x: %d x: %d\n",x_conv_LSB,x_conv_MSB);
+		//printf("y: %d y: %d\n",y_conv_LSB,y_conv_MSB);
 		*((uint16_t *) string) = msgId++;
 		string[2] = TEAM_ID;
 		string[3] = 0xFF;
@@ -729,12 +729,12 @@ void gotoxyfinisher(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t s
 	deltax=(xnewf-xoldf);
 	deltay=(ynewf-yoldf);
 	distanceto=sqrt(pow(deltax,2)+pow(deltay,2))*19;
-	printf("distance to do: %f",distanceto);
+	//printf("distance to do: %f",distanceto);
 	//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
 	deltax=(double)abs(deltax);
 	deltay=(double)abs(deltay);
 	angleofrotation=atan2(deltax,deltay)*180/M_PI;
-	printf("angle of turning : %f",angleofrotation);
+	//printf("angle of turning : %f",angleofrotation);
 	rotatedx(sn,dx,max_speed,angleofrotation,sn_mag);
 	go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,distanceto,sn_compass,sn_mag);
 
@@ -747,15 +747,15 @@ void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uin
 	deltax=(xnewf-xoldf);
 	deltay=(ynewf-yoldf);
 	distanceto=sqrt(pow(deltax,2)+pow(deltay,2))*19;
-	printf("distance to do: %f",distanceto);
+	//printf("distance to do: %f",distanceto);
 	//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
 	deltax=(double)deltax;
 	deltay=(double)deltay;
 	angleofrotation=atan2(deltax,deltay)*180/M_PI;  
-	printf("teta is :%f\n",teta);
-	printf("delta aangle is :%f\n",angleofrotation); 
+	//printf("teta is :%f\n",teta);
+	//printf("delta aangle is :%f\n",angleofrotation); 
 	rot = -90+rad2deg(teta) + angleofrotation;		//solo per prova era -360+ teta+angle ofrotation
-	printf("angle of turning : %f",rot);
+	//printf("angle of turning : %f",rot);
 	if(rot<0)
 		rotatesx(sn,dx,max_speed,abs(rot),sn_mag);
 	else
