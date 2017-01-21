@@ -1260,9 +1260,10 @@ int main( int argc, char **argv )
         printf( "Waiting tacho is plugged...\n" );
 
 #endif
+	
         while ( ev3_tacho_init() < 1 ) Sleep( 1000 );
 
- 	
+ 	printf("prima di leggere dal file\n");
 	//ONLY FOR MAPPING
 	/* apre il file */
 	  fd=fopen("maps.txt", "r"); 
