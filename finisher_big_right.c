@@ -1276,7 +1276,7 @@ int main( int argc, char **argv )
 		
 			/* legge il numero di elementi del vettore */
 	  fscanf(fd, "%d", &numerorighe);
-printf("sono dopo fscanf\n");
+printf("sono dopo fscanf:%d\n",numerorighe);
 
 			/* legge l'array */
 	  if(numerorighe>=100) 
