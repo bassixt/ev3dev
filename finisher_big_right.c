@@ -193,9 +193,9 @@ void positioning(void * args)
     			   perror("erreur mutex unlock");
      			  exit(EXIT_FAILURE);
     			 }
- 	printf("new_angs: %f   last_angle: %f\n",new_angs, last_angle);
+ 	//printf("new_angs: %f   last_angle: %f\n",new_angs, last_angle);
 	m_rot = -( new_angs - last_angle);		//rotation
- 	printf("m_rot: %f\n",m_rot);
+ 	//printf("m_rot: %f\n",m_rot);
 	m_rot = deg2rad(m_rot);				//rotation to rad
 	last_angle = new_angs;				//refresh last angle
 	get_tacho_position(donald->sn,&new_sx);			
@@ -215,11 +215,11 @@ void positioning(void * args)
 	old_dx = new_dx;
  	old_x = old_x + disp_diff * sign * cos( teta_calc );
 	old_y = old_y + disp_diff * sign * sin( teta_calc ); 
- 	printf("teta calc: %f:\n",teta_calc);
+ 	//printf("teta calc: %f:\n",teta_calc);
  	donald->teta=teta_calc;
  	donald->x = old_x;
  	donald->y = old_y;
-	printf("y=%f and x=%f\n",old_y,old_x);
+	//printf("y=%f and x=%f\n",old_y,old_x);
 	
 }
 
