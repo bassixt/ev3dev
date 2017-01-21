@@ -54,7 +54,7 @@ unsigned char next = 0xFF;
 unsigned char side=0;
 int s;
 uint16_t msgId=0;
-
+int vett[100];
 
 typedef struct motandsens test;
 struct motandsens {
@@ -702,7 +702,7 @@ void* positioning_sys(void* args)
 	positioning(donald);
 	Sleep(100);
 	seconds_bt=seconds_bt+1;
-	if (seconds_bt == 20)
+	if (seconds_bt == 20 && donald->number==0)
 	{	//send position
 	 	x_conv_MSB = (0xFF & ((int16_t)donald->x>>8));
 	 	x_conv_LSB = (0xFF &  ((int16_t)donald->x));
@@ -808,46 +808,17 @@ float xbefore,ybefore,distanceback;
 if ( !get_sensor_value0(donald->sn_mag, &heading)){
 					heading=0;
 					}
-switch(donald->number)
-{
-	case 0 ://prima era x=19 y=43 e 1 e 150
-		//waitning for the next
-		Sleep(1000);
-		//research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-		gotoxybeg(donald->x, donald->y, 38.0, 225.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
-		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-		//gotoxybeg(donald->x, donald->y, 38.0, 192.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-		//rotatesx(donald->sn,donald->dx,donald->max_speed,180,donald->sn_mag);
-		//leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-		//go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-		
-		//put_down(donald->med,donald->max_speed);
-		//gotoxybeg(donald->x, donald->y, 15, 350.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-		//rotatedx of 180
-		//leave the ball
-		//send ball position
-		//rotatesx 180
-		//gotoxy (go ahead for a little bit
-		//gotoxy to the end
-		//send next maessage
-		
-		break;
-	case 1 :
-		//waiting for start
-		Sleep(1000);
-		gotoxybeg(donald->x, donald->y, -75, 75.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-		leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
-		go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
-		put_down(donald->med,donald->max_speed);
-		//send ball position
-		gotoxybeg(donald->x, donald->y, -95.0, 150.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag,donald->teta);
-		//receive the ball signal
-		//send next message
-		gotoxybeg(donald->x, donald->y,-85 , 125.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-		gotoxybeg(donald->x, donald->y, -90.0, 25,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-		break;
-}
+while(donald->number==1) //wait your turn
+	{
+	    Sleep(200);
+	}
+Sleep(1000);
+gotoxybeg(donald->x, donald->y, vett[0], vett[1],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
+rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
+research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
+gotoxybeg(donald->x, donald->y, vett[2], vett[3],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+gotoxybeg(donald->x, donald->y, vett[4], vett[5],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+
 return EXIT_SUCCESS;
 }
 
@@ -1007,6 +978,7 @@ uint32_t n, ii;
 donald->x=110; 
 donald->y=390;//finisher=190
 donald->teta=-90;//finisher=-90
+donald->number=1;
 return donald;
 }
 
@@ -1225,16 +1197,11 @@ return;
 }
 
 	
-int main( int argc, char **argv )
+int main()
 {	//ONLY FOR MAPPING ARENA
 	
-	FILE *fd;
-	int numerorighe;
-	int vett[100];
-	int indexi;
- 	// FINISH MAPPING
-	
-	
+	FILE *fd;	
+ 	// FINISH MAPPING	
 	pid_t ret;
  	char *name;
         int i,d,n;
@@ -1263,47 +1230,24 @@ int main( int argc, char **argv )
 	
         while ( ev3_tacho_init() < 1 ) Sleep( 1000 );
 
- 	printf("prima di leggere dal file\n");
 	//ONLY FOR MAPPING
 	/* apre il file */
 	  fd=fopen("maps.txt", "r"); 
-	printf("sono dopo fd\n");
 			/* verifica errori in apertura */
 	  if( fd==NULL ) {
 	    perror("Errore in apertura del file");
 	    exit(1);
 	  }
 		
-			/* legge il numero di elementi del vettore */
-	  fscanf(fd, "%d %d %d %d %d %d",&vett[0],&vett[1],&vett[2],&vett[3],&vett[4],&vett[5]);
-	  printf("sono dopo fscanf:%d %d %d %d %d %d \n",vett[0],vett[1],vett[2],vett[3],vett[4],vett[5]);
-	/*		
-	  if(numerorighe>=100) 
-	    printf("Troppi elementi da leggere\n");
-	  else
-	    for(indexi=0; indexi=numerorighe-1; indexi++)
-	      fscanf(fd, "%d", &vett[indexi]);
-
-
-		
-	  for(indexi=0; indexi<=numerorighe-1; indexi++)
-	    printf("%d\n", vett[indexi]);
-	    */
-
-			 
+	  fscanf(fd, "%d %d %d %d %d %d %d %d %d %d %d %d",&vett[0],&vett[1],&vett[2],&vett[3],&vett[4],&vett[5],&vett[6],&vett[7],&vett[8],&vett[9],&vett[10],&vett[11]);
 	  fclose(fd);
 	
 	
 	//FINISH MAPPING
-	
-
- 
- 	caseNumber = atoi(argv[1]);
  
         printf( "*** ( EV3 ) Hello! ***\n" );
 	
 	donald = inizialization(donald);
- 	donald->number = caseNumber;
  	///////////////////////////////////////////////////////////////////////
 	////								   ////
 	////			CONNECTION TO SERVER			   ////
@@ -1320,44 +1264,88 @@ int main( int argc, char **argv )
     addr.rc_channel = (uint8_t) 1;
     str2ba (SERV_ADDR, &addr.rc_bdaddr);
 
-    /* connect to server */
     status = connect(s, (struct sockaddr *)&addr, sizeof(addr));
 
     /* if connected */
-    if( status == 0 ) {
-        char string[58];
+    while( status != 0 )
+    {
+	printf("I'm connecting....\n\n\n\n");    
+    }
+			
+retour = pthread_create(&thread_movement, NULL, movements, donald);
+if (retour != 0)
+{
+  perror("erreur thread movement");
+  exit(EXIT_FAILURE);
+}
 
-        /* Wait for START message */
-        read_from_server (s, string, 9);
-        if (string[4] == MSG_START) {
+retour = pthread_create(&thread_position, NULL, positioning_sys, donald);
+if (retour != 0)
+{
+  perror("erreur thread sensor");
+  exit(EXIT_FAILURE);
+}
+
+ 	
+        
+ while(game_status_flag==0)
+ {
+ read_from_server (s, string, 9);
+ printf("message type %d\n",string[4]);
+ switch (string[4])	
+ { 	
+	case MSG_START:
             printf ("Received start message!\n");
             rank = (unsigned char) string[5];
 	    side = (unsigned char) string[6];
             next = (unsigned char) string[7];
+	    if (rank== 0)
+	    {
+		    printf("I am beginner\n");
+		    donald->role = 0;	//only at the init to know how to start
+		    donald->number = 0 ;
+		    //THE BEGINNER CAN START
 			
-        }
-		if (side==0){
-		    printf("I am on the right side\n");
-		}
-		else {
-			printf("I am on the left side\n");
-		}
-		
-        if (rank == 0){
-            printf("beginner\n");
 	    }
-        else
-            printf("beginner\n");
-
-
-
-    } else {
-        fprintf (stderr, "Failed to connect to server...\n");
-        sleep (2);
-	close(s);
-        exit (EXIT_FAILURE);
-    }
-
+	    else 
+	    {
+		    printf("I am finisher\n");
+		    donald->role = 1;
+		    donald->number =  1;
+		    //WAIT NEXT MESSAGE
+	    }
+ 	    printf("##########################################\n##########    Next is %d    ###########\n#########################################\n\n",next);
+	    break;
+	case MSG_BALL:
+       	     if (string[5] == 1) 
+	     	{
+            		printf ("Received ball message! Ball has been left \n");
+           		string[2] = TEAM_ID;
+			x_LSB = string[6];          // get x of the ball
+			x_MSB = string[7];
+			y_LSB = string[8];	    //get y of the ball
+			y_MSB = string[9];
+			
+       		 }	
+	// need to reconvert + create a specific variable x_ball and y_ball
+	//x_ball = ;
+	//y_ball = ;
+	// wait for a start msg
+	      break;
+	 case MSG_KICK :
+	     game_status_flag =1;
+	     break;
+	 case MSG_STOP:
+	     game_status_flag =1;
+	     break;
+	 case MSG_NEXT:
+	     donald->number =  0;
+	     //OK let start!!
+             
+	     
+        }
+				
+}
    
 	///////////////////////////////////////////////////////////////////////
 	////								   ////
@@ -1365,26 +1353,7 @@ int main( int argc, char **argv )
 	////								   ////
 	///////////////////////////////////////////////////////////////////////
 
-	retour = pthread_create(&thread_movement, NULL, movements, donald);
-	if (retour != 0)
-	{
-	  perror("erreur thread movement");
-	  exit(EXIT_FAILURE);
-	}
- 
- 	retour = pthread_create(&thread_position, NULL, positioning_sys, donald);
-	if (retour != 0)
-	{
-	  perror("erreur thread sensor");
-	  exit(EXIT_FAILURE);
-	}
- 	/*retour = pthread_create(&thread_colorsense, NULL, colorsense, donald);
-	if (retour != 0)
-	{
-	  perror("erreur thread sensor");
-	  exit(EXIT_FAILURE);
-	}*/
- 	
+
 	if (pthread_join(thread_position, NULL)) 
 	{
 	  perror("pthread_join position");
@@ -1395,11 +1364,6 @@ int main( int argc, char **argv )
 	  perror("pthread_join movement");
 	  return EXIT_FAILURE;
 	} 
- 	/*if (pthread_join(thread_colorsense, NULL)) 
-	{
-	  perror("pthread_join colorsens");
-	  return EXIT_FAILURE;
-	} 	*/
         ev3_uninit();
         printf( "*** ( EV3 ) Bye! ***\n" );
 
