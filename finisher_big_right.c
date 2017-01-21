@@ -1267,16 +1267,16 @@ int main( int argc, char **argv )
 	//ONLY FOR MAPPING
 	/* apre il file */
 	  fd=fopen("maps.txt", "r"); 
-
+	printf("sono dopo fd\n");
 			/* verifica errori in apertura */
 	  if( fd==NULL ) {
 	    perror("Errore in apertura del file");
 	    exit(1);
 	  }
-
+		
 			/* legge il numero di elementi del vettore */
 	  fscanf(fd, "%d", &numerorighe);
-
+printf("sono dopo fscanf\n");
 
 			/* legge l'array */
 	  if(numerorighe>=100) 
