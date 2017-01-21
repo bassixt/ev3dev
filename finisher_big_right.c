@@ -688,7 +688,7 @@ while((finish - beginning - distance)<=0){
 	beginning+=(finish-partial);
 }
 get_tacho_position( dx, &finish);		
-control_direction(sn,dx,max_speed,initial_angle, sn_mag);	
+//control_direction(sn,dx,max_speed,initial_angle, sn_mag);	
 return (finish-beginning)/21; //return the distance in cm
 }
 void* positioning_sys(void* args)
