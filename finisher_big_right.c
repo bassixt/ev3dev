@@ -688,7 +688,7 @@ while((finish - beginning - distance)<=0){
 	beginning+=(finish-partial);
 }
 get_tacho_position( dx, &finish);		
-//control_direction(sn,dx,max_speed,initial_angle, sn_mag);	
+control_direction(sn,dx,max_speed,initial_angle, sn_mag);	
 return (finish-beginning)/21; //return the distance in cm
 }
 void* positioning_sys(void* args)
@@ -819,7 +819,7 @@ Sleep(1000);
 gotoxybeg(donald->x, donald->y, vett[0], vett[1],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
 go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,vett[2],donald->sn_compass,donald->sn_mag);
-research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
+research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 40 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 
 gotoxybeg(donald->x, donald->y, vett[4], vett[5],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 gotoxybeg(donald->x, donald->y, vett[6], vett[7],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
