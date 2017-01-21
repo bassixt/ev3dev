@@ -171,7 +171,7 @@ void positioning(void * args)
 	static float teta_calc = -M_PI/2;//prima era M_PI
 	static float old_sx = 0;
 	static float old_dx = 0;
-	static float old_x = 110;
+	static float old_x = 84;
 	static float old_y = 390;//finisher 190
  	float sign;
 	int new_sx,new_dx;
