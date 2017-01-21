@@ -817,7 +817,7 @@ while(donald->number==1) //wait your turn
 	}
 Sleep(1000);
 gotoxybeg(donald->x, donald->y, vett[0], vett[1],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
-rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
+//rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
 gotoxybeg(donald->x, donald->y, vett[2], vett[3],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 
