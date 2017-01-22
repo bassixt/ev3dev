@@ -809,7 +809,7 @@ Sleep(1000);
 gotoxybeg(donald->x, donald->y, vett[0], vett[1],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 rotatesx(donald->sn,donald->dx,donald->max_speed,vett[2],donald->sn_mag);
 go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,vett[3],donald->sn_compass,donald->sn_mag);
-research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, vett[4] , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
+research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, vett[4] , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 x_ball = donald->x+5*cos(donald->teta);
 y_ball = donald->x+5*sin(donald->teta);
 x_conv_MSB = (0xFF & ((int16_t)x_ball>>8));
