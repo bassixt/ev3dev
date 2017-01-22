@@ -809,7 +809,22 @@ gotoxybeg(donald->x, donald->y, vett[0], vett[1],donald->sn,donald->dx,donald->m
 rotatesx(donald->sn,donald->dx,donald->max_speed,vett[2],donald->sn_mag);
 go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,vett[3],donald->sn_compass,donald->sn_mag);
 research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, vett[4] , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-
+x_ball = donald->x+5*cos(donald->teta);
+y_ball = donald->x+5*sin(donald->teta);
+x_conv_MSB = (0xFF & ((int16_t)x_ball>>8));
+x_conv_LSB = (0xFF &  ((int16_t)x_ball));
+y_conv_MSB = (0xFF & ((int16_t)y_ball>>8));
+y_conv_LSB = (0xFF & ((int16_t)y_ball));
+	*((uint16_t *) string) = msgId++;
+			string[2] = TEAM_ID;
+			string[3] = next;
+			string[4] = MSG_BALL;
+			string[5] = 1; // robot leaved the ball
+			string[6] = x_conv_LSB;          // x 
+			string[7] = x_conv_MSB;
+			string[8] = y_conv_LSB;	    // y 
+			string[9] = y_conv_MSB;
+write(s, string, 10);
 gotoxybeg(donald->x, donald->y, vett[5], vett[6],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 gotoxybeg(donald->x, donald->y, vett[7], vett[8],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 
