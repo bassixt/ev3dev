@@ -636,25 +636,10 @@ while((finish - beginning - distance)<=0){
                         }
                         //printf( "\r(%f) \n", value);
 			fflush( stdout );
-     /*  if(value<2500 && value>=1500)
+     	if(value<2500 && value >=250)
 		{
-	set_tacho_speed_sp( sn, max_speed );
-	set_tacho_speed_sp( dx, max_speed );
-			}
-	if(value<1500 && value >=500)
-		{
-	set_tacho_speed_sp( sn, max_speed * 2 / 3 );
-	set_tacho_speed_sp( dx, max_speed * 2 / 3 );
-			}
-	if(value<500 && value >=350)
-		{
-	set_tacho_speed_sp( sn, max_speed * 1 / 3 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 3 );
-			       } */   
-	if(value<2500 && value >=250)
-		{
-	set_tacho_speed_sp( sn, max_speed * 1 / 4 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 4 );
+	set_tacho_speed_sp( sn, max_speed * 1 / 2 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 2 );
 			       }         		
 	if(value<250 && value >=70)
 		{
@@ -817,12 +802,12 @@ while(donald->number==1) //wait your turn
 	}
 Sleep(1000);
 gotoxybeg(donald->x, donald->y, vett[0], vett[1],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
-rotatesx(donald->sn,donald->dx,donald->max_speed,90,donald->sn_mag);
-go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,vett[2],donald->sn_compass,donald->sn_mag);
-research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 40 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
+rotatesx(donald->sn,donald->dx,donald->max_speed,vett[2],donald->sn_mag);
+go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,vett[3],donald->sn_compass,donald->sn_mag);
+research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, vett[4] , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 
-gotoxybeg(donald->x, donald->y, vett[4], vett[5],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-gotoxybeg(donald->x, donald->y, vett[6], vett[7],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+gotoxybeg(donald->x, donald->y, vett[5], vett[6],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
+gotoxybeg(donald->x, donald->y, vett[7], vett[8],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 
 return EXIT_SUCCESS;
 }
