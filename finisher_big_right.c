@@ -290,16 +290,16 @@ void rotatesx(uint8_t sn, uint8_t dx, int max_speed, int rotation, uint8_t sn_ma
 
 }
 
-void rotateforscan(uint8_t sn, uint8_t dx, int max_speed)
+void rotateforscan(uint8_t sn, uint8_t dx, int max_speed, int vers)
 {
-	set_tacho_speed_sp( sn, max_speed/2);
+	set_tacho_speed_sp( sn, max_speed/2);  //vers +1 left -1 right
 	set_tacho_ramp_up_sp( sn, 0 );
 	set_tacho_ramp_down_sp( sn, 0 );
 	set_tacho_speed_sp( dx, max_speed/2);
 	set_tacho_ramp_up_sp( dx, 0 );
 	set_tacho_ramp_down_sp( dx, 0 );
-	set_tacho_position_sp( sn,  -2);
-	set_tacho_position_sp( dx, 2);
+	set_tacho_position_sp( sn,  -2*vers);
+	set_tacho_position_sp( dx, 2*vers);
 	set_tacho_command_inx( sn, TACHO_RUN_TO_REL_POS );
 	set_tacho_command_inx( dx, TACHO_RUN_TO_REL_POS );
 	Sleep(50);
@@ -1006,7 +1006,7 @@ while(status_re==0)
 		for(i=0;i<angles_to_scan;i++)
 		{	points[i]=get_sonar_values(sn_sonar);
 			get_sensor_value0(sn_mag, &angle[i] );
-			rotateforscan(sn,dx,-max_speed);
+			rotateforscan(sn,dx,max_speed,-1);
 		}
 		int max=8000000;
 		int index=0;
