@@ -55,6 +55,7 @@ unsigned char side=0;
 int s;
 uint16_t msgId=0;
 int vett[100];
+float x_ball, y_ball;
 
 typedef struct motandsens test;
 struct motandsens {
