@@ -798,7 +798,7 @@ while(1)
 			break;
 		case 1 :
 			//waiting for start
-			if(flag == 1){
+		
 			gotoxybeg(donald->x, donald->y,85 , 125.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 			research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 			//send ball position
@@ -829,7 +829,7 @@ while(1)
 			actual_role=0;
 			donald->number=1; // stop wait for the next signal
 			break;
-			}	
+				
 	}
 }
 return EXIT_SUCCESS;
