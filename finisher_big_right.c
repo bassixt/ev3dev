@@ -1164,6 +1164,7 @@ int main()
  	int caseNumber;
 	 int game_status_flag=0;	// is set to one if a kick message or a stop message is received
 	char string[58];
+	char IDMSG[58];
 int8_t x_LSB,x_MSB,y_MSB,y_LSB;
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
@@ -1271,13 +1272,24 @@ if (retour != 0)
        	     if (string[5] == 1) 
 	     	{
             		printf ("Received ball message! Ball has been left \n");
-           		string[2] = TEAM_ID;
+           		*((uint16_t *) IDMSG) = *((uint16_t *) string);
+		     	string[2] = TEAM_ID;
 			x_LSB = string[6];          // get x of the ball
 			x_MSB = string[7];
 			y_LSB = string[8];	    //get y of the ball
 			y_MSB = string[9];
+		     
+		    	*((uint16_t *) string) = msgId++;
+			string[2] = TEAM_ID;
+			string[3] = next;
+			string[4] = MSG_ACK;
+			string[5] = IDMSG[0];
+		 	string[6] = IDMSG[1];          // x 
+			string[7] = 0;
+write(s, string, 8);
 			
        		 }	
+		 
 	// need to reconvert + create a specific variable x_ball and y_ball
 	//x_ball = ;
 	//y_ball = ;
