@@ -1082,7 +1082,7 @@ while(status_re==0)
 		for(i=0;i<angles_to_scan;i++)
 		{	points[i]=get_sonar_values(sn_sonar);
 			get_sensor_value0(sn_mag, &angle[i] );
-			rotateforscan(sn,dx,max_speed);
+			rotateforscan(sn,dx,max_speed,1);
 		}
 		int max=8000000;
 		int index=0;
