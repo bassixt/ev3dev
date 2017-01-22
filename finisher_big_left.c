@@ -172,7 +172,7 @@ void positioning(void * args)
 	static float teta_calc = -M_PI/2;//prima era M_PI
 	static float old_sx = 0;
 	static float old_dx = 0;
-	static float old_x = 84;
+	static float old_x = -84;
 	static float old_y = 390;//finisher 190
  	float sign;
 	int new_sx,new_dx;
@@ -985,7 +985,7 @@ uint32_t n, ii;
                         fflush( stdout );
 		}
 //FINISHER
-donald->x=84; 
+donald->x=-84; 
 donald->y=390;//finisher=190
 donald->teta=-90;//finisher=-90
 donald->number=1;
@@ -1183,7 +1183,7 @@ int8_t x_LSB,x_MSB,y_MSB,y_LSB;
 
 	//ONLY FOR MAPPING
 	/* apre il file */
-	  fd=fopen("maps.txt", "r"); 
+	  fd=fopen("maps_fin_big_left.txt", "r"); 
 			/* verifica errori in apertura */
 	  if( fd==NULL ) {
 	    perror("Errore in apertura del file");
