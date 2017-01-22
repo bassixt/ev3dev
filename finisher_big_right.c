@@ -1286,7 +1286,7 @@ if (retour != 0)
 			string[5] = IDMSG[0];
 		 	string[6] = IDMSG[1];          // x 
 			string[7] = 0;
-write(s, string, 8);
+			write(s, string, 8);
 			
        		 }	
 		 
@@ -1302,8 +1302,21 @@ write(s, string, 8);
 	     game_status_flag =1;
 	     break;
 	 case MSG_NEXT:
-	     donald->number =  0;
+	    *((uint16_t *) IDMSG) = *((uint16_t *) string);
+            printf("next message received\n");
+	    donald->number =  0;
+	     		     
+	     *((uint16_t *) string) = msgId++;	     
+	     string[2] = TEAM_ID;
+	     string[3] = next;
+	     string[4] = MSG_ACK;
+	     string[5] = IDMSG[0];
+	     string[6] = IDMSG[1];          // x
+             string[7] = 0;
+             write(s, string, 8);
+		
 	     //OK let start!!
+	      break;
              
 	     
         }
