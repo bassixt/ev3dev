@@ -760,7 +760,7 @@ while(1)
 	{
 	    Sleep(200);
 	}
-	
+	printf("Found number==0 and actual_role=%d\n",actual_role);
 	switch(actual_role)
 	{
 		case 0 :Sleep(1000);
@@ -1342,6 +1342,7 @@ if (retour != 0)
 	     game_status_flag =1;
 	     break;
 	 case MSG_NEXT:
+	     printf("NEXT RECEIVED!!!\n");
 	     donald->number =  0;
 	     //OK let start!!
              
