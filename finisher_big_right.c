@@ -808,7 +808,7 @@ Sleep(1000);
 gotoxybeg(donald->x, donald->y, vett[0], vett[1],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 rotatesx(donald->sn,donald->dx,donald->max_speed,vett[2],donald->sn_mag);
 go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,vett[3],donald->sn_compass,donald->sn_mag);
-research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, vett[4] , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
+research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, vett[4] , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 
 gotoxybeg(donald->x, donald->y, vett[5], vett[6],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 gotoxybeg(donald->x, donald->y, vett[7], vett[8],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
@@ -983,7 +983,9 @@ float start_angle, final_angle, middle_angle,turn_angle,end_angle;
 int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx,init_turn; 
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
 int i, flag_1,flag_2,grab, ball_dist, status_re;
-float points[1000]={0};
+int angles_to_scan=20;
+float points[1000]={8000000};
+float angle[1000]={0};
 init_turn = max_turn_degree;
 //init_turn=35;   TO BE CHANGED WITH 
 if ( !get_sensor_value0(sn_mag, &initial_angle )) 
@@ -993,124 +995,60 @@ if ( !get_sensor_value0(sn_mag, &initial_angle ))
 get_tacho_position(sn, &pos_in_sn);
 get_tacho_position(dx, &pos_in_dx);
 status_re = 0;
+flag_1=0;
 while(status_re==0)
 	{
-		flag_1=0;
-		flag_2=0;  // because of vibration the first value scanned after first angle must be cecked
+		
+		//flag_2=0;  // because of vibration the first value scanned after first angle must be cecked
 		//turn right 45 ° and start moving 2° each step
-		rotatedx(sn,dx,max_speed,init_turn,sn_mag);	
+		rotatesx(sn,dx,max_speed,init_turn,sn_mag);	
 		Sleep(200);
-		for(i=0;i<30;i++)
-		{
-			//printf("I'M here\n");
-			Sleep(100);
-			//get_sensor_value0(sn_sonar, &points[i]);
-			points[i]=get_sonar_values(sn_sonar);
-			if(flag_1==1 && flag_2==0) //if you have found the ball the first value after that can be wrong due to vibrations
-			{
-				if(points[i] > points[i-1] + 200)
-					points[i]=points[i-1];
-				flag_2=1;
-			}
-				
-			printf("Il valore è %f:\n",points[i]);
-			if(i!=0 && ((points[i-1]-points[i])>=300) && flag_1==0)
-			{
-			 //this is the first balls' extremity 
-				if ( !get_sensor_value0(sn_mag, &start_angle )) 
-				{
-				start_angle = 0;
-				}
-				printf("first_angle%f\n",start_angle);
-				get_tacho_position(sn,&pos_in_ball_sn);
-				get_tacho_position(dx,&pos_in_ball_dx);
-				flag_1=1;
-			}
-			if(i!=0 && ((points[i]-points[i-1])>=300) && flag_1==1)
-			{
-			  //this is the last point of the ball detected
-				if ( !get_sensor_value0(sn_mag, &final_angle )) 
-				{
-				final_angle = 0;
-				}
-				printf("final_angle%f\n",final_angle);
-				get_tacho_position(sn,&pos_in_ball_sn);
-				get_tacho_position(dx,&pos_in_ball_dx);
-				ball_dist = points[i-2];
-				flag_1=2;
-
-			}
-			if(flag_1==2)
-			{	
-				middle_angle = (final_angle + start_angle) / 2;
-				printf("middle_angle%f\n",middle_angle);
-				found_sn=(pos_fin_ball_sn - pos_in_ball_sn) / 2;
-				found_dx=(pos_fin_ball_dx - pos_in_ball_dx) / 2;
-				break;
-			}
-			//rotatesx(sn,dx,sn_compass,max_speed,1,sn_mag);
-			rotateforscan(sn,dx,max_speed);
-			
+		for(i=0;i<angles_to_scan;i++)
+		{	points[i]=get_sonar_values(sn_sonar);
+			get_sensor_value0(sn_mag, &angle[i] );
+			rotateforscan(sn,dx,-max_speed);
 		}
-		
-		if ( !get_sensor_value0(sn_mag, &end_angle )) 
-		   {
-		   end_angle = 0;
-		   }
-	
-		
-		if(flag_1==2)
-		{
-			
-		
-			//it has finished the search
-			//restart from centre and go to the desired angle
-			/*if(final_angle<0)
-				turn_angle = middle_angle - final_angle;
-			else
-				turn_angle=final_angle-middle_angle;*/
-			turn_angle = abs( middle_angle - final_angle );
-			rotatedx(sn,dx,max_speed,(int)turn_angle,sn_mag); 
-			Sleep(200);
-
-			if (ball_dist > 300)
-			{	
-				go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,(int)ball_dist*4/5,sn_compass,sn_mag);
-				for(i=0;i<1000;i++)
-					points[i]=0; //TO BE CONTROLLED
-				init_turn=init_turn - 15;
-			}
-			else
-			{
-				status_re=1; //LEAVE THE RESEARCH TAKE THE BALL
-			}
-		}
-		else
+		int max=8000000;
+		int index=0;
+	      	for(i=0;i<angles_to_scan;i++)
 		{	
-			turn_angle = abs( end_angle-initial_angle );
-			rotatedx(sn,dx,max_speed,(int)turn_angle,sn_mag);
-			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,380,sn_compass,sn_mag);
-			for(i=0;i<1000;i++)
-					points[i]=0; //TO BE CONTROLLED
-			
+		  if(points[i]<max)
+		  {
+			  max=points[i];
+			  index=i;
+		  }
 		}
-
+		printf("point[index]:%f\n",points[index]);
+		printf("angle[index]:%f\n",angle[index]);
+	if ( !get_sensor_value0(sn_mag, &final_angle)) 
+   {
+   final_angle = 0;
+   }
+	middle_angle=abs(angle[index]-final_angle);
+	printf("final angle:%f and middle angle:%f\n",final_angle,middle_angle);
+	rotatesx(sn,dx,max_speed,middle_angle-4,sn_mag);
+	if (flag_1==0)
+	{
+		go_ahead_till_obstacle(sn,dx,max_speed*2/3,sn_sonar,points[index]*3/4,sn_compass,sn_mag);
+		flag_1=1;
+		for(i=0;i<500;i++)
+			{
+				points[i]=800000;
+			}
+	}
+	else
+	{
+		status_re=1;
+	}
 }
-/*rotatesx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);
-elapsed_dis=go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,4000,sn_compass,sn_mag);
-rotatedx(sn,dx,sn_compass,max_speed,180,sn_mag);*/
 grab=colorsense(sn,dx,med,max_speed,sn_color);
 printf("grab=%d\n",grab);
 while(grab==0)
 {
-	go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,95,sn_compass,sn_mag);
+	go_ahead_till_obstacle(sn,dx,max_speed*2/3,sn_sonar,40,sn_compass,sn_mag);
 	grab=colorsense(sn,dx,med,max_speed,sn_color);
 	printf("grab=%d\n",grab);
 }
-//colorsense(sn,dx,med,max_speed,sn_color);
-/*rotatesx(sn,dx,sn_compass,max_speed,180,sn_mag);
-rotatedx(sn,dx,sn_compass,max_speed,middle_angle,sn_mag);*/
-//hope it will work=)
 return;
 }
 
