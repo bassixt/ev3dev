@@ -638,8 +638,8 @@ while((finish - beginning - distance)<=0){
 			fflush( stdout );
      	if(value<2500 && value >=250)
 		{
-	set_tacho_speed_sp( sn, max_speed * 1 / 2 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 2 );
+	set_tacho_speed_sp( sn, max_speed * 1 / 3 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 3 );
 			       }         		
 	if(value<250 && value >=70)
 		{
@@ -741,6 +741,10 @@ void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uin
 	//printf("delta aangle is :%f\n",angleofrotation); 
 	rot = -90+rad2deg(teta) + angleofrotation;		//solo per prova era -360+ teta+angle ofrotation
 	//printf("angle of turning : %f",rot);
+	if (rot<-180)
+		rot=rot+360;
+	if (rot>180)
+		rot=rot-360;
 	if(rot<0)
 		rotatesx(sn,dx,max_speed,abs(rot),sn_mag);
 	else
