@@ -657,8 +657,6 @@ void* positioning_sys(void* args)
 	 	x_conv_LSB = (0xFF &  ((int16_t)donald->x));
 		y_conv_MSB = (0xFF & ((int16_t)donald->y>>8));
 		y_conv_LSB = (0xFF &  ((int16_t)donald->y));
-		printf("x: %d x: %d\n",x_conv_LSB,x_conv_MSB);
-		printf("y: %d y: %d\n",y_conv_LSB,y_conv_MSB);
 		*((uint16_t *) string) = msgId++;
 		string[2] = TEAM_ID;
 		string[3] = 0xFF;
