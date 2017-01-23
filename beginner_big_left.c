@@ -1194,7 +1194,7 @@ int8_t x_LSB,x_MSB,y_MSB,y_LSB;
 
 	//ONLY FOR MAPPING
 	/* apre il file */
-	  fd=fopen("maps_fin_big_left.txt", "r"); 
+	  fd=fopen("maps_beg_big_left.txt", "r"); 
 			/* verifica errori in apertura */
 	  if( fd==NULL ) {
 	    perror("Errore in apertura del file");
