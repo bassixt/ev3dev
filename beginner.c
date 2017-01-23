@@ -803,7 +803,7 @@ while(1)
 			research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 			//send ball position
 			x_ball = donald->x+5*cos(donald->teta);
-			y_ball = donald->x+5*sin(donald->teta);
+			y_ball = donald->y+5*sin(donald->teta);
 			x_conv_MSB = (0xFF & ((int16_t)x_ball>>8));
 			x_conv_LSB = (0xFF &  ((int16_t)x_ball));
 			y_conv_MSB = (0xFF & ((int16_t)y_ball>>8));
@@ -821,13 +821,16 @@ while(1)
 			gotoxybeg(donald->x, donald->y, 90.0, 25,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
 			// SEND NEXT msg
 			//send next message
+			/*
 			*((uint16_t *) string) = msgId++;
 			string[2] = TEAM_ID;
 			string[3] = next;
 			string[4] = MSG_NEXT;
 			write(s, string, 10);
 			actual_role=0;
-			donald->number=1; // stop wait for the next signal
+			donald->number=1; // stop wait for the next signal*/
+			donald->number=0; 
+			actual_role=0;
 			break;
 				
 	}
