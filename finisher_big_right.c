@@ -811,7 +811,7 @@ rotatesx(donald->sn,donald->dx,donald->max_speed,vett[2],donald->sn_mag);
 go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,vett[3],donald->sn_compass,donald->sn_mag);
 research(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, vett[4] , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 x_ball = donald->x+5*cos(donald->teta);
-y_ball = donald->x+5*sin(donald->teta);
+y_ball = donald->y+5*sin(donald->teta);
 x_conv_MSB = (0xFF & ((int16_t)x_ball>>8));
 x_conv_LSB = (0xFF &  ((int16_t)x_ball));
 y_conv_MSB = (0xFF & ((int16_t)y_ball>>8));
