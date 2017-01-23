@@ -602,12 +602,12 @@ while((finish - beginning - distance)<=0){
 	multi_set_tacho_ramp_up_sp( both, 2000 );
 	multi_set_tacho_ramp_down_sp( both, 2000 );
 	*/
-	set_tacho_time_sp( sn, 200 );
+	/*set_tacho_time_sp( sn, 200 );
 	set_tacho_ramp_up_sp( sn, 1500 );
 	set_tacho_ramp_down_sp( sn, 1500 );
 	set_tacho_time_sp( dx, 200);
 	set_tacho_ramp_up_sp( dx, 1500 );
-	set_tacho_ramp_down_sp( dx, 1500 );
+	set_tacho_ramp_down_sp( dx, 1500 );*/
 	retour = pthread_mutex_lock(&mutex_pos);
     			if (retour != 0)
     			 {
