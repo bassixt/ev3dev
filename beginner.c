@@ -812,23 +812,13 @@ while(1)
 			string[2] = TEAM_ID;
 			string[3] = next;
 			string[4] = MSG_BALL;
-			string[5] = 1; // robot leaved the ball
+			string[5] = 1; // robot picked the ball
 			string[6] = x_conv_LSB;          // x 
 			string[7] = x_conv_MSB;
 			string[8] = y_conv_LSB;	    // y 
 			string[9] = y_conv_MSB;
 			write(s, string, 10);
 			gotoxybeg(donald->x, donald->y, 90.0, 25,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-			// SEND NEXT msg
-			//send next message
-			/*
-			*((uint16_t *) string) = msgId++;
-			string[2] = TEAM_ID;
-			string[3] = next;
-			string[4] = MSG_NEXT;
-			write(s, string, 10);
-			actual_role=0;
-			donald->number=1; // stop wait for the next signal*/
 			donald->number=0; 
 			actual_role=0;
 			break;
