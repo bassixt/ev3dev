@@ -37,8 +37,8 @@ pthread_mutex_t mutex,mutex_pos;
 //         FOR BT               //
 //////////////////////////////////
 //#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
-//#define SERV_ADDR "00:26:B6:7F:A6:F7"
-#define SERV_ADDR "7C:5C:F8:45:D4:DA"
+#define SERV_ADDR "00:26:B6:7F:A6:F7"
+//#define SERV_ADDR "7C:5C:F8:45:D4:DA"
 #define TEAM_ID     10                       /* team ID */
 
 #define MSG_ACK     0
@@ -613,18 +613,15 @@ while((finish - beginning - distance)<=0){
 	set_tacho_speed_sp( sn, max_speed * 1 / 4 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 4 );
 			       }
-	if(value<70 && value >=40)
+	if(value<70 && value >=50)
 		{
 	set_tacho_speed_sp( sn, max_speed * 1 / 24 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 24);
 		 }
-	if(value<40 && value >=0)
-		 {
-		printf("sono nello zero\n");
-		fflush( stdout );	
+	if(value<50 && value >=0)
+		 {	
 	 set_tacho_speed_sp( sn, max_speed * 0 );
 	 set_tacho_speed_sp( dx, max_speed * 0 );
-	 Sleep(100);
 	 break;
 		}
 	set_tacho_command_inx( sn, TACHO_RUN_TIMED );
