@@ -193,9 +193,9 @@ void positioning(void * args)
     			   perror("erreur mutex unlock");
      			  exit(EXIT_FAILURE);
     			 }
- 	printf("new_angs: %f   last_angle: %f\n",new_angs, last_angle);
+ 	//printf("new_angs: %f   last_angle: %f\n",new_angs, last_angle);
 	m_rot = -( new_angs - last_angle);		//rotation
- 	printf("m_rot: %f\n",m_rot);
+ 	//printf("m_rot: %f\n",m_rot);
 	m_rot = deg2rad(m_rot);				//rotation to rad
 	last_angle = new_angs;				//refresh last angle
 	get_tacho_position(donald->sn,&new_sx);			
@@ -215,11 +215,11 @@ void positioning(void * args)
 	old_dx = new_dx;
  	old_x = old_x + disp_diff * sign * cos( teta_calc );
 	old_y = old_y + disp_diff * sign * sin( teta_calc ); 
- 	printf("teta calc: %f:\n",teta_calc);
+ 	//printf("teta calc: %f:\n",teta_calc);
  	donald->teta=teta_calc;
  	donald->x = old_x;
  	donald->y = old_y;
-	printf("y=%f and x=%f\n",old_y,old_x);
+	//printf("y=%f and x=%f\n",old_y,old_x);
 	
 }
 
@@ -675,12 +675,12 @@ void gotoxyfinisher(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t s
 	deltax=(xnewf-xoldf);
 	deltay=(ynewf-yoldf);
 	distanceto=sqrt(pow(deltax,2)+pow(deltay,2))*19;
-	printf("distance to do: %f",distanceto);
+	//printf("distance to do: %f",distanceto);
 	//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
 	deltax=(double)abs(deltax);
 	deltay=(double)abs(deltay);
 	angleofrotation=atan2(deltax,deltay)*180/M_PI;
-	printf("angle of turning : %f",angleofrotation);
+	//printf("angle of turning : %f",angleofrotation);
 	rotatedx(sn,dx,max_speed,angleofrotation,sn_mag);
 	go_ahead_till_obstacle(sn,dx,max_speed,sn_sonar,distanceto,sn_compass,sn_mag);
 
@@ -693,12 +693,12 @@ void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uin
 	deltax=(xnewf-xoldf);
 	deltay=(ynewf-yoldf);
 	distanceto=sqrt(pow(deltax,2)+pow(deltay,2))*19;
-	printf("distance to do: %f",distanceto);
+	//printf("distance to do: %f",distanceto);
 	//angleofrotationback=atan((double)(abs(deltax)/abs(deltay)))*180/M_PI;
 	deltax=(double)deltax;
 	deltay=(double)deltay;
 	angleofrotation=atan2(deltax,deltay)*180/M_PI;  
-	printf("teta is :%f\n",teta);
+	//printf("teta is :%f\n",teta);
 	printf("delta aangle is :%f\n",angleofrotation); 
 	rot = -90+rad2deg(teta) + angleofrotation;		//solo per prova era -360+ teta+angle ofrotation
 	printf("angle of turning : %f",rot);
@@ -1210,7 +1210,7 @@ return;
 }
 
 	
-int main( int argc, char **argv )
+int main()
 {	pid_t ret;
  	char *name;
         int i,d,n;
@@ -1240,13 +1240,7 @@ int main( int argc, char **argv )
         printf( "Waiting tacho is plugged...\n" );
 
 #endif
-        while ( ev3_tacho_init() < 1 ) Sleep( 1000 );
-
- 
-
- 
- 	caseNumber = atoi(argv[1]);
- 
+        while ( ev3_tacho_init() < 1 ) Sleep( 1000 ); 
         printf( "*** ( EV3 ) Hello! ***\n" );
 	donald->number = caseNumber;
 	donald = inizialization(donald);
@@ -1321,8 +1315,7 @@ if (retour != 0)
  	    printf("##########################################\n##########    Next is %d    ###########\n#########################################\n\n",next);
 	    break;
 	case MSG_BALL:
-       	     if (string[5] == 1) 
-	     	{
+    
             		printf ("Received ball message! Ball has been left \n");
            		string[2] = TEAM_ID;
 			x_LSB = string[6];          // get x of the ball
@@ -1337,18 +1330,15 @@ if (retour != 0)
 			ack[6] = string[1]; // Id ack
 			ack[7] = 0; // 0 if it OK, 1 if it failed 
 			write(s, ack, 8);
-			
-       		 }	
-	// need to reconvert + create a specific variable x_ball and y_ball
-	//x_ball = ;
-	//y_ball = ;
-	// wait for a start msg
 	      break;
 	 case MSG_KICK :
 	     game_status_flag =1;
+	     if (string[5] == 10)
+             return (1);
 	     break;
 	 case MSG_STOP:
 	     game_status_flag =1;
+	     return (1);
 	     break;
 	 case MSG_NEXT:
 	     printf("NEXT RECEIVED!!!\n");
@@ -1362,6 +1352,7 @@ if (retour != 0)
 	     ack[7] = 0; // 0 if it OK, 1 if it failed 
 	     write(s, ack, 8);
 	     //OK let start!!
+	     break;
              
 	     
         }
