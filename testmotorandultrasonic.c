@@ -1135,6 +1135,7 @@ int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
 int i, flag_1,flag_2,grab, ball_dist, status_re;
 int angles_to_scan=20;
 float points[1000]={8000000};
+float gotosec;
 float angle[1000]={0};
 init_turn = max_turn_degree;
 //init_turn=35;   TO BE CHANGED WITH 
@@ -1179,7 +1180,11 @@ while(status_re==0)
 	rotatedx(sn,dx,max_speed,middle_angle-4,sn_mag);
 	if (flag_1==0)
 	{
-		go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,points[index]*3/4,sn_compass,sn_mag);
+	        if(points[index]<=100)
+			gotosec=0;
+		else
+			gotosec=points[index]*2/3;
+		go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,gotosec,sn_compass,sn_mag);
 		flag_1=1;
 		for(i=0;i<500;i++)
 			{
