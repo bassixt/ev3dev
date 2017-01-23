@@ -999,7 +999,7 @@ float start_angle, final_angle, middle_angle,turn_angle,end_angle;
 int pos_in_sn, pos_in_dx, pos_in_ball_sn, pos_in_ball_dx,init_turn; 
 int pos_fin_ball_sn, pos_fin_ball_dx, found_sn, found_dx;
 int i, flag_1,flag_2,grab, ball_dist, status_re;
-int angles_to_scan=20;
+int angles_to_scan=30;
 float points[1000]={8000000};
 float angle[1000]={0};
 init_turn = max_turn_degree;
@@ -1055,6 +1055,8 @@ while(status_re==0)
 	else
 	{
 		status_re=1;
+		init_turn=25;
+		angles_to_scan=20;
 	}
 }
 grab=colorsense(sn,dx,med,max_speed,sn_color);
