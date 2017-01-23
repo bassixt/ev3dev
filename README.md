@@ -1,4 +1,4 @@
-# ################################ DONALD ROBOT #############################
+# ############# DONALD ROBOT #####################
 # ev3dev
 This repository is created for the OS course project.
 The original project can be found at the page: http://soc.eurecom.fr/OS/projects_fall2016.html
