@@ -834,6 +834,7 @@ string[2] = TEAM_ID;
 string[3] = next;
 string[4] = MSG_NEXT;
 write(s, string, 10);
+donald->number=1;
 return EXIT_SUCCESS;
 }
 
