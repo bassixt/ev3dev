@@ -1169,21 +1169,15 @@ while(status_re==0)
 			  index=i;
 		  }
 		}
-		printf("point[index]:%f\n",points[index]);
-		printf("angle[index]:%f\n",angle[index]);
 	if ( !get_sensor_value0(sn_mag, &final_angle)) 
    {
    final_angle = 0;
    }
 	middle_angle=abs(angle[index]-final_angle);
-	printf("final angle:%f and middle angle:%f\n",final_angle,middle_angle);
 	rotatedx(sn,dx,max_speed,middle_angle-4,sn_mag);
 	if (flag_1==0)
 	{
-	        if(points[index]-100>0){
-			gotosec=points[index]*2/3;
-			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,gotosec,sn_compass,sn_mag);
-		}
+		go_ahead_till_obstacle(sn,dx,max_speed*2/3,sn_sonar,points[index]*3/4,sn_compass,sn_mag);
 		flag_1=1;
 		for(i=0;i<500;i++)
 			{
@@ -1196,12 +1190,10 @@ while(status_re==0)
 	}
 }
 grab=colorsense(sn,dx,med,max_speed,sn_color);
-printf("grab=%d\n",grab);
 while(grab==0)
 {
 	go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,40,sn_compass,sn_mag);
 	grab=colorsense(sn,dx,med,max_speed,sn_color);
-	printf("grab=%d\n",grab);
 }
 return;
 }
