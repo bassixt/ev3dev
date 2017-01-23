@@ -1238,7 +1238,7 @@ int main()
 #endif
         while ( ev3_tacho_init() < 1 ) Sleep( 1000 ); 
         printf( "*** ( EV3 ) Hello! ***\n" );
-	donald->number = caseNumber;
+	
 	donald = inizialization(donald);
  	
  	///////////////////////////////////////////////////////////////////////
