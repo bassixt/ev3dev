@@ -647,11 +647,12 @@ void* positioning_sys(void* args)
 	positioning(donald);
 	Sleep(100);
 	seconds_bt=seconds_bt+1;
-	printf("sono qui e donald->number vale:%d",donald->number);
+	printf("seconds_bt :%d :%d\n",seconds_bt,donald->number);
 	if(seconds_bt == 20 && donald->number==1)
 		seconds_bt=0;
 	if (seconds_bt == 20 && donald->number==0)  //if you have reached the counter and if you are moving
 	{	//send position
+		printf("CIAO\n");
 	 	x_conv_MSB = (0xFF & ((int16_t)donald->x>>8));
 	 	x_conv_LSB = (0xFF &  ((int16_t)donald->x));
 		y_conv_MSB = (0xFF & ((int16_t)donald->y>>8));
