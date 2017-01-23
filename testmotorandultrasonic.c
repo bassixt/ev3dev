@@ -36,7 +36,8 @@ pthread_mutex_t mutex,mutex_pos;
 //////////////////////////////////
 //         FOR BT               //
 //////////////////////////////////
-#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
+//#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
+#define SERV_ADDR "00:26:B6:7F:A6:F7"
 #define TEAM_ID     10                       /* team ID */
 
 #define MSG_ACK     0
@@ -776,7 +777,7 @@ while(1)
 		string[2] = TEAM_ID;
 		string[3] = next;
 		string[4] = MSG_BALL;
-		string[5] = 0; // robot leaved the ball
+		string[5] = 1; // robot leaved the ball
 		string[6] = x_conv_LSB;          // x 
 		string[7] = x_conv_MSB;
 		string[8] = y_conv_LSB;	    // y 
