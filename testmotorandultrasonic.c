@@ -321,8 +321,8 @@ void control_direction(uint8_t sn,uint8_t dx,int max_speed, float initial_angle,
 		{
 			set_tacho_position_sp( sn,  1 );
 			set_tacho_position_sp( dx, -1 );
-			set_tacho_speed_sp( sn, max_speed/6 );
-			set_tacho_speed_sp( dx, max_speed/6 );
+			set_tacho_speed_sp( sn, max_speed/5 );
+			set_tacho_speed_sp( dx, max_speed/5 );
 			set_tacho_time_sp( sn, 100 );
 			set_tacho_ramp_up_sp( sn,   0 );
 			set_tacho_ramp_down_sp( sn, 0 );
@@ -345,8 +345,8 @@ void control_direction(uint8_t sn,uint8_t dx,int max_speed, float initial_angle,
 		{
 			set_tacho_position_sp( sn, -1 );
 			set_tacho_position_sp( dx,  1 );
-			set_tacho_speed_sp( sn, max_speed/6 );
-			set_tacho_speed_sp( dx, max_speed/6 );
+			set_tacho_speed_sp( sn, max_speed/5 );
+			set_tacho_speed_sp( dx, max_speed/5 );
 			set_tacho_time_sp( sn, 100 );
 			set_tacho_ramp_up_sp( sn,   0 );
 			set_tacho_ramp_down_sp( sn, 0 );
@@ -647,6 +647,8 @@ void* positioning_sys(void* args)
 	positioning(donald);
 	Sleep(100);
 	seconds_bt=seconds_bt+1;
+	if(seconds_bt == 20 && donald->number==1)
+		seconds_bt=0;
 	if (seconds_bt == 20 && donald->number==0)  //if you have reached the counter and if you are moving
 	{	//send position
 	 	x_conv_MSB = (0xFF & ((int16_t)donald->x>>8));
