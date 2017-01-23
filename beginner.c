@@ -702,6 +702,10 @@ void gotoxybeg(float xoldf, float yoldf,float xnewf, float ynewf, uint8_t sn,uin
 	printf("delta aangle is :%f\n",angleofrotation); 
 	rot = -90+rad2deg(teta) + angleofrotation;		//solo per prova era -360+ teta+angle ofrotation
 	printf("angle of turning : %f",rot);
+	if(rot<-180)
+		rot=rot+360;
+	if(rot>180)
+		rot=rot-360;
 	if(rot<0)
 		rotatesx(sn,dx,max_speed,abs(rot),sn_mag);
 	else
