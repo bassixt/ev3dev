@@ -830,15 +830,12 @@ write(s, string, 10);
 go_backward(donald->sn,donald->dx,donald->med,donald->max_speed);
 put_down(donald->med,donald->max_speed);
 gotoxybeg(donald->x, donald->y, vett[5], vett[6],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
-
-gotoxybeg(donald->x, donald->y, vett[0], vett[1],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
-rotatedx(donald->sn,donald->dx,donald->max_speed,vett[2],donald->sn_mag);
-go_ahead_till_obstacle(donald->sn,donald->dx,donald->max_speed,donald->sn_sonar,vett[3],donald->sn_compass,donald->sn_mag);
-research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, vett[4] , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
-
-gotoxybeg(donald->x, donald->y, vett[5], vett[6],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-gotoxybeg(donald->x, donald->y, vett[7], vett[8],donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);
-
+*((uint16_t *) string) = msgId++;
+string[2] = TEAM_ID;
+string[3] = next;
+string[4] = MSG_NEXT;
+write(s, string, 10);
+donald->number=1;
 return EXIT_SUCCESS;
 }
 
