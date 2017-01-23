@@ -36,8 +36,8 @@ pthread_mutex_t mutex,mutex_pos;
 //////////////////////////////////
 //         FOR BT               //
 //////////////////////////////////
-//#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
-#define SERV_ADDR "00:26:B6:7F:A6:F7"
+#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
+//#define SERV_ADDR "00:26:B6:7F:A6:F7"
 //#define SERV_ADDR "7C:5C:F8:45:D4:DA"
 #define TEAM_ID     10                       /* team ID */
 
@@ -613,12 +613,12 @@ while((finish - beginning - distance)<=0){
 	set_tacho_speed_sp( sn, max_speed * 1 / 4 );
 	set_tacho_speed_sp( dx, max_speed * 1 / 4 );
 			       }
-	if(value<70 && value >=50)
+	if(value<70 && value >=30)
 		{
-	set_tacho_speed_sp( sn, max_speed * 1 / 24 );
-	set_tacho_speed_sp( dx, max_speed * 1 / 24);
+	set_tacho_speed_sp( sn, max_speed * 1 / 16 );
+	set_tacho_speed_sp( dx, max_speed * 1 / 16);
 		 }
-	if(value<50 && value >=0)
+	if(value<30 && value >=0)
 		 {	
 	 set_tacho_speed_sp( sn, max_speed * 0 );
 	 set_tacho_speed_sp( dx, max_speed * 0 );
