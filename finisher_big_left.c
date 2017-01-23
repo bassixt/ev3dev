@@ -584,11 +584,11 @@ int retour;
 float value;
 float initial_angle;
 set_tacho_time_sp( sn, 200 );
-set_tacho_ramp_up_sp( sn, 1500 );
-set_tacho_ramp_down_sp( sn, 1500);
+set_tacho_ramp_up_sp( sn, 1000 );
+set_tacho_ramp_down_sp( sn, 1000);
 set_tacho_time_sp( dx, 200 );
-set_tacho_ramp_up_sp( dx, 1500 );
-set_tacho_ramp_down_sp( dx, 1500 );
+set_tacho_ramp_up_sp( dx, 1000 );
+set_tacho_ramp_down_sp( dx, 1000 );
 get_tacho_position( dx, &beginning);
 finish = beginning;
 if ( !get_sensor_value0(sn_mag, &initial_angle)){
@@ -602,12 +602,12 @@ while((finish - beginning - distance)<=0){
 	multi_set_tacho_ramp_up_sp( both, 2000 );
 	multi_set_tacho_ramp_down_sp( both, 2000 );
 	*/
-	/*set_tacho_time_sp( sn, 200 );
-	set_tacho_ramp_up_sp( sn, 1500 );
-	set_tacho_ramp_down_sp( sn, 1500 );
+	set_tacho_time_sp( sn, 200 );
+	set_tacho_ramp_up_sp( sn, 1000 );
+	set_tacho_ramp_down_sp( sn, 1000 );
 	set_tacho_time_sp( dx, 200);
-	set_tacho_ramp_up_sp( dx, 1500 );
-	set_tacho_ramp_down_sp( dx, 1500 );*/
+	set_tacho_ramp_up_sp( dx, 1000 );
+	set_tacho_ramp_down_sp( dx, 1000 );
 	retour = pthread_mutex_lock(&mutex_pos);
     			if (retour != 0)
     			 {
@@ -657,12 +657,12 @@ while((finish - beginning - distance)<=0){
 	set_tacho_command_inx( dx, TACHO_RUN_TIMED );
 	Sleep(100);
 	get_tacho_position( dx, &partial);
-	//control_direction(sn,dx,max_speed,initial_angle, sn_mag);
+	control_direction(sn,dx,max_speed,initial_angle, sn_mag);
 	get_tacho_position( dx, &finish);
 	beginning+=(finish-partial);
 }
 get_tacho_position( dx, &finish);		
-//control_direction(sn,dx,max_speed,initial_angle, sn_mag);	
+control_direction(sn,dx,max_speed,initial_angle, sn_mag);	
 return (finish-beginning)/21; //return the distance in cm
 }
 void* positioning_sys(void* args)
