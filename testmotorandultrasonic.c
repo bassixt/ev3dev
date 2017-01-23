@@ -647,7 +647,7 @@ void* positioning_sys(void* args)
 	positioning(donald);
 	Sleep(100);
 	seconds_bt=seconds_bt+1;
-	printf("sono qui e donald->number vale:%d" donald->number );
+	printf("sono qui e donald->number vale:%d",donald->number);
 	if(seconds_bt == 20 && donald->number==1)
 		seconds_bt=0;
 	if (seconds_bt == 20 && donald->number==0)  //if you have reached the counter and if you are moving
