@@ -1180,12 +1180,10 @@ while(status_re==0)
 	rotatedx(sn,dx,max_speed,middle_angle-4,sn_mag);
 	if (flag_1==0)
 	{
-	        if(points[index]<=100)
-			gotosec=0;
-		else	{
+	        if(points[index]-100>0){
 			gotosec=points[index]*2/3;
-			go_ahead_till_obstacle(sn,dx,max_speed*2/3,sn_sonar,gotosec,sn_compass,sn_mag);
-			}
+			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,gotosec,sn_compass,sn_mag);
+		}
 		flag_1=1;
 		for(i=0;i<500;i++)
 			{
