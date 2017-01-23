@@ -1184,7 +1184,7 @@ while(status_re==0)
 			gotosec=0;
 		else	{
 			gotosec=points[index]*2/3;
-			go_ahead_till_obstacle(sn,dx,max_speed/2,sn_sonar,gotosec,sn_compass,sn_mag);
+			go_ahead_till_obstacle(sn,dx,max_speed*2/3,sn_sonar,gotosec,sn_compass,sn_mag);
 			}
 		flag_1=1;
 		for(i=0;i<500;i++)
