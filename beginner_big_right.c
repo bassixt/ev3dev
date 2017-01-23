@@ -1169,7 +1169,7 @@ int main()
  	int caseNumber;
 	 int game_status_flag=0;	// is set to one if a kick message or a stop message is received
 	char string[58];
-	char IDMSG[58];
+	char ack[10];
 int8_t x_LSB,x_MSB,y_MSB,y_LSB;
 #ifndef __ARM_ARCH_4T__
         /* Disable auto-detection of the brick (you have to set the correct address below) */
@@ -1249,7 +1249,7 @@ if (retour != 0)
  {
  read_from_server (s, string, 9);
  printf("message type %d\n",string[4]);
- switch (string[4])	
+  switch (string[4])	
  { 	
 	case MSG_START:
             printf ("Received start message!\n");
@@ -1274,54 +1274,44 @@ if (retour != 0)
  	    printf("##########################################\n##########    Next is %d    ###########\n#########################################\n\n",next);
 	    break;
 	case MSG_BALL:
-       	     if (string[5] == 1) 
-	     	{
+    
             		printf ("Received ball message! Ball has been left \n");
-           		*((uint16_t *) IDMSG) = *((uint16_t *) string);
-		     	string[2] = TEAM_ID;
+           		string[2] = TEAM_ID;
 			x_LSB = string[6];          // get x of the ball
 			x_MSB = string[7];
 			y_LSB = string[8];	    //get y of the ball
 			y_MSB = string[9];
-		     
-		    	*((uint16_t *) string) = msgId++;
-			string[2] = TEAM_ID;
-			string[3] = next;
-			string[4] = MSG_ACK;
-			string[5] = IDMSG[0];
-		 	string[6] = IDMSG[1];          // x 
-			string[7] = 0;
-			write(s, string, 8);
-			
-       		 }	
-		 
-	// need to reconvert + create a specific variable x_ball and y_ball
-	//x_ball = ;
-	//y_ball = ;
-	// wait for a start msg
+		        *((uint16_t *) ack) = msgId++;
+			ack[2] = TEAM_ID;
+			ack[3] = next;
+			ack[4] = MSG_ACK;
+			ack[5] = string[0]; // Id ack 
+			ack[6] = string[1]; // Id ack
+			ack[7] = 0; // 0 if it OK, 1 if it failed 
+			write(s, ack, 8);
 	      break;
 	 case MSG_KICK :
 	     game_status_flag =1;
+	     if (string[5] == 10)
+             return (1);
 	     break;
 	 case MSG_STOP:
 	     game_status_flag =1;
+	     return (1);
 	     break;
 	 case MSG_NEXT:
-	    *((uint16_t *) IDMSG) = *((uint16_t *) string);
-            printf("next message received\n");
-	    donald->number =  0;
-	     		     
-	     *((uint16_t *) string) = msgId++;	     
-	     string[2] = TEAM_ID;
-	     string[3] = next;
-	     string[4] = MSG_ACK;
-	     string[5] = IDMSG[0];
-	     string[6] = IDMSG[1];          // x
-             string[7] = 0;
-             write(s, string, 8);
-		
+	     printf("NEXT RECEIVED!!!\n");
+	     donald->number =  0;
+	     *((uint16_t *) ack) = msgId++;
+	     ack[2] = TEAM_ID;
+	     ack[3] = next;
+	     ack[4] = MSG_ACK;
+	     ack[5] = string[0]; // Id ack 
+	     ack[6] = string[1]; // Id ack
+	     ack[7] = 0; // 0 if it OK, 1 if it failed 
+	     write(s, ack, 8);
 	     //OK let start!!
-	      break;
+	     break;
              
 	     
         }
