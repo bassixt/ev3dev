@@ -688,6 +688,8 @@ void* positioning_sys(void* args)
 	positioning(donald);
 	Sleep(100);
 	seconds_bt=seconds_bt+1;
+	if(seconds_bt == 20 && donald->number==1)
+		seconds_bt=0;
 	if (seconds_bt == 20 && donald->number==0)
 	{	//send position
 	 	x_conv_MSB = (0xFF & ((int16_t)donald->x>>8));
