@@ -37,7 +37,8 @@ pthread_mutex_t mutex,mutex_pos;
 //         FOR BT               //
 //////////////////////////////////
 //#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
-#define SERV_ADDR "00:26:B6:7F:A6:F7"
+//#define SERV_ADDR "00:26:B6:7F:A6:F7"
+#define SERV_ADDR "7C:5C:F8:45:D4:DA"
 #define TEAM_ID     10                       /* team ID */
 
 #define MSG_ACK     0
@@ -768,7 +769,7 @@ while(1)
 	printf("Found number==0 and actual_role=%d\n",actual_role);
 
 		Sleep(1000);
-		gotoxybeg(donald->x, donald->y, 29.0, 147.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
+		gotoxybeg(donald->x, donald->y, 29.0, 143.0,donald->sn,donald->dx,donald->max_speed,donald->sn_sonar, donald->sn_compass, donald->sn_mag, donald->teta);	
 		research2(donald->sn,donald->dx, donald->max_speed, donald->sn_compass, 25 , donald->med, donald->sn_color, donald->sn_mag, donald->sn_sonar);
 		//send ball position
 		x_ball = donald->x+5*cos(donald->teta);
