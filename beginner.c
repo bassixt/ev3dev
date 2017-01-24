@@ -36,7 +36,7 @@ pthread_mutex_t mutex,mutex_pos;
 //////////////////////////////////
 //         FOR BT               //
 //////////////////////////////////
-#define SERV_ADDR   "00:1E:10:00:06:2B"     /* address of the server is */
+#define SERV_ADDR   "DC:53:60:AD:61:90"     /* address of the server is */
 #define TEAM_ID     10                       /* team ID */
 
 #define MSG_ACK     0
