@@ -774,7 +774,7 @@ while(1)
 			leave_ball(donald->sn,donald->dx,donald->med,donald->max_speed);
 			//send ball position
 			x_ball = donald->x+5*cos(donald->teta);
-			y_ball = donald->x+5*sin(donald->teta);
+			y_ball = donald->y+5*sin(donald->teta);
 			x_conv_MSB = (0xFF & ((int16_t)x_ball>>8));
 			x_conv_LSB = (0xFF &  ((int16_t)x_ball));
 			y_conv_MSB = (0xFF & ((int16_t)y_ball>>8));
