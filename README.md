@@ -16,7 +16,12 @@ Connnect to the robot and in the terminal cut and paste these lines:
 
 Replace "wanted brain" with the wanted side of the arena, for example:
 SMALL ARENA:
+
+BEGINNER:
 >make beginner
+
+FINISHER:
+>make finisher
 
 Other options are
 
